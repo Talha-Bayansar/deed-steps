@@ -4,8 +4,8 @@ import { db } from ".";
 
 export const userTable = sqliteTable("user", {
   id: integer("id").primaryKey(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
   email: text("email").unique().notNull(),
 });
 
@@ -29,9 +29,6 @@ export const emailVerificationCodeTable = sqliteTable(
     id: integer("id").primaryKey(),
     email: text("email").notNull(),
     code: text("code").notNull(),
-    userId: integer("user_id")
-      .notNull()
-      .references(() => userTable.id),
     expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
   }
 );

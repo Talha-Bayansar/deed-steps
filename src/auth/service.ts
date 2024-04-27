@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db";
-import { emailVerificationCodeTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { emailVerificationCodeTable, userTable } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { TimeSpan, createDate } from "oslo";
 import { generateRandomString, alphabet } from "oslo/crypto";
 import { lucia } from ".";
@@ -56,40 +56,77 @@ export const sendEmail = async (email: string, verificationCode: string) => {
 };
 
 export async function generateEmailVerificationCode(
-  userId: number,
   email: string
 ): Promise<string> {
   await db
     .delete(emailVerificationCodeTable)
-    .where(eq(emailVerificationCodeTable.userId, userId));
+    .where(eq(emailVerificationCodeTable.email, email));
   const code = generateRandomString(8, alphabet("0-9"));
   await db.insert(emailVerificationCodeTable).values({
-    userId: userId,
     email: email,
     code: code,
     expiresAt: createDate(new TimeSpan(15, "m")),
   });
-  await sendEmail(email, code);
   return code;
 }
 
-export async function signin(code: string) {
+export async function sendEmailVerificationCode(email: string) {
+  const code = await generateEmailVerificationCode(email);
+  await sendEmail(email, code);
+}
+
+export async function signin(email: string, code: string) {
   const verificationCode = await db
     .select()
     .from(emailVerificationCodeTable)
-    .where(eq(emailVerificationCodeTable.code, code));
-  if (verificationCode.length > 0) {
-    const session = await lucia.createSession(verificationCode[0].userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes
+    .where(
+      and(
+        eq(emailVerificationCodeTable.email, email),
+        eq(emailVerificationCodeTable.code, code)
+      )
     );
-    await db
-      .delete(emailVerificationCodeTable)
-      .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
-    return true;
+  if (verificationCode.length > 0) {
+    const user = await db
+      .select()
+      .from(userTable)
+      .where(eq(userTable.email, verificationCode[0].email));
+
+    if (user.length > 0) {
+      const session = await lucia.createSession(user[0].id, {});
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      );
+      await db
+        .delete(emailVerificationCodeTable)
+        .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
+      return true;
+    } else {
+      const newUser = await db
+        .insert(userTable)
+        .values({
+          email: verificationCode[0].email,
+        })
+        .returning({ id: userTable.id });
+
+      if (newUser.length > 0) {
+        const session = await lucia.createSession(newUser[0].id, {});
+        const sessionCookie = lucia.createSessionCookie(session.id);
+        cookies().set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes
+        );
+        await db
+          .delete(emailVerificationCodeTable)
+          .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
+        return true;
+      } else {
+        return false;
+      }
+    }
   } else {
     return false;
   }
