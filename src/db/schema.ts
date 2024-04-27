@@ -9,8 +9,8 @@ export const userTable = sqliteTable("user", {
   email: text("email").unique().notNull(),
 });
 
-export type User = typeof userTable.$inferSelect; // return type when queried
-export type InsertUser = typeof userTable.$inferInsert; // insert type
+export type User = typeof userTable.$inferSelect;
+export type InsertUser = typeof userTable.$inferInsert;
 
 export const sessionTable = sqliteTable("session", {
   id: text("id").notNull().primaryKey(),
@@ -19,5 +19,21 @@ export const sessionTable = sqliteTable("session", {
     .references(() => userTable.id),
   expiresAt: integer("expires_at").notNull(),
 });
+
+export type Session = typeof sessionTable.$inferSelect;
+export type InsertSession = typeof sessionTable.$inferInsert;
+
+export const emailVerificationCodeTable = sqliteTable(
+  "email_verification_code",
+  {
+    id: integer("id").primaryKey(),
+    email: text("email").notNull(),
+    code: text("code").notNull(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => userTable.id),
+    expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  }
+);
 
 export const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
