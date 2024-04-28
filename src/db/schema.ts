@@ -1,6 +1,10 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db } from ".";
+import {
+  integer,
+  primaryKey,
+  sqliteTable,
+  text,
+} from "drizzle-orm/sqlite-core";
+import { relations } from "drizzle-orm";
 
 export const userTable = sqliteTable("user", {
   id: integer("id").primaryKey(),
@@ -9,9 +13,6 @@ export const userTable = sqliteTable("user", {
   email: text("email").unique().notNull(),
 });
 
-export type User = typeof userTable.$inferSelect;
-export type InsertUser = typeof userTable.$inferInsert;
-
 export const sessionTable = sqliteTable("session", {
   id: text("id").notNull().primaryKey(),
   userId: integer("user_id")
@@ -19,9 +20,6 @@ export const sessionTable = sqliteTable("session", {
     .references(() => userTable.id),
   expiresAt: integer("expires_at").notNull(),
 });
-
-export type Session = typeof sessionTable.$inferSelect;
-export type InsertSession = typeof sessionTable.$inferInsert;
 
 export const emailVerificationCodeTable = sqliteTable(
   "email_verification_code",
@@ -33,12 +31,43 @@ export const emailVerificationCodeTable = sqliteTable(
   }
 );
 
-export const group = sqliteTable("group", {
+export const groupTable = sqliteTable("group", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
 });
 
-export type Group = typeof group.$inferSelect;
-export type InsertGroup = typeof group.$inferInsert;
+// Junction table for users and groups
+export const userToGroupTable = sqliteTable(
+  "user_to_group",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => userTable.id),
+    groupId: integer("group_id")
+      .notNull()
+      .references(() => groupTable.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.groupId] }),
+  })
+);
 
-export const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
+// Define the relations
+export const usersRelations = relations(userTable, ({ many }) => ({
+  groups: many(userToGroupTable),
+}));
+
+export const groupsRelations = relations(groupTable, ({ many }) => ({
+  users: many(userToGroupTable),
+}));
+
+export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
+  group: one(groupTable, {
+    fields: [userToGroupTable.groupId],
+    references: [groupTable.id],
+  }),
+  user: one(userTable, {
+    fields: [userToGroupTable.userId],
+    references: [userTable.id],
+  }),
+}));

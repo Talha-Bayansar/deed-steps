@@ -1,0 +1,21 @@
+"use server";
+
+import { validateRequest } from "@/auth/service";
+import { db } from "@/db";
+import { userToGroupTable } from "@/db/schema";
+import { DrizzleError, eq } from "drizzle-orm";
+
+export async function getMyGroups() {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  const myGroups = await db.query.userToGroupTable.findMany({
+    where: eq(userToGroupTable.userId, user.id),
+    with: {
+      group: true,
+    },
+  });
+
+  return myGroups.map((group) => group.group);
+}

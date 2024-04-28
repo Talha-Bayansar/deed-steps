@@ -11,7 +11,6 @@ const AppLayout = ({ children }: Props) => {
     <AuthWrapper>
       <PageWrapper>
         {children}
-
         <RootNavBar />
       </PageWrapper>
     </AuthWrapper>
