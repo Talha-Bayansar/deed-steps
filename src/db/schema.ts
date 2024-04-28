@@ -33,4 +33,12 @@ export const emailVerificationCodeTable = sqliteTable(
   }
 );
 
+export const group = sqliteTable("group", {
+  id: integer("id").primaryKey(),
+  name: text("name").notNull(),
+});
+
+export type Group = typeof group.$inferSelect;
+export type InsertGroup = typeof group.$inferInsert;
+
 export const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
