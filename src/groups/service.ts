@@ -22,8 +22,10 @@ export async function getMyGroups() {
     },
   });
 
-  return myGroups.map((group) => ({
-    group: group.group,
-    userCount: group.userCount,
-  }));
+  return myGroups
+    .filter((item) => !!item.groupId)
+    .map((group) => ({
+      group: group.group,
+      userCount: group.userCount,
+    }));
 }

@@ -1,11 +1,23 @@
+import { isArrayEmpty } from "@/lib/utils";
 import { getMyGroups } from "../service";
 import { GroupCard } from "./GroupCard";
+import { View } from "@/components/layout/View";
+import { EmptyView } from "@/components/EmptyView";
+import { Users } from "lucide-react";
 
 export const MyGroupsView = async () => {
   const myGroups = await getMyGroups();
 
+  if (isArrayEmpty(myGroups))
+    return (
+      <EmptyView
+        Icon={Users}
+        message="You are not a member of any group yet."
+      />
+    );
+
   return (
-    <div className="flex flex-col gap-4">
+    <View>
       {myGroups.map((item) => (
         <GroupCard
           key={item.group.id}
@@ -13,6 +25,6 @@ export const MyGroupsView = async () => {
           userCount={item.userCount}
         />
       ))}
-    </div>
+    </View>
   );
 };
