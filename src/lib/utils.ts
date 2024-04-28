@@ -11,6 +11,6 @@ export const isArrayEmpty = (array: unknown[]) => {
   return array.length < 1;
 };
 
-export const generateArray = (size: number = 20) => {
+export const generateArray = (size: number = 10) => {
   return Array.from({ length: size }, (_, i) => i);
 };

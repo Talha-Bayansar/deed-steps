@@ -1,13 +1,16 @@
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { MyGroupsView } from "@/groups/components/MyGroupsView";
+import {
+  MyGroupsView,
+  MyGroupsViewSkeleton,
+} from "@/groups/components/MyGroupsView";
 import { Suspense } from "react";
 
 const Page = () => {
   return (
     <Main>
       <Title>My Groups</Title>
-      <Suspense fallback={<div>Loading groups...</div>}>
+      <Suspense fallback={<MyGroupsViewSkeleton />}>
         <MyGroupsView />
       </Suspense>
     </Main>

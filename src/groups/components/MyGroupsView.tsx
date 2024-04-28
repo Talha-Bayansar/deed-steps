@@ -1,6 +1,6 @@
-import { isArrayEmpty } from "@/lib/utils";
+import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { getMyGroups } from "../service";
-import { GroupCard } from "./GroupCard";
+import { GroupCard, GroupCardSkeleton } from "./GroupCard";
 import { View } from "@/components/layout/View";
 import { EmptyView } from "@/components/EmptyView";
 import { Users } from "lucide-react";
@@ -24,6 +24,16 @@ export const MyGroupsView = async () => {
           group={item.group}
           userCount={item.userCount}
         />
+      ))}
+    </View>
+  );
+};
+
+export const MyGroupsViewSkeleton = () => {
+  return (
+    <View>
+      {generateArray().map((item) => (
+        <GroupCardSkeleton key={item} />
       ))}
     </View>
   );
