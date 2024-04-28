@@ -34,6 +34,9 @@ export const emailVerificationCodeTable = sqliteTable(
 export const groupTable = sqliteTable("group", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
+  ownerId: integer("owner_id")
+    .notNull()
+    .references(() => userTable.id),
 });
 
 // Junction table for users and groups
@@ -55,10 +58,15 @@ export const userToGroupTable = sqliteTable(
 // Define the relations
 export const usersRelations = relations(userTable, ({ many }) => ({
   groups: many(userToGroupTable),
+  ownedGroups: many(groupTable),
 }));
 
-export const groupsRelations = relations(groupTable, ({ many }) => ({
-  users: many(userToGroupTable),
+export const groupsRelations = relations(groupTable, ({ many, one }) => ({
+  members: many(userToGroupTable),
+  owner: one(userTable, {
+    fields: [groupTable.ownerId],
+    references: [userTable.id],
+  }),
 }));
 
 export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
@@ -66,7 +74,7 @@ export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
     fields: [userToGroupTable.groupId],
     references: [groupTable.id],
   }),
-  user: one(userTable, {
+  member: one(userTable, {
     fields: [userToGroupTable.userId],
     references: [userTable.id],
   }),

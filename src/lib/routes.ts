@@ -5,5 +5,8 @@ export const routes = {
   },
   myGroups: {
     root: "/my-groups",
+    create: {
+      root: "/my-groups/create",
+    },
   },
 };

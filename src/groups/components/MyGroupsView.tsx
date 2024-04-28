@@ -4,6 +4,9 @@ import { GroupCard, GroupCardSkeleton } from "./GroupCard";
 import { View } from "@/components/layout/View";
 import { EmptyView } from "@/components/EmptyView";
 import { Users } from "lucide-react";
+import { routes } from "@/lib/routes";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const MyGroupsView = async () => {
   const myGroups = await getMyGroups();
@@ -13,6 +16,11 @@ export const MyGroupsView = async () => {
       <EmptyView
         Icon={Users}
         message="You are not a member of any group yet."
+        actionComponent={
+          <Button asChild>
+            <Link href={routes.myGroups.create.root}>Create group</Link>
+          </Button>
+        }
       />
     );
 

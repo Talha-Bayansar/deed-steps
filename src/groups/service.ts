@@ -2,8 +2,9 @@
 
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
-import { userToGroupTable } from "@/db/schema";
+import { groupTable, userToGroupTable } from "@/db/schema";
 import { DrizzleError, eq, sql } from "drizzle-orm";
+import type { GroupInsert } from "./models";
 
 export async function getMyGroups() {
   const { user } = await validateRequest();
@@ -28,4 +29,12 @@ export async function getMyGroups() {
       group: group.group,
       userCount: group.userCount,
     }));
+}
+
+export async function createGroup(group: GroupInsert) {
+  const { user } = await validateRequest();
+
+  const newGroup = await db.insert(groupTable).values(group);
+
+  return newGroup;
 }
