@@ -8,6 +8,11 @@ export default async function Home() {
   return (
     <main className="flex-grow grid place-items-center">
       {user ? (
+        <p>You are signed in as {JSON.stringify(user, undefined, 2)}.</p>
+      ) : (
+        <p>You are not signed in.</p>
+      )}
+      {user ? (
         <SignoutButton />
       ) : (
         <Button asChild>
