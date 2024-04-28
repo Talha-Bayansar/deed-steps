@@ -17,8 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "min-h-screen flex flex-col")}>
-        {children}
+      <body className={cn("font-sans antialiased", inter.className)}>
+        <div
+          className="flex min-h-screen w-full overflow-x-hidden bg-background"
+          vaul-drawer-wrapper=""
+        >
+          {children}
+        </div>
       </body>
     </html>
   );
