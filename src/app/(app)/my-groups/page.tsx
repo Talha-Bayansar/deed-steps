@@ -1,18 +1,25 @@
+import { IconButton } from "@/components/IconButton";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import {
-  MyGroupsView,
-  MyGroupsViewSkeleton,
-} from "@/groups/components/MyGroupsView";
+import { MyGroupsView } from "@/groups/components/MyGroupsView";
+import { routes } from "@/lib/routes";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 import { Suspense } from "react";
 
 const Page = () => {
   return (
     <Main>
-      <Title>My Groups</Title>
-      <Suspense fallback={<MyGroupsViewSkeleton />}>
-        <MyGroupsView />
-      </Suspense>
+      <div className="flex justify-between items-start">
+        <Title>My Groups</Title>
+        <IconButton>
+          <Link href={routes.myGroups.create.root}>
+            <Plus className="text-primary" />
+          </Link>
+        </IconButton>
+      </div>
+
+      <MyGroupsView />
     </Main>
   );
 };

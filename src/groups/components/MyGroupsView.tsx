@@ -1,3 +1,4 @@
+"use client";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { getMyGroups } from "../service";
 import { GroupCard, GroupCardSkeleton } from "./GroupCard";
@@ -7,11 +8,19 @@ import { Users } from "lucide-react";
 import { routes } from "@/lib/routes";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 
-export const MyGroupsView = async () => {
-  const myGroups = await getMyGroups();
+export const MyGroupsView = () => {
+  const { data: myGroups, isLoading } = useQuery({
+    queryKey: ["myGroups"],
+    queryFn: async () => await getMyGroups(),
+  });
 
-  if (isArrayEmpty(myGroups))
+  if (isLoading) {
+    return <MyGroupsViewSkeleton />;
+  }
+
+  if (!myGroups || isArrayEmpty(myGroups))
     return (
       <EmptyView
         Icon={Users}
@@ -26,12 +35,8 @@ export const MyGroupsView = async () => {
 
   return (
     <View>
-      {myGroups.map((item) => (
-        <GroupCard
-          key={item.group.id}
-          group={item.group}
-          userCount={item.userCount}
-        />
+      {myGroups.map((group) => (
+        <GroupCard key={group.id} group={group} isOwner={group.isOwner} />
       ))}
     </View>
   );

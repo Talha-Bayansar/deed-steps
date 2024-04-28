@@ -14,6 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { createGroup } from "../service";
+import { revalidatePath } from "next/cache";
+import { routes } from "@/lib/routes";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   name: z.string().min(3).max(50),
@@ -29,9 +33,15 @@ export const GroupForm = (props: Props) => {
       name: "",
     },
   });
+  const mutation = useMutation({
+    mutationFn: createGroup,
+    onSuccess: () => {
+      router.push(routes.myGroups.root);
+    },
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    mutation.mutate(values);
   }
 
   return (
@@ -53,7 +63,9 @@ export const GroupForm = (props: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Create</Button>
+        <Button type="submit" disabled={mutation.isPending}>
+          Create
+        </Button>
       </form>
     </Form>
   );

@@ -6,15 +6,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   group: Group;
-  userCount: number;
+  isOwner: boolean;
 };
 
-export const GroupCard = ({ group, userCount }: Props) => {
+export const GroupCard = ({ group, isOwner }: Props) => {
   return (
     <Card className="p-4">
       <div className="flex flex-col gap-2">
         <CardTitle>{group.name}</CardTitle>
-        <CardDescription>Members: {userCount}</CardDescription>
+        <CardDescription>
+          Status: {isOwner ? "Owner" : "Member"}
+        </CardDescription>
       </div>
     </Card>
   );
@@ -25,7 +27,7 @@ export const GroupCardSkeleton = () => {
     <Card className="p-4">
       <div className="flex flex-col gap-2">
         <Skeleton className="h-6 w-full" />
-        <Skeleton className="h-2 w-full" />
+        <Skeleton className="h-4 w-full" />
       </div>
     </Card>
   );

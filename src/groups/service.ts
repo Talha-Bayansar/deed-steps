@@ -6,6 +6,8 @@ import { groupTable, userToGroupTable } from "@/db/schema";
 import { DrizzleError, eq, sql } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 
+type Nullable<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 export async function getMyGroups() {
   const { user } = await validateRequest();
 
@@ -16,25 +18,33 @@ export async function getMyGroups() {
     with: {
       group: true,
     },
-    extras: {
-      userCount: sql<number>`count(${userToGroupTable.userId})`.as(
-        "user_count"
-      ),
-    },
   });
 
-  return myGroups
-    .filter((item) => !!item.groupId)
-    .map((group) => ({
-      group: group.group,
-      userCount: group.userCount,
-    }));
+  return myGroups.map((item) => ({
+    ...item.group,
+    isOwner: item.group.ownerId === user.id,
+  }));
 }
 
-export async function createGroup(group: GroupInsert) {
+export async function createGroup(group: Nullable<GroupInsert, "ownerId">) {
   const { user } = await validateRequest();
 
-  const newGroup = await db.insert(groupTable).values(group);
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
 
-  return newGroup;
+  const newGroup = await db
+    .insert(groupTable)
+    .values({
+      name: group.name,
+      ownerId: user.id,
+    })
+    .returning({
+      id: groupTable.id,
+    });
+
+  await db.insert(userToGroupTable).values({
+    groupId: newGroup[0].id,
+    userId: user.id,
+  });
+
+  return true;
 }
