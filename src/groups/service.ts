@@ -3,7 +3,7 @@
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
 import { userToGroupTable } from "@/db/schema";
-import { DrizzleError, eq } from "drizzle-orm";
+import { DrizzleError, eq, sql } from "drizzle-orm";
 
 export async function getMyGroups() {
   const { user } = await validateRequest();
@@ -15,7 +15,15 @@ export async function getMyGroups() {
     with: {
       group: true,
     },
+    extras: {
+      userCount: sql<number>`count(${userToGroupTable.userId})`.as(
+        "user_count"
+      ),
+    },
   });
 
-  return myGroups.map((group) => group.group);
+  return myGroups.map((group) => ({
+    group: group.group,
+    userCount: group.userCount,
+  }));
 }

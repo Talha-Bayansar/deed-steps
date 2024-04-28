@@ -1,5 +1,5 @@
+import { adapter } from "@/db";
 import { Lucia } from "lucia";
-import { adapter } from "@/db/schema";
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
