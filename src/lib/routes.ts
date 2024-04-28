@@ -3,10 +3,11 @@ export const routes = {
   signin: {
     root: "/signin",
   },
-  myGroups: {
-    root: "/my-groups",
+  groups: {
+    root: "/groups",
     create: {
-      root: "/my-groups/create",
+      root: "/groups/create",
     },
+    id: (id: string) => `/groups/${id}`,
   },
 };

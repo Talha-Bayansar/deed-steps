@@ -30,7 +30,7 @@ export const RootNavBar = () => {
     },
     {
       Icon: Users,
-      href: routes.myGroups.root,
+      href: routes.groups.root,
       tooltip: "My Groups",
     },
   ];

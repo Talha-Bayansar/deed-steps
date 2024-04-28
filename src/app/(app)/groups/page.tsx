@@ -11,9 +11,9 @@ const Page = () => {
   return (
     <Main>
       <div className="flex justify-between items-start">
-        <Title>My Groups</Title>
+        <Title>Groups</Title>
         <IconButton>
-          <Link href={routes.myGroups.create.root}>
+          <Link href={routes.groups.create.root}>
             <Plus className="text-primary" />
           </Link>
         </IconButton>

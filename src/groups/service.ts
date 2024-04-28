@@ -8,6 +8,24 @@ import type { GroupInsert } from "./models";
 
 type Nullable<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
+export async function getGroupById(groupId: number) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  const group = await db.query.groupTable.findFirst({
+    where: eq(groupTable.id, groupId),
+    with: {
+      members: true,
+    },
+  });
+
+  return group;
+}
+
 export async function getMyGroups() {
   const { user } = await validateRequest();
 

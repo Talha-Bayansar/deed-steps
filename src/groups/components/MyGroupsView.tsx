@@ -27,7 +27,7 @@ export const MyGroupsView = () => {
         message="You are not a member of any group yet."
         actionComponent={
           <Button asChild>
-            <Link href={routes.myGroups.create.root}>Create group</Link>
+            <Link href={routes.groups.create.root}>Create group</Link>
           </Button>
         }
       />
@@ -36,7 +36,9 @@ export const MyGroupsView = () => {
   return (
     <View>
       {myGroups.map((group) => (
-        <GroupCard key={group.id} group={group} isOwner={group.isOwner} />
+        <Link key={group.id} href={routes.groups.id(group.id.toString())}>
+          <GroupCard group={group} isOwner={group.isOwner} />
+        </Link>
       ))}
     </View>
   );
