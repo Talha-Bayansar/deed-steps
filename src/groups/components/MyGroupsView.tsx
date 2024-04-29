@@ -36,7 +36,7 @@ export const MyGroupsView = () => {
   return (
     <View>
       {myGroups.map((group) => (
-        <Link key={group.id} href={routes.groups.id(group.id.toString())}>
+        <Link key={group.id} href={routes.groups.id(group.id.toString()).root}>
           <GroupCard group={group} isOwner={group.isOwner} />
         </Link>
       ))}

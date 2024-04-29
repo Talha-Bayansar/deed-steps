@@ -8,6 +8,9 @@ export const routes = {
     create: {
       root: "/groups/create",
     },
-    id: (id: string) => `/groups/${id}`,
+    id: (id: string) => ({
+      root: `/groups/${id}`,
+      settings: { root: `/groups/${id}/settings` },
+    }),
   },
 };

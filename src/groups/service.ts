@@ -3,7 +3,7 @@
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
 import { groupTable, userToGroupTable } from "@/db/schema";
-import { DrizzleError, eq } from "drizzle-orm";
+import { DrizzleError, and, eq } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 
 type Nullable<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
@@ -19,11 +19,15 @@ export async function getGroupById(groupId: number) {
   const group = await db.query.groupTable.findFirst({
     where: eq(groupTable.id, groupId),
     with: {
-      members: true,
+      members: {
+        with: {
+          member: true,
+        },
+      },
     },
   });
 
-  return group;
+  return { ...group, isOwner: user.id === group?.ownerId };
 }
 
 export async function getMyGroups() {
@@ -85,5 +89,21 @@ export async function deleteGroup(groupId: number) {
   await db
     .delete(userToGroupTable)
     .where(eq(userToGroupTable.groupId, groupId));
+  return true;
+}
+
+export async function deleteUserFromGroup(userId: number, groupId: number) {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  await db
+    .delete(userToGroupTable)
+    .where(
+      and(
+        eq(userToGroupTable.userId, userId),
+        eq(userToGroupTable.groupId, groupId)
+      )
+    );
   return true;
 }
