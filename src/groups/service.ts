@@ -94,6 +94,21 @@ export async function deleteGroup(groupId: number) {
   return true;
 }
 
+export async function getMyGroupInvitations() {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  const invitations = await db.query.invitationTable.findMany({
+    where: eq(invitationTable.userId, user.id),
+    with: {
+      group: true,
+    },
+  });
+
+  return invitations;
+}
+
 export async function inviteUserToGroup(userId: number, groupId: number) {
   const { user } = await validateRequest();
 
