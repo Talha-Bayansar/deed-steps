@@ -17,3 +17,7 @@ export const isArrayEmpty = (array: unknown[]) => {
 export const generateArray = (size: number = 10) => {
   return Array.from({ length: size }, (_, i) => i);
 };
+
+export const isLastOfArray = (index: number, array: unknown[]) => {
+  return index === array.length - 1;
+};

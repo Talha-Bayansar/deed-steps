@@ -87,10 +87,10 @@ export async function deleteGroup(groupId: number) {
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
 
-  await db.delete(groupTable).where(eq(groupTable.id, groupId));
   await db
     .delete(userToGroupTable)
     .where(eq(userToGroupTable.groupId, groupId));
+  await db.delete(groupTable).where(eq(groupTable.id, groupId));
   return true;
 }
 

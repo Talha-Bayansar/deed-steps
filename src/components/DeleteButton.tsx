@@ -28,7 +28,9 @@ export const DeleteButton = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">{label}</Button>
+        <Button className="w-full" variant="destructive">
+          {label}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -9,6 +9,7 @@ import { routes } from "@/lib/routes";
 import { View } from "@/components/layout/View";
 import { GroupMember } from "./GroupMember";
 import { useGroupById } from "../../hooks/useGroupById";
+import { isLastOfArray } from "@/lib/utils";
 
 type Props = {
   groupId: string;
@@ -36,12 +37,13 @@ export const GroupDetailsView = ({ groupId }: Props) => {
       <View className="gap-2">
         <h2 className="text-xl font-semibold">Members</h2>
         <View className="gap-0">
-          {data.members?.map((member) => (
+          {data.members?.map((member, i) => (
             <GroupMember
               key={member.userId}
               member={member.member}
               groupId={member.groupId}
               isOwner={data.isOwner}
+              // isLast={isLastOfArray(i, data.members!)}
             />
           ))}
         </View>

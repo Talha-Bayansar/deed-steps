@@ -1,19 +1,14 @@
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { UpdateGroupForm } from "@/groups/components/UpdateGroupForm";
-import React from "react";
+import { ChangeName } from "./_components/ChangeName";
+import { DeleteGroup } from "./_components/DeleteGroup";
 
-type Props = {
-  params: {
-    groupId: string;
-  };
-};
-
-const Page = ({ params: { groupId } }: Props) => {
+const Page = () => {
   return (
     <Main>
       <Title>Settings</Title>
-      <UpdateGroupForm groupId={groupId} />
+      <ChangeName />
+      <DeleteGroup />
     </Main>
   );
 };
