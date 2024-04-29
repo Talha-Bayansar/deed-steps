@@ -39,6 +39,16 @@ export const groupTable = sqliteTable("group", {
     .references(() => userTable.id),
 });
 
+export const invitationTable = sqliteTable("invitation", {
+  id: integer("id").primaryKey(),
+  groupId: integer("group_id")
+    .notNull()
+    .references(() => groupTable.id),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+});
+
 // Junction table for users and groups
 export const userToGroupTable = sqliteTable(
   "user_to_group",
@@ -59,6 +69,7 @@ export const userToGroupTable = sqliteTable(
 export const usersRelations = relations(userTable, ({ many }) => ({
   groups: many(userToGroupTable),
   ownedGroups: many(groupTable),
+  invitations: many(invitationTable),
 }));
 
 export const groupsRelations = relations(groupTable, ({ many, one }) => ({
@@ -67,6 +78,7 @@ export const groupsRelations = relations(groupTable, ({ many, one }) => ({
     fields: [groupTable.ownerId],
     references: [userTable.id],
   }),
+  invitations: many(invitationTable),
 }));
 
 export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
@@ -76,6 +88,17 @@ export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
   }),
   member: one(userTable, {
     fields: [userToGroupTable.userId],
+    references: [userTable.id],
+  }),
+}));
+
+export const invitationRelations = relations(invitationTable, ({ one }) => ({
+  group: one(groupTable, {
+    fields: [invitationTable.groupId],
+    references: [groupTable.id],
+  }),
+  user: one(userTable, {
+    fields: [invitationTable.userId],
     references: [userTable.id],
   }),
 }));

@@ -2,7 +2,7 @@
 
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
-import { groupTable, userToGroupTable } from "@/db/schema";
+import { groupTable, invitationTable, userToGroupTable } from "@/db/schema";
 import { DrizzleError, and, eq } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 import type { Nullable } from "@/lib/utils";
@@ -91,6 +91,58 @@ export async function deleteGroup(groupId: number) {
     .delete(userToGroupTable)
     .where(eq(userToGroupTable.groupId, groupId));
   await db.delete(groupTable).where(eq(groupTable.id, groupId));
+  return true;
+}
+
+export async function inviteUserToGroup(userId: number, groupId: number) {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  await db.insert(invitationTable).values({
+    userId,
+    groupId,
+  });
+
+  return true;
+}
+
+export async function acceptInvitation(groupId: number) {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  await db.insert(userToGroupTable).values({
+    userId: user.id,
+    groupId,
+  });
+
+  await db
+    .delete(invitationTable)
+    .where(
+      and(
+        eq(invitationTable.groupId, groupId),
+        eq(invitationTable.userId, user.id)
+      )
+    );
+
+  return true;
+}
+
+export async function declineInvitation(groupId: number) {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  await db
+    .delete(invitationTable)
+    .where(
+      and(
+        eq(invitationTable.groupId, groupId),
+        eq(invitationTable.userId, user.id)
+      )
+    );
+
   return true;
 }
 
