@@ -1,22 +1,30 @@
 import { IconButton } from "@/components/IconButton";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
+import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
 import { MyGroupsView } from "@/groups/components/MyGroupsView";
 import { routes } from "@/lib/routes";
-import { Plus } from "lucide-react";
+import { Inbox, Plus } from "lucide-react";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const Page = () => {
   return (
     <Main>
       <div className="flex justify-between items-start">
         <Title>Groups</Title>
-        <IconButton>
-          <Link href={routes.groups.create.root}>
-            <Plus className="text-primary" />
-          </Link>
-        </IconButton>
+        <div className="flex items-start">
+          <IconButton className="relative">
+            <Link href={routes.groups.create.root}>
+              <Inbox className="text-primary" />
+            </Link>
+            <InvitationsBadge />
+          </IconButton>
+          <IconButton>
+            <Link href={routes.groups.create.root}>
+              <Plus className="text-primary" />
+            </Link>
+          </IconButton>
+        </div>
       </div>
 
       <MyGroupsView />
