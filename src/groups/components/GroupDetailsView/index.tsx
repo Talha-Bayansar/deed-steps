@@ -8,7 +8,7 @@ import { IconButton } from "@/components/IconButton";
 import { routes } from "@/lib/routes";
 import { View } from "@/components/layout/View";
 import { GroupMember } from "./GroupMember";
-import { useGroupById } from "../hooks/useGroupById";
+import { useGroupById } from "../../hooks/useGroupById";
 
 type Props = {
   groupId: string;

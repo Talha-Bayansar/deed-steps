@@ -3,9 +3,9 @@ import type { User } from "@/auth/models";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useMutation } from "@tanstack/react-query";
-import { deleteUserFromGroup } from "../service";
+import { deleteUserFromGroup } from "../../service";
 import { useState } from "react";
-import { useGroupById } from "../hooks/useGroupById";
+import { useGroupById } from "../../hooks/useGroupById";
 import { DeleteButton } from "@/components/DeleteButton";
 import { View } from "@/components/layout/View";
 

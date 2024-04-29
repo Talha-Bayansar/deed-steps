@@ -13,36 +13,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
-import { createGroup } from "../service";
-import { revalidatePath } from "next/cache";
-import { routes } from "@/lib/routes";
-import { useMutation } from "@tanstack/react-query";
+import type { Group } from "../models";
 
 const formSchema = z.object({
   name: z.string().min(3).max(50),
 });
 
-type Props = {};
+type Props = {
+  group?: Group;
+  onSubmit: (values: z.infer<typeof formSchema>) => any;
+  isLoading?: boolean;
+};
 
-export const GroupForm = (props: Props) => {
-  const router = useRouter();
+export const GroupForm = ({ group, onSubmit, isLoading = false }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: group?.name ?? "",
     },
   });
-  const mutation = useMutation({
-    mutationFn: createGroup,
-    onSuccess: () => {
-      router.push(routes.myGroups.root);
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    mutation.mutate(values);
-  }
 
   return (
     <Form {...form}>
@@ -63,8 +52,8 @@ export const GroupForm = (props: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={mutation.isPending}>
-          Create
+        <Button type="submit" disabled={isLoading}>
+          Submit
         </Button>
       </form>
     </Form>

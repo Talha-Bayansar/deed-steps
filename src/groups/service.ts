@@ -5,8 +5,7 @@ import { db } from "@/db";
 import { groupTable, userToGroupTable } from "@/db/schema";
 import { DrizzleError, and, eq } from "drizzle-orm";
 import type { GroupInsert } from "./models";
-
-type Nullable<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+import type { Nullable } from "@/lib/utils";
 
 export async function getGroupById(groupId: number) {
   const { user } = await validateRequest();
@@ -71,12 +70,15 @@ export async function createGroup(group: Nullable<GroupInsert, "ownerId">) {
   return true;
 }
 
-export async function updateGroup(group: Nullable<GroupInsert, "ownerId">) {
+export async function updateGroup(
+  groupId: number,
+  group: Nullable<GroupInsert, "ownerId">
+) {
   const { user } = await validateRequest();
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
 
-  await db.update(groupTable).set(group);
+  await db.update(groupTable).set(group).where(eq(groupTable.id, groupId));
   return true;
 }
 

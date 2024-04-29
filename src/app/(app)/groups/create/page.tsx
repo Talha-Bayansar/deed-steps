@@ -1,12 +1,12 @@
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { GroupForm } from "@/groups/components/GroupForm";
+import { CreateGroupForm } from "@/groups/components/CreateGroupForm";
 
 const Page = () => {
   return (
     <Main>
       <Title>Create group</Title>
-      <GroupForm />
+      <CreateGroupForm />
     </Main>
   );
 };

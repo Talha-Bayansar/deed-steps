@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// UTILITY TYPES
+export type Nullable<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 // TAILWIND UTILITY FUNCTIONS
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
