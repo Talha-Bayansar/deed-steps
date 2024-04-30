@@ -1,20 +1,19 @@
-"use server";
-import { validateRequest } from "@/auth/service";
+"use client";
+
 import { routes } from "@/lib/routes";
 import { Loader2 } from "lucide-react";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "../hooks/useSession";
 
 type Props = {
   children: JSX.Element;
 };
 
 export const AuthWrapper = ({ children }: Props) => {
-  return (
-    <Suspense fallback={<AuthLoading />}>
-      <AuthRequired>{children}</AuthRequired>
-    </Suspense>
-  );
+  const { isLoading } = useSession();
+
+  if (isLoading) return <AuthLoading />;
+  return <AuthRequired>{children}</AuthRequired>;
 };
 
 const AuthLoading = () => {
@@ -34,10 +33,14 @@ const AuthLoading = () => {
   );
 };
 
-const AuthRequired = async ({ children }: Props) => {
-  const { user } = await validateRequest();
+const AuthRequired = ({ children }: Props) => {
+  const router = useRouter();
+  const { data } = useSession();
 
-  if (!user) redirect(routes.signin.root);
+  if (!data?.user) {
+    router.push(routes.signin.root);
+    return null;
+  }
 
   return children;
 };

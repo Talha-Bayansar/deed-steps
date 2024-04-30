@@ -16,4 +16,7 @@ export const routes = {
       settings: { root: `/groups/${id}/settings` },
     }),
   },
+  settings: {
+    root: "/settings",
+  },
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, Home } from "lucide-react";
+import { Users, Home, Settings } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { NavigationBar } from "@/components/layout/NavigationBar";
@@ -33,6 +33,11 @@ export const RootNavBar = () => {
       Icon: Users,
       href: routes.groups.root,
       tooltip: "Groups",
+    },
+    {
+      Icon: Settings,
+      href: routes.settings.root,
+      tooltip: "Settings",
     },
   ];
 
