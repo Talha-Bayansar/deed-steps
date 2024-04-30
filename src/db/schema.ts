@@ -39,6 +39,38 @@ export const groupTable = sqliteTable("group", {
     .references(() => userTable.id),
 });
 
+export const deedTable = sqliteTable("deed", {
+  id: integer("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+  deedTemplateId: integer("deed_template_id")
+    .notNull()
+    .references(() => deedTemplateTable.id),
+  deedStatusId: integer("deed_status_id")
+    .notNull()
+    .references(() => deedStatusTable.id),
+  date: integer("date", { mode: "timestamp" }).notNull(),
+});
+
+export const deedTemplateTable = sqliteTable("deed_template", {
+  id: integer("id").primaryKey(),
+  groupId: integer("group_id")
+    .notNull()
+    .references(() => groupTable.id),
+  name: text("title").notNull(),
+});
+
+export const deedStatusTable = sqliteTable("deed_status", {
+  id: integer("id").primaryKey(),
+  name: text("name").notNull(),
+  color: text("color").notNull(),
+  reward: integer("reward").notNull(),
+  deedTemplateId: integer("deed_template_id")
+    .notNull()
+    .references(() => deedTemplateTable.id),
+});
+
 export const invitationTable = sqliteTable("invitation", {
   id: integer("id").primaryKey(),
   groupId: integer("group_id")
@@ -70,6 +102,7 @@ export const usersRelations = relations(userTable, ({ many }) => ({
   groups: many(userToGroupTable),
   ownedGroups: many(groupTable),
   invitations: many(invitationTable),
+  deeds: many(deedTable),
 }));
 
 export const groupsRelations = relations(groupTable, ({ many, one }) => ({
@@ -79,6 +112,7 @@ export const groupsRelations = relations(groupTable, ({ many, one }) => ({
     references: [userTable.id],
   }),
   invitations: many(invitationTable),
+  deedTemplates: many(deedTemplateTable),
 }));
 
 export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
@@ -102,3 +136,41 @@ export const invitationRelations = relations(invitationTable, ({ one }) => ({
     references: [userTable.id],
   }),
 }));
+
+export const deedRelations = relations(deedTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [deedTable.userId],
+    references: [userTable.id],
+  }),
+  deedTemplate: one(deedTemplateTable, {
+    fields: [deedTable.deedTemplateId],
+    references: [deedTemplateTable.id],
+  }),
+  status: one(deedStatusTable, {
+    fields: [deedTable.deedStatusId],
+    references: [deedStatusTable.id],
+  }),
+}));
+
+export const deedTemplateRelations = relations(
+  deedTemplateTable,
+  ({ many, one }) => ({
+    deeds: many(deedTable),
+    statuses: many(deedStatusTable),
+    group: one(groupTable, {
+      fields: [deedTemplateTable.groupId],
+      references: [groupTable.id],
+    }),
+  })
+);
+
+export const deedStatusRelations = relations(
+  deedStatusTable,
+  ({ one, many }) => ({
+    deedTemplate: one(deedTemplateTable, {
+      fields: [deedStatusTable.deedTemplateId],
+      references: [deedTemplateTable.id],
+    }),
+    deeds: many(deedTable),
+  })
+);
