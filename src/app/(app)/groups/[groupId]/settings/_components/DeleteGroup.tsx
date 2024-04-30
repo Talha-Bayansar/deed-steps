@@ -1,7 +1,16 @@
 "use client";
-import { DeleteButton } from "@/components/DeleteButton";
 import { ListTile } from "@/components/ListTile";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { deleteGroup } from "@/groups/service";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -22,19 +31,27 @@ export const DeleteGroup = () => {
   });
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
         <ListTile className="text-destructive">Delete group</ListTile>
-      </DrawerTrigger>
-      <DrawerContent>
-        <div className="p-4">
-          <DeleteButton
-            deleteFn={() => mutation.mutate()}
-            modalTitle="Are you sure you want to delete this group?"
-            modalDescription="This action cannot be undone. All data linked to this group will be lost."
-          />
-        </div>
-      </DrawerContent>
-    </Drawer>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Are you sure you want to delete this group?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. All data linked to this group will be
+            lost.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => mutation.mutate()}>
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
