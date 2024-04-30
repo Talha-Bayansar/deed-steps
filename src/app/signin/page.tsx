@@ -13,7 +13,7 @@ type Props = {
 const Page = ({ searchParams }: Props) => {
   const email = searchParams.email;
   return (
-    <PageWrapper>
+    <PageWrapper hasNavigationBar={false}>
       <Main>
         <Title>Sign in</Title>
         {email ? <VerificationCodeForm email={email} /> : <SigninForm />}

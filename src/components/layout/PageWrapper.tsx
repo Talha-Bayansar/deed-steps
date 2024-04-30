@@ -14,9 +14,9 @@ export const PageWrapper = ({
   return (
     <div
       className={cn(
-        "flex w-full flex-grow flex-col items-center p-8",
+        "flex w-full flex-grow flex-col items-center p-8 md:pb-8",
         {
-          "md:pl-36": hasNavigationBar,
+          "pb-36 md:pl-36": hasNavigationBar,
         },
         className
       )}

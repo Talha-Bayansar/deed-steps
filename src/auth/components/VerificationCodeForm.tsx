@@ -42,7 +42,10 @@ export const VerificationCodeForm = ({ email }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex-grow flex flex-col gap-8 justify-between md:justify-start"
+      >
         <FormField
           control={form.control}
           name="code"
