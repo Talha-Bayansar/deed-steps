@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { getDay } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 // UTILITY TYPES
@@ -20,4 +21,11 @@ export const generateArray = (size: number = 10) => {
 
 export const isLastOfArray = (index: number, array: unknown[]) => {
   return index === array.length - 1;
+};
+
+// DATE UTILITY FUNCTIONS
+export const getDayOfWeek = (date: string | number | Date) => {
+  const day = getDay(date);
+  if (day === 0) return 6;
+  else return day - 1;
 };
