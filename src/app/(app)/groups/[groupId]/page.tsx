@@ -1,5 +1,5 @@
 import { Main } from "@/components/layout/Main";
-import { GroupDetailsView } from "@/groups/components/GroupDetailsView";
+import { GroupDetailsView } from "./_components/GroupDetailsView";
 
 type Props = {
   params: {
@@ -10,7 +10,7 @@ type Props = {
 const Page = ({ params: { groupId } }: Props) => {
   return (
     <Main>
-      <GroupDetailsView groupId={groupId} />
+      <GroupDetailsView />
     </Main>
   );
 };
