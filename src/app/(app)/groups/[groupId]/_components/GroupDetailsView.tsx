@@ -4,6 +4,7 @@ import { IconButton } from "@/components/IconButton";
 import { Title, TitleSkeleton } from "@/components/layout/Title";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GroupDeedTemplatesView } from "@/deeds/components/GroupDeedTemplatesView";
 import { GroupMembersView } from "@/groups/components/GroupMembersView";
 import { useGroupById } from "@/groups/hooks/useGroupById";
 import { routes } from "@/lib/routes";
@@ -32,15 +33,17 @@ export const GroupDetailsView = () => {
           </Link>
         )}
       </div>
-      <Tabs defaultValue="members">
+      <Tabs className="flex-grow" defaultValue="members">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="members">Members</TabsTrigger>
           <TabsTrigger value="deeds">Deeds</TabsTrigger>
         </TabsList>
-        <TabsContent value="members">
+        <TabsContent className="h-full" value="members">
           <GroupMembersView groupId={groupId} />
         </TabsContent>
-        <TabsContent value="deeds">Deeds</TabsContent>
+        <TabsContent className="h-full" value="deeds">
+          <GroupDeedTemplatesView groupId={groupId} />
+        </TabsContent>
       </Tabs>
     </>
   );
