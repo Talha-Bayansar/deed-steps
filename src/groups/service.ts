@@ -2,7 +2,12 @@
 
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
-import { groupTable, invitationTable, userToGroupTable } from "@/db/schema";
+import {
+  groupTable,
+  invitationTable,
+  userTable,
+  userToGroupTable,
+} from "@/db/schema";
 import { DrizzleError, and, eq } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 import type { Nullable } from "@/lib/utils";
@@ -109,13 +114,39 @@ export async function getMyGroupInvitations() {
   return invitations;
 }
 
-export async function inviteUserToGroup(userId: number, groupId: number) {
+export async function inviteUserToGroup(email: string, groupId: number) {
   const { user } = await validateRequest();
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
 
+  const invitedUser = await db.query.userTable.findFirst({
+    where: eq(userTable.email, email),
+  });
+
+  if (!invitedUser) throw new DrizzleError({ message: "User not found" });
+
+  const isUserAlreadyInGroup = await db.query.userToGroupTable.findFirst({
+    where: and(
+      eq(userToGroupTable.userId, invitedUser.id),
+      eq(userToGroupTable.groupId, groupId)
+    ),
+  });
+
+  if (isUserAlreadyInGroup)
+    throw new DrizzleError({ message: "User already in group" });
+
+  const isUserAlreadyInvited = await db.query.invitationTable.findFirst({
+    where: and(
+      eq(invitationTable.userId, invitedUser.id),
+      eq(invitationTable.groupId, groupId)
+    ),
+  });
+
+  if (isUserAlreadyInvited)
+    throw new DrizzleError({ message: "User already invited" });
+
   await db.insert(invitationTable).values({
-    userId,
+    userId: invitedUser.id,
     groupId,
   });
 
