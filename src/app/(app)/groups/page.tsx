@@ -14,7 +14,7 @@ const Page = () => {
         <Title>Groups</Title>
         <div className="flex items-start">
           <IconButton className="relative">
-            <Link href={routes.groups.create.root}>
+            <Link href={routes.groups.invitations.root}>
               <Inbox className="text-primary" />
             </Link>
             <InvitationsBadge />

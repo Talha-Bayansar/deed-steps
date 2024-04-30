@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { ChevronRight } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
   withSeparator?: boolean;
@@ -18,21 +19,35 @@ export const ListTile = ({
   ...rest
 }: Props) => {
   return (
-    <>
+    <div className="flex flex-col">
       <Button
         {...rest}
-        className={cn(
-          "justify-between px-0 h-auto py-3 font-normal",
-          className
-        )}
+        className={cn("px-0 h-auto py-3 font-normal", className, {
+          "hover:bg-transparent": !isClickable,
+        })}
+        asChild={!isClickable}
         variant="ghost"
       >
-        {children}
-        {isClickable ? (
-          <ChevronRight className="text-gray-400" size={16} />
-        ) : null}
+        <div className="flex w-full justify-between items-center">
+          {children}
+          {isClickable ? (
+            <ChevronRight className="text-gray-400" size={16} />
+          ) : null}
+        </div>
       </Button>
       {withSeparator && <Separator />}
-    </>
+    </div>
   );
 };
+
+export const ListTileSkeleton = () => (
+  <div className="flex flex-col">
+    <Button
+      className="justify-between px-0 h-auto py-3 font-normal"
+      variant="ghost"
+    >
+      <Skeleton className="h-5 w-28" />
+    </Button>
+    <Separator />
+  </div>
+);

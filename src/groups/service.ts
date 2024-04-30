@@ -122,21 +122,29 @@ export async function inviteUserToGroup(userId: number, groupId: number) {
   return true;
 }
 
-export async function acceptInvitation(groupId: number) {
+export async function acceptInvitation(invitationId: number) {
   const { user } = await validateRequest();
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
+  const invitation = await db.query.invitationTable.findFirst({
+    where: and(
+      eq(invitationTable.id, invitationId),
+      eq(invitationTable.userId, user.id)
+    ),
+  });
+
+  if (!invitation) throw new DrizzleError({ message: "Invitation not found" });
 
   await db.insert(userToGroupTable).values({
-    userId: user.id,
-    groupId,
+    userId: invitation.userId,
+    groupId: invitation.groupId,
   });
 
   await db
     .delete(invitationTable)
     .where(
       and(
-        eq(invitationTable.groupId, groupId),
+        eq(invitationTable.groupId, invitation.groupId),
         eq(invitationTable.userId, user.id)
       )
     );
@@ -144,16 +152,25 @@ export async function acceptInvitation(groupId: number) {
   return true;
 }
 
-export async function declineInvitation(groupId: number) {
+export async function declineInvitation(invitationId: number) {
   const { user } = await validateRequest();
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  const invitation = await db.query.invitationTable.findFirst({
+    where: and(
+      eq(invitationTable.id, invitationId),
+      eq(invitationTable.userId, user.id)
+    ),
+  });
+
+  if (!invitation) throw new DrizzleError({ message: "Invitation not found" });
 
   await db
     .delete(invitationTable)
     .where(
       and(
-        eq(invitationTable.groupId, groupId),
+        eq(invitationTable.groupId, invitation.groupId),
         eq(invitationTable.userId, user.id)
       )
     );

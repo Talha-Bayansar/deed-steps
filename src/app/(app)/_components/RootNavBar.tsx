@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/IconButton";
 import Link from "next/link";
+import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
 
 export const RootNavBar = () => {
   const pathName = usePathname();
@@ -31,7 +32,7 @@ export const RootNavBar = () => {
     {
       Icon: Users,
       href: routes.groups.root,
-      tooltip: "My Groups",
+      tooltip: "Groups",
     },
   ];
 
@@ -47,8 +48,9 @@ export const RootNavBar = () => {
                   "rounded-full bg-primary/20": currentPath === link.href,
                 })}
               >
-                <IconButton>
+                <IconButton className="relative">
                   <link.Icon />
+                  {link.tooltip === "Groups" && <InvitationsBadge />}
                 </IconButton>
               </Link>
             </TooltipTrigger>
