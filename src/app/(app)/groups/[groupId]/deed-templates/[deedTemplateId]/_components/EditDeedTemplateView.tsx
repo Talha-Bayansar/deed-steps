@@ -1,7 +1,6 @@
 "use client";
 
 import { EmptyView } from "@/components/EmptyView";
-import { ListTile } from "@/components/ListTile";
 import { View } from "@/components/layout/View";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,9 +10,13 @@ import { useDeedTemplateById } from "@/deeds/hooks/useDeedTemplateById";
 import { generateArray } from "@/lib/utils";
 import { ListChecks } from "lucide-react";
 import { useParams } from "next/navigation";
+import { ChangeNameTile } from "./ChangeNameTile";
 
 export const EditDeedTemplateView = () => {
-  const { deedTemplateId } = useParams<{ deedTemplateId: string }>();
+  const { deedTemplateId } = useParams<{
+    deedTemplateId: string;
+    groupId: string;
+  }>();
   const { data, isLoading } = useDeedTemplateById(Number(deedTemplateId));
 
   if (isLoading) return <EditDeedTemplateViewSkeleton />;
@@ -30,40 +33,28 @@ export const EditDeedTemplateView = () => {
     <View>
       <View className="gap-2">
         <h2 className="text-xl font-semibold">{data.name}</h2>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <ListTile>Change name</ListTile>
-          </DrawerTrigger>
-          <DrawerContent>
-            <div className="p-4">
-              <DeedTemplateForm
-                deedTemplate={data}
-                onSubmit={console.log}
-                isLoading={false}
-              />
-            </div>
-          </DrawerContent>
-        </Drawer>
+        <ChangeNameTile />
       </View>
       <View className="gap-2">
         <h2 className="text-xl font-semibold">Statuses</h2>
-        <View className="gap-0"></View>
-        {data.statuses.map((status) => (
-          <Drawer key={status.id}>
-            <DrawerTrigger asChild>
-              <DeedStatusTile status={status} />
-            </DrawerTrigger>
-            <DrawerContent>
-              <div className="p-4">
-                <DeedTemplateForm
-                  deedTemplate={data}
-                  onSubmit={console.log}
-                  isLoading={false}
-                />
-              </div>
-            </DrawerContent>
-          </Drawer>
-        ))}
+        <View className="gap-0">
+          {data.statuses.map((status) => (
+            <Drawer key={status.id}>
+              <DrawerTrigger asChild>
+                <DeedStatusTile status={status} />
+              </DrawerTrigger>
+              <DrawerContent>
+                <div className="p-4">
+                  <DeedTemplateForm
+                    deedTemplate={data}
+                    onSubmit={console.log}
+                    isLoading={false}
+                  />
+                </div>
+              </DrawerContent>
+            </Drawer>
+          ))}
+        </View>
       </View>
     </View>
   );
