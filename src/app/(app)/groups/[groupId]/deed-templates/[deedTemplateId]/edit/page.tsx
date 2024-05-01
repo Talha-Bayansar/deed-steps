@@ -1,10 +1,10 @@
 import { Main } from "@/components/layout/Main";
-import { GroupDetailsView } from "./_components/GroupDetailsView";
+import { EditDeedTemplateView } from "../_components/EditDeedTemplateView";
 
 const Page = () => {
   return (
     <Main>
-      <GroupDetailsView />
+      <EditDeedTemplateView />
     </Main>
   );
 };

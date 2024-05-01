@@ -11,9 +11,18 @@ export const routes = {
     invitations: {
       root: "/groups/invitations",
     },
-    id: (id: string) => ({
-      root: `/groups/${id}`,
-      settings: { root: `/groups/${id}/settings` },
+    id: (groupId: string) => ({
+      root: `/groups/${groupId}`,
+      settings: { root: `/groups/${groupId}/settings` },
+      deedTemplates: {
+        root: `/groups/${groupId}/deed-templates`,
+        id: (deedTemplateId: string) => ({
+          root: `/groups/${groupId}/deed-templates/${deedTemplateId}`,
+          edit: {
+            root: `/groups/${groupId}/deed-templates/${deedTemplateId}/edit`,
+          },
+        }),
+      },
     }),
   },
   settings: {

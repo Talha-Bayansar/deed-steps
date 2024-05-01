@@ -1,0 +1,32 @@
+"use client";
+
+import { ListTile } from "@/components/ListTile";
+import type { DeedStatus } from "../models";
+import { Badge } from "@/components/ui/badge";
+import { View } from "@/components/layout/View";
+import { ButtonProps } from "@/components/ui/button";
+
+type Props = {
+  status: DeedStatus;
+  withSeparator?: boolean;
+  isClickable?: boolean;
+} & ButtonProps;
+
+export const DeedStatusTile = ({ status, ...rest }: Props) => {
+  return (
+    <ListTile {...rest}>
+      <div className="flex items-center gap-2">
+        <Badge
+          className="h-4 w-4 p-0 border border-gray-100"
+          style={{
+            backgroundColor: status.color,
+          }}
+        />
+        <View className="gap-0 items-start">
+          <span>{status.name}</span>
+          <span className="text-gray-400 text-xs">Reward: {status.reward}</span>
+        </View>
+      </div>
+    </ListTile>
+  );
+};

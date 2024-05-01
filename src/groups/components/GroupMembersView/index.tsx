@@ -19,7 +19,7 @@ export const GroupMembersView = ({ groupId }: Props) => {
     return (
       <View className="gap-0">
         {generateArray().map((i) => (
-          <ListTileSkeleton />
+          <ListTileSkeleton key={i} />
         ))}
       </View>
     );

@@ -5,7 +5,12 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import type { DeedStatus, DeedTemplate } from "../models";
 import { useState } from "react";
 import { View } from "@/components/layout/View";
-import { Badge } from "@/components/ui/badge";
+import { useGroupById } from "@/groups/hooks/useGroupById";
+import { Button } from "@/components/ui/button";
+import { isLastOfArray } from "@/lib/utils";
+import { DeedStatusTile } from "./DeedStatusTile";
+import Link from "next/link";
+import { routes } from "@/lib/routes";
 
 type Props = {
   deedTemplate: DeedTemplate & {
@@ -15,6 +20,7 @@ type Props = {
 
 export const DeedTemplateTile = ({ deedTemplate }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data } = useGroupById(deedTemplate.groupId.toString());
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -23,22 +29,29 @@ export const DeedTemplateTile = ({ deedTemplate }: Props) => {
       </DrawerTrigger>
       <DrawerContent>
         <View className="p-4">
-          {deedTemplate.statuses.map((status) => (
-            <div className="flex items-center gap-2" key={status.id}>
-              <Badge
-                className="h-4 w-4 p-0 border border-gray-100"
-                style={{
-                  backgroundColor: status.color,
-                }}
+          {data?.isOwner && (
+            <Button asChild>
+              <Link
+                href={
+                  routes.groups
+                    .id(deedTemplate.groupId.toString())
+                    .deedTemplates.id(deedTemplate.id.toString()).edit.root
+                }
+              >
+                Manage
+              </Link>
+            </Button>
+          )}
+          <View className="gap-0">
+            {deedTemplate.statuses.map((status, i) => (
+              <DeedStatusTile
+                key={status.id}
+                status={status}
+                isClickable={false}
+                withSeparator={!isLastOfArray(i, deedTemplate.statuses)}
               />
-              <View className="gap-0">
-                <span>{status.name}</span>
-                <span className="text-gray-400 text-xs">
-                  Reward: {status.reward}
-                </span>
-              </View>
-            </div>
-          ))}
+            ))}
+          </View>
         </View>
       </DrawerContent>
     </Drawer>

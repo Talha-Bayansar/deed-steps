@@ -34,7 +34,7 @@ export const GroupMember = ({
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} shouldScaleBackground>
-      <DrawerTrigger disabled={!isOwner} asChild>
+      <DrawerTrigger asChild>
         <ListTile isClickable={isOwner} withSeparator={!isLast}>
           {member.firstName} {member.lastName}
         </ListTile>

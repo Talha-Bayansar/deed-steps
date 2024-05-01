@@ -14,6 +14,7 @@ type Props = {
 export const ListTile = ({
   children,
   className,
+  onClick,
   withSeparator = true,
   isClickable = true,
   ...rest
@@ -23,9 +24,9 @@ export const ListTile = ({
       <Button
         {...rest}
         className={cn("px-0 h-auto py-3 font-normal", className, {
-          "hover:bg-transparent": !isClickable,
+          "hover:bg-transparent cursor-default": !isClickable,
         })}
-        asChild={!isClickable}
+        onClick={!isClickable ? (e) => e.preventDefault() : onClick}
         variant="ghost"
       >
         <div className="flex w-full justify-between items-center">
