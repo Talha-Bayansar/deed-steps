@@ -22,6 +22,24 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
   return deedTemplates;
 }
 
+export async function getDeedTemplateById(id: number) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  const deedTemplate = await db.query.deedTemplateTable.findFirst({
+    where: eq(deedTemplateTable.id, id),
+    with: {
+      statuses: true,
+    },
+  });
+
+  return deedTemplate;
+}
+
 export async function getMyDeedTemplates() {
   const { user } = await validateRequest();
 
