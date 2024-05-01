@@ -15,6 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { signin } from "../service";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "../hooks/useSession";
 
 const formSchema = z.object({
   code: z.string().min(8).max(8),
@@ -26,6 +28,14 @@ type Props = {
 
 export const VerificationCodeForm = ({ email }: Props) => {
   const router = useRouter();
+  const { refetch } = useSession();
+  const mutation = useMutation({
+    mutationFn: async (code: string) => await signin(email, code),
+    onSuccess: async () => {
+      await refetch();
+      router.push("/");
+    },
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,10 +44,7 @@ export const VerificationCodeForm = ({ email }: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const success = await signin(email, values.code);
-    if (success) {
-      router.push("/");
-    }
+    mutation.mutate(values.code);
   }
 
   return (
