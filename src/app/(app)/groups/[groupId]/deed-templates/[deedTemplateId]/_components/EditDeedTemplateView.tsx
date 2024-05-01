@@ -2,15 +2,13 @@
 
 import { EmptyView } from "@/components/EmptyView";
 import { View } from "@/components/layout/View";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Skeleton } from "@/components/ui/skeleton";
-import { DeedStatusTile } from "@/deeds/components/DeedStatusTile";
-import { DeedTemplateForm } from "@/deeds/components/DeedTemplateForm";
 import { useDeedTemplateById } from "@/deeds/hooks/useDeedTemplateById";
 import { generateArray } from "@/lib/utils";
 import { ListChecks } from "lucide-react";
 import { useParams } from "next/navigation";
 import { ChangeNameTile } from "./ChangeNameTile";
+import { ListTileSkeleton } from "@/components/ListTile";
+import { UpdateDeedStatusTile } from "./UpdateDeedStatusTile";
 
 export const EditDeedTemplateView = () => {
   const { deedTemplateId } = useParams<{
@@ -39,20 +37,7 @@ export const EditDeedTemplateView = () => {
         <h2 className="text-xl font-semibold">Statuses</h2>
         <View className="gap-0">
           {data.statuses.map((status) => (
-            <Drawer key={status.id}>
-              <DrawerTrigger asChild>
-                <DeedStatusTile status={status} />
-              </DrawerTrigger>
-              <DrawerContent>
-                <div className="p-4">
-                  <DeedTemplateForm
-                    deedTemplate={data}
-                    onSubmit={console.log}
-                    isLoading={false}
-                  />
-                </div>
-              </DrawerContent>
-            </Drawer>
+            <UpdateDeedStatusTile key={status.id} status={status} />
           ))}
         </View>
       </View>
@@ -62,9 +47,9 @@ export const EditDeedTemplateView = () => {
 
 const EditDeedTemplateViewSkeleton = () => {
   return (
-    <View>
+    <View className="gap-0">
       {generateArray().map((i) => (
-        <Skeleton key={i} className="w-full h-20" />
+        <ListTileSkeleton key={i} />
       ))}
     </View>
   );

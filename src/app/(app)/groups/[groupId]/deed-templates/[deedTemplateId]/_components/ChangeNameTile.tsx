@@ -47,7 +47,7 @@ export const ChangeNameTile = () => {
                 groupId: Number(groupId),
               })
             }
-            isLoading={false}
+            isLoading={deedTemplateMutation.isPending}
           />
         </div>
       </DrawerContent>

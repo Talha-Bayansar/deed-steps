@@ -1,9 +1,13 @@
 "use server";
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
-import { deedTemplateTable, userToGroupTable } from "@/db/schema";
+import {
+  deedStatusTable,
+  deedTemplateTable,
+  userToGroupTable,
+} from "@/db/schema";
 import { DrizzleError, eq, inArray } from "drizzle-orm";
-import type { DeedTemplateInsert } from "./models";
+import type { DeedStatusInsert, DeedTemplateInsert } from "./models";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -79,10 +83,29 @@ export async function updateDeedTemplateById(
       message: "Not authenticated",
     });
 
-  const deedTemplate = await db
+  await db
     .update(deedTemplateTable)
     .set(deedTemplateDto)
     .where(eq(deedTemplateTable.id, id));
+
+  return true;
+}
+
+export async function updateDeedStatusById(
+  id: number,
+  status: DeedStatusInsert
+) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  await db
+    .update(deedStatusTable)
+    .set(status)
+    .where(eq(deedStatusTable.id, id));
 
   return true;
 }
