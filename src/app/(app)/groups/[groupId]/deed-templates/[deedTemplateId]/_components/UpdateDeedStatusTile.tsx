@@ -1,12 +1,14 @@
 "use client";
 
+import { DeleteButton } from "@/components/DeleteButton";
+import { View } from "@/components/layout/View";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DeedStatusForm } from "@/deeds/components/DeedStatusForm";
 import { DeedStatusTile } from "@/deeds/components/DeedStatusTile";
 import { useDeedTemplateById } from "@/deeds/hooks/useDeedTemplateById";
 import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
 import type { DeedStatus, DeedStatusInsert } from "@/deeds/models";
-import { updateDeedStatusById } from "@/deeds/service";
+import { deleteDeedStatusById, updateDeedStatusById } from "@/deeds/service";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -35,13 +37,21 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: async () => await deleteDeedStatusById(status.id),
+    onSuccess: async () => {
+      await Promise.all([refetchTemplate(), refetchGroupTemplates()]);
+      setIsOpen(false);
+    },
+  });
+
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <DeedStatusTile status={status} />
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <View className="p-4">
           <DeedStatusForm
             status={status}
             onSubmit={(values) =>
@@ -52,7 +62,12 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
             }
             isLoading={mutation.isPending}
           />
-        </div>
+          <DeleteButton
+            deleteFn={() => deleteMutation.mutate()}
+            modalTitle="Are you sure you want to delete this deed status?"
+            modalDescription="This deed status and all depending data will be permanently deleted."
+          />
+        </View>
       </DrawerContent>
     </Drawer>
   );
