@@ -2,20 +2,22 @@
 
 import { View } from "@/components/layout/View";
 import { useMyDeedTemplates } from "../hooks/useMyDeedTemplates";
-import { ListTile, ListTileSkeleton } from "@/components/ListTile";
-import { generateArray, isArrayEmpty, isLastOfArray } from "@/lib/utils";
+import { ListTileSkeleton } from "@/components/ListTile";
+import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { EmptyView } from "@/components/EmptyView";
 import { ListChecks } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { ScrollableCalendar } from "@/components/ScrollableCalendar";
 import { startOfToday } from "date-fns";
 import { useState } from "react";
+import { useMyDeedsByDate } from "../hooks/useMyDeedsByDate";
+import { DeedTile } from "./DeedTile";
 
 export const MyDeedTemplatesView = () => {
-  const { data, isLoading } = useMyDeedTemplates();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState<Date>(today);
+  const { data, isLoading } = useMyDeedTemplates();
+  const { data: myDeeds, isLoading: isLoadingMyDeeds } =
+    useMyDeedsByDate(selectedDay);
 
   if (isLoading) return <MyDeedTemplatesViewSkeleton />;
 
@@ -33,31 +35,15 @@ export const MyDeedTemplatesView = () => {
 
       <View className="gap-0">
         {data.map((deedTemplate) => (
-          <Drawer key={deedTemplate.id}>
-            <DrawerTrigger asChild>
-              <ListTile>{deedTemplate.name}</ListTile>
-            </DrawerTrigger>
-            <DrawerContent>
-              <View className="p-4 gap-0">
-                {deedTemplate.statuses.map((status, i) => (
-                  <ListTile
-                    key={status.id}
-                    withSeparator={!isLastOfArray(i, deedTemplate.statuses)}
-                  >
-                    <div className="flex gap-2 items-center">
-                      <Badge
-                        className="h-4 w-4 p-0 border border-gray-100"
-                        style={{
-                          backgroundColor: status.color,
-                        }}
-                      />
-                      <span>{status.name}</span>
-                    </div>
-                  </ListTile>
-                ))}
-              </View>
-            </DrawerContent>
-          </Drawer>
+          <DeedTile
+            key={deedTemplate.id}
+            deedTemplate={deedTemplate}
+            deed={myDeeds?.find(
+              (deed) => deed.deedTemplateId === deedTemplate.id
+            )}
+            isLoading={isLoadingMyDeeds}
+            selectedDay={selectedDay}
+          />
         ))}
       </View>
     </View>

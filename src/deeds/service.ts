@@ -3,11 +3,17 @@ import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
 import {
   deedStatusTable,
+  deedTable,
   deedTemplateTable,
   userToGroupTable,
 } from "@/db/schema";
-import { DrizzleError, eq, inArray } from "drizzle-orm";
-import type { DeedStatusInsert, DeedTemplateInsert } from "./models";
+import { DrizzleError, and, eq, gte, inArray, lte } from "drizzle-orm";
+import type {
+  DeedInsert,
+  DeedStatusInsert,
+  DeedTemplateInsert,
+} from "./models";
+import { endOfDay, startOfDay } from "date-fns";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -66,10 +72,51 @@ export async function getMyDeedTemplates() {
     where: inArray(deedTemplateTable.groupId, groupIds),
     with: {
       statuses: true,
+      group: true,
     },
   });
 
   return deedTemplates;
+}
+
+export async function getMyDeedsByDate(date: Date) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  const startOfDate = startOfDay(date);
+  const endOfDate = endOfDay(date);
+
+  const myDeeds = await db.query.deedTable.findMany({
+    where: and(
+      eq(deedTable.userId, user.id),
+      gte(deedTable.date, startOfDate),
+      lte(deedTable.date, endOfDate)
+    ),
+  });
+
+  return myDeeds;
+}
+
+export async function saveDeed(deed: DeedInsert) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  if (deed.id) {
+    await db.update(deedTable).set(deed).where(eq(deedTable.id, deed.id));
+    return true;
+  } else {
+    await db.insert(deedTable).values(deed);
+
+    return true;
+  }
 }
 
 export async function createDeedTemplate(deedTemplate: DeedTemplateInsert) {
