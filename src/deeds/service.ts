@@ -135,3 +135,33 @@ export async function updateDeedStatusById(
 
   return true;
 }
+
+export async function deleteDeedTemplateById(id: number) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  await db
+    .delete(deedStatusTable)
+    .where(eq(deedStatusTable.deedTemplateId, id));
+
+  await db.delete(deedTemplateTable).where(eq(deedTemplateTable.id, id));
+
+  return true;
+}
+
+export async function deleteDeedStatusById(id: number) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  await db.delete(deedStatusTable).where(eq(deedStatusTable.id, id));
+
+  return true;
+}

@@ -8,7 +8,9 @@ type Props = {
 
 export const Title = ({ className, children }: Props) => {
   return (
-    <h1 className={cn("mb-8 text-4xl font-semibold", className)}>{children}</h1>
+    <h1 className={cn("mb-8 text-3xl md:text-4xl font-semibold", className)}>
+      {children}
+    </h1>
   );
 };
 

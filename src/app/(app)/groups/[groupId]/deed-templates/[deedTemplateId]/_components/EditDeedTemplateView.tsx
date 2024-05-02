@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import { ChangeNameTile } from "./ChangeNameTile";
 import { ListTileSkeleton } from "@/components/ListTile";
 import { UpdateDeedStatusTile } from "./UpdateDeedStatusTile";
+import { DeleteDeedTemplate } from "./DeleteDeedTemplate";
 
 export const EditDeedTemplateView = () => {
   const { deedTemplateId } = useParams<{
@@ -41,6 +42,7 @@ export const EditDeedTemplateView = () => {
           ))}
         </View>
       </View>
+      <DeleteDeedTemplate />
     </View>
   );
 };
