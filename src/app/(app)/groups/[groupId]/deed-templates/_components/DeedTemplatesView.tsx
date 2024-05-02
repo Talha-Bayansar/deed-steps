@@ -32,7 +32,7 @@ export const DeedTemplatesView = () => {
 
   return (
     <>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center">
         <Title>
           Deed templates: <span className="text-primary">{group.name}</span>
         </Title>

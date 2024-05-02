@@ -10,9 +10,9 @@ import Link from "next/link";
 const Page = () => {
   return (
     <Main>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center">
         <Title>Groups</Title>
-        <div className="flex items-start">
+        <div className="flex items-center">
           <IconButton className="relative">
             <Link href={routes.groups.invitations.root}>
               <Inbox className="text-primary" />

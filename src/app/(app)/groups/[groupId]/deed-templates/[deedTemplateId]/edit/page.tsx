@@ -6,7 +6,7 @@ import { CreateDeedStatus } from "../_components/CreateDeedStatus";
 const Page = () => {
   return (
     <Main>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center">
         <Title>Edit deed template</Title>
         <CreateDeedStatus />
       </div>

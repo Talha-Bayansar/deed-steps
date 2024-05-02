@@ -23,7 +23,7 @@ export const GroupDetailsView = () => {
 
   return (
     <>
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center">
         <Title>{data.name}</Title>
         {data.isOwner && (
           <Link href={routes.groups.id(groupId).settings.root}>
