@@ -72,6 +72,32 @@ export async function getMyDeedTemplates() {
   return deedTemplates;
 }
 
+export async function createDeedTemplate(deedTemplate: DeedTemplateInsert) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  await db.insert(deedTemplateTable).values(deedTemplate);
+
+  return true;
+}
+
+export async function createDeedStatus(deedStatus: DeedStatusInsert) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  await db.insert(deedStatusTable).values(deedStatus);
+
+  return true;
+}
+
 export async function updateDeedTemplateById(
   id: number,
   deedTemplateDto: DeedTemplateInsert

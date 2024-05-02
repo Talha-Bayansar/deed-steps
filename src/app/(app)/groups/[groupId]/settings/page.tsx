@@ -3,6 +3,7 @@ import { Title } from "@/components/layout/Title";
 import { ChangeName } from "./_components/ChangeName";
 import { DeleteGroup } from "./_components/DeleteGroup";
 import { InviteUser } from "./_components/InviteUser";
+import { ManageDeeds } from "./_components/ManageDeeds";
 
 const Page = () => {
   return (
@@ -10,6 +11,7 @@ const Page = () => {
       <Title>Settings</Title>
       <ChangeName />
       <InviteUser />
+      <ManageDeeds />
       <DeleteGroup />
     </Main>
   );
