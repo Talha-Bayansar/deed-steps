@@ -15,7 +15,7 @@ export const ChangeName = () => {
         <ListTile>Change name</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <div className="p-8">
           <UpdateGroupForm
             onSuccess={() => setIsOpen(false)}
             groupId={groupId}

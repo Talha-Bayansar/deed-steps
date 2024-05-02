@@ -30,7 +30,7 @@ export const ChangeName = () => {
         <ListTile>Change name</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <div className="p-8">
           <UserForm
             user={data!.user!}
             onSubmit={(values) => mutation.mutate(values)}

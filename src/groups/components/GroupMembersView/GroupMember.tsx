@@ -40,7 +40,7 @@ export const GroupMember = ({
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-4">
+        <View className="p-8">
           {isOwner && (
             <DeleteButton
               deleteFn={() => mutation.mutate()}

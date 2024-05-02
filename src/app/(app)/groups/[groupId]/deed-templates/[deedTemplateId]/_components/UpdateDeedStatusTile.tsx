@@ -51,7 +51,7 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
         <DeedStatusTile status={status} />
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-4">
+        <View className="p-8">
           <DeedStatusForm
             status={status}
             onSubmit={(values) =>

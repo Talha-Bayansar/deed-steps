@@ -24,7 +24,7 @@ export const DeedTemplateTile = ({ deedTemplate }: Props) => {
         <ListTile onClick={() => setIsOpen(true)}>{deedTemplate.name}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-4">
+        <View className="p-8">
           <View className="gap-0">
             {deedTemplate.statuses.map((status, i) => (
               <DeedStatusTile

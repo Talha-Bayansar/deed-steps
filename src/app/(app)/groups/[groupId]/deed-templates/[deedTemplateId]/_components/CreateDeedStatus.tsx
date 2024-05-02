@@ -33,7 +33,7 @@ export const CreateDeedStatus = () => {
         </IconButton>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <div className="p-8">
           <DeedStatusForm
             onSubmit={(values) =>
               mutation.mutate({

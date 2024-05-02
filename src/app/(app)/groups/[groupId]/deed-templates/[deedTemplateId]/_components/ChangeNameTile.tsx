@@ -38,7 +38,7 @@ export const ChangeNameTile = () => {
         <ListTile>Change name</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <div className="p-8">
           <DeedTemplateForm
             deedTemplate={data}
             onSubmit={(values) =>

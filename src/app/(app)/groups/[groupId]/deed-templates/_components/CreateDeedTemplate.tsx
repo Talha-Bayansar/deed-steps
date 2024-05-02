@@ -32,7 +32,7 @@ export const CreateDeedTemplate = () => {
         </IconButton>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-4">
+        <div className="p-8">
           <DeedTemplateForm
             onSubmit={(values) =>
               mutation.mutate({ ...values, groupId: Number(groupId) })
