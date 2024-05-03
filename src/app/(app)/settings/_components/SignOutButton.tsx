@@ -10,6 +10,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { routes } from "@/lib/routes";
@@ -34,11 +35,13 @@ export const SignOutButton = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          Are you sure you want to sign out?
+          <AlertDialogTitle>
+            Are you sure you want to sign out?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            You will be signed out of your account.
+          </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogDescription>
-          You will be signed out of your account.
-        </AlertDialogDescription>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={() => mutation.mutate()}>
