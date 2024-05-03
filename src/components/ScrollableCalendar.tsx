@@ -3,6 +3,7 @@
 import {
   eachDayOfInterval,
   endOfMonth,
+  format,
   isSameDay,
   isToday,
   startOfMonth,
@@ -12,6 +13,7 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn, getDayOfWeek } from "@/lib/utils";
+import { View } from "./layout/View";
 
 type Props = {
   selectedDay: Date;
@@ -41,39 +43,44 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
   }, [selectedDay]);
 
   return (
-    <ScrollArea ref={scrollContainerRef} className="w-full pb-2">
-      <div className="flex">
-        {intervals.map((day, i) => (
-          <Button
-            variant="ghost"
-            key={`day_${i}`}
-            onClick={() => onSelectDay(day)}
-            className={cn(
-              "flex h-auto w-12 flex-col items-center rounded p-2 hover:bg-primary/15",
-              {
-                "is-selected bg-primary/15": isSameDay(selectedDay, day),
-              }
-            )}
-          >
-            <span
-              className={cn("text-sm font-normal", {
-                "text-primary": isToday(day),
-              })}
-            >
-              {days[getDayOfWeek(day)]}
-            </span>
-            <span
-              className={cn("text-lg font-normal", {
-                "font-medium text-primary": isToday(day),
-                "font-bold": isSameDay(selectedDay, day),
-              })}
-            >
-              {day.getDate()}
-            </span>
-          </Button>
-        ))}
+    <View className="w-full gap-0">
+      <div className="text-xl font-medium flex items-center">
+        {format(today, "MMMM")}
       </div>
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+      <ScrollArea ref={scrollContainerRef} className="w-full pb-2">
+        <div className="flex">
+          {intervals.map((day, i) => (
+            <Button
+              variant="ghost"
+              key={`day_${i}`}
+              onClick={() => onSelectDay(day)}
+              className={cn(
+                "flex h-auto w-12 flex-col items-center rounded p-2 hover:bg-primary/15",
+                {
+                  "is-selected bg-primary/15": isSameDay(selectedDay, day),
+                }
+              )}
+            >
+              <span
+                className={cn("text-sm font-normal", {
+                  "text-primary": isToday(day),
+                })}
+              >
+                {days[getDayOfWeek(day)]}
+              </span>
+              <span
+                className={cn("text-lg font-normal", {
+                  "font-medium text-primary": isToday(day),
+                  "font-bold": isSameDay(selectedDay, day),
+                })}
+              >
+                {day.getDate()}
+              </span>
+            </Button>
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+    </View>
   );
 };

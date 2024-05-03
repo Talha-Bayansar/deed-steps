@@ -64,8 +64,7 @@ export async function getMyDeedTemplates() {
     where: eq(userToGroupTable.userId, user.id),
   });
 
-  if (myGroups.length < 1)
-    throw new DrizzleError({ message: "No groups found" });
+  if (myGroups.length < 1) return;
 
   const groupIds = myGroups.map((item) => item.groupId);
 
