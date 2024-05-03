@@ -5,6 +5,7 @@ import {
   deedStatusTable,
   deedTable,
   deedTemplateTable,
+  groupPointsTable,
   userToGroupTable,
 } from "@/db/schema";
 import { DrizzleError, and, eq, gte, inArray, lte } from "drizzle-orm";
@@ -109,11 +110,66 @@ export async function saveDeed(deed: DeedInsert) {
       message: "Not authenticated",
     });
 
+  const deedTemplate = await db.query.deedTemplateTable.findFirst({
+    where: eq(deedTemplateTable.id, deed.deedTemplateId),
+  });
+
+  if (!deedTemplate)
+    throw new DrizzleError({
+      message: "Deed template not found",
+    });
+
+  const deedStatus = await db.query.deedStatusTable.findFirst({
+    where: eq(deedStatusTable.id, deed.deedStatusId),
+  });
+
+  if (!deedStatus)
+    throw new DrizzleError({
+      message: "Deed status not found",
+    });
+
+  const groupPoints = await db.query.groupPointsTable.findFirst({
+    where: and(
+      eq(groupPointsTable.groupId, deedTemplate.groupId),
+      eq(groupPointsTable.userId, deed.userId)
+    ),
+  });
+
+  if (!groupPoints)
+    throw new DrizzleError({
+      message: "Group points not found",
+    });
+
   if (deed.id) {
+    const previousDeed = await db.query.deedTable.findFirst({
+      where: eq(deedTable.id, deed.id),
+      with: {
+        status: true,
+      },
+    });
+
+    if (!previousDeed)
+      throw new DrizzleError({
+        message: "Deed not found",
+      });
+
+    await db.update(groupPointsTable).set({
+      groupId: groupPoints.groupId,
+      userId: groupPoints.userId,
+      points:
+        groupPoints.points - previousDeed.status.reward + deedStatus.reward,
+    });
+
     await db.update(deedTable).set(deed).where(eq(deedTable.id, deed.id));
     return true;
   } else {
     await db.insert(deedTable).values(deed);
+
+    await db.update(groupPointsTable).set({
+      groupId: groupPoints.groupId,
+      userId: groupPoints.userId,
+      points: groupPoints.points + deedStatus.reward,
+    });
 
     return true;
   }
@@ -209,6 +265,8 @@ export async function deleteDeedStatusById(id: number) {
     throw new DrizzleError({
       message: "Not authenticated",
     });
+
+  await db.delete(deedTable).where(eq(deedTable.deedStatusId, id));
 
   await db.delete(deedStatusTable).where(eq(deedStatusTable.id, id));
 

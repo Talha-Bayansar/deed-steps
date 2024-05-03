@@ -3,14 +3,18 @@
 import { validateRequest } from "@/auth/service";
 import { db } from "@/db";
 import {
+  deedStatusTable,
+  deedTable,
+  deedTemplateTable,
+  groupPointsTable,
   groupTable,
   invitationTable,
   userTable,
   userToGroupTable,
 } from "@/db/schema";
-import { DrizzleError, and, eq } from "drizzle-orm";
+import { DrizzleError, and, eq, inArray } from "drizzle-orm";
 import type { GroupInsert } from "./models";
-import type { Nullable } from "@/lib/utils";
+import { isArrayEmpty, type Nullable } from "@/lib/utils";
 
 export async function getGroupById(groupId: number) {
   const { user } = await validateRequest();
@@ -72,6 +76,12 @@ export async function createGroup(group: Nullable<GroupInsert, "ownerId">) {
     userId: user.id,
   });
 
+  await db.insert(groupPointsTable).values({
+    groupId: newGroup[0].id,
+    userId: user.id,
+    points: 0,
+  });
+
   return true;
 }
 
@@ -91,10 +101,33 @@ export async function deleteGroup(groupId: number) {
   const { user } = await validateRequest();
 
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
+  const deedTemplates = await db.query.deedTemplateTable.findMany({
+    where: eq(deedTemplateTable.groupId, groupId),
+    columns: { id: true },
+  });
+
+  if (!isArrayEmpty(deedTemplates)) {
+    const deedTemplateIds = deedTemplates.map(({ id }) => id);
+
+    await db
+      .delete(deedTable)
+      .where(inArray(deedTable.deedTemplateId, deedTemplateIds));
+    await db
+      .delete(deedStatusTable)
+      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
+    await db
+      .delete(deedTemplateTable)
+      .where(eq(deedTemplateTable.groupId, groupId));
+  }
 
   await db
     .delete(userToGroupTable)
     .where(eq(userToGroupTable.groupId, groupId));
+  await db
+    .delete(groupPointsTable)
+    .where(eq(groupPointsTable.groupId, groupId));
+
+  await db.delete(invitationTable).where(eq(invitationTable.groupId, groupId));
   await db.delete(groupTable).where(eq(groupTable.id, groupId));
   return true;
 }
@@ -171,6 +204,12 @@ export async function acceptInvitation(invitationId: number) {
     groupId: invitation.groupId,
   });
 
+  await db.insert(groupPointsTable).values({
+    groupId: invitation.groupId,
+    userId: invitation.userId,
+    points: 0,
+  });
+
   await db
     .delete(invitationTable)
     .where(
@@ -223,4 +262,18 @@ export async function deleteUserFromGroup(userId: number, groupId: number) {
       )
     );
   return true;
+}
+
+export async function getGroupPointsByGroupId(groupId: number) {
+  const { user } = await validateRequest();
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  const points = await db.query.groupPointsTable.findFirst({
+    where: and(
+      eq(groupPointsTable.groupId, groupId),
+      eq(groupPointsTable.userId, user.id)
+    ),
+  });
+
+  return points;
 }
