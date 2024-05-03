@@ -191,6 +191,8 @@ export async function deleteDeedTemplateById(id: number) {
       message: "Not authenticated",
     });
 
+  await db.delete(deedTable).where(eq(deedTable.deedTemplateId, id));
+
   await db
     .delete(deedStatusTable)
     .where(eq(deedStatusTable.deedTemplateId, id));

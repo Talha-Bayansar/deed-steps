@@ -15,7 +15,28 @@ import {
 import { Input } from "@/components/ui/input";
 import type { DeedStatus } from "../models";
 import { View } from "@/components/layout/View";
-import ColorFul from "@uiw/react-color-colorful";
+import ColorPicker from "@uiw/react-color-circle";
+
+const colors = [
+  "#F44335",
+  "#E91D63",
+  "#9C27B0",
+  "#673AB7",
+  "#3f51b5",
+  "#2196f3",
+  "#03a9f4",
+  "#00bcd4",
+  "#009688",
+  "#4caf50",
+  "#8bc34a",
+  "#cddc39",
+  "#ffeb3b",
+  "#ffc107",
+  "#ff9800",
+  "#ff5722",
+  "#795548",
+  "#607d8b",
+];
 
 const formSchema = z.object({
   name: z.string().min(3).max(50),
@@ -83,7 +104,9 @@ export const DeedStatusForm = ({
               <FormItem>
                 <FormLabel>Color</FormLabel>
                 <FormControl>
-                  <ColorFul
+                  <ColorPicker
+                    className="[&>*]:!h-8 [&>*]:!w-8"
+                    colors={colors}
                     color={field.value}
                     onChange={(color) => form.setValue("color", color.hex)}
                   />

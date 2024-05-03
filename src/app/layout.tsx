@@ -258,7 +258,7 @@ export default function RootLayout({
           >
             {children}
           </div>
-          <Toaster />
+          <Toaster position="top-center" />
         </ReactQueryClientProvider>
       </body>
     </html>
