@@ -1,6 +1,7 @@
 "use client";
 import { EmptyView } from "@/components/EmptyView";
 import { IconButton } from "@/components/IconButton";
+import { Header } from "@/components/layout/Heading";
 import { Title, TitleSkeleton } from "@/components/layout/Title";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,7 +24,7 @@ export const GroupDetailsView = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <Header>
         <Title>{data.name}</Title>
         {data.isOwner && (
           <Link href={routes.groups.id(groupId).settings.root}>
@@ -32,7 +33,7 @@ export const GroupDetailsView = () => {
             </IconButton>
           </Link>
         )}
-      </div>
+      </Header>
       <Tabs className="flex-grow" defaultValue="members">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="members">Members</TabsTrigger>
@@ -52,7 +53,9 @@ export const GroupDetailsView = () => {
 const GroupDetailsViewSkeleton = () => {
   return (
     <>
-      <TitleSkeleton />
+      <Header>
+        <TitleSkeleton />
+      </Header>
       <Skeleton className="w-full h-full" />
     </>
   );

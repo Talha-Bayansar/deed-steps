@@ -1,3 +1,4 @@
+import { Header } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
 import { MyGroupInvitationsView } from "@/groups/components/MyGroupInvitationsView";
@@ -5,7 +6,9 @@ import { MyGroupInvitationsView } from "@/groups/components/MyGroupInvitationsVi
 const Page = () => {
   return (
     <Main>
-      <Title>Invitations</Title>
+      <Header>
+        <Title>Invitations</Title>
+      </Header>
       <MyGroupInvitationsView />
     </Main>
   );

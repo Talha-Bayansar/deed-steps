@@ -3,6 +3,7 @@ import { VerificationCodeForm } from "@/auth/components/VerificationCodeForm";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
+import { Header } from "@/components/layout/Heading";
 
 type Props = {
   searchParams: {
@@ -15,7 +16,9 @@ const Page = ({ searchParams }: Props) => {
   return (
     <PageWrapper hasNavigationBar={false}>
       <Main>
-        <Title>Sign in</Title>
+        <Header>
+          <Title>Sign in</Title>
+        </Header>
         {email ? <VerificationCodeForm email={email} /> : <SigninForm />}
       </Main>
     </PageWrapper>

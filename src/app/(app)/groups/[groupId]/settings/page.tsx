@@ -4,11 +4,14 @@ import { ChangeName } from "./_components/ChangeName";
 import { DeleteGroup } from "./_components/DeleteGroup";
 import { InviteUser } from "./_components/InviteUser";
 import { ManageDeeds } from "./_components/ManageDeeds";
+import { Header } from "@/components/layout/Heading";
 
 const Page = () => {
   return (
     <Main>
-      <Title>Settings</Title>
+      <Header>
+        <Title>Settings</Title>
+      </Header>
       <ChangeName />
       <InviteUser />
       <ManageDeeds />

@@ -1,4 +1,5 @@
 import { IconButton } from "@/components/IconButton";
+import { Header } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
 import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
@@ -10,7 +11,7 @@ import Link from "next/link";
 const Page = () => {
   return (
     <Main>
-      <div className="flex justify-between items-center">
+      <Header>
         <Title>Groups</Title>
         <div className="flex items-center">
           <IconButton className="relative">
@@ -25,7 +26,7 @@ const Page = () => {
             </Link>
           </IconButton>
         </div>
-      </div>
+      </Header>
 
       <MyGroupsView />
     </Main>
