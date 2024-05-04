@@ -5,7 +5,8 @@ import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroup
 import { deleteDeedTemplateById } from "@/deeds/service";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "@/navigation";
 
 export const DeleteDeedTemplate = () => {
   const router = useRouter();

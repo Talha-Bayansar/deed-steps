@@ -6,7 +6,7 @@ import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
 import { MyGroupsView } from "@/groups/components/MyGroupsView";
 import { routes } from "@/lib/routes";
 import { Inbox, Plus } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 const Page = () => {
   return (

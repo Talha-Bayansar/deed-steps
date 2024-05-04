@@ -1,7 +1,8 @@
 "use client";
 
 import { Users, Home, Settings } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
+import { usePathname } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { NavigationBar } from "@/components/layout/NavigationBar";
 import {
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/IconButton";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
 
 export const RootNavBar = () => {

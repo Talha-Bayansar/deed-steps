@@ -6,7 +6,7 @@ import { View } from "@/components/layout/View";
 import { EmptyView } from "@/components/EmptyView";
 import { Users } from "lucide-react";
 import { routes } from "@/lib/routes";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 

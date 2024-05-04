@@ -9,7 +9,7 @@ import { useGroupById } from "@/groups/hooks/useGroupById";
 import { routes } from "@/lib/routes";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { ListChecks, Users } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 import { CreateDeedTemplate } from "./CreateDeedTemplate";
 import { Header } from "@/components/layout/Heading";

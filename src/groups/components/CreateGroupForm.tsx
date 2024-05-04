@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { createGroup } from "../service";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { GroupForm } from "./GroupForm";
 

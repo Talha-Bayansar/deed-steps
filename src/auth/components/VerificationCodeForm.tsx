@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signin } from "../service";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "../hooks/useSession";
 

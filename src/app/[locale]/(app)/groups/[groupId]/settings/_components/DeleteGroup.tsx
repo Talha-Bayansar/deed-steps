@@ -15,7 +15,8 @@ import { deleteGroup } from "@/groups/service";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useState } from "react";
 
 export const DeleteGroup = () => {

@@ -2,7 +2,7 @@
 
 import { routes } from "@/lib/routes";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useSession } from "../hooks/useSession";
 
 type Props = {

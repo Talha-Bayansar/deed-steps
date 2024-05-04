@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { sendEmailVerificationCode } from "../service";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 
 const formSchema = z.object({
   email: z.string().email("Not a valid email").min(5).max(50),

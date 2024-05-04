@@ -11,15 +11,13 @@ import { useGroupById } from "@/groups/hooks/useGroupById";
 import { useGroupPointsByGroupId } from "@/groups/hooks/useGroupPointsByGroupId";
 import { routes } from "@/lib/routes";
 import { Users, Settings, Coins } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 
 export const GroupDetailsView = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { data, isLoading } = useGroupById(groupId);
-  const { data: points, isLoading: isLoadingPoints } = useGroupPointsByGroupId(
-    Number(groupId)
-  );
+  const { data: points } = useGroupPointsByGroupId(Number(groupId));
 
   if (isLoading) return <GroupDetailsViewSkeleton />;
 
