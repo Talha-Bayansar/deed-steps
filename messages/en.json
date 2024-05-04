@@ -15,5 +15,9 @@
   },
   "OfflinePage": {
     "description": "It looks like you are offline."
+  },
+  "AuthWrapper": {
+    "title": "Authenticating",
+    "description": "Please wait while we verify your credentials."
   }
 }
