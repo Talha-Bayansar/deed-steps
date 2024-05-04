@@ -126,6 +126,9 @@
     "change_name_success": "Successfully updated name.",
     "sign_out": "Sign out",
     "sign_out_modal_title": "Are you sure you want to sign out?",
-    "sign_out_modal_description": "You will be signed out of your account."
+    "sign_out_modal_description": "You will be signed out of your account.",
+    "change_language": "Change language",
+    "language_description": "Select your preferred language for the app.",
+    "select_language": "Select language"
   }
 }

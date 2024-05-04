@@ -5,6 +5,7 @@ import { SignOutButton } from "./_components/SignOutButton";
 import { ChangeName } from "./_components/ChangeName";
 import { Header } from "@/components/layout/Heading";
 import { getTranslations } from "next-intl/server";
+import { ChangeLocale } from "./_components/ChangeLocale";
 
 const Page = async () => {
   const t = await getTranslations("SettingsPage");
@@ -16,6 +17,7 @@ const Page = async () => {
       </Header>
       <View className="gap-0">
         <ChangeName />
+        <ChangeLocale />
         <SignOutButton />
       </View>
     </Main>
