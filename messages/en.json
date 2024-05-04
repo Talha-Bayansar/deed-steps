@@ -12,5 +12,8 @@
     "title": "Sign In",
     "verification_code": "Verification Code",
     "send_verification_code": "Send verification code"
+  },
+  "OfflinePage": {
+    "description": "It looks like you are offline."
   }
 }
