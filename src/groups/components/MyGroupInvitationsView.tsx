@@ -8,8 +8,10 @@ import { ListTile, ListTileSkeleton } from "@/components/ListTile";
 import { IconButton } from "@/components/IconButton";
 import { useMutation } from "@tanstack/react-query";
 import { acceptInvitation, declineInvitation } from "../service";
+import { useTranslations } from "next-intl";
 
 export const MyGroupInvitationsView = () => {
+  const tInvitationsPage = useTranslations("InvitationsPage");
   const { data, isLoading, refetch } = useMyGroupInvitations();
   const acceptInvitationMutation = useMutation({
     mutationFn: async (id: number) => await acceptInvitation(id),
@@ -28,10 +30,7 @@ export const MyGroupInvitationsView = () => {
 
   if (!data || isArrayEmpty(data))
     return (
-      <EmptyView
-        Icon={Inbox}
-        message="It looks like you don't have any invitations."
-      />
+      <EmptyView Icon={Inbox} message={tInvitationsPage("no_invitations")} />
     );
 
   return (

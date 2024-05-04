@@ -57,6 +57,10 @@
     "no_groups": "You are not a member of any group yet.",
     "create_group": "Create group"
   },
+  "InvitationsPage": {
+    "title": "Invitations",
+    "no_invitations": "It looks like you don't have any invitations."
+  },
   "SignInPage": {
     "title": "Sign In",
     "verification_code": "Verification Code",
