@@ -15,19 +15,26 @@ import {
 import { Input } from "@/components/ui/input";
 import type { User } from "../models";
 import { View } from "@/components/layout/View";
-
-const formSchema = z.object({
-  firstName: z.string().min(3).max(50),
-  lastName: z.string().min(3).max(50),
-});
+import { useTranslations } from "next-intl";
 
 type Props = {
   user: User;
-  onSubmit: (values: z.infer<typeof formSchema>) => any;
+  onSubmit: (values: { firstName: string; lastName: string }) => any;
   isLoading?: boolean;
 };
 
 export const UserForm = ({ user, onSubmit, isLoading = false }: Props) => {
+  const t = useTranslations("global");
+  const formSchema = z.object({
+    firstName: z
+      .string()
+      .min(3, t("errors.min", { amount: 3 }))
+      .max(50, t("errors.max", { amount: 50 })),
+    lastName: z
+      .string()
+      .min(3, t("errors.min", { amount: 3 }))
+      .max(50, t("errors.max", { amount: 3 })),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,7 +55,7 @@ export const UserForm = ({ user, onSubmit, isLoading = false }: Props) => {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First name</FormLabel>
+                <FormLabel>{t("first_name")}</FormLabel>
                 <FormControl>
                   <Input placeholder="John" {...field} />
                 </FormControl>
@@ -61,7 +68,7 @@ export const UserForm = ({ user, onSubmit, isLoading = false }: Props) => {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last name</FormLabel>
+                <FormLabel>{t("last_name")}</FormLabel>
                 <FormControl>
                   <Input placeholder="Doe" {...field} />
                 </FormControl>
@@ -71,7 +78,7 @@ export const UserForm = ({ user, onSubmit, isLoading = false }: Props) => {
           />
         </View>
         <Button type="submit" disabled={isLoading}>
-          Submit
+          {t("submit")}
         </Button>
       </form>
     </Form>

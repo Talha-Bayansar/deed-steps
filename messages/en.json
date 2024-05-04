@@ -11,7 +11,9 @@
     "settings": "Settings",
     "submit": "Submit",
     "continue": "Continue",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "first_name": "First Name",
+    "last_name": "Last Name"
   },
   "SignInPage": {
     "title": "Sign In",
