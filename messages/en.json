@@ -52,7 +52,8 @@
     "members": "Members",
     "deeds": "Deeds",
     "delete": "Delete",
-    "reward": "Reward"
+    "reward": "Reward",
+    "points": "Points"
   },
   "HomePage": {
     "title": "My Deeds",

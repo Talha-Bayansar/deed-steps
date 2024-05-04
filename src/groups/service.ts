@@ -29,7 +29,15 @@ export async function getGroupById(groupId: number) {
     with: {
       members: {
         with: {
-          member: true,
+          member: {
+            with: {
+              groupPoints: {
+                where(fields, { eq }) {
+                  return eq(fields.groupId, groupId);
+                },
+              },
+            },
+          },
         },
       },
     },

@@ -9,9 +9,12 @@ import { DeleteButton } from "@/components/DeleteButton";
 import { View } from "@/components/layout/View";
 import { ListTile } from "@/components/ListTile";
 import { useTranslations } from "next-intl";
+import type { GroupPoints } from "@/groups/models";
 
 type Props = {
-  member: User;
+  member: User & {
+    groupPoints: GroupPoints[];
+  };
   groupId: number;
   isOwner: boolean;
   isLast?: boolean;
@@ -23,6 +26,7 @@ export const GroupMember = ({
   isOwner,
   isLast = false,
 }: Props) => {
+  const t = useTranslations("global");
   const tGroupDetailsPage = useTranslations("GroupDetailsPage");
   const [isOpen, setIsOpen] = useState(false);
   const { refetch } = useGroupById(groupId.toString());
@@ -38,7 +42,16 @@ export const GroupMember = ({
     <Drawer open={isOpen} onOpenChange={setIsOpen} shouldScaleBackground>
       <DrawerTrigger asChild>
         <ListTile isClickable={isOwner} withSeparator={!isLast}>
-          {member.firstName} {member.lastName}
+          <View className="items-start gap-1">
+            <div>
+              {member.firstName} {member.lastName}
+            </div>
+            {isOwner && (
+              <div className="text-xs text-gray-400">
+                {t("points")}: {member.groupPoints[0].points}
+              </div>
+            )}
+          </View>
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>

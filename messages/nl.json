@@ -52,7 +52,8 @@
     "members": "Leden",
     "deeds": "Daden",
     "delete": "Verwijderen",
-    "reward": "Beloning"
+    "reward": "Beloning",
+    "points": "Punten"
   },
   "HomePage": {
     "title": "Mijn daden",
