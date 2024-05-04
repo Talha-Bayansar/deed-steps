@@ -14,18 +14,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { Group } from "../models";
-
-const formSchema = z.object({
-  name: z.string().min(3).max(50),
-});
+import { useTranslations } from "next-intl";
 
 type Props = {
   group?: Group;
-  onSubmit: (values: z.infer<typeof formSchema>) => any;
+  onSubmit: (values: { name: string }) => any;
   isLoading?: boolean;
 };
 
 export const GroupForm = ({ group, onSubmit, isLoading = false }: Props) => {
+  const t = useTranslations("global");
+  const tGroupsPage = useTranslations("GroupsPage");
+
+  const formSchema = z.object({
+    name: z
+      .string()
+      .min(3, t("errors.min", { amount: 3 }))
+      .max(50, t("errors.max", { amount: 50 })),
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,16 +51,16 @@ export const GroupForm = ({ group, onSubmit, isLoading = false }: Props) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{tGroupsPage("group_name")}</FormLabel>
               <FormControl>
-                <Input placeholder="Group name" {...field} />
+                <Input placeholder={tGroupsPage("group_name")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" disabled={isLoading}>
-          Submit
+          {t("submit")}
         </Button>
       </form>
     </Form>

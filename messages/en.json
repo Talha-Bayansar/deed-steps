@@ -54,6 +54,7 @@
   },
   "GroupsPage": {
     "title": "Groups",
+    "group_name": "Group name",
     "no_groups": "You are not a member of any group yet.",
     "create_group": "Create group"
   },

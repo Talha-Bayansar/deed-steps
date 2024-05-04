@@ -6,9 +6,7 @@ import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { GroupForm } from "./GroupForm";
 
-type Props = {};
-
-export const CreateGroupForm = (props: Props) => {
+export const CreateGroupForm = () => {
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: createGroup,
@@ -16,5 +14,10 @@ export const CreateGroupForm = (props: Props) => {
       router.push(routes.groups.root);
     },
   });
-  return <GroupForm onSubmit={(values) => mutation.mutate(values)} />;
+  return (
+    <GroupForm
+      onSubmit={(values) => mutation.mutate(values)}
+      isLoading={mutation.isPending}
+    />
+  );
 };
