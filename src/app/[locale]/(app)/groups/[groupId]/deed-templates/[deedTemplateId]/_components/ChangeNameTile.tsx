@@ -8,10 +8,12 @@ import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroup
 import { DeedTemplateInsert } from "@/deeds/models";
 import { updateDeedTemplateById } from "@/deeds/service";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export const ChangeNameTile = () => {
+  const tEditDeedTemplatePage = useTranslations("EditDeedTemplatePage");
   const [isOpen, setIsOpen] = useState(false);
   const { deedTemplateId, groupId } = useParams<{
     deedTemplateId: string;
@@ -35,7 +37,7 @@ export const ChangeNameTile = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>Change name</ListTile>
+        <ListTile>{tEditDeedTemplatePage("change_name")}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <div className="p-8">

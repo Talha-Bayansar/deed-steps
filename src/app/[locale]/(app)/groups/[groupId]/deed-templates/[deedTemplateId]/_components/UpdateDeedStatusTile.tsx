@@ -10,6 +10,7 @@ import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroup
 import type { DeedStatus, DeedStatusInsert } from "@/deeds/models";
 import { deleteDeedStatusById, updateDeedStatusById } from "@/deeds/service";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export const UpdateDeedStatusTile = ({ status }: Props) => {
+  const tEditDeedTemplatePage = useTranslations("EditDeedTemplatePage");
   const { groupId, deedTemplateId } = useParams<{
     groupId: string;
     deedTemplateId: string;
@@ -64,8 +66,10 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
           />
           <DeleteButton
             deleteFn={() => deleteMutation.mutate()}
-            modalTitle="Are you sure you want to delete this deed status?"
-            modalDescription="This deed status and all depending data will be permanently deleted."
+            modalTitle={tEditDeedTemplatePage("delete_deed_status_modal_title")}
+            modalDescription={tEditDeedTemplatePage(
+              "delete_deed_status_modal_description"
+            )}
           />
         </View>
       </DrawerContent>

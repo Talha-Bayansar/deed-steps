@@ -10,8 +10,10 @@ import { ChangeNameTile } from "./ChangeNameTile";
 import { ListTileSkeleton } from "@/components/ListTile";
 import { UpdateDeedStatusTile } from "./UpdateDeedStatusTile";
 import { DeleteDeedTemplate } from "./DeleteDeedTemplate";
+import { useTranslations } from "next-intl";
 
 export const EditDeedTemplateView = () => {
+  const tEditDeedTemplatePage = useTranslations("EditDeedTemplatePage");
   const { deedTemplateId } = useParams<{
     deedTemplateId: string;
     groupId: string;
@@ -24,7 +26,7 @@ export const EditDeedTemplateView = () => {
     return (
       <EmptyView
         Icon={ListChecks}
-        message="This deed template could not be found."
+        message={tEditDeedTemplatePage("no_deed_template")}
       />
     );
 
@@ -35,7 +37,9 @@ export const EditDeedTemplateView = () => {
         <ChangeNameTile />
       </View>
       <View className="gap-2">
-        <h2 className="text-xl font-semibold">Statuses</h2>
+        <h2 className="text-xl font-semibold">
+          {tEditDeedTemplatePage("statuses")}
+        </h2>
         <View className="gap-0">
           {data.statuses.map((status) => (
             <UpdateDeedStatusTile key={status.id} status={status} />
