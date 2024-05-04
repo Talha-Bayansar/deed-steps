@@ -15,8 +15,10 @@ import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/IconButton";
 import { Link } from "@/navigation";
 import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
+import { useTranslations } from "next-intl";
 
 export const RootNavBar = () => {
+  const t = useTranslations("global");
   const pathName = usePathname();
   const params = useParams<{ locale: string }>();
   const locale = params.locale;
@@ -28,17 +30,17 @@ export const RootNavBar = () => {
     {
       Icon: Home,
       href: routes.root,
-      tooltip: "Home",
+      tooltip: t("home"),
     },
     {
       Icon: Users,
       href: routes.groups.root,
-      tooltip: "Groups",
+      tooltip: t("groups"),
     },
     {
       Icon: Settings,
       href: routes.settings.root,
-      tooltip: "Settings",
+      tooltip: t("settings"),
     },
   ];
 

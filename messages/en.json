@@ -6,6 +6,9 @@
       "email": "Not a valid email address"
     },
     "email": "Email",
+    "home": "Home",
+    "groups": "Groups",
+    "settings": "Settings",
     "submit": "Submit"
   },
   "SignInPage": {
