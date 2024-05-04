@@ -1,134 +1,134 @@
 {
   "global": {
     "errors": {
-      "min": "Minimum {amount} characters",
-      "max": "Maximum {amount} characters",
-      "min_value": "Minimum value is {value}",
-      "max_value": "Maximum value is {value}",
-      "email": "Not a valid email address"
+      "min": "Minimaal {amount} karakters",
+      "max": "Maximaal {amount} karakters",
+      "min_value": "Minimumwaarde is {value}",
+      "max_value": "Maximale waarde is {value}",
+      "email": "Geen geldig e-mailadres"
     },
     "days": {
       "0": {
-        "short": "Mon",
-        "long": "Monday"
+        "short": "Ma",
+        "long": "Maandag"
       },
       "1": {
-        "short": "Tue",
-        "long": "Tuesday"
+        "short": "Di",
+        "long": "Dinsdag"
       },
       "2": {
-        "short": "Wed",
-        "long": "Wednesday"
+        "short": "Wo",
+        "long": "Woensdag"
       },
       "3": {
-        "short": "Thu",
-        "long": "Thursday"
+        "short": "Do",
+        "long": "Donderdag"
       },
       "4": {
-        "short": "Fri",
-        "long": "Friday"
+        "short": "Vr",
+        "long": "Vrijdag"
       },
       "5": {
-        "short": "Sat",
-        "long": "Saturday"
+        "short": "Za",
+        "long": "Zaterdag"
       },
       "6": {
-        "short": "Sun",
-        "long": "Sunday"
+        "short": "Zo",
+        "long": "Zondag"
       }
     },
-    "email": "Email",
-    "home": "Home",
-    "groups": "Groups",
-    "settings": "Settings",
-    "submit": "Submit",
-    "continue": "Continue",
-    "cancel": "Cancel",
-    "first_name": "First name",
-    "last_name": "Last name",
+    "email": "E-mail",
+    "home": "Startpagina",
+    "groups": "Groepen",
+    "settings": "Instellingen",
+    "submit": "Bevestigen",
+    "continue": "Doorgaan",
+    "cancel": "Annuleren",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
     "status": "Status",
-    "owner": "Owner",
-    "member": "Member",
-    "members": "Members",
-    "deeds": "Deeds",
-    "delete": "Delete",
-    "reward": "Reward"
+    "owner": "Eigenaar",
+    "member": "Lid",
+    "members": "Leden",
+    "deeds": "Daden",
+    "delete": "Verwijderen",
+    "reward": "Beloning"
   },
   "HomePage": {
-    "title": "My Deeds",
-    "no_deeds": "You don't have any deeds yet."
+    "title": "Mijn daden",
+    "no_deeds": "Je hebt nog geen daden."
   },
   "GroupsPage": {
-    "title": "Groups",
-    "no_groups": "You are not a member of any group yet.",
-    "create_group": "Create group"
+    "title": "Groepen",
+    "no_groups": "Je bent nog geen lid van een groep.",
+    "create_group": "Groep maken"
   },
   "CreateGroupPage": {
-    "title": "Create group",
-    "group_name": "Group name"
+    "title": "Groep maken",
+    "group_name": "Groep naam"
   },
   "GroupDetailsPage": {
-    "no_group": "This group could not be found.",
-    "no_members": "This group does not have any members yet.",
-    "delete_modal_title": "Are you sure you want to remove this user from the group?",
-    "delete_modal_description": "This action cannot be undone. This will permanently delete all data associated with this user.",
-    "no_deeds": "This group does not have any deeds yet."
+    "no_group": "Deze groep kon niet worden gevonden.",
+    "no_members": "Deze groep heeft nog geen leden.",
+    "delete_modal_title": "Weet je zeker dat je deze gebruiker uit de groep wilt verwijderen?",
+    "delete_modal_description": "Deze actie kan niet ongedaan worden. Hierdoor worden alle gegevens van deze gebruiker permanent verwijderd.",
+    "no_deeds": "Deze groep heeft nog geen daden."
   },
   "GroupSettingsPage": {
-    "title": "Settings",
-    "change_name": "Change name",
-    "invite_success": "User successfully invited",
-    "invite_user": "Invite user",
-    "email_user": "Email of user",
-    "manage_deeds": "Manage deeds",
-    "delete_group": "Delete group",
-    "delete_group_modal_title": "Are you sure you want to delete this group?",
-    "delete_group_modal_description": "This action cannot be undone. All data linked to this group will be lost."
+    "title": "Instellingen",
+    "change_name": "Naam wijzigen",
+    "invite_success": "Gebruiker succesvol uitgenodigd",
+    "invite_user": "Gebruiker uitnodigen",
+    "email_user": "E-mail gebruiker",
+    "manage_deeds": "Daden beheren",
+    "delete_group": "Groep verwijderen",
+    "delete_group_modal_title": "Weet je zeker dat je deze groep wilt verwijderen?",
+    "delete_group_modal_description": "Deze actie kan niet ongedaan worden. Alle gegevens gekoppeld aan deze groep zullen verloren gaan."
   },
   "DeedTemplatesPage": {
-    "title": "Deed templates",
-    "no_group": "The group you are looking for does not exist.",
-    "no_deed_templates": "It looks like this group does not have any deed templates yet.",
-    "deed_template_name": "Deed template name"
+    "title": "Daad sjablonen",
+    "no_group": "De groep die je zoekt bestaat niet.",
+    "no_deed_templates": "Het lijkt erop dat deze groep nog geen daad sjablonen heeft.",
+    "deed_template_name": "Daad sjabloon naam"
   },
   "EditDeedTemplatePage": {
-    "title": "Edit deed template",
-    "status_name": "Status name",
-    "color": "Color",
-    "reward": "Reward",
-    "no_deed_template": "This deed template could not be found.",
-    "change_name": "Change name",
-    "statuses": "Statuses",
-    "delete_deed_status_modal_title": "Are you sure you want to delete this deed status?",
-    "delete_deed_status_modal_description": "This deed status and all depending data will be permanently deleted.",
-    "delete_deed_template_modal_title": "Are you sure you want to delete this deed template?",
-    "delete_deed_template_modal_description": "This deed template and all related statuses will be permanently deleted."
+    "title": "Daad sjabloon wijzigen",
+    "status_name": "Status naam",
+    "color": "Kleur",
+    "reward": "Beloning",
+    "no_deed_template": "Deze daad sjabloon kon niet worden gevonden.",
+    "change_name": "Naam wijzigen",
+    "statuses": "Statussen",
+    "delete_deed_status_modal_title": "Weet je zeker dat je deze daad status wilt verwijderen?",
+    "delete_deed_status_modal_description": "Deze daad status en alle bijbehorende gegevens worden permanent verwijderd.",
+    "delete_deed_template_modal_title": "Weet je zeker dat je deze daad sjabloon wilt verwijderen?",
+    "delete_deed_template_modal_description": "Deze daad sjabloon en alle gerelateerde statussen zullen permanent worden verwijderd."
   },
   "InvitationsPage": {
-    "title": "Invitations",
-    "no_invitations": "It looks like you don't have any invitations."
+    "title": "Uitnodigingen",
+    "no_invitations": "Het lijkt erop dat je geen uitnodigingen hebt."
   },
   "SignInPage": {
-    "title": "Sign In",
-    "verification_code": "Verification Code",
-    "send_verification_code": "Send verification code"
+    "title": "Aanmelden",
+    "verification_code": "Verificatiecode",
+    "send_verification_code": "Verificatiecode verzenden"
   },
   "OfflinePage": {
-    "description": "It looks like you are offline."
+    "description": "Het lijkt erop dat je offline bent."
   },
   "AuthWrapper": {
-    "title": "Authenticating",
-    "description": "Please wait while we verify your credentials."
+    "title": "Authenticeren",
+    "description": "Wacht even terwijl we je gegevens controleren."
   },
   "SettingsPage": {
-    "title": "Settings",
-    "change_name": "Change name",
-    "change_name_success": "Successfully updated name.",
-    "sign_out": "Sign out",
-    "sign_out_modal_title": "Are you sure you want to sign out?",
-    "sign_out_modal_description": "You will be signed out of your account.",
-    "change_language": "Change language",
-    "language_description": "Select your preferred language for the app.",
-    "select_language": "Select language"
+    "title": "Instellingen",
+    "change_name": "Naam wijzigen",
+    "change_name_success": "Naam succesvol bijgewerkt.",
+    "sign_out": "Afmelden",
+    "sign_out_modal_title": "Weet je zeker dat je je wilt afmelden?",
+    "sign_out_modal_description": "Je wordt afgemeld bij je account.",
+    "change_language": "Taal veranderen",
+    "language_description": "Selecteer de taal van je voorkeur voor de app.",
+    "select_language": "Selecteer taal"
   }
 }
