@@ -15,14 +15,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { sendEmailVerificationCode } from "../service";
 import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
-const formSchema = z.object({
-  email: z.string().email("Not a valid email").min(5).max(50),
-});
+export const SigninForm = () => {
+  const t = useTranslations("global");
+  const tSignInPage = useTranslations("SignInPage");
 
-type Props = {};
-
-export const SigninForm = (props: Props) => {
+  const formSchema = z.object({
+    email: z.string().email(t("errors.email")),
+  });
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +50,7 @@ export const SigninForm = (props: Props) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <Input placeholder="john.doe@acme.com" {...field} />
               </FormControl>
@@ -57,7 +58,7 @@ export const SigninForm = (props: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Send verification code</Button>
+        <Button type="submit">{tSignInPage("send_verification_code")}</Button>
       </form>
     </Form>
   );

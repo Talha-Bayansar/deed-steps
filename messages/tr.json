@@ -1,5 +1,8 @@
 {
   "global": {
     "title": "Merhaba dünya!"
+  },
+  "SignInPage": {
+    "title": "Giriş yap"
   }
 }

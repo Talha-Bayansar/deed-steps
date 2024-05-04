@@ -17,16 +17,32 @@ import { signin } from "../service";
 import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "../hooks/useSession";
-
-const formSchema = z.object({
-  code: z.string().min(8).max(8),
-});
+import { useTranslations } from "next-intl";
 
 type Props = {
   email: string;
 };
 
 export const VerificationCodeForm = ({ email }: Props) => {
+  const t = useTranslations("global");
+  const formSchema = z.object({
+    code: z
+      .string()
+      .min(
+        8,
+        t("errors.min", {
+          amount: 8,
+        })
+      )
+      .max(
+        8,
+        t("errors.max", {
+          amount: 8,
+        })
+      ),
+  });
+
+  const tSignInPage = useTranslations("SignInPage");
   const router = useRouter();
   const { refetch } = useSession();
   const mutation = useMutation({
@@ -58,7 +74,7 @@ export const VerificationCodeForm = ({ email }: Props) => {
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Verification Code</FormLabel>
+              <FormLabel>{tSignInPage("verification_code")}</FormLabel>
               <FormControl>
                 <Input placeholder="XXXX XXXX" {...field} />
               </FormControl>
@@ -66,7 +82,7 @@ export const VerificationCodeForm = ({ email }: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit verification code</Button>
+        <Button type="submit">{t("submit")}</Button>
       </form>
     </Form>
   );

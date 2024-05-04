@@ -1,5 +1,16 @@
 {
   "global": {
-    "title": "Hello world!"
+    "errors": {
+      "min": "Minimum {amount} characters",
+      "max": "Maximum {amount} characters",
+      "email": "Not a valid email address"
+    },
+    "email": "Email",
+    "submit": "Submit"
+  },
+  "SignInPage": {
+    "title": "Sign In",
+    "verification_code": "Verification Code",
+    "send_verification_code": "Send verification code"
   }
 }

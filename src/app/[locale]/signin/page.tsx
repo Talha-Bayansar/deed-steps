@@ -4,6 +4,7 @@ import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
 import { Header } from "@/components/layout/Heading";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   searchParams: {
@@ -11,13 +12,15 @@ type Props = {
   };
 };
 
-const Page = ({ searchParams }: Props) => {
+const Page = async ({ searchParams }: Props) => {
+  const t = await getTranslations("SignInPage");
   const email = searchParams.email;
+
   return (
     <PageWrapper hasNavigationBar={false}>
       <Main>
         <Header>
-          <Title>Sign in</Title>
+          <Title>{t("title")}</Title>
         </Header>
         {email ? <VerificationCodeForm email={email} /> : <SigninForm />}
       </Main>
