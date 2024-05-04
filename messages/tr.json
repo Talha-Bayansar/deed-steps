@@ -1,134 +1,134 @@
 {
   "global": {
     "errors": {
-      "min": "Minimum {amount} characters",
-      "max": "Maximum {amount} characters",
-      "min_value": "Minimum value is {value}",
-      "max_value": "Maximum value is {value}",
-      "email": "Not a valid email address"
+      "min": "En az {amount} karakter",
+      "max": "En fazla {amount} karakter",
+      "min_value": "Minimum değer {value}",
+      "max_value": "Maksimum değer {value}",
+      "email": "Geçerli bir e-posta adresi değil"
     },
     "days": {
       "0": {
-        "short": "Mon",
-        "long": "Monday"
+        "short": "Pzt",
+        "long": "Pazartesi"
       },
       "1": {
-        "short": "Tue",
-        "long": "Tuesday"
+        "short": "Sal",
+        "long": "Salı"
       },
       "2": {
-        "short": "Wed",
-        "long": "Wednesday"
+        "short": "Çar",
+        "long": "Çarşamba"
       },
       "3": {
-        "short": "Thu",
-        "long": "Thursday"
+        "short": "Per",
+        "long": "Perşembe"
       },
       "4": {
-        "short": "Fri",
-        "long": "Friday"
+        "short": "Cum",
+        "long": "Cuma"
       },
       "5": {
-        "short": "Sat",
-        "long": "Saturday"
+        "short": "Cmt",
+        "long": "Cumartesi"
       },
       "6": {
-        "short": "Sun",
-        "long": "Sunday"
+        "short": "Paz",
+        "long": "Pazar"
       }
     },
-    "email": "Email",
-    "home": "Home",
-    "groups": "Groups",
-    "settings": "Settings",
-    "submit": "Submit",
-    "continue": "Continue",
-    "cancel": "Cancel",
-    "first_name": "First name",
-    "last_name": "Last name",
-    "status": "Status",
-    "owner": "Owner",
-    "member": "Member",
-    "members": "Members",
-    "deeds": "Deeds",
-    "delete": "Delete",
-    "reward": "Reward"
+    "email": "E-posta",
+    "home": "Anasayfa",
+    "groups": "Gruplar",
+    "settings": "Ayarlar",
+    "submit": "Onayla",
+    "continue": "Devam et",
+    "cancel": "İptal et",
+    "first_name": "İsim",
+    "last_name": "Soyisim",
+    "status": "Durum",
+    "owner": "Sahibi",
+    "member": "Üye",
+    "members": "Üyeler",
+    "deeds": "Ameller",
+    "delete": "Sil",
+    "reward": "Ödül"
   },
   "HomePage": {
-    "title": "My Deeds",
-    "no_deeds": "You don't have any deeds yet."
+    "title": "Amellerim",
+    "no_deeds": "Henüz hiç ameliniz yok."
   },
   "GroupsPage": {
-    "title": "Groups",
-    "no_groups": "You are not a member of any group yet.",
-    "create_group": "Create group"
+    "title": "Gruplar",
+    "no_groups": "Henüz herhangi bir gruba üye değilsiniz.",
+    "create_group": "Grup oluştur"
   },
   "CreateGroupPage": {
-    "title": "Create group",
-    "group_name": "Group name"
+    "title": "Grup oluştur",
+    "group_name": "Grup ismi"
   },
   "GroupDetailsPage": {
-    "no_group": "This group could not be found.",
-    "no_members": "This group does not have any members yet.",
-    "delete_modal_title": "Are you sure you want to remove this user from the group?",
-    "delete_modal_description": "This action cannot be undone. This will permanently delete all data associated with this user.",
-    "no_deeds": "This group does not have any deeds yet."
+    "no_group": "Bu grup bulunamadı.",
+    "no_members": "Bu grubun henüz bir üyesi bulunmamaktadır.",
+    "delete_modal_title": "Bu kullanıcıyı gruptan çıkarmak istediğinizden emin misiniz?",
+    "delete_modal_description": "Bu eylem geri alınamaz. Bu, bu kullanıcıyla ilişkili tüm verileri kalıcı olarak silecektir.",
+    "no_deeds": "Bu grubun henüz amelleri bulunmamaktadır."
   },
   "GroupSettingsPage": {
-    "title": "Settings",
-    "change_name": "Change name",
-    "invite_success": "User successfully invited",
-    "invite_user": "Invite user",
-    "email_user": "Email of user",
-    "manage_deeds": "Manage deeds",
-    "delete_group": "Delete group",
-    "delete_group_modal_title": "Are you sure you want to delete this group?",
-    "delete_group_modal_description": "This action cannot be undone. All data linked to this group will be lost."
+    "title": "Ayarlar",
+    "change_name": "İsim değiştir",
+    "invite_success": "Kullanıcı başarıyla davet edildi",
+    "invite_user": "Kullanıcı davet et",
+    "email_user": "Kullanıcı e-postası",
+    "manage_deeds": "Amelleri yönet",
+    "delete_group": "Grubu sil",
+    "delete_group_modal_title": "Bu grubu silmek istediğinizden emin misiniz?",
+    "delete_group_modal_description": "Bu eylem geri alınamaz. Bu gruba bağlı tüm veriler kaybolacaktır."
   },
   "DeedTemplatesPage": {
-    "title": "Deed templates",
-    "no_group": "The group you are looking for does not exist.",
-    "no_deed_templates": "It looks like this group does not have any deed templates yet.",
-    "deed_template_name": "Deed template name"
+    "title": "Amel şablonları",
+    "no_group": "Aradığınız grup mevcut değil.",
+    "no_deed_templates": "Görünüşe göre bu grupta henüz herhangi bir amel şablonu yok.",
+    "deed_template_name": "Amel şablonu ismi"
   },
   "EditDeedTemplatePage": {
-    "title": "Edit deed template",
-    "status_name": "Status name",
-    "color": "Color",
-    "reward": "Reward",
-    "no_deed_template": "This deed template could not be found.",
-    "change_name": "Change name",
-    "statuses": "Statuses",
-    "delete_deed_status_modal_title": "Are you sure you want to delete this deed status?",
-    "delete_deed_status_modal_description": "This deed status and all depending data will be permanently deleted.",
-    "delete_deed_template_modal_title": "Are you sure you want to delete this deed template?",
-    "delete_deed_template_modal_description": "This deed template and all related statuses will be permanently deleted."
+    "title": "Amel şablonunu düzenle",
+    "status_name": "Durum ismi",
+    "color": "Renk",
+    "reward": "Ödül",
+    "no_deed_template": "Bu amel şablonu bulunamadı.",
+    "change_name": "İsim değiştir",
+    "statuses": "Durumlar",
+    "delete_deed_status_modal_title": "Bu amel durumunu silmek istediğinizden emin misiniz?",
+    "delete_deed_status_modal_description": "Bu amel durumu ve buna bağlı tüm veriler kalıcı olarak silinecektir.",
+    "delete_deed_template_modal_title": "Bu amel şablonunu silmek istediğinizden emin misiniz?",
+    "delete_deed_template_modal_description": "Bu amel şablonu ve ilgili tüm durumlar kalıcı olarak silinecektir."
   },
   "InvitationsPage": {
-    "title": "Invitations",
-    "no_invitations": "It looks like you don't have any invitations."
+    "title": "Davetiyeler",
+    "no_invitations": "Görünüşe göre hiç davetiyeniz yok."
   },
   "SignInPage": {
-    "title": "Sign In",
-    "verification_code": "Verification Code",
-    "send_verification_code": "Send verification code"
+    "title": "Giriş yap",
+    "verification_code": "Doğrulama Kodu",
+    "send_verification_code": "Doğrulama kodu gönder"
   },
   "OfflinePage": {
-    "description": "It looks like you are offline."
+    "description": "Görünüşe göre çevrimdışısınız."
   },
   "AuthWrapper": {
-    "title": "Authenticating",
-    "description": "Please wait while we verify your credentials."
+    "title": "Kimlik Doğrulama",
+    "description": "Kimlik bilgilerinizi doğrularken lütfen bekleyin."
   },
   "SettingsPage": {
-    "title": "Settings",
-    "change_name": "Change name",
-    "change_name_success": "Successfully updated name.",
-    "sign_out": "Sign out",
-    "sign_out_modal_title": "Are you sure you want to sign out?",
-    "sign_out_modal_description": "You will be signed out of your account.",
-    "change_language": "Change language",
-    "language_description": "Select your preferred language for the app.",
-    "select_language": "Select language"
+    "title": "Ayarlar",
+    "change_name": "İsim değiştir",
+    "change_name_success": "İsim başarıyla güncellendi.",
+    "sign_out": "Çıkış yap",
+    "sign_out_modal_title": "Çıkış yapmak istediğinize emin misiniz?",
+    "sign_out_modal_description": "Hesabınızdan çıkış yapacaksınız.",
+    "change_language": "Dili değiştir",
+    "language_description": "Uygulama için tercih ettiğiniz dili seçin.",
+    "select_language": "Dil seçin"
   }
 }
