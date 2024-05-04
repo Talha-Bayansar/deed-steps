@@ -14,6 +14,7 @@ import { Users, Settings, Coins } from "lucide-react";
 import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { BackButton } from "@/components/BackButton";
 
 export const GroupDetailsView = () => {
   const t = useTranslations("global");
@@ -30,7 +31,10 @@ export const GroupDetailsView = () => {
   return (
     <>
       <Header>
-        <Title>{data.name}</Title>
+        <div className="flex items-center">
+          <BackButton href={routes.groups.root} />
+          <Title>{data.name}</Title>
+        </div>
         <div className="flex items-center">
           <div className="flex items-center gap-2 bg-gray-50 rounded p-2">
             <Coins className="text-yellow-400" /> {points?.points ?? "?"}

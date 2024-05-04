@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import { CreateDeedTemplate } from "./CreateDeedTemplate";
 import { Header } from "@/components/layout/Heading";
 import { useTranslations } from "next-intl";
+import { BackButton } from "@/components/BackButton";
 
 export const DeedTemplatesView = () => {
   const tDeedTemplatesPage = useTranslations("DeedTemplatesPage");
@@ -31,10 +32,13 @@ export const DeedTemplatesView = () => {
   return (
     <>
       <Header>
-        <Title>
-          {tDeedTemplatesPage("title")}:{" "}
-          <span className="text-primary">{group.name}</span>
-        </Title>
+        <div className="flex items-center">
+          <BackButton href={routes.groups.id(groupId).settings.root} />
+          <Title>
+            {tDeedTemplatesPage("title")}:{" "}
+            <span className="text-primary">{group.name}</span>
+          </Title>
+        </div>
         <CreateDeedTemplate />
       </Header>
       {!deedTemplates || isArrayEmpty(deedTemplates) ? (
