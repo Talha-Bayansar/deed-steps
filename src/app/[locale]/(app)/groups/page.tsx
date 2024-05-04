@@ -7,12 +7,15 @@ import { MyGroupsView } from "@/groups/components/MyGroupsView";
 import { routes } from "@/lib/routes";
 import { Inbox, Plus } from "lucide-react";
 import { Link } from "@/navigation";
+import { getTranslations } from "next-intl/server";
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations("GroupsPage");
+
   return (
     <Main>
       <Header>
-        <Title>Groups</Title>
+        <Title>{t("title")}</Title>
         <div className="flex items-center">
           <IconButton className="relative">
             <Link href={routes.groups.invitations.root}>

@@ -42,12 +42,20 @@
     "submit": "Submit",
     "continue": "Continue",
     "cancel": "Cancel",
-    "first_name": "First Name",
-    "last_name": "Last Name"
+    "first_name": "First name",
+    "last_name": "Last name",
+    "status": "Status",
+    "owner": "Owner",
+    "member": "Member"
   },
   "HomePage": {
     "title": "My Deeds",
     "no_deeds": "You don't have any deeds yet."
+  },
+  "GroupsPage": {
+    "title": "Groups",
+    "no_groups": "You are not a member of any group yet.",
+    "create_group": "Create group"
   },
   "SignInPage": {
     "title": "Sign In",
