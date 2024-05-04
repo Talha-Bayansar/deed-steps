@@ -4,12 +4,15 @@ import { View } from "@/components/layout/View";
 import { SignOutButton } from "./_components/SignOutButton";
 import { ChangeName } from "./_components/ChangeName";
 import { Header } from "@/components/layout/Heading";
+import { getTranslations } from "next-intl/server";
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations("SettingsPage");
+
   return (
     <Main>
       <Header>
-        <Title>Settings</Title>
+        <Title>{t("title")}</Title>
       </Header>
       <View className="gap-0">
         <ChangeName />

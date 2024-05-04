@@ -16,8 +16,11 @@ import {
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 export const SignOutButton = () => {
+  const t = useTranslations("global");
+  const tSettingsPage = useTranslations("SettingsPage");
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: async () => await signout(),
@@ -30,22 +33,22 @@ export const SignOutButton = () => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <ListTile className="text-destructive" type="submit">
-          Sign out
+          {tSettingsPage("sign_out")}
         </ListTile>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to sign out?
+            {tSettingsPage("sign_out_modal_title")}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You will be signed out of your account.
+            {tSettingsPage("sign_out_modal_description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => mutation.mutate()}>
-            Continue
+            {t("continue")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

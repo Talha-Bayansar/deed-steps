@@ -8,10 +8,12 @@ import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { type Nullable } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export const ChangeName = () => {
+  const t = useTranslations("SettingsPage");
   const { data, refetch } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const mutation = useMutation({
@@ -19,7 +21,7 @@ export const ChangeName = () => {
       await updateUser(userDto),
     onSuccess: async () => {
       await refetch();
-      toast.success("Successfully updated name");
+      toast.success(t("change_name_success"));
       setIsOpen(false);
     },
   });
@@ -27,7 +29,7 @@ export const ChangeName = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>Change name</ListTile>
+        <ListTile>{t("change_name")}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <div className="p-8">

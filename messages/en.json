@@ -9,7 +9,9 @@
     "home": "Home",
     "groups": "Groups",
     "settings": "Settings",
-    "submit": "Submit"
+    "submit": "Submit",
+    "continue": "Continue",
+    "cancel": "Cancel"
   },
   "SignInPage": {
     "title": "Sign In",
@@ -22,5 +24,13 @@
   "AuthWrapper": {
     "title": "Authenticating",
     "description": "Please wait while we verify your credentials."
+  },
+  "SettingsPage": {
+    "title": "Settings",
+    "change_name": "Change name",
+    "change_name_success": "Successfully updated name.",
+    "sign_out": "Sign out",
+    "sign_out_modal_title": "Are you sure you want to sign out?",
+    "sign_out_modal_description": "You will be signed out of your account."
   }
 }
