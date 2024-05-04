@@ -11,8 +11,10 @@ import { startOfToday } from "date-fns";
 import { useState } from "react";
 import { useMyDeedsByDate } from "../hooks/useMyDeedsByDate";
 import { DeedTile } from "./DeedTile";
+import { useTranslations } from "next-intl";
 
 export const MyDeedTemplatesView = () => {
+  const tHomePage = useTranslations("HomePage");
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState<Date>(today);
   const { data, isLoading } = useMyDeedTemplates();
@@ -22,9 +24,7 @@ export const MyDeedTemplatesView = () => {
   if (isLoading) return <MyDeedTemplatesViewSkeleton />;
 
   if (!data || isArrayEmpty(data))
-    return (
-      <EmptyView Icon={ListChecks} message="You don't have any deeds yet." />
-    );
+    return <EmptyView Icon={ListChecks} message={tHomePage("no_deeds")} />;
 
   return (
     <View>

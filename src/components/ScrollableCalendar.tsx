@@ -3,7 +3,6 @@
 import {
   eachDayOfInterval,
   endOfMonth,
-  format,
   isSameDay,
   isToday,
   startOfMonth,
@@ -14,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn, getDayOfWeek } from "@/lib/utils";
 import { View } from "./layout/View";
+import { useFormatter, useTranslations } from "next-intl";
 
 type Props = {
   selectedDay: Date;
@@ -21,7 +21,9 @@ type Props = {
 };
 
 export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const format = useFormatter();
+  const t = useTranslations("global");
+  const days = useTranslations("global.days");
   const today = startOfToday();
   const start = startOfMonth(today);
   const end = endOfMonth(today);
@@ -30,6 +32,25 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
     end,
   });
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const getDay = (index: number) => {
+    switch (index) {
+      case 0:
+        return days("0.short");
+      case 1:
+        return days("1.short");
+      case 2:
+        return days("2.short");
+      case 3:
+        return days("3.short");
+      case 4:
+        return days("4.short");
+      case 5:
+        return days("5.short");
+      case 6:
+        return days("6.short");
+    }
+  };
 
   useEffect(() => {
     // Scroll to the selected day when it changes
@@ -44,8 +65,8 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
 
   return (
     <View className="w-full gap-0">
-      <div className="text-xl font-medium flex items-center">
-        {format(today, "MMMM")}
+      <div className="text-xl font-medium flex items-center capitalize">
+        {format.dateTime(today, { month: "long" })}
       </div>
       <ScrollArea ref={scrollContainerRef} className="w-full pb-2">
         <div className="flex">
@@ -66,7 +87,7 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
                   "text-primary": isToday(day),
                 })}
               >
-                {days[getDayOfWeek(day)]}
+                {getDay(getDayOfWeek(day))}
               </span>
               <span
                 className={cn("text-lg font-normal", {

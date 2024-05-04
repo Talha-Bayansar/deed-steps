@@ -5,6 +5,36 @@
       "max": "Maximum {amount} characters",
       "email": "Not a valid email address"
     },
+    "days": {
+      "0": {
+        "short": "Mon",
+        "long": "Monday"
+      },
+      "1": {
+        "short": "Tue",
+        "long": "Tuesday"
+      },
+      "2": {
+        "short": "Wed",
+        "long": "Wednesday"
+      },
+      "3": {
+        "short": "Thu",
+        "long": "Thursday"
+      },
+      "4": {
+        "short": "Fri",
+        "long": "Friday"
+      },
+      "5": {
+        "short": "Sat",
+        "long": "Saturday"
+      },
+      "6": {
+        "short": "Sun",
+        "long": "Sunday"
+      }
+    },
     "email": "Email",
     "home": "Home",
     "groups": "Groups",
@@ -14,6 +44,10 @@
     "cancel": "Cancel",
     "first_name": "First Name",
     "last_name": "Last Name"
+  },
+  "HomePage": {
+    "title": "My Deeds",
+    "no_deeds": "You don't have any deeds yet."
   },
   "SignInPage": {
     "title": "Sign In",
