@@ -13,8 +13,10 @@ import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 import { CreateDeedTemplate } from "./CreateDeedTemplate";
 import { Header } from "@/components/layout/Heading";
+import { useTranslations } from "next-intl";
 
 export const DeedTemplatesView = () => {
+  const tDeedTemplatesPage = useTranslations("DeedTemplatesPage");
   const { groupId } = useParams<{ groupId: string }>();
   const { data: group, isLoading: isLoadingGroup } = useGroupById(groupId);
   const { data: deedTemplates, isLoading: isLoadingDeedTemplates } =
@@ -24,25 +26,21 @@ export const DeedTemplatesView = () => {
     return <DeedTemplatesViewSkeleton />;
 
   if (!group)
-    return (
-      <EmptyView
-        Icon={Users}
-        message="The group you are looking for does not exist."
-      />
-    );
+    return <EmptyView Icon={Users} message={tDeedTemplatesPage("no_group")} />;
 
   return (
     <>
       <Header>
         <Title>
-          Deed templates: <span className="text-primary">{group.name}</span>
+          {tDeedTemplatesPage("title")}:{" "}
+          <span className="text-primary">{group.name}</span>
         </Title>
         <CreateDeedTemplate />
       </Header>
       {!deedTemplates || isArrayEmpty(deedTemplates) ? (
         <EmptyView
           Icon={ListChecks}
-          message="It looks like this group does not have any deed templates yet."
+          message={tDeedTemplatesPage("no_deed_templates")}
         />
       ) : (
         <View className="gap-0">

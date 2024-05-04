@@ -14,14 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { DeedTemplate } from "../models";
-
-const formSchema = z.object({
-  name: z.string().min(3).max(50),
-});
+import { useTranslations } from "next-intl";
 
 type Props = {
   deedTemplate?: DeedTemplate;
-  onSubmit: (values: z.infer<typeof formSchema>) => any;
+  onSubmit: (values: { name: string }) => any;
   isLoading?: boolean;
 };
 
@@ -30,6 +27,15 @@ export const DeedTemplateForm = ({
   onSubmit,
   isLoading = false,
 }: Props) => {
+  const t = useTranslations("global");
+  const tDeedTemplatesPage = useTranslations("DeedTemplatesPage");
+
+  const formSchema = z.object({
+    name: z
+      .string()
+      .min(3, t("errors.min", { amount: 3 }))
+      .max(50, t("errors.max", { amount: 50 })),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,16 +54,19 @@ export const DeedTemplateForm = ({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Deed template name</FormLabel>
+              <FormLabel>{tDeedTemplatesPage("deed_template_name")}</FormLabel>
               <FormControl>
-                <Input placeholder="Deed template name" {...field} />
+                <Input
+                  placeholder={tDeedTemplatesPage("deed_template_name")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" disabled={isLoading}>
-          Submit
+          {t("submit")}
         </Button>
       </form>
     </Form>
