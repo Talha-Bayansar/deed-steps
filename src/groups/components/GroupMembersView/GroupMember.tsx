@@ -42,7 +42,7 @@ export const GroupMember = ({
     <Drawer open={isOpen} onOpenChange={setIsOpen} shouldScaleBackground>
       <DrawerTrigger asChild>
         <ListTile isClickable={isOwner} withSeparator={!isLast}>
-          <View className="items-start gap-1">
+          <View className="items-start gap-0">
             <div>
               {member.firstName} {member.lastName}
             </div>
