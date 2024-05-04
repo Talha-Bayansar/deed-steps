@@ -5,12 +5,14 @@ import { DeleteGroup } from "./_components/DeleteGroup";
 import { InviteUser } from "./_components/InviteUser";
 import { ManageDeeds } from "./_components/ManageDeeds";
 import { Header } from "@/components/layout/Heading";
+import { getTranslations } from "next-intl/server";
 
-const Page = () => {
+const Page = async () => {
+  const t = await getTranslations("GroupSettingsPage");
   return (
     <Main>
       <Header>
-        <Title>Settings</Title>
+        <Title>{t("title")}</Title>
       </Header>
       <ChangeName />
       <InviteUser />

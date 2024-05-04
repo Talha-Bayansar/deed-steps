@@ -2,17 +2,19 @@
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { UpdateGroupForm } from "@/groups/components/UpdateGroupForm";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export const ChangeName = () => {
+  const t = useTranslations("GroupSettingsPage");
   const { groupId } = useParams<{ groupId: string }>();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>Change name</ListTile>
+        <ListTile>{t("change_name")}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <div className="p-8">

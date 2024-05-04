@@ -18,8 +18,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export const DeleteGroup = () => {
+  const t = useTranslations("global");
+  const tGroupSettingsPage = useTranslations("GroupSettingsPage");
   const { groupId } = useParams<{ groupId: string }>();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -34,22 +37,23 @@ export const DeleteGroup = () => {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <ListTile className="text-destructive">Delete group</ListTile>
+        <ListTile className="text-destructive">
+          {tGroupSettingsPage("delete_group")}
+        </ListTile>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete this group?
+            {tGroupSettingsPage("delete_group_modal_title")}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. All data linked to this group will be
-            lost.
+            {tGroupSettingsPage("delete_group_modal_description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => mutation.mutate()}>
-            Continue
+            {t("continue")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

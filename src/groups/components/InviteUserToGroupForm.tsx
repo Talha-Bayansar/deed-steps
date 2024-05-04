@@ -13,13 +13,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  email: z.string().email().min(5).max(50),
-});
+import { useTranslations } from "next-intl";
 
 type Props = {
-  onSubmit: (values: z.infer<typeof formSchema>) => any;
+  onSubmit: (values: { email: string }) => any;
   isLoading?: boolean;
 };
 
@@ -27,6 +24,15 @@ export const InviteUserToGroupForm = ({
   onSubmit,
   isLoading = false,
 }: Props) => {
+  const t = useTranslations("global");
+  const tGroupSettingsPage = useTranslations("GroupSettingsPage");
+  const formSchema = z.object({
+    email: z
+      .string()
+      .email(t("errors.email"))
+      .min(5, t("errors.min", { amount: 5 }))
+      .max(50, t("errors.max", { amount: 50 })),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,16 +51,19 @@ export const InviteUserToGroupForm = ({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
-                <Input placeholder="Email of user" {...field} />
+                <Input
+                  placeholder={tGroupSettingsPage("email_user")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" disabled={isLoading}>
-          Submit
+          {t("submit")}
         </Button>
       </form>
     </Form>
