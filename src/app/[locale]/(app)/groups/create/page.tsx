@@ -5,11 +5,11 @@ import { CreateGroupForm } from "@/groups/components/CreateGroupForm";
 import { getTranslations } from "next-intl/server";
 
 const Page = async () => {
-  const t = await getTranslations("GroupsPage");
+  const t = await getTranslations("CreateGroupPage");
   return (
     <Main>
       <Header>
-        <Title>{t("create_group")}</Title>
+        <Title>{t("title")}</Title>
       </Header>
       <CreateGroupForm />
     </Main>

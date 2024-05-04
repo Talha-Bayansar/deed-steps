@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "./ui/button";
+import { useTranslations } from "next-intl";
 
 type Props = {
   label?: string;
@@ -21,15 +22,16 @@ type Props = {
 
 export const DeleteButton = ({
   deleteFn,
-  label = "Delete",
+  label,
   modalTitle,
   modalDescription,
 }: Props) => {
+  const t = useTranslations("global");
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button className="w-full" variant="destructive">
-          {label}
+          {label ?? t("delete")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

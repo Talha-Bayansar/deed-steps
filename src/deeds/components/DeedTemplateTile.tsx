@@ -5,7 +5,6 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import type { DeedStatus, DeedTemplate } from "../models";
 import { useState } from "react";
 import { View } from "@/components/layout/View";
-import { useGroupById } from "@/groups/hooks/useGroupById";
 import { isLastOfArray } from "@/lib/utils";
 import { DeedStatusTile } from "./DeedStatusTile";
 

@@ -7,12 +7,14 @@ import { EmptyView } from "@/components/EmptyView";
 import { ListChecks } from "lucide-react";
 import { DeedTemplateTile } from "./DeedTemplateTile";
 import { ListTileSkeleton } from "@/components/ListTile";
+import { useTranslations } from "next-intl";
 
 type Props = {
   groupId: string;
 };
 
 export const GroupDeedTemplatesView = ({ groupId }: Props) => {
+  const tGroupDetailsPage = useTranslations("GroupDetailsPage");
   const { data, isLoading } = useDeedTemplatesByGroupId(groupId);
 
   if (isLoading) return <GroupDeedTemplatesViewSkeleton />;
@@ -20,10 +22,7 @@ export const GroupDeedTemplatesView = ({ groupId }: Props) => {
   if (!data || isArrayEmpty(data))
     return (
       <div className="flex flex-col h-full">
-        <EmptyView
-          Icon={ListChecks}
-          message="This group does not have any deeds yet."
-        />
+        <EmptyView Icon={ListChecks} message={tGroupDetailsPage("no_deeds")} />
       </div>
     );
 

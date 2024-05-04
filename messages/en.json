@@ -46,7 +46,11 @@
     "last_name": "Last name",
     "status": "Status",
     "owner": "Owner",
-    "member": "Member"
+    "member": "Member",
+    "members": "Members",
+    "deeds": "Deeds",
+    "delete": "Delete",
+    "reward": "Reward"
   },
   "HomePage": {
     "title": "My Deeds",
@@ -54,9 +58,19 @@
   },
   "GroupsPage": {
     "title": "Groups",
-    "group_name": "Group name",
     "no_groups": "You are not a member of any group yet.",
     "create_group": "Create group"
+  },
+  "CreateGroupPage": {
+    "title": "Create group",
+    "group_name": "Group name"
+  },
+  "GroupDetailsPage": {
+    "no_group": "This group could not be found.",
+    "no_members": "This group does not have any members yet.",
+    "delete_modal_title": "Are you sure you want to remove this user from the group?",
+    "delete_modal_description": "This action cannot be undone. This will permanently delete all data associated with this user.",
+    "no_deeds": "This group does not have any deeds yet."
   },
   "InvitationsPage": {
     "title": "Invitations",

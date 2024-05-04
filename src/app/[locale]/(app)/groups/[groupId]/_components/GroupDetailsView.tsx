@@ -13,8 +13,11 @@ import { routes } from "@/lib/routes";
 import { Users, Settings, Coins } from "lucide-react";
 import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const GroupDetailsView = () => {
+  const t = useTranslations("global");
+  const tGroupDetailspage = useTranslations("GroupDetailsPage");
   const { groupId } = useParams<{ groupId: string }>();
   const { data, isLoading } = useGroupById(groupId);
   const { data: points } = useGroupPointsByGroupId(Number(groupId));
@@ -22,7 +25,7 @@ export const GroupDetailsView = () => {
   if (isLoading) return <GroupDetailsViewSkeleton />;
 
   if (!data)
-    return <EmptyView Icon={Users} message="This group could not be found." />;
+    return <EmptyView Icon={Users} message={tGroupDetailspage("no_group")} />;
 
   return (
     <>
@@ -43,8 +46,8 @@ export const GroupDetailsView = () => {
       </Header>
       <Tabs className="flex-grow" defaultValue="members">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="members">Members</TabsTrigger>
-          <TabsTrigger value="deeds">Deeds</TabsTrigger>
+          <TabsTrigger value="members">{t("members")}</TabsTrigger>
+          <TabsTrigger value="deeds">{t("deeds")}</TabsTrigger>
         </TabsList>
         <TabsContent className="h-full" value="members">
           <GroupMembersView groupId={groupId} />

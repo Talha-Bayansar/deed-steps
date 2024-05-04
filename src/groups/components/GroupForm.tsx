@@ -24,7 +24,7 @@ type Props = {
 
 export const GroupForm = ({ group, onSubmit, isLoading = false }: Props) => {
   const t = useTranslations("global");
-  const tGroupsPage = useTranslations("GroupsPage");
+  const tGroupsPage = useTranslations("CreateGroupPage");
 
   const formSchema = z.object({
     name: z

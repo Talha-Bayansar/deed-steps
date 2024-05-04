@@ -5,6 +5,7 @@ import type { DeedStatus } from "../models";
 import { Badge } from "@/components/ui/badge";
 import { View } from "@/components/layout/View";
 import { ButtonProps } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 type Props = {
   status: DeedStatus;
@@ -13,6 +14,7 @@ type Props = {
 } & ButtonProps;
 
 export const DeedStatusTile = ({ status, ...rest }: Props) => {
+  const t = useTranslations("global");
   return (
     <ListTile {...rest}>
       <div className="flex items-center gap-2">
@@ -24,7 +26,9 @@ export const DeedStatusTile = ({ status, ...rest }: Props) => {
         />
         <View className="gap-0 items-start">
           <span>{status.name}</span>
-          <span className="text-gray-400 text-xs">Reward: {status.reward}</span>
+          <span className="text-gray-400 text-xs">
+            {t("reward")}: {status.reward}
+          </span>
         </View>
       </div>
     </ListTile>

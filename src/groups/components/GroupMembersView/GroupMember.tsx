@@ -8,6 +8,7 @@ import { useGroupById } from "../../hooks/useGroupById";
 import { DeleteButton } from "@/components/DeleteButton";
 import { View } from "@/components/layout/View";
 import { ListTile } from "@/components/ListTile";
+import { useTranslations } from "next-intl";
 
 type Props = {
   member: User;
@@ -22,6 +23,7 @@ export const GroupMember = ({
   isOwner,
   isLast = false,
 }: Props) => {
+  const tGroupDetailsPage = useTranslations("GroupDetailsPage");
   const [isOpen, setIsOpen] = useState(false);
   const { refetch } = useGroupById(groupId.toString());
   const mutation = useMutation({
@@ -44,9 +46,8 @@ export const GroupMember = ({
           {isOwner && (
             <DeleteButton
               deleteFn={() => mutation.mutate()}
-              modalTitle="Are you sure you want to remove this user from the group?"
-              modalDescription="This action cannot be undone. This will permanently delete all
-          data associated with this user."
+              modalTitle={tGroupDetailsPage("delete_modal_title")}
+              modalDescription={tGroupDetailsPage("delete_modal_description")}
             />
           )}
         </View>
