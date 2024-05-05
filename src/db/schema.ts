@@ -91,6 +91,18 @@ export const groupPointsTable = sqliteTable("group_points", {
     .references(() => userTable.id),
   points: integer("points").notNull(),
 });
+
+export const transactionTable = sqliteTable("transaction", {
+  id: integer("id").primaryKey(),
+  groupId: integer("group_id")
+    .notNull()
+    .references(() => groupTable.id),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+  amount: integer("points").notNull(),
+});
+
 // Junction table for users and groups
 export const userToGroupTable = sqliteTable(
   "user_to_group",
@@ -114,6 +126,7 @@ export const usersRelations = relations(userTable, ({ many }) => ({
   invitations: many(invitationTable),
   deeds: many(deedTable),
   groupPoints: many(groupPointsTable),
+  transactions: many(transactionTable),
 }));
 
 export const groupsRelations = relations(groupTable, ({ many, one }) => ({
@@ -125,6 +138,7 @@ export const groupsRelations = relations(groupTable, ({ many, one }) => ({
   invitations: many(invitationTable),
   deedTemplates: many(deedTemplateTable),
   groupPoints: many(groupPointsTable),
+  transactions: many(transactionTable),
 }));
 
 export const userToGroupRelations = relations(userToGroupTable, ({ one }) => ({
@@ -194,6 +208,17 @@ export const groupPointsRelations = relations(groupPointsTable, ({ one }) => ({
   }),
   user: one(userTable, {
     fields: [groupPointsTable.userId],
+    references: [userTable.id],
+  }),
+}));
+
+export const transactionRelations = relations(transactionTable, ({ one }) => ({
+  group: one(groupTable, {
+    fields: [transactionTable.groupId],
+    references: [groupTable.id],
+  }),
+  user: one(userTable, {
+    fields: [transactionTable.userId],
     references: [userTable.id],
   }),
 }));
