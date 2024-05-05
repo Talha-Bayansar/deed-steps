@@ -109,7 +109,7 @@ export const DeedStatusForm = ({
               <FormItem>
                 <FormLabel>{tEditDeedTemplatePage("reward")}</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input inputMode="numeric" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

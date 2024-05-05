@@ -76,6 +76,10 @@
     "delete_modal_description": "Deze actie kan niet ongedaan worden. Hierdoor worden alle gegevens van deze gebruiker permanent verwijderd.",
     "no_deeds": "Deze groep heeft nog geen daden."
   },
+  "TransactionPage": {
+    "title": "Transactie",
+    "generate_transaction_link": "Genereer transactielink"
+  },
   "GroupSettingsPage": {
     "title": "Instellingen",
     "change_name": "Naam wijzigen",

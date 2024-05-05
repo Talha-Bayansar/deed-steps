@@ -76,6 +76,10 @@
     "delete_modal_description": "Bu eylem geri alınamaz. Bu, bu kullanıcıyla ilişkili tüm verileri kalıcı olarak silecektir.",
     "no_deeds": "Bu grubun henüz amelleri bulunmamaktadır."
   },
+  "TransactionPage": {
+    "title": "İşlem",
+    "generate_transaction_link": "İşlem bağlantısı oluştur"
+  },
   "GroupSettingsPage": {
     "title": "Ayarlar",
     "change_name": "İsim değiştir",

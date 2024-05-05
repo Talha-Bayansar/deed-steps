@@ -77,7 +77,8 @@
     "no_deeds": "This group does not have any deeds yet."
   },
   "TransactionPage": {
-    "title": "Transaction"
+    "title": "Transaction",
+    "generate_transaction_link": "Generate transaction link"
   },
   "GroupSettingsPage": {
     "title": "Settings",

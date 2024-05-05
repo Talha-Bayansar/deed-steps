@@ -14,6 +14,7 @@ export const routes = {
     id: (groupId: string) => ({
       root: `/groups/${groupId}`,
       settings: { root: `/groups/${groupId}/settings` },
+      transaction: { root: `/groups/${groupId}/transaction` },
       deedTemplates: {
         root: `/groups/${groupId}/deed-templates`,
         id: (deedTemplateId: string) => ({
