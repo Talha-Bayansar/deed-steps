@@ -12,7 +12,7 @@ export const GenerateTransactionLink = () => {
         <ListTile>{t("generate_transaction_link")}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <GenerateTransactionLinkForm />
         </div>
       </DrawerContent>

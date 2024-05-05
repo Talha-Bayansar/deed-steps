@@ -54,7 +54,9 @@
     "delete": "Sil",
     "reward": "Ödül",
     "points": "Puanlar",
-    "duplicate": "Çoğalt"
+    "duplicate": "Çoğalt",
+    "role": "Rol",
+    "generate": "Oluştur"
   },
   "HomePage": {
     "title": "Amellerim",

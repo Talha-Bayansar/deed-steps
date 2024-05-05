@@ -17,7 +17,7 @@ export const GroupCard = ({ group, isOwner }: Props) => {
       <div className="flex flex-col gap-2">
         <CardTitle>{group.name}</CardTitle>
         <CardDescription>
-          {t("status")}: {isOwner ? t("owner") : t("member")}
+          {t("role")}: {isOwner ? t("owner") : t("member")}
         </CardDescription>
       </div>
     </Card>

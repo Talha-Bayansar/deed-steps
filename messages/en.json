@@ -54,7 +54,9 @@
     "delete": "Delete",
     "reward": "Reward",
     "points": "Points",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicate",
+    "role": "Role",
+    "generate": "Generate"
   },
   "HomePage": {
     "title": "My Deeds",

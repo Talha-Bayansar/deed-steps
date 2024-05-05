@@ -80,7 +80,7 @@ export const GenerateTransactionLinkForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">{t("submit")}</Button>
+        <Button type="submit">{t("generate")}</Button>
       </form>
     </Form>
   );

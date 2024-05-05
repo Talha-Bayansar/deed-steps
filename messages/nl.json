@@ -54,7 +54,9 @@
     "delete": "Verwijderen",
     "reward": "Beloning",
     "points": "Punten",
-    "duplicate": "Dupliceren"
+    "duplicate": "Dupliceren",
+    "role": "Rol",
+    "generate": "Genereren"
   },
   "HomePage": {
     "title": "Mijn daden",
