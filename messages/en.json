@@ -78,7 +78,8 @@
   },
   "TransactionPage": {
     "title": "Transaction",
-    "generate_transaction_link": "Generate transaction link"
+    "generate_transaction_link": "Generate transaction link",
+    "no_group": "This group could not be found."
   },
   "GroupSettingsPage": {
     "title": "Settings",

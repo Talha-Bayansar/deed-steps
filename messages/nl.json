@@ -78,7 +78,8 @@
   },
   "TransactionPage": {
     "title": "Transactie",
-    "generate_transaction_link": "Genereer transactielink"
+    "generate_transaction_link": "Genereer transactielink",
+    "no_group": "Deze groep kon niet worden gevonden."
   },
   "GroupSettingsPage": {
     "title": "Instellingen",

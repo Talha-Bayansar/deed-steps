@@ -9,6 +9,7 @@ import {
   groupPointsTable,
   groupTable,
   invitationTable,
+  transactionTable,
   userTable,
   userToGroupTable,
 } from "@/db/schema";
@@ -42,6 +43,8 @@ export async function getGroupById(groupId: number) {
       },
     },
   });
+
+  if (!group) return undefined;
 
   return { ...group, isOwner: user.id === group?.ownerId };
 }
@@ -284,4 +287,41 @@ export async function getGroupPointsByGroupId(groupId: number) {
   });
 
   return points;
+}
+
+export async function createTransaction(groupId: number, amount: number) {
+  const { user } = await validateRequest();
+
+  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+
+  await db.insert(transactionTable).values({
+    userId: user.id,
+    groupId: groupId,
+    amount: amount,
+  });
+
+  const groupPointsUser = await db.query.groupPointsTable.findFirst({
+    where: and(
+      eq(groupPointsTable.groupId, groupId),
+      eq(groupPointsTable.userId, user.id)
+    ),
+  });
+
+  if (!groupPointsUser)
+    throw new DrizzleError({
+      message: "Group points not found",
+    });
+
+  if (groupPointsUser.points < amount)
+    throw new DrizzleError({
+      message: "Not enough points",
+    });
+
+  await db
+    .update(groupPointsTable)
+    .set({
+      points: groupPointsUser.points - amount,
+    })
+    .where(eq(groupPointsTable.id, groupPointsUser.id));
+  return true;
 }

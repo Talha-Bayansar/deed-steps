@@ -78,7 +78,8 @@
   },
   "TransactionPage": {
     "title": "İşlem",
-    "generate_transaction_link": "İşlem bağlantısı oluştur"
+    "generate_transaction_link": "İşlem bağlantısı oluştur",
+    "no_group": "Bu grup bulunamadı."
   },
   "GroupSettingsPage": {
     "title": "Ayarlar",
