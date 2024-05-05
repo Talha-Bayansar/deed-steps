@@ -79,7 +79,9 @@
   "TransactionPage": {
     "title": "İşlem",
     "generate_transaction_link": "İşlem bağlantısı oluştur",
-    "no_group": "Bu grup bulunamadı."
+    "no_group": "Bu grup bulunamadı.",
+    "success": "İşlem başarılı oldu.",
+    "error": "İşlem başarısız oldu.\nYa grup mevcut değil ya da puanlarınız yeterli değil."
   },
   "GroupSettingsPage": {
     "title": "Ayarlar",

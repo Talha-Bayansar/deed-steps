@@ -79,7 +79,9 @@
   "TransactionPage": {
     "title": "Transaction",
     "generate_transaction_link": "Generate transaction link",
-    "no_group": "This group could not be found."
+    "no_group": "This group could not be found.",
+    "success": "Transaction was successful.",
+    "error": "Transaction failed.\nEither the group does not exist or your points are not enough."
   },
   "GroupSettingsPage": {
     "title": "Settings",

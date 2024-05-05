@@ -79,7 +79,9 @@
   "TransactionPage": {
     "title": "Transactie",
     "generate_transaction_link": "Genereer transactielink",
-    "no_group": "Deze groep kon niet worden gevonden."
+    "no_group": "Deze groep kon niet worden gevonden.",
+    "success": "Transactie was succesvol.",
+    "error": "Transactie mislukt.\nOf de groep bestaat niet of je hebt niet genoeg punten."
   },
   "GroupSettingsPage": {
     "title": "Instellingen",
