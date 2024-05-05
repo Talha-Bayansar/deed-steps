@@ -1,5 +1,5 @@
 import { IconButton } from "@/components/IconButton";
-import { Header } from "@/components/layout/Heading";
+import { Heading } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
 import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
@@ -14,7 +14,7 @@ const Page = async () => {
 
   return (
     <Main>
-      <Header>
+      <Heading>
         <Title>{t("title")}</Title>
         <div className="flex items-center">
           <IconButton className="relative">
@@ -29,7 +29,7 @@ const Page = async () => {
             </Link>
           </IconButton>
         </div>
-      </Header>
+      </Heading>
 
       <MyGroupsView />
     </Main>

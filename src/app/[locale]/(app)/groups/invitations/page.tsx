@@ -1,5 +1,5 @@
 import { BackButton } from "@/components/BackButton";
-import { Header } from "@/components/layout/Heading";
+import { Heading } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
 import { MyGroupInvitationsView } from "@/groups/components/MyGroupInvitationsView";
@@ -10,12 +10,12 @@ const Page = async () => {
   const t = await getTranslations("InvitationsPage");
   return (
     <Main>
-      <Header>
+      <Heading>
         <div className="flex items-center">
           <BackButton href={routes.groups.root} />
           <Title>{t("title")}</Title>
         </div>
-      </Header>
+      </Heading>
       <MyGroupInvitationsView />
     </Main>
   );

@@ -1,7 +1,7 @@
 "use client";
 import { EmptyView } from "@/components/EmptyView";
 import { IconButton } from "@/components/IconButton";
-import { Header } from "@/components/layout/Heading";
+import { Heading } from "@/components/layout/Heading";
 import { Title, TitleSkeleton } from "@/components/layout/Title";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -30,7 +30,7 @@ export const GroupDetailsView = () => {
 
   return (
     <>
-      <Header>
+      <Heading>
         <div className="flex items-center">
           <BackButton href={routes.groups.root} />
           <Title>{data.name}</Title>
@@ -47,7 +47,7 @@ export const GroupDetailsView = () => {
             </Link>
           )}
         </div>
-      </Header>
+      </Heading>
       <Tabs className="flex-grow" defaultValue="members">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="members">{t("members")}</TabsTrigger>
@@ -67,9 +67,9 @@ export const GroupDetailsView = () => {
 const GroupDetailsViewSkeleton = () => {
   return (
     <>
-      <Header>
+      <Heading>
         <TitleSkeleton />
-      </Header>
+      </Heading>
       <Skeleton className="w-full h-full" />
     </>
   );

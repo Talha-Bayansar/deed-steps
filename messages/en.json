@@ -76,6 +76,9 @@
     "delete_modal_description": "This action cannot be undone. This will permanently delete all data associated with this user.",
     "no_deeds": "This group does not have any deeds yet."
   },
+  "TransactionPage": {
+    "title": "Transaction"
+  },
   "GroupSettingsPage": {
     "title": "Settings",
     "change_name": "Change name",

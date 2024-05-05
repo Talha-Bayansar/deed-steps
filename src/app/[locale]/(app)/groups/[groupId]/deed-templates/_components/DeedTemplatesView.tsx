@@ -12,7 +12,7 @@ import { ListChecks, Users } from "lucide-react";
 import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 import { CreateDeedTemplate } from "./CreateDeedTemplate";
-import { Header } from "@/components/layout/Heading";
+import { Heading } from "@/components/layout/Heading";
 import { useTranslations } from "next-intl";
 import { BackButton } from "@/components/BackButton";
 
@@ -31,7 +31,7 @@ export const DeedTemplatesView = () => {
 
   return (
     <>
-      <Header>
+      <Heading>
         <div className="flex items-center">
           <BackButton href={routes.groups.id(groupId).settings.root} />
           <Title>
@@ -40,7 +40,7 @@ export const DeedTemplatesView = () => {
           </Title>
         </div>
         <CreateDeedTemplate />
-      </Header>
+      </Heading>
       {!deedTemplates || isArrayEmpty(deedTemplates) ? (
         <EmptyView
           Icon={ListChecks}
@@ -69,9 +69,9 @@ export const DeedTemplatesView = () => {
 const DeedTemplatesViewSkeleton = () => {
   return (
     <>
-      <Header>
+      <Heading>
         <TitleSkeleton />
-      </Header>
+      </Heading>
       <View className="gap-0">
         {generateArray().map((i) => {
           return <ListTileSkeleton key={i} />;

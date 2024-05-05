@@ -3,7 +3,7 @@ import { VerificationCodeForm } from "@/auth/components/VerificationCodeForm";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { Header } from "@/components/layout/Heading";
+import { Heading } from "@/components/layout/Heading";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
@@ -19,9 +19,9 @@ const Page = async ({ searchParams }: Props) => {
   return (
     <PageWrapper hasNavigationBar={false}>
       <Main>
-        <Header>
+        <Heading>
           <Title>{t("title")}</Title>
-        </Header>
+        </Heading>
         {email ? <VerificationCodeForm email={email} /> : <SigninForm />}
       </Main>
     </PageWrapper>
