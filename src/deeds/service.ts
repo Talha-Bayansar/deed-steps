@@ -187,6 +187,44 @@ export async function createDeedTemplate(deedTemplate: DeedTemplateInsert) {
   return true;
 }
 
+export async function duplicateDeedTemplate(
+  deedTemplateId: number,
+  newName: string
+) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  const deedTemplate = await db.query.deedTemplateTable.findFirst({
+    where: eq(deedTemplateTable.id, deedTemplateId),
+    with: {
+      statuses: true,
+    },
+  });
+  if (!deedTemplate)
+    throw new DrizzleError({ message: "Deed template not found" });
+
+  const newDeedTemplateResult = await db
+    .insert(deedTemplateTable)
+    .values({
+      name: newName,
+      groupId: deedTemplate.groupId,
+    })
+    .returning({ id: deedTemplateTable.id });
+  const newDeedTemplate = newDeedTemplateResult[0];
+  const deedStatuses = deedTemplate.statuses.map((status) => ({
+    name: status.name,
+    reward: status.reward,
+    color: status.color,
+    deedTemplateId: newDeedTemplate.id,
+  }));
+  await db.insert(deedStatusTable).values(deedStatuses);
+  return true;
+}
+
 export async function createDeedStatus(deedStatus: DeedStatusInsert) {
   const { user } = await validateRequest();
 

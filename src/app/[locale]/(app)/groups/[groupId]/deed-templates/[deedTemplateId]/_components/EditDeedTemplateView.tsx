@@ -11,6 +11,7 @@ import { ListTileSkeleton } from "@/components/ListTile";
 import { UpdateDeedStatusTile } from "./UpdateDeedStatusTile";
 import { DeleteDeedTemplate } from "./DeleteDeedTemplate";
 import { useTranslations } from "next-intl";
+import { DuplicateDeedTemplate } from "./DuplicateDeedTemplate";
 
 export const EditDeedTemplateView = () => {
   const tEditDeedTemplatePage = useTranslations("EditDeedTemplatePage");
@@ -46,6 +47,7 @@ export const EditDeedTemplateView = () => {
           ))}
         </View>
       </View>
+      <DuplicateDeedTemplate />
       <DeleteDeedTemplate />
     </View>
   );

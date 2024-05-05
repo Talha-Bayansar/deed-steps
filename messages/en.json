@@ -53,7 +53,8 @@
     "deeds": "Deeds",
     "delete": "Delete",
     "reward": "Reward",
-    "points": "Points"
+    "points": "Points",
+    "duplicate": "Duplicate"
   },
   "HomePage": {
     "title": "My Deeds",
