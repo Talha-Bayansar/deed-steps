@@ -141,5 +141,13 @@
     "change_language": "Dili değiştir",
     "language_description": "Uygulama için tercih ettiğiniz dili seçin.",
     "select_language": "Dil seçin"
+  },
+  "AdminWrapper": {
+    "title": "İzinler kontrol ediliyor",
+    "description": "İzinlerinizi kontrol ederken lütfen bekleyin."
+  },
+  "MemberWrapper": {
+    "title": "İzinler kontrol ediliyor",
+    "description": "İzinlerinizi kontrol ederken lütfen bekleyin."
   }
 }

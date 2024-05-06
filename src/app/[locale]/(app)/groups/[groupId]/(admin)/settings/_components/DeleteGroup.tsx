@@ -19,6 +19,8 @@ import { useParams } from "next/navigation";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useMyDeedTemplates } from "@/deeds/hooks/useMyDeedTemplates";
+import { useMyGroups } from "@/groups/hooks/useMyGroups";
 
 export const DeleteGroup = () => {
   const t = useTranslations("global");
@@ -26,9 +28,12 @@ export const DeleteGroup = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { refetch: refetchMyDeedTemplates } = useMyDeedTemplates();
+  const { refetch: refetchMyGroups } = useMyGroups();
   const mutation = useMutation({
     mutationFn: async () => await deleteGroup(Number(groupId)),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Promise.all([refetchMyDeedTemplates(), refetchMyGroups()]);
       setIsOpen(false);
       router.push(routes.groups.root);
     },

@@ -1,24 +1,31 @@
 "use client";
 
+import { useGroupById } from "@/groups/hooks/useGroupById";
 import { routes } from "@/lib/routes";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "@/navigation";
-import { useSession } from "../hooks/useSession";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type Props = {
-  children: JSX.Element;
+  groupId: string;
+  children: React.ReactNode;
 };
 
-export const AuthWrapper = ({ children }: Props) => {
-  const { isLoading } = useSession();
+export const AdminWrapper = ({ groupId, children }: Props) => {
+  const router = useRouter();
+  const { data: group, isLoading: isLoadingGroup } = useGroupById(groupId);
 
-  if (isLoading) return <AuthLoading />;
-  return <AuthRequired>{children}</AuthRequired>;
+  if (isLoadingGroup) return <AdminLoading />;
+
+  if (group?.isOwner) return children;
+
+  router.push(routes.groups.root);
+  return null;
 };
 
-const AuthLoading = () => {
-  const t = useTranslations("AuthWrapper");
+const AdminLoading = () => {
+  const t = useTranslations("AdminWrapper");
+
   return (
     <div className="flex-grow grid place-items-center">
       <div className="p-6 flex flex-col items-center space-y-4 w-full max-w-md">
@@ -33,16 +40,4 @@ const AuthLoading = () => {
       </div>
     </div>
   );
-};
-
-const AuthRequired = ({ children }: Props) => {
-  const router = useRouter();
-  const { data } = useSession();
-
-  if (!data?.user) {
-    router.push(routes.signin.root);
-    return null;
-  }
-
-  return children;
 };

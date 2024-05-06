@@ -141,5 +141,13 @@
     "change_language": "Taal veranderen",
     "language_description": "Selecteer de taal van je voorkeur voor de app.",
     "select_language": "Selecteer taal"
+  },
+  "AdminWrapper": {
+    "title": "Rechten controleren",
+    "description": "Wacht even terwijl we je rechten controleren."
+  },
+  "MemberWrapper": {
+    "title": "Rechten controleren",
+    "description": "Wacht even terwijl we je rechten controleren."
   }
 }

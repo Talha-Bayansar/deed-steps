@@ -117,6 +117,10 @@ export async function deleteGroup(groupId: number) {
     columns: { id: true },
   });
 
+  await db
+    .delete(transactionTable)
+    .where(eq(transactionTable.groupId, groupId));
+
   if (!isArrayEmpty(deedTemplates)) {
     const deedTemplateIds = deedTemplates.map(({ id }) => id);
 

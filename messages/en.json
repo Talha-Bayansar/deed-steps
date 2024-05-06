@@ -141,5 +141,13 @@
     "change_language": "Change language",
     "language_description": "Select your preferred language for the app.",
     "select_language": "Select language"
+  },
+  "AdminWrapper": {
+    "title": "Verifying permissions",
+    "description": "Please wait while we verify your permissions."
+  },
+  "MemberWrapper": {
+    "title": "Verifying permissions",
+    "description": "Please wait while we verify your permissions."
   }
 }

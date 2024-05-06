@@ -1,6 +1,5 @@
 "use client";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
-import { getMyGroups } from "../service";
 import { GroupCard, GroupCardSkeleton } from "./GroupCard";
 import { View } from "@/components/layout/View";
 import { EmptyView } from "@/components/EmptyView";
@@ -8,16 +7,13 @@ import { Users } from "lucide-react";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useMyGroups } from "../hooks/useMyGroups";
 
 export const MyGroupsView = () => {
   const tGroupsPage = useTranslations("GroupsPage");
 
-  const { data: myGroups, isLoading } = useQuery({
-    queryKey: ["myGroups"],
-    queryFn: async () => await getMyGroups(),
-  });
+  const { data: myGroups, isLoading } = useMyGroups();
 
   if (isLoading) {
     return <MyGroupsViewSkeleton />;
