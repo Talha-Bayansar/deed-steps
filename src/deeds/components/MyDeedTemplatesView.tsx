@@ -21,14 +21,9 @@ export const MyDeedTemplatesView = () => {
   const { data: myDeeds, isLoading: isLoadingMyDeeds } =
     useMyDeedsByDate(selectedDay);
 
-  if (isLoading) return <MyDeedTemplatesViewSkeleton />;
-
-  if (!data || isArrayEmpty(data))
-    return <EmptyView Icon={ListChecks} message={tHomePage("no_deeds")} />;
-
   const groupedDeedTemplates = useMemo(
     () =>
-      data.reduce<(typeof data)[]>((previous, current) => {
+      data?.reduce<(typeof data)[]>((previous, current) => {
         let result = previous;
 
         const groupExists = previous.find((group) =>
@@ -52,8 +47,13 @@ export const MyDeedTemplatesView = () => {
 
         return result;
       }, []),
-    data
+    [data]
   );
+
+  if (isLoading) return <MyDeedTemplatesViewSkeleton />;
+
+  if (!groupedDeedTemplates || isArrayEmpty(groupedDeedTemplates))
+    return <EmptyView Icon={ListChecks} message={tHomePage("no_deeds")} />;
 
   return (
     <View>
