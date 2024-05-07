@@ -8,6 +8,7 @@ import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { type Nullable } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
+import { Pen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -29,7 +30,10 @@ export const ChangeName = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>{t("change_name")}</ListTile>
+        <ListTile>
+          <Pen className="text-primary mr-2" size={16} />
+          {t("change_name")}
+        </ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <div className="p-8">

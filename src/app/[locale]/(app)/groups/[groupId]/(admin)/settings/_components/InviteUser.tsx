@@ -4,6 +4,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { InviteUserToGroupForm } from "@/groups/components/InviteUserToGroupForm";
 import { inviteUserToGroup } from "@/groups/service";
 import { useMutation } from "@tanstack/react-query";
+import { UserRoundPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -28,7 +29,10 @@ export const InviteUser = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>{tGroupSettingsPage("invite_user")}</ListTile>
+        <ListTile>
+          <UserRoundPlus className="text-primary mr-2" size={16} />
+          {tGroupSettingsPage("invite_user")}
+        </ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <div className="p-8">

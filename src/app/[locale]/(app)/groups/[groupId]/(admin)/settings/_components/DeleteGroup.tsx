@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMyDeedTemplates } from "@/deeds/hooks/useMyDeedTemplates";
 import { useMyGroups } from "@/groups/hooks/useMyGroups";
+import { Trash2 } from "lucide-react";
 
 export const DeleteGroup = () => {
   const t = useTranslations("global");
@@ -43,6 +44,7 @@ export const DeleteGroup = () => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <ListTile className="text-destructive">
+          <Trash2 className="text-destructive mr-2" size={16} />
           {tGroupSettingsPage("delete_group")}
         </ListTile>
       </AlertDialogTrigger>

@@ -17,6 +17,7 @@ import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { LogOut } from "lucide-react";
 
 export const SignOutButton = () => {
   const t = useTranslations("global");
@@ -33,6 +34,7 @@ export const SignOutButton = () => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <ListTile className="text-destructive" type="submit">
+          <LogOut className="text-destructive mr-2" size={16} />
           {tSettingsPage("sign_out")}
         </ListTile>
       </AlertDialogTrigger>

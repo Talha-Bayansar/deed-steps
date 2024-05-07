@@ -2,6 +2,7 @@
 import { ListTile } from "@/components/ListTile";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
+import { List } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
@@ -11,7 +12,10 @@ export const ManageDeeds = () => {
 
   return (
     <Link href={routes.groups.id(groupId).deedTemplates.root}>
-      <ListTile>{tGroupSettingsPage("manage_deeds")}</ListTile>
+      <ListTile>
+        <List className="text-primary mr-2" size={16} />
+        {tGroupSettingsPage("manage_deeds")}
+      </ListTile>
     </Link>
   );
 };

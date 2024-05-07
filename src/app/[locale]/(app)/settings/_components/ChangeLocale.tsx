@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/drawer";
 import { View } from "@/components/layout/View";
 import { useState } from "react";
+import { Languages } from "lucide-react";
 
 export const ChangeLocale = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,10 @@ export const ChangeLocale = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <ListTile>{t("change_language")}</ListTile>
+        <ListTile>
+          <Languages className="text-primary mr-2" size={16} />
+          {t("change_language")}
+        </ListTile>
       </DrawerTrigger>
       <DrawerContent>
         <View className="p-8 gap-2">
