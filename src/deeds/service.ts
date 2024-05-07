@@ -80,7 +80,7 @@ export async function getMyDeedTemplates() {
     where: eq(userToGroupTable.userId, user.id),
   });
 
-  if (myGroups.length < 1) return;
+  if (myGroups.length < 1) return null;
 
   const groupIds = myGroups.map((item) => item.groupId);
 
