@@ -30,7 +30,7 @@ export const ListTile = ({
         variant="ghost"
       >
         <div className="flex w-full justify-between items-center">
-          <div className="flex items-center">{children}</div>
+          <div className="flex items-center w-full">{children}</div>
           {isClickable ? (
             <ChevronRight className="text-gray-400" size={16} />
           ) : null}

@@ -37,7 +37,7 @@ export const MyGroupInvitationsView = () => {
     <View>
       {data.map((invitation) => (
         <ListTile key={invitation.id} isClickable={false}>
-          <div className="w-full flex justify-between items-center">
+          <div className="flex-grow flex justify-between items-center">
             <span>{invitation.group.name}</span>
             <div className="flex items-center gap-4">
               <IconButton
@@ -45,14 +45,14 @@ export const MyGroupInvitationsView = () => {
                 disabled={acceptInvitationMutation.isPending}
                 className="p-0"
               >
-                <Check />
+                <Check className="text-primary" size={20} />
               </IconButton>
               <IconButton
                 onClick={() => declineInvitationMutation.mutate(invitation.id)}
                 disabled={declineInvitationMutation.isPending}
                 className="p-0"
               >
-                <X />
+                <X className="text-destructive" size={20} />
               </IconButton>
             </div>
           </div>

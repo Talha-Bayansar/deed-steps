@@ -168,7 +168,7 @@ export async function inviteUserToGroup(email: string, groupId: number) {
   if (!user) throw new DrizzleError({ message: "Not authenticated" });
 
   const invitedUser = await db.query.userTable.findFirst({
-    where: eq(userTable.email, email),
+    where: eq(userTable.email, email.toLowerCase()),
   });
 
   if (!invitedUser) throw new DrizzleError({ message: "User not found" });

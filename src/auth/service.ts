@@ -111,7 +111,7 @@ export async function signin(email: string, code: string) {
       const newUser = await db
         .insert(userTable)
         .values({
-          email: email,
+          email: email.toLowerCase(),
           firstName: name[0],
           lastName: name[1],
         })
