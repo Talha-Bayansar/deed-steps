@@ -184,11 +184,12 @@ export async function saveDeed(deed: DeedInsert) {
   } else {
     await db.insert(deedTable).values(deed);
 
-    await db.update(groupPointsTable).set({
-      groupId: groupPoints.groupId,
-      userId: groupPoints.userId,
-      points: groupPoints.points + deedStatus.reward,
-    });
+    await db
+      .update(groupPointsTable)
+      .set({
+        points: groupPoints.points + deedStatus.reward,
+      })
+      .where(eq(groupPointsTable.id, groupPoints.id));
 
     return true;
   }
