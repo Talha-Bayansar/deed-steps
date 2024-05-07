@@ -47,6 +47,7 @@ export const ChangeNameTile = () => {
               deedTemplateMutation.mutate({
                 ...values,
                 groupId: Number(groupId),
+                order: data!.order,
               })
             }
             isLoading={deedTemplateMutation.isPending}
