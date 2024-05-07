@@ -8,7 +8,7 @@ import {
   groupPointsTable,
   userToGroupTable,
 } from "@/db/schema";
-import { DrizzleError, and, eq, gte, inArray, lte } from "drizzle-orm";
+import { DrizzleError, and, asc, eq, gte, inArray, lte } from "drizzle-orm";
 import type {
   DeedInsert,
   DeedStatusInsert,
@@ -27,7 +27,9 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
   const deedTemplates = await db.query.deedTemplateTable.findMany({
     where: eq(deedTemplateTable.groupId, groupId),
     with: {
-      statuses: true,
+      statuses: {
+        orderBy: [asc(deedStatusTable.reward)],
+      },
     },
   });
 
@@ -45,7 +47,9 @@ export async function getDeedTemplateById(id: number) {
   const deedTemplate = await db.query.deedTemplateTable.findFirst({
     where: eq(deedTemplateTable.id, id),
     with: {
-      statuses: true,
+      statuses: {
+        orderBy: [asc(deedStatusTable.reward)],
+      },
     },
   });
 
@@ -71,7 +75,9 @@ export async function getMyDeedTemplates() {
   const deedTemplates = await db.query.deedTemplateTable.findMany({
     where: inArray(deedTemplateTable.groupId, groupIds),
     with: {
-      statuses: true,
+      statuses: {
+        orderBy: [asc(deedStatusTable.reward)],
+      },
       group: true,
     },
   });
