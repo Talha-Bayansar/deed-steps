@@ -26,6 +26,34 @@ export const MyDeedTemplatesView = () => {
   if (!data || isArrayEmpty(data))
     return <EmptyView Icon={ListChecks} message={tHomePage("no_deeds")} />;
 
+  const groupedDeedTemplates = data.reduce<(typeof data)[]>(
+    (previous, current) => {
+      let result = previous;
+
+      const groupExists = previous.find((group) =>
+        group.find((deedTemplate) => deedTemplate.groupId === current.groupId)
+      );
+
+      if (groupExists) {
+        result = previous.map((group) => {
+          const templateWithSameGroup = group.find(
+            (deedTemplate) => deedTemplate.groupId === current.groupId
+          );
+          if (templateWithSameGroup) {
+            return [...group, current];
+          } else {
+            return group;
+          }
+        });
+      } else {
+        result = [...previous, [current]];
+      }
+
+      return result;
+    },
+    []
+  );
+
   return (
     <View>
       <ScrollableCalendar
@@ -33,17 +61,24 @@ export const MyDeedTemplatesView = () => {
         onSelectDay={setSelectedDay}
       />
 
-      <View className="gap-0">
-        {data.map((deedTemplate) => (
-          <DeedTile
-            key={deedTemplate.id}
-            deedTemplate={deedTemplate}
-            deed={myDeeds?.find(
-              (deed) => deed.deedTemplateId === deedTemplate.id
-            )}
-            isLoading={isLoadingMyDeeds}
-            selectedDay={selectedDay}
-          />
+      <View>
+        {groupedDeedTemplates.map((deedTemplates) => (
+          <View className="gap-0" key={deedTemplates[0].groupId}>
+            <h2 className="font-medium">{deedTemplates[0].group.name}</h2>
+            <View className="gap-0">
+              {deedTemplates.map((deedTemplate) => (
+                <DeedTile
+                  key={deedTemplate.id}
+                  deedTemplate={deedTemplate}
+                  deed={myDeeds?.find(
+                    (deed) => deed.deedTemplateId === deedTemplate.id
+                  )}
+                  isLoading={isLoadingMyDeeds}
+                  selectedDay={selectedDay}
+                />
+              ))}
+            </View>
+          </View>
         ))}
       </View>
     </View>
