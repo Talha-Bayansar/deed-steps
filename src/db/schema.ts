@@ -59,6 +59,7 @@ export const deedTemplateTable = sqliteTable("deed_template", {
     .notNull()
     .references(() => groupTable.id),
   name: text("title").notNull(),
+  order: integer("order").notNull(),
 });
 
 export const deedStatusTable = sqliteTable("deed_status", {

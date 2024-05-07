@@ -8,13 +8,24 @@ import {
   groupPointsTable,
   userToGroupTable,
 } from "@/db/schema";
-import { DrizzleError, and, asc, eq, gte, inArray, lte } from "drizzle-orm";
+import {
+  DrizzleError,
+  and,
+  asc,
+  eq,
+  gte,
+  inArray,
+  lte,
+  max,
+  ne,
+} from "drizzle-orm";
 import type {
   DeedInsert,
   DeedStatusInsert,
   DeedTemplateInsert,
 } from "./models";
 import { endOfDay, startOfDay } from "date-fns";
+import { Nullable } from "@/lib/utils";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -25,6 +36,7 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
     });
 
   const deedTemplates = await db.query.deedTemplateTable.findMany({
+    orderBy: [asc(deedTemplateTable.order)],
     where: eq(deedTemplateTable.groupId, groupId),
     with: {
       statuses: {
@@ -65,6 +77,7 @@ export async function getMyDeedTemplates() {
     });
 
   const myGroups = await db.query.userToGroupTable.findMany({
+    orderBy: [asc(deedTemplateTable.order)],
     where: eq(userToGroupTable.userId, user.id),
   });
 
@@ -180,7 +193,11 @@ export async function saveDeed(deed: DeedInsert) {
   }
 }
 
-export async function createDeedTemplate(deedTemplate: DeedTemplateInsert) {
+export async function changeOrderDeedTemplates(
+  deedTemplateId: number,
+  oldOrder: number,
+  newOrder: number
+) {
   const { user } = await validateRequest();
 
   if (!user)
@@ -188,7 +205,77 @@ export async function createDeedTemplate(deedTemplate: DeedTemplateInsert) {
       message: "Not authenticated",
     });
 
-  await db.insert(deedTemplateTable).values(deedTemplate);
+  const deedTemplate = await db.query.deedTemplateTable.findFirst({
+    where: eq(deedTemplateTable.id, deedTemplateId),
+  });
+
+  if (!deedTemplate)
+    throw new DrizzleError({
+      message: "Deed template not found",
+    });
+
+  if (newOrder > oldOrder) {
+    const deedTemplates = await db.query.deedTemplateTable.findMany({
+      where: and(
+        eq(deedTemplateTable.groupId, deedTemplate.groupId),
+        ne(deedTemplateTable.id, deedTemplateId),
+        lte(deedTemplateTable.order, newOrder)
+      ),
+    });
+    for (const deedTemplate of deedTemplates) {
+      await db
+        .update(deedTemplateTable)
+        .set({ ...deedTemplate, order: deedTemplate.order - 1 })
+        .where(eq(deedTemplateTable.id, deedTemplate.id));
+    }
+  } else {
+    const deedTemplates = await db.query.deedTemplateTable.findMany({
+      where: and(
+        eq(deedTemplateTable.groupId, deedTemplate.groupId),
+        ne(deedTemplateTable.id, deedTemplateId),
+        gte(deedTemplateTable.order, newOrder)
+      ),
+    });
+    for (const deedTemplate of deedTemplates) {
+      await db
+        .update(deedTemplateTable)
+        .set({ ...deedTemplate, order: deedTemplate.order + 1 })
+        .where(eq(deedTemplateTable.id, deedTemplate.id));
+    }
+  }
+
+  await db
+    .update(deedTemplateTable)
+    .set({ ...deedTemplate, order: newOrder })
+    .where(eq(deedTemplateTable.id, deedTemplate.id));
+
+  return true;
+}
+
+export async function createDeedTemplate(
+  deedTemplate: Nullable<DeedTemplateInsert, "order">
+) {
+  const { user } = await validateRequest();
+
+  if (!user)
+    throw new DrizzleError({
+      message: "Not authenticated",
+    });
+
+  const group = await db
+    .select({
+      highestOrder: max(deedTemplateTable.order),
+    })
+    .from(deedTemplateTable)
+    .where(eq(deedTemplateTable.groupId, deedTemplate.groupId));
+
+  if (group[0] && group[0].highestOrder) {
+    await db
+      .insert(deedTemplateTable)
+      .values({ ...deedTemplate, order: group[0].highestOrder + 1 });
+  } else {
+    await db.insert(deedTemplateTable).values({ ...deedTemplate, order: 0 });
+  }
 
   return true;
 }
@@ -210,16 +297,26 @@ export async function duplicateDeedTemplate(
       statuses: true,
     },
   });
+
   if (!deedTemplate)
     throw new DrizzleError({ message: "Deed template not found" });
+
+  const highestOrderTemplate = await db
+    .select({
+      highestOrder: max(deedTemplateTable.order),
+    })
+    .from(deedTemplateTable)
+    .where(eq(deedTemplateTable.groupId, deedTemplate.groupId));
 
   const newDeedTemplateResult = await db
     .insert(deedTemplateTable)
     .values({
       name: newName,
       groupId: deedTemplate.groupId,
+      order: highestOrderTemplate[0].highestOrder!,
     })
     .returning({ id: deedTemplateTable.id });
+
   const newDeedTemplate = newDeedTemplateResult[0];
   const deedStatuses = deedTemplate.statuses.map((status) => ({
     name: status.name,
@@ -297,6 +394,18 @@ export async function deleteDeedTemplateById(id: number) {
     .where(eq(deedStatusTable.deedTemplateId, id));
 
   await db.delete(deedTemplateTable).where(eq(deedTemplateTable.id, id));
+
+  const deedTemplates = await getMyDeedTemplates();
+
+  if (deedTemplates) {
+    for (let index = 0; index < deedTemplates.length; index++) {
+      const deedTemplate = deedTemplates[index];
+      await updateDeedTemplateById(deedTemplate.id, {
+        ...deedTemplate,
+        order: index,
+      });
+    }
+  }
 
   return true;
 }
