@@ -1,7 +1,7 @@
 "use client";
 
 import { EmptyView } from "@/components/EmptyView";
-import { ListTile, ListTileSkeleton } from "@/components/ListTile";
+import { ListTileSkeleton } from "@/components/ListTile";
 import { Title, TitleSkeleton } from "@/components/layout/Title";
 import { View } from "@/components/layout/View";
 import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
@@ -9,12 +9,12 @@ import { useGroupById } from "@/groups/hooks/useGroupById";
 import { routes } from "@/lib/routes";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { ListChecks, Users } from "lucide-react";
-import { Link } from "@/navigation";
 import { useParams } from "next/navigation";
 import { CreateDeedTemplate } from "./CreateDeedTemplate";
 import { Heading } from "@/components/layout/Heading";
 import { useTranslations } from "next-intl";
 import { BackButton } from "@/components/BackButton";
+import { DraggableDeedTemplates } from "./DraggableDeedTemplates";
 
 export const DeedTemplatesView = () => {
   const tDeedTemplatesPage = useTranslations("DeedTemplatesPage");
@@ -47,20 +47,7 @@ export const DeedTemplatesView = () => {
           message={tDeedTemplatesPage("no_deed_templates")}
         />
       ) : (
-        <View className="gap-0">
-          {deedTemplates.map((deedTemplate) => (
-            <Link
-              key={deedTemplate.id}
-              href={
-                routes.groups
-                  .id(groupId)
-                  .deedTemplates.id(deedTemplate.id.toString()).edit.root
-              }
-            >
-              <ListTile>{deedTemplate.name}</ListTile>
-            </Link>
-          ))}
-        </View>
+        <DraggableDeedTemplates />
       )}
     </>
   );

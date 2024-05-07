@@ -5,6 +5,7 @@ import { DeedTemplateForm } from "@/deeds/components/DeedTemplateForm";
 import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
 import type { DeedTemplateInsert } from "@/deeds/models";
 import { createDeedTemplate } from "@/deeds/service";
+import { Nullable } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -16,7 +17,7 @@ export const CreateDeedTemplate = () => {
   const { refetch } = useDeedTemplatesByGroupId(groupId);
 
   const mutation = useMutation({
-    mutationFn: async (deedTemplate: DeedTemplateInsert) =>
+    mutationFn: async (deedTemplate: Nullable<DeedTemplateInsert, "order">) =>
       await createDeedTemplate(deedTemplate),
     onSuccess: async () => {
       await refetch();
