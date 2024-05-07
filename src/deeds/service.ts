@@ -171,12 +171,13 @@ export async function saveDeed(deed: DeedInsert) {
         message: "Deed not found",
       });
 
-    await db.update(groupPointsTable).set({
-      groupId: groupPoints.groupId,
-      userId: groupPoints.userId,
-      points:
-        groupPoints.points - previousDeed.status.reward + deedStatus.reward,
-    });
+    await db
+      .update(groupPointsTable)
+      .set({
+        points:
+          groupPoints.points - previousDeed.status.reward + deedStatus.reward,
+      })
+      .where(eq(groupPointsTable.id, groupPoints.id));
 
     await db.update(deedTable).set(deed).where(eq(deedTable.id, deed.id));
     return true;
