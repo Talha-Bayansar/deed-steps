@@ -36,7 +36,7 @@ export const GenerateTransactionLinkForm = () => {
       z
         .number()
         .min(1, t("errors.min_value", { value: 1 }))
-        .max(50, t("errors.max_value", { value: 1000000 }))
+        .max(1000000, t("errors.max_value", { value: 1000000 }))
     ),
   });
 
