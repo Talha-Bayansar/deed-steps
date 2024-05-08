@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Page = async ({ searchParams: { amount } }: Props) => {
-  if (!amount || Number(amount) < 1 || Number(amount) > 50) notFound();
+  if (!amount || Number(amount) < 1 || Number(amount) > 1000000) notFound();
 
   const t = await getTranslations("TransactionPage");
 

@@ -56,7 +56,7 @@ export const DeedStatusForm = ({
   const formSchema = z.object({
     name: z
       .string()
-      .min(3, t("errors.min", { amount: 3 }))
+      .min(3, t("errors.min", { amount: 1 }))
       .max(50, t("errors.max", { amount: 50 })),
     color: z
       .string()
