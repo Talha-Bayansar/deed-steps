@@ -71,7 +71,7 @@ export const DeedTile = ({
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-8 gap-0">
+        <View className="p-8 gap-0 overflow-y-scroll">
           {deedTemplate.statuses.map((status, i) => (
             <ListTile
               key={status.id}

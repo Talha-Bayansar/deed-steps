@@ -40,7 +40,7 @@ export const ChangeNameTile = () => {
         <ListTile>{tEditDeedTemplatePage("change_name")}</ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <DeedTemplateForm
             deedTemplate={data}
             onSubmit={(values) =>

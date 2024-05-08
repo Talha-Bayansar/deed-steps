@@ -55,7 +55,7 @@ export const GroupMember = ({
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-8">
+        <View className="p-8 overflow-y-scroll">
           {isOwner && (
             <DeleteButton
               deleteFn={() => mutation.mutate()}

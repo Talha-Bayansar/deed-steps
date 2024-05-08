@@ -32,7 +32,7 @@ export const CreateDeedStatus = () => {
         </IconButton>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <DeedStatusForm
             onSubmit={(values) =>
               mutation.mutate({

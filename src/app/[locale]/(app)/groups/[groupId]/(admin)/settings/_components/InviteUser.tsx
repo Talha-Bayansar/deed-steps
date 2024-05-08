@@ -35,7 +35,7 @@ export const InviteUser = () => {
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <InviteUserToGroupForm
             onSubmit={(values) => mutation.mutate(values.email)}
             isLoading={mutation.isPending}

@@ -21,7 +21,7 @@ export const ChangeName = () => {
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <UpdateGroupForm
             onSuccess={() => setIsOpen(false)}
             groupId={groupId}

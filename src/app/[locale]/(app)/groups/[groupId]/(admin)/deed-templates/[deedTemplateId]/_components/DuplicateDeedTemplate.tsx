@@ -37,7 +37,7 @@ export const DuplicateDeedTemplate = () => {
         <Button>{t("duplicate")}</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <DeedTemplateForm
             onSubmit={(values) => mutation.mutate(values)}
             isLoading={mutation.isPending}

@@ -36,7 +36,7 @@ export const ChangeName = () => {
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <UserForm
             user={data!.user!}
             onSubmit={(values) => mutation.mutate(values)}

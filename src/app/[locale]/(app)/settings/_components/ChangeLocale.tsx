@@ -41,7 +41,7 @@ export const ChangeLocale = () => {
         </ListTile>
       </DrawerTrigger>
       <DrawerContent>
-        <View className="p-8 gap-2">
+        <View className="p-8 gap-2 overflow-y-scroll">
           <Select value={locale} onValueChange={changeLocale}>
             <SelectTrigger className="uppercase">
               <SelectValue placeholder={t("select_language")} />
