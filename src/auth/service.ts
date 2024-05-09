@@ -63,10 +63,10 @@ export async function generateEmailVerificationCode(
 ): Promise<string> {
   await db
     .delete(emailVerificationCodeTable)
-    .where(eq(emailVerificationCodeTable.email, email));
+    .where(eq(emailVerificationCodeTable.email, email.toLowerCase()));
   const code = generateRandomString(8, alphabet("0-9"));
   await db.insert(emailVerificationCodeTable).values({
-    email: email,
+    email: email.toLowerCase(),
     code: code,
     expiresAt: createDate(new TimeSpan(15, "m")),
   });
@@ -74,8 +74,8 @@ export async function generateEmailVerificationCode(
 }
 
 export async function sendEmailVerificationCode(email: string) {
-  const code = await generateEmailVerificationCode(email);
-  await sendEmail(email, code);
+  const code = await generateEmailVerificationCode(email.toLowerCase());
+  await sendEmail(email.toLowerCase(), code);
 }
 
 export async function signin(email: string, code: string) {
