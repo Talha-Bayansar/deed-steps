@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { NextRequest } from "next/server";
 import webPush from "web-push";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   if (
     req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
   ) {
