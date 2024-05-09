@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider, useMessages } from "next-intl";
+import { ServiceWorkerWrapper } from "@/notifications/components/ServiceWorkerWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -258,13 +259,15 @@ export default function LocaleLayout({
       <body className={cn("font-sans antialiased", inter.className)}>
         <ReactQueryClientProvider>
           <NextIntlClientProvider messages={messages}>
-            <div
-              className="flex min-h-screen w-full overflow-x-hidden bg-background"
-              vaul-drawer-wrapper=""
-            >
-              {children}
-            </div>
-            <Toaster position="top-center" />
+            <ServiceWorkerWrapper>
+              <div
+                className="flex min-h-screen w-full overflow-x-hidden bg-background"
+                vaul-drawer-wrapper=""
+              >
+                {children}
+              </div>
+              <Toaster position="top-center" />
+            </ServiceWorkerWrapper>
           </NextIntlClientProvider>
         </ReactQueryClientProvider>
       </body>

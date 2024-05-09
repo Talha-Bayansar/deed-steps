@@ -140,7 +140,8 @@
     "sign_out_modal_description": "Hesabınızdan çıkış yapacaksınız.",
     "change_language": "Dili değiştir",
     "language_description": "Uygulama için tercih ettiğiniz dili seçin.",
-    "select_language": "Dil seçin"
+    "select_language": "Dil seçin",
+    "allow_notifications": "Bildirimlere izin ver"
   },
   "AdminWrapper": {
     "title": "İzinler kontrol ediliyor",

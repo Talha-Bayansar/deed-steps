@@ -140,7 +140,8 @@
     "sign_out_modal_description": "Je wordt afgemeld bij je account.",
     "change_language": "Taal veranderen",
     "language_description": "Selecteer de taal van je voorkeur voor de app.",
-    "select_language": "Selecteer taal"
+    "select_language": "Selecteer taal",
+    "allow_notifications": "Meldingen toestaan"
   },
   "AdminWrapper": {
     "title": "Rechten controleren",

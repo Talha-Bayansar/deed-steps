@@ -27,6 +27,7 @@ export const ListTile = ({
           "hover:bg-transparent cursor-default": !isClickable,
         })}
         onClick={!isClickable ? (e) => e.preventDefault() : onClick}
+        asChild={!isClickable}
         variant="ghost"
       >
         <div className="flex w-full justify-between items-center">

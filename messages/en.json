@@ -140,7 +140,8 @@
     "sign_out_modal_description": "You will be signed out of your account.",
     "change_language": "Change language",
     "language_description": "Select your preferred language for the app.",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "allow_notifications": "Allow notifications"
   },
   "AdminWrapper": {
     "title": "Verifying permissions",

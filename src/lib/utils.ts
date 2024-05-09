@@ -29,3 +29,18 @@ export const getDayOfWeek = (date: string | number | Date) => {
   if (day === 0) return 6;
   else return day - 1;
 };
+
+// SERVICE WORKER FUNCTIONS
+export async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    throw Error("Service workers are not supported by this browser");
+  }
+  await navigator.serviceWorker.register("/sw.js");
+}
+
+export async function getReadyServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    throw Error("Service workers are not supported by this browser");
+  }
+  return navigator.serviceWorker.ready;
+}

@@ -6,6 +6,7 @@ import { ChangeName } from "./_components/ChangeName";
 import { Heading } from "@/components/layout/Heading";
 import { getTranslations } from "next-intl/server";
 import { ChangeLocale } from "./_components/ChangeLocale";
+import { NotificationsPreference } from "./_components/NotificationsPreference";
 
 const Page = async () => {
   const t = await getTranslations("SettingsPage");
@@ -18,6 +19,7 @@ const Page = async () => {
       <View className="gap-0">
         <ChangeName />
         <ChangeLocale />
+        <NotificationsPreference />
         <SignOutButton />
       </View>
     </Main>

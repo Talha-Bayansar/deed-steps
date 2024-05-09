@@ -104,6 +104,14 @@ export const transactionTable = sqliteTable("transaction", {
   amount: integer("points").notNull(),
 });
 
+export const pushSubscriptionTable = sqliteTable("push_subscription", {
+  id: integer("id").primaryKey(),
+  sessionId: text("session_id")
+    .notNull()
+    .references(() => sessionTable.id),
+  subscription: text("subscription", { mode: "json" }).notNull(),
+});
+
 // Junction table for users and groups
 export const userToGroupTable = sqliteTable(
   "user_to_group",
@@ -220,6 +228,23 @@ export const transactionRelations = relations(transactionTable, ({ one }) => ({
   }),
   user: one(userTable, {
     fields: [transactionTable.userId],
+    references: [userTable.id],
+  }),
+}));
+
+export const pushSubscriptionRelations = relations(
+  pushSubscriptionTable,
+  ({ one }) => ({
+    session: one(sessionTable, {
+      fields: [pushSubscriptionTable.sessionId],
+      references: [sessionTable.id],
+    }),
+  })
+);
+
+export const sessionTableRelations = relations(sessionTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [sessionTable.userId],
     references: [userTable.id],
   }),
 }));
