@@ -37,6 +37,9 @@
         "long": "Pazar"
       }
     },
+    "messages": {
+      "deed_created": "Birisi az önce iyi bir amel işledi."
+    },
     "email": "E-posta",
     "home": "Anasayfa",
     "groups": "Gruplar",

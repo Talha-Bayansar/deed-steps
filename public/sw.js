@@ -10,7 +10,7 @@ const sw = /** @type {ServiceWorkerGlobalScope & typeof globalThis} */ (
 
 sw.addEventListener("push", (event) => {
   const message = event.data?.json();
-  const { title, body, icon, groupId } = message;
+  const { title, body, groupId } = message;
 
   console.log("Received push message", message);
 
@@ -28,10 +28,9 @@ sw.addEventListener("push", (event) => {
 
     await sw.registration.showNotification(title, {
       body,
-      icon,
-      badge: "/icon512_maskable.png",
-      tag: "Deed Steps",
-      // data: { groupId },
+      icon: "/notification-icon.png",
+      badge: "/notification-icon.png",
+      tag: groupId,
     });
   }
 
@@ -43,19 +42,7 @@ sw.addEventListener("notificationclick", (event) => {
   notification.close();
 
   async function handleNotificationClick() {
-    const windowClients = await sw.clients.matchAll({
-      type: "window",
-      includeUncontrolled: true,
-    });
-
-    const channelId = notification.data.channelId;
-
-    if (windowClients.length > 0) {
-      await windowClients[0].focus();
-      windowClients[0].postMessage({ channelId });
-    } else {
-      sw.clients.openWindow("/" + channelId);
-    }
+    sw.clients.openWindow("/");
   }
 
   event.waitUntil(handleNotificationClick());

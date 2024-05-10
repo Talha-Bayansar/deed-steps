@@ -1,4 +1,5 @@
 import { getReadyServiceWorker } from "@/lib/utils";
+import type { Message } from "./models";
 
 export async function getCurrentPushSubscription(): Promise<PushSubscription | null> {
   const sw = await getReadyServiceWorker();

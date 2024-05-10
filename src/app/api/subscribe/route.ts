@@ -32,30 +32,18 @@ export async function POST(req: Request) {
       subscription: JSON.stringify(newSubscription),
     });
 
-    await db.insert(pushSubscriptionTable).values({
-      sessionId: session.id,
-      subscription: JSON.stringify(newSubscription),
-    });
+    const existingSubscription = await db.query.pushSubscriptionTable.findFirst(
+      {
+        where: eq(pushSubscriptionTable.sessionId, session.id),
+      }
+    );
 
-    // const userSubscriptions = await db.query.pushSubscriptionTable.findMany({
-    //   with: {
-    //     session: {
-    //       extras:
-    //     }
-    //   }
-    // });
-
-    // const updatedSubscriptions = userSubscriptions.filter(
-    //   (subscription) =>
-    //     (subscription.subscription as PushSubscription).endpoint !==
-    //     newSubscription.endpoint
-    // );
-
-    // updatedSubscriptions.push(newSubscription);
-
-    // await clerkClient.users.updateUser(user.id, {
-    //   privateMetadata: { subscriptions: updatedSubscriptions },
-    // });
+    if (!existingSubscription) {
+      await db.insert(pushSubscriptionTable).values({
+        sessionId: session.id,
+        subscription: JSON.stringify(newSubscription),
+      });
+    }
 
     return NextResponse.json(
       { message: "Push subscription saved" },

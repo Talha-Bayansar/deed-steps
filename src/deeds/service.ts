@@ -6,6 +6,8 @@ import {
   deedTable,
   deedTemplateTable,
   groupPointsTable,
+  groupTable,
+  pushSubscriptionTable,
   userToGroupTable,
 } from "@/db/schema";
 import {
@@ -16,7 +18,6 @@ import {
   gte,
   inArray,
   lte,
-  ne,
   sql,
 } from "drizzle-orm";
 import type {
@@ -26,6 +27,10 @@ import type {
 } from "./models";
 import { endOfDay, startOfDay } from "date-fns";
 import { Nullable } from "@/lib/utils";
+// import { sendNotification } from "@/notifications/service";
+import type { Message } from "@/notifications/models";
+import webPush, { WebPushError } from "web-push";
+import { getTranslations } from "next-intl/server";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -130,6 +135,9 @@ export async function saveDeed(deed: DeedInsert) {
 
   const deedTemplate = await db.query.deedTemplateTable.findFirst({
     where: eq(deedTemplateTable.id, deed.deedTemplateId),
+    with: {
+      group: true,
+    },
   });
 
   if (!deedTemplate)
@@ -180,7 +188,6 @@ export async function saveDeed(deed: DeedInsert) {
       .where(eq(groupPointsTable.id, groupPoints.id));
 
     await db.update(deedTable).set(deed).where(eq(deedTable.id, deed.id));
-    return true;
   } else {
     await db.insert(deedTable).values(deed);
 
@@ -191,8 +198,17 @@ export async function saveDeed(deed: DeedInsert) {
       })
       .where(eq(groupPointsTable.id, groupPoints.id));
 
-    return true;
+    const t = await getTranslations("global.messages");
+
+    await sendNotification({
+      title: deedTemplate.group.name,
+      body: t("deed_created"),
+      userId: user.id,
+      groupId: deedTemplate.groupId,
+    });
   }
+
+  return true;
 }
 
 export async function changeOrderDeedTemplates(orderedTemplateIds: number[]) {
@@ -387,4 +403,74 @@ export async function deleteDeedStatusById(id: number) {
   await db.delete(deedStatusTable).where(eq(deedStatusTable.id, id));
 
   return true;
+}
+
+async function sendNotification(message: Message) {
+  const { userId, groupId } = message;
+
+  const group = await db.query.groupTable.findFirst({
+    where: eq(groupTable.id, groupId),
+    with: {
+      members: {
+        where(fields, operators) {
+          return operators.ne(fields.userId, userId);
+        },
+        with: {
+          member: {
+            with: {
+              sessions: {
+                columns: { id: true },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!group) throw new Error("Group not found");
+
+  const sessions = group.members.map((member) => member.member.sessions);
+
+  const sessionIds = sessions.reduce<string[]>(
+    (prev, curr) => [...prev, ...curr.map((session) => session.id)],
+    []
+  );
+
+  const subscriptions = await db.query.pushSubscriptionTable.findMany({
+    where(fields, operators) {
+      return operators.inArray(fields.sessionId, sessionIds);
+    },
+  });
+
+  const pushPromises = subscriptions.map((subscription) =>
+    webPush
+      .sendNotification(
+        JSON.parse(subscription.subscription as string),
+        JSON.stringify({
+          title: message.title,
+          body: message.body,
+          icon: "public/icon512_maskable.png",
+          groupId: message.groupId,
+        }),
+        {
+          vapidDetails: {
+            subject: `mailto:${process.env.MY_EMAIL}`,
+            publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY as string,
+            privateKey: process.env.VAPID_PRIVATE_KEY as string,
+          },
+        }
+      )
+      .catch(async (error) => {
+        console.error("Error sending push notification: ", error);
+        if (error instanceof WebPushError && error.statusCode === 410) {
+          console.log("Push subscription expired, deleting...");
+
+          await db
+            .delete(pushSubscriptionTable)
+            .where(eq(pushSubscriptionTable.id, subscription.id));
+        }
+      })
+  );
+  const responses = await Promise.all(pushPromises);
 }

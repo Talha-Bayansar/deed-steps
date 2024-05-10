@@ -37,6 +37,9 @@
         "long": "Sunday"
       }
     },
+    "messages": {
+      "deed_created": "Someone has just done a good deed."
+    },
     "email": "Email",
     "home": "Home",
     "groups": "Groups",

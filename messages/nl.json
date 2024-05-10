@@ -37,6 +37,9 @@
         "long": "Zondag"
       }
     },
+    "messages": {
+      "deed_created": "Iemand heeft zojuist een goede daad verricht."
+    },
     "email": "E-mail",
     "home": "Startpagina",
     "groups": "Groepen",

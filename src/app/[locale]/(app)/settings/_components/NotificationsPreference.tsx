@@ -13,7 +13,10 @@ import { useState } from "react";
 export const NotificationsPreference = () => {
   const t = useTranslations("SettingsPage");
   const [isAllowed, setIsAllowed] = useState(
-    Notification.permission === "granted" ? true : false
+    Notification.permission === "granted" &&
+      !!localStorage.getItem("notifications-allowed")
+      ? true
+      : false
   );
 
   async function handleCheck(value: boolean) {
@@ -21,11 +24,13 @@ export const NotificationsPreference = () => {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
           setIsAllowed(value);
+          localStorage.setItem("notifications-allowed", "true");
           registerPushNotifications();
         }
       });
     } else {
       setIsAllowed(value);
+      localStorage.setItem("notifications-allowed", "false");
       unregisterPushNotifications();
     }
   }
