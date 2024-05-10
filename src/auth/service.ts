@@ -12,7 +12,6 @@ import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import type { UserInsert } from "./models";
 import { type Nullable } from "@/lib/utils";
-import { unregisterPushNotifications } from "@/notifications/service";
 
 export const sendEmail = async (email: string, verificationCode: string) => {
   const transport = nodemailer.createTransport({
@@ -180,8 +179,6 @@ export async function signout(): Promise<boolean> {
   if (!session) {
     return false;
   }
-
-  await unregisterPushNotifications();
 
   await lucia.invalidateSession(session.id);
 

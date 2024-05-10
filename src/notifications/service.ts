@@ -1,5 +1,4 @@
 import { getReadyServiceWorker } from "@/lib/utils";
-import type { Message } from "./models";
 
 export async function getCurrentPushSubscription(): Promise<PushSubscription | null> {
   const sw = await getReadyServiceWorker();
@@ -31,7 +30,7 @@ export async function unregisterPushNotifications() {
   const existingSubscription = await getCurrentPushSubscription();
 
   if (!existingSubscription) {
-    throw Error("No existing push subscription found");
+    return;
   }
 
   await deletePushSubscriptionFromServer(existingSubscription);
@@ -53,7 +52,7 @@ export async function sendPushSubscriptionToServer(
 }
 
 export async function deletePushSubscriptionFromServer(
-  subscription?: PushSubscription
+  subscription: PushSubscription
 ) {
   const response = await fetch("/api/subscribe", {
     method: "DELETE",

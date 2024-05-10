@@ -18,14 +18,16 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
+import { unregisterPushNotifications } from "@/notifications/service";
 
 export const SignOutButton = () => {
   const t = useTranslations("global");
   const tSettingsPage = useTranslations("SettingsPage");
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: async () => await signout(),
-    onSuccess: () => {
+    mutationFn: async () => await unregisterPushNotifications(),
+    onSuccess: async () => {
+      await signout();
       router.push(routes.signin.root);
     },
   });
