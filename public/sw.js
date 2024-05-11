@@ -42,7 +42,7 @@ sw.addEventListener("notificationclick", (event) => {
   notification.close();
 
   async function handleNotificationClick() {
-    sw.clients.openWindow("/");
+    sw.clients.openWindow(notification.tag ? "/" : "/groups/notifications");
   }
 
   event.waitUntil(handleNotificationClick());

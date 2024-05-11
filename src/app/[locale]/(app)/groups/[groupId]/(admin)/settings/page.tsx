@@ -9,6 +9,7 @@ import { getTranslations } from "next-intl/server";
 import { BackButton } from "@/components/BackButton";
 import { routes } from "@/lib/routes";
 import { GenerateTransactionLink } from "./_components/GenerateTransactionLink";
+import { NotificationPreferences } from "./_components/NotificationPreferences";
 
 type Props = {
   params: {
@@ -30,6 +31,7 @@ const Page = async ({ params: { groupId } }: Props) => {
       <ChangeName />
       <InviteUser />
       <ManageDeeds />
+      <NotificationPreferences />
       <GenerateTransactionLink />
       <DeleteGroup />
     </Main>

@@ -7,7 +7,6 @@ import {
   deedTemplateTable,
   groupPointsTable,
   groupTable,
-  pushSubscriptionTable,
   userToGroupTable,
 } from "@/db/schema";
 import {
@@ -28,9 +27,8 @@ import type {
 import { endOfDay, startOfDay } from "date-fns";
 import { Nullable } from "@/lib/utils";
 import type { GroupMessage } from "@/notifications/models";
-import webPush, { WebPushError } from "web-push";
 import { getTranslations } from "next-intl/server";
-import { sendNotificationToSubscribers } from "@/notifications/service";
+import { sendNotificationToSubscribers } from "@/notifications/server-actions";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -198,14 +196,16 @@ export async function saveDeed(deed: DeedInsert) {
       })
       .where(eq(groupPointsTable.id, groupPoints.id));
 
-    const t = await getTranslations("global.messages");
+    if (!!deedTemplate.group.hasDeedNotifications) {
+      const t = await getTranslations("global.messages");
 
-    await sendDeedNotification({
-      title: deedTemplate.group.name,
-      body: t("deed_created"),
-      userId: user.id,
-      groupId: deedTemplate.groupId,
-    });
+      await sendDeedNotification({
+        title: deedTemplate.group.name,
+        body: t("deed_created"),
+        userId: user.id,
+        groupId: deedTemplate.groupId,
+      });
+    }
   }
 
   return true;

@@ -39,10 +39,10 @@
     },
     "messages": {
       "deed_created": "Birisi az önce iyi bir amel işledi.",
-      "reminder_title": "Reminder",
-      "reminder_body": "Don't forget to do good deeds today.",
-      "group_invited_title": "Group invitation",
-      "group_invited_body": "You have got a group invitation from {groupName}."
+      "reminder_title": "Hatırlatma",
+      "reminder_body": "Bugün iyi amel işlemeyi unutmayın.",
+      "group_invited_title": "Grup davetiyesi",
+      "group_invited_body": "{groupName} grubundan bir davetiye aldınız."
     },
     "email": "E-posta",
     "home": "Anasayfa",
@@ -101,7 +101,12 @@
     "manage_deeds": "Amelleri yönet",
     "delete_group": "Grubu sil",
     "delete_group_modal_title": "Bu grubu silmek istediğinizden emin misiniz?",
-    "delete_group_modal_description": "Bu eylem geri alınamaz. Bu gruba bağlı tüm veriler kaybolacaktır."
+    "delete_group_modal_description": "Bu eylem geri alınamaz. Bu gruba bağlı tüm veriler kaybolacaktır.",
+    "notification_preferences": "Bildirim tercihleri",
+    "send_reminder": "Hatırlatma mesajı gönder",
+    "send_notification_deeds": "Amel başı bildirim gönderme",
+    "send_reminder_success": "Hatırlatma mesajı başarıyla gönderildi",
+    "send_reminder_error": "İletim sırasında bir şeyler ters gitti"
   },
   "DeedTemplatesPage": {
     "title": "Amel şablonları",

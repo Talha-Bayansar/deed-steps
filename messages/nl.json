@@ -39,10 +39,10 @@
     },
     "messages": {
       "deed_created": "Iemand heeft zojuist een goede daad verricht.",
-      "reminder_title": "Reminder",
-      "reminder_body": "Don't forget to do good deeds today.",
-      "group_invited_title": "Group invitation",
-      "group_invited_body": "You have got a group invitation from {groupName}."
+      "reminder_title": "Herinnering",
+      "reminder_body": "Vergeet niet om vandaag goede daden te verrichten.",
+      "group_invited_title": "Groep uitnodiging",
+      "group_invited_body": "Je hebt een groepsuitnodiging gekregen van {groupName}."
     },
     "email": "E-mail",
     "home": "Startpagina",
@@ -101,7 +101,12 @@
     "manage_deeds": "Daden beheren",
     "delete_group": "Groep verwijderen",
     "delete_group_modal_title": "Weet je zeker dat je deze groep wilt verwijderen?",
-    "delete_group_modal_description": "Deze actie kan niet ongedaan worden. Alle gegevens gekoppeld aan deze groep zullen verloren gaan."
+    "delete_group_modal_description": "Deze actie kan niet ongedaan worden. Alle gegevens gekoppeld aan deze groep zullen verloren gaan.",
+    "notification_preferences": "Voorkeuren meldingen",
+    "send_reminder": "Herinneringsbericht verzenden",
+    "send_notification_deeds": "Melding verzenden per daad",
+    "send_reminder_success": "Herinneringsbericht was succesvol verzonden",
+    "send_reminder_error": "Er liep iets mis tijdens het verzenden"
   },
   "DeedTemplatesPage": {
     "title": "Daad sjablonen",

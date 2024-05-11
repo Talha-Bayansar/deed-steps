@@ -101,7 +101,12 @@
     "manage_deeds": "Manage deeds",
     "delete_group": "Delete group",
     "delete_group_modal_title": "Are you sure you want to delete this group?",
-    "delete_group_modal_description": "This action cannot be undone. All data linked to this group will be lost."
+    "delete_group_modal_description": "This action cannot be undone. All data linked to this group will be lost.",
+    "notification_preferences": "Notification preferences",
+    "send_reminder": "Send reminder notification",
+    "send_notification_deeds": "Send notification per deed",
+    "send_reminder_success": "Reminder was successfully sent",
+    "send_reminder_error": "Something went wrong while sending reminder"
   },
   "DeedTemplatesPage": {
     "title": "Deed templates",

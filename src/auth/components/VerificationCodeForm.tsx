@@ -82,7 +82,9 @@ export const VerificationCodeForm = ({ email }: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">{t("submit")}</Button>
+        <Button type="submit" disabled={mutation.isPending}>
+          {t("submit")}
+        </Button>
       </form>
     </Form>
   );

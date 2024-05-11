@@ -34,6 +34,9 @@ export const emailVerificationCodeTable = sqliteTable(
 export const groupTable = sqliteTable("group", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
+  hasDeedNotifications: integer("has_deed_notifications", {
+    mode: "boolean",
+  }).default(false),
   ownerId: integer("owner_id")
     .notNull()
     .references(() => userTable.id),

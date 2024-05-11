@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { sendEmailVerificationCode } from "../service";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { useMutation } from "@tanstack/react-query";
 
 export const SigninForm = () => {
   const t = useTranslations("global");
@@ -32,11 +33,17 @@ export const SigninForm = () => {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: async (email: string) => await sendEmailVerificationCode(email),
+    onSuccess: (_, variables) => {
+      const searchParams = new URLSearchParams();
+      searchParams.append("email", variables);
+      router.push(`/signin?${searchParams}`);
+    },
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await sendEmailVerificationCode(values.email);
-    const searchParams = new URLSearchParams();
-    searchParams.append("email", values.email);
-    router.push(`/signin?${searchParams}`);
+    mutation.mutate(values.email);
   }
 
   return (
@@ -58,7 +65,9 @@ export const SigninForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">{tSignInPage("send_verification_code")}</Button>
+        <Button type="submit" disabled={mutation.isPending}>
+          {tSignInPage("send_verification_code")}
+        </Button>
       </form>
     </Form>
   );

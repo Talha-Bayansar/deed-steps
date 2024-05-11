@@ -10,7 +10,6 @@ import {
   groupTable,
   invitationTable,
   pushSubscriptionTable,
-  sessionTable,
   transactionTable,
   userTable,
   userToGroupTable,
@@ -19,7 +18,7 @@ import { DrizzleError, and, eq, inArray } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 import { isArrayEmpty, type Nullable } from "@/lib/utils";
 import { GroupMessage } from "@/notifications/models";
-import { sendNotificationToSubscribers } from "@/notifications/service";
+import { sendNotificationToSubscribers } from "@/notifications/server-actions";
 import { getTranslations } from "next-intl/server";
 
 export async function getGroupById(groupId: number) {
@@ -103,7 +102,7 @@ export async function createGroup(group: Nullable<GroupInsert, "ownerId">) {
 
 export async function updateGroup(
   groupId: number,
-  group: Nullable<GroupInsert, "ownerId">
+  group: Partial<GroupInsert>
 ) {
   const { user } = await validateRequest();
 
