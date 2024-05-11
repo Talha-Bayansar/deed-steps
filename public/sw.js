@@ -30,7 +30,7 @@ sw.addEventListener("push", (event) => {
       body,
       icon: "/notification-icon.png",
       badge: "/notification-icon.png",
-      tag: groupId,
+      tag: groupId ?? null,
     });
   }
 

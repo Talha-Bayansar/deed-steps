@@ -38,7 +38,11 @@
       }
     },
     "messages": {
-      "deed_created": "Someone has just done a good deed."
+      "deed_created": "Someone has just done a good deed.",
+      "reminder_title": "Reminder",
+      "reminder_body": "Don't forget to do good deeds today.",
+      "group_invited_title": "Group invitation",
+      "group_invited_body": "You have got a group invitation from {groupName}."
     },
     "email": "Email",
     "home": "Home",

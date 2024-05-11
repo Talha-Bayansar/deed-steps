@@ -27,10 +27,10 @@ import type {
 } from "./models";
 import { endOfDay, startOfDay } from "date-fns";
 import { Nullable } from "@/lib/utils";
-// import { sendNotification } from "@/notifications/service";
-import type { Message } from "@/notifications/models";
+import type { GroupMessage } from "@/notifications/models";
 import webPush, { WebPushError } from "web-push";
 import { getTranslations } from "next-intl/server";
+import { sendNotificationToSubscribers } from "@/notifications/service";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();
@@ -200,7 +200,7 @@ export async function saveDeed(deed: DeedInsert) {
 
     const t = await getTranslations("global.messages");
 
-    await sendNotification({
+    await sendDeedNotification({
       title: deedTemplate.group.name,
       body: t("deed_created"),
       userId: user.id,
@@ -405,7 +405,7 @@ export async function deleteDeedStatusById(id: number) {
   return true;
 }
 
-async function sendNotification(message: Message) {
+async function sendDeedNotification(message: GroupMessage) {
   const { userId, groupId } = message;
 
   const group = await db.query.groupTable.findFirst({
@@ -443,34 +443,5 @@ async function sendNotification(message: Message) {
     },
   });
 
-  const pushPromises = subscriptions.map((subscription) =>
-    webPush
-      .sendNotification(
-        JSON.parse(subscription.subscription as string),
-        JSON.stringify({
-          title: message.title,
-          body: message.body,
-          icon: "public/icon512_maskable.png",
-          groupId: message.groupId,
-        }),
-        {
-          vapidDetails: {
-            subject: `mailto:${process.env.MY_EMAIL}`,
-            publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY as string,
-            privateKey: process.env.VAPID_PRIVATE_KEY as string,
-          },
-        }
-      )
-      .catch(async (error) => {
-        console.error("Error sending push notification: ", error);
-        if (error instanceof WebPushError && error.statusCode === 410) {
-          console.log("Push subscription expired, deleting...");
-
-          await db
-            .delete(pushSubscriptionTable)
-            .where(eq(pushSubscriptionTable.id, subscription.id));
-        }
-      })
-  );
-  const responses = await Promise.all(pushPromises);
+  await sendNotificationToSubscribers(message, subscriptions);
 }

@@ -9,6 +9,8 @@ import {
   groupPointsTable,
   groupTable,
   invitationTable,
+  pushSubscriptionTable,
+  sessionTable,
   transactionTable,
   userTable,
   userToGroupTable,
@@ -16,6 +18,9 @@ import {
 import { DrizzleError, and, eq, inArray } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 import { isArrayEmpty, type Nullable } from "@/lib/utils";
+import { GroupMessage } from "@/notifications/models";
+import { sendNotificationToSubscribers } from "@/notifications/service";
+import { getTranslations } from "next-intl/server";
 
 export async function getGroupById(groupId: number) {
   const { user } = await validateRequest();
@@ -169,9 +174,18 @@ export async function inviteUserToGroup(email: string, groupId: number) {
 
   const invitedUser = await db.query.userTable.findFirst({
     where: eq(userTable.email, email.toLowerCase()),
+    with: {
+      sessions: true,
+    },
   });
 
   if (!invitedUser) throw new DrizzleError({ message: "User not found" });
+
+  const group = await db.query.groupTable.findFirst({
+    where: eq(groupTable.id, groupId),
+  });
+
+  if (!group) throw new DrizzleError({ message: "Group not found" });
 
   const isUserAlreadyInGroup = await db.query.userToGroupTable.findFirst({
     where: and(
@@ -197,6 +211,21 @@ export async function inviteUserToGroup(email: string, groupId: number) {
     userId: invitedUser.id,
     groupId,
   });
+
+  const sessionIds = invitedUser.sessions.map((s) => s.id);
+  const subscriptions = await db.query.pushSubscriptionTable.findMany({
+    where: inArray(pushSubscriptionTable.sessionId, sessionIds),
+  });
+  const t = await getTranslations("global.messages");
+
+  await sendNotificationToSubscribers(
+    {
+      title: t("group_invited_title"),
+      body: t("group_invited_body", { groupName: group.name }),
+      userId: invitedUser.id,
+    },
+    subscriptions
+  );
 
   return true;
 }
@@ -328,4 +357,45 @@ export async function createTransaction(groupId: number, amount: number) {
     })
     .where(eq(groupPointsTable.id, groupPointsUser.id));
   return true;
+}
+
+export async function sendReminderNotification(message: GroupMessage) {
+  const { userId, groupId } = message;
+
+  const group = await db.query.groupTable.findFirst({
+    where: eq(groupTable.id, groupId),
+    with: {
+      members: {
+        where(fields, operators) {
+          return operators.ne(fields.userId, userId);
+        },
+        with: {
+          member: {
+            with: {
+              sessions: {
+                columns: { id: true },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!group) throw new Error("Group not found");
+
+  const sessions = group.members.map((member) => member.member.sessions);
+
+  const sessionIds = sessions.reduce<string[]>(
+    (prev, curr) => [...prev, ...curr.map((session) => session.id)],
+    []
+  );
+
+  const subscriptions = await db.query.pushSubscriptionTable.findMany({
+    where(fields, operators) {
+      return operators.inArray(fields.sessionId, sessionIds);
+    },
+  });
+
+  await sendNotificationToSubscribers(message, subscriptions);
 }
