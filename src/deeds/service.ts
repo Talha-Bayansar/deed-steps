@@ -196,7 +196,7 @@ export async function saveDeed(deed: DeedInsert) {
       })
       .where(eq(groupPointsTable.id, groupPoints.id));
 
-    if (!!deedTemplate.group.hasDeedNotifications) {
+    if (!!deedTemplate.group.hasDeedNotifications && deedStatus.reward > 0) {
       const t = await getTranslations("global.messages");
 
       await sendDeedNotification({
