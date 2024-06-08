@@ -1,8 +1,8 @@
 "use client";
 
 import { DeleteButton } from "@/components/DeleteButton";
-import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
-import { deleteDeedTemplateById } from "@/deeds/service";
+import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
+import { deleteDeedTemplateById } from "@/features/deeds/service";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";

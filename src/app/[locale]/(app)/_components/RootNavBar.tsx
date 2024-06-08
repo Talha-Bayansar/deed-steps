@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/IconButton";
 import { Link } from "@/navigation";
-import { InvitationsBadge } from "@/groups/components/InvitationsBadge";
+import { InvitationsBadge } from "@/features/groups/components/InvitationsBadge";
 import { useTranslations } from "next-intl";
 
 export const RootNavBar = () => {

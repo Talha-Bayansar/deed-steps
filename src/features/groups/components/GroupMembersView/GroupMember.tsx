@@ -1,5 +1,5 @@
 "use client";
-import type { User } from "@/auth/models";
+import type { User } from "@/features/auth/models";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useMutation } from "@tanstack/react-query";
 import { deleteUserFromGroup } from "../../service";
@@ -9,7 +9,7 @@ import { DeleteButton } from "@/components/DeleteButton";
 import { View } from "@/components/layout/View";
 import { ListTile } from "@/components/ListTile";
 import { useTranslations } from "next-intl";
-import type { GroupPoints } from "@/groups/models";
+import type { GroupPoints } from "@/features/groups/models";
 
 type Props = {
   member: User & {

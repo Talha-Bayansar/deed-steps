@@ -1,17 +1,15 @@
 "use server";
 import { db } from "@/db";
 import { emailVerificationCodeTable, userTable } from "@/db/schema";
-import { DrizzleError, and, eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { TimeSpan, createDate } from "oslo";
 import { generateRandomString, alphabet } from "oslo/crypto";
-import { lucia } from ".";
+import { lucia } from "..";
 import { cookies } from "next/headers";
 import { cache } from "react";
 import type { Session, User } from "lucia";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
-import type { UserInsert } from "./models";
-import { type Nullable } from "@/lib/utils";
 
 export const sendEmail = async (email: string, verificationCode: string) => {
   const transport = nodemailer.createTransport({
@@ -188,21 +186,5 @@ export async function signout(): Promise<boolean> {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return true;
-}
-
-export async function updateUser(userDto: Nullable<UserInsert, "email">) {
-  const { user } = await validateRequest();
-
-  if (!user)
-    throw new DrizzleError({
-      message: "Not authenticated",
-    });
-
-  const updatedUser = await db
-    .update(userTable)
-    .set(userDto)
-    .where(eq(userTable.id, user.id));
-
   return true;
 }

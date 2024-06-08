@@ -2,7 +2,7 @@ import { BackButton } from "@/components/BackButton";
 import { Heading } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { MyGroupInvitationsView } from "@/groups/components/MyGroupInvitationsView";
+import { MyGroupInvitationsView } from "@/features/groups/components/MyGroupInvitationsView";
 import { routes } from "@/lib/routes";
 import { getTranslations } from "next-intl/server";
 

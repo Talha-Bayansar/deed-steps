@@ -3,12 +3,15 @@
 import { DeleteButton } from "@/components/DeleteButton";
 import { View } from "@/components/layout/View";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { DeedStatusForm } from "@/deeds/components/DeedStatusForm";
-import { DeedStatusTile } from "@/deeds/components/DeedStatusTile";
-import { useDeedTemplateById } from "@/deeds/hooks/useDeedTemplateById";
-import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
-import type { DeedStatus, DeedStatusInsert } from "@/deeds/models";
-import { deleteDeedStatusById, updateDeedStatusById } from "@/deeds/service";
+import { DeedStatusForm } from "@/features/deeds/components/DeedStatusForm";
+import { DeedStatusTile } from "@/features/deeds/components/DeedStatusTile";
+import { useDeedTemplateById } from "@/features/deeds/hooks/useDeedTemplateById";
+import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
+import type { DeedStatus, DeedStatusInsert } from "@/features/deeds/models";
+import {
+  deleteDeedStatusById,
+  updateDeedStatusById,
+} from "@/features/deeds/service";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

@@ -1,8 +1,8 @@
 "use client";
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { InviteUserToGroupForm } from "@/groups/components/InviteUserToGroupForm";
-import { inviteUserToGroup } from "@/groups/service";
+import { InviteUserToGroupForm } from "@/features/groups/components/InviteUserToGroupForm";
+import { inviteUserToGroup } from "@/features/groups/service";
 import { useMutation } from "@tanstack/react-query";
 import { UserRoundPlus } from "lucide-react";
 import { useTranslations } from "next-intl";

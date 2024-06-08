@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import {
   registerPushNotifications,
   unregisterPushNotifications,
-} from "@/notifications/service";
+} from "@/features/notifications/service";
 import { Bell } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

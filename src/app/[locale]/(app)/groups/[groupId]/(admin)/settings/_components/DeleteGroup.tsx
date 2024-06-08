@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteGroup } from "@/groups/service";
+import { deleteGroup } from "@/features/groups/service";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 
@@ -19,8 +19,8 @@ import { useParams } from "next/navigation";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useMyDeedTemplates } from "@/deeds/hooks/useMyDeedTemplates";
-import { useMyGroups } from "@/groups/hooks/useMyGroups";
+import { useMyDeedTemplates } from "@/features/deeds/hooks/useMyDeedTemplates";
+import { useMyGroups } from "@/features/groups/hooks/useMyGroups";
 import { Trash2 } from "lucide-react";
 
 export const DeleteGroup = () => {

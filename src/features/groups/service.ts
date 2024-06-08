@@ -1,6 +1,6 @@
 "use server";
 
-import { validateRequest } from "@/auth/service";
+import { validateRequest } from "@/features/auth/actions/auth";
 import { db } from "@/db";
 import {
   deedStatusTable,
@@ -17,8 +17,8 @@ import {
 import { DrizzleError, and, eq, inArray } from "drizzle-orm";
 import type { GroupInsert } from "./models";
 import { isArrayEmpty, type Nullable } from "@/lib/utils";
-import { GroupMessage } from "@/notifications/models";
-import { sendNotificationToSubscribers } from "@/notifications/server-actions";
+import { GroupMessage } from "@/features/notifications/models";
+import { sendNotificationToSubscribers } from "@/features/notifications/server-actions";
 import { getTranslations } from "next-intl/server";
 
 export async function getGroupById(groupId: number) {

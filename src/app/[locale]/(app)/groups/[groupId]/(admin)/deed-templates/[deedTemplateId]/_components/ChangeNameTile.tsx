@@ -2,11 +2,11 @@
 
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { DeedTemplateForm } from "@/deeds/components/DeedTemplateForm";
-import { useDeedTemplateById } from "@/deeds/hooks/useDeedTemplateById";
-import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
-import { DeedTemplateInsert } from "@/deeds/models";
-import { updateDeedTemplateById } from "@/deeds/service";
+import { DeedTemplateForm } from "@/features/deeds/components/DeedTemplateForm";
+import { useDeedTemplateById } from "@/features/deeds/hooks/useDeedTemplateById";
+import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
+import { DeedTemplateInsert } from "@/features/deeds/models";
+import { updateDeedTemplateById } from "@/features/deeds/service";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

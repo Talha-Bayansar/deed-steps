@@ -1,4 +1,4 @@
-import { MemberWrapper } from "@/groups/components/MemberWrapper";
+import { MemberWrapper } from "@/features/groups/components/MemberWrapper";
 
 type Props = {
   params: {

@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { sendEmailVerificationCode } from "../service";
+import { sendEmailVerificationCode } from "../actions/auth";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";

@@ -1,4 +1,4 @@
-import { AuthWrapper } from "@/auth/components/AuthWrapper";
+import { AuthWrapper } from "@/features/auth/components/AuthWrapper";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { RootNavBar } from "./_components/RootNavBar";
 

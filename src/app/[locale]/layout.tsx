@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider, useMessages } from "next-intl";
-import { ServiceWorkerWrapper } from "@/notifications/components/ServiceWorkerWrapper";
+import { ServiceWorkerWrapper } from "@/features/notifications/components/ServiceWorkerWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 

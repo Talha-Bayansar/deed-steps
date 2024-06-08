@@ -1,4 +1,4 @@
-import { validateRequest } from "@/auth/service";
+import { validateRequest } from "@/features/auth/actions/auth";
 import { db } from "@/db";
 import { pushSubscriptionTable } from "@/db/schema";
 import { eq } from "drizzle-orm";

@@ -1,6 +1,6 @@
 "use client";
 
-import { signout } from "@/auth/service";
+import { signout } from "@/features/auth/actions/auth";
 import { ListTile } from "@/components/ListTile";
 import {
   AlertDialog,
@@ -18,7 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
-import { unregisterPushNotifications } from "@/notifications/service";
+import { unregisterPushNotifications } from "@/features/notifications/service";
 
 export const SignOutButton = () => {
   const t = useTranslations("global");
