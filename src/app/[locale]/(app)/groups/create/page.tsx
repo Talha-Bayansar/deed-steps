@@ -2,7 +2,7 @@ import { BackButton } from "@/components/BackButton";
 import { Heading } from "@/components/layout/Heading";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";
-import { CreateGroupForm } from "@/groups/components/CreateGroupForm";
+import { CreateGroupForm } from "@/features/groups/components/CreateGroupForm";
 import { routes } from "@/lib/routes";
 import { getTranslations } from "next-intl/server";
 

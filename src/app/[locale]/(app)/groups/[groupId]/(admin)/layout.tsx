@@ -1,4 +1,4 @@
-import { AdminWrapper } from "@/groups/components/AdminWrapper";
+import { AdminWrapper } from "@/features/groups/components/AdminWrapper";
 
 type Props = {
   params: {

@@ -1,5 +1,5 @@
 "use server";
-import { validateRequest } from "@/auth/service";
+import { validateRequest } from "@/features/auth/actions/auth";
 import { db } from "@/db";
 import {
   deedStatusTable,
@@ -26,9 +26,9 @@ import type {
 } from "./models";
 import { endOfDay, startOfDay } from "date-fns";
 import { Nullable } from "@/lib/utils";
-import type { GroupMessage } from "@/notifications/models";
+import type { GroupMessage } from "@/features/notifications/models";
 import { getTranslations } from "next-intl/server";
-import { sendNotificationToSubscribers } from "@/notifications/server-actions";
+import { sendNotificationToSubscribers } from "@/features/notifications/server-actions";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();

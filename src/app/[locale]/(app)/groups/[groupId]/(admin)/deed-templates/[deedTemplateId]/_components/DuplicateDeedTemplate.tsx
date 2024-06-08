@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { DeedTemplateForm } from "@/deeds/components/DeedTemplateForm";
-import { useDeedTemplatesByGroupId } from "@/deeds/hooks/useDeedTemplatesByGroupId";
-import { duplicateDeedTemplate } from "@/deeds/service";
+import { DeedTemplateForm } from "@/features/deeds/components/DeedTemplateForm";
+import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
+import { duplicateDeedTemplate } from "@/features/deeds/service";
 import { routes } from "@/lib/routes";
 import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";

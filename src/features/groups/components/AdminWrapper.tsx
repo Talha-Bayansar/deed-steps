@@ -1,7 +1,6 @@
 "use client";
 
-import { useSession } from "@/auth/hooks/useSession";
-import { useGroupById } from "@/groups/hooks/useGroupById";
+import { useGroupById } from "@/features/groups/hooks/useGroupById";
 import { routes } from "@/lib/routes";
 import { useRouter } from "@/navigation";
 import { Loader2 } from "lucide-react";
@@ -12,25 +11,20 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const MemberWrapper = ({ groupId, children }: Props) => {
+export const AdminWrapper = ({ groupId, children }: Props) => {
   const router = useRouter();
-  const { data: session } = useSession();
   const { data: group, isLoading: isLoadingGroup } = useGroupById(groupId);
 
-  if (isLoadingGroup) return <MemberLoading />;
+  if (isLoadingGroup) return <AdminLoading />;
 
-  if (
-    group?.isOwner ||
-    !!group?.members.find((member) => member.userId === session?.user?.id)
-  )
-    return children;
+  if (group?.isOwner) return children;
 
   router.push(routes.groups.root);
   return null;
 };
 
-const MemberLoading = () => {
-  const t = useTranslations("MemberWrapper");
+const AdminLoading = () => {
+  const t = useTranslations("AdminWrapper");
 
   return (
     <div className="flex-grow grid place-items-center">

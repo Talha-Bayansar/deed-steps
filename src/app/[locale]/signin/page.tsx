@@ -1,5 +1,5 @@
-import { SigninForm } from "@/auth/components/SigninForm";
-import { VerificationCodeForm } from "@/auth/components/VerificationCodeForm";
+import { SigninForm } from "@/features/auth/components/SigninForm";
+import { VerificationCodeForm } from "@/features/auth/components/VerificationCodeForm";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Main } from "@/components/layout/Main";
 import { Title } from "@/components/layout/Title";

@@ -1,12 +1,15 @@
 "use client";
 
-import { useSession } from "@/auth/hooks/useSession";
+import { useSession } from "@/features/auth/hooks/useSession";
 import { ListTile } from "@/components/ListTile";
 import { View } from "@/components/layout/View";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Switch } from "@/components/ui/switch";
-import { useGroupById } from "@/groups/hooks/useGroupById";
-import { sendReminderNotification, updateGroup } from "@/groups/service";
+import { useGroupById } from "@/features/groups/hooks/useGroupById";
+import {
+  sendReminderNotification,
+  updateGroup,
+} from "@/features/groups/service";
 import { useMutation } from "@tanstack/react-query";
 import { Bell, BellRing, ListChecks } from "lucide-react";
 import { useTranslations } from "next-intl";

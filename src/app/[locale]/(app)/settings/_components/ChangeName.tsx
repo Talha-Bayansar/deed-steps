@@ -1,9 +1,8 @@
 "use client";
 
-import { UserForm } from "@/auth/components/UserForm";
-import { useSession } from "@/auth/hooks/useSession";
-import type { UserInsert } from "@/auth/models";
-import { updateUser } from "@/auth/service";
+import { UserForm } from "@/features/auth/components/UserForm";
+import { useSession } from "@/features/auth/hooks/useSession";
+import type { UserInsert } from "@/features/auth/models";
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { type Nullable } from "@/lib/utils";
@@ -12,6 +11,7 @@ import { Pen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
+import { updateUser } from "@/features/auth/actions/users";
 
 export const ChangeName = () => {
   const t = useTranslations("SettingsPage");

@@ -1,7 +1,7 @@
 "use client";
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { GenerateTransactionLinkForm } from "@/groups/components/GenerateTransactionLinkForm";
+import { GenerateTransactionLinkForm } from "@/features/groups/components/GenerateTransactionLinkForm";
 import { Link } from "lucide-react";
 import { useTranslations } from "next-intl";
 
