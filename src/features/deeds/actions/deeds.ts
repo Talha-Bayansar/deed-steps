@@ -23,12 +23,12 @@ import type {
   DeedInsert,
   DeedStatusInsert,
   DeedTemplateInsert,
-} from "./models";
+} from "../models";
 import { endOfDay, startOfDay } from "date-fns";
 import { Nullable } from "@/lib/utils";
 import type { GroupMessage } from "@/features/notifications/models";
 import { getTranslations } from "next-intl/server";
-import { sendNotificationToSubscribers } from "@/features/notifications/server-actions";
+import { sendNotificationToSubscribers } from "@/features/notifications/actions/notifications";
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   const { user } = await validateRequest();

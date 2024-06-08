@@ -9,7 +9,7 @@ import { useGroupById } from "@/features/groups/hooks/useGroupById";
 import {
   sendReminderNotification,
   updateGroup,
-} from "@/features/groups/service";
+} from "@/features/groups/actions/groups";
 import { useMutation } from "@tanstack/react-query";
 import { Bell, BellRing, ListChecks } from "lucide-react";
 import { useTranslations } from "next-intl";

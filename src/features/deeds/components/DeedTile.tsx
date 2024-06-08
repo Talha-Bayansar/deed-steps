@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import type { DeedInsert, DeedStatus, DeedTemplate, Deed } from "../models";
 import { useMutation } from "@tanstack/react-query";
-import { saveDeed } from "../service";
+import { saveDeed } from "../actions/deeds";
 import { useSession } from "@/features/auth/hooks/useSession";
 import { Badge } from "@/components/ui/badge";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getDeedTemplatesByGroupId } from "../service";
+import { getDeedTemplatesByGroupId } from "../actions/deeds";
 
 export const useDeedTemplatesByGroupId = (groupId: string) => {
   const query = useQuery({

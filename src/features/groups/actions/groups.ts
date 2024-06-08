@@ -15,10 +15,10 @@ import {
   userToGroupTable,
 } from "@/db/schema";
 import { DrizzleError, and, eq, inArray } from "drizzle-orm";
-import type { GroupInsert } from "./models";
+import type { GroupInsert } from "../models";
 import { isArrayEmpty, type Nullable } from "@/lib/utils";
 import { GroupMessage } from "@/features/notifications/models";
-import { sendNotificationToSubscribers } from "@/features/notifications/server-actions";
+import { sendNotificationToSubscribers } from "@/features/notifications/actions/notifications";
 import { getTranslations } from "next-intl/server";
 
 export async function getGroupById(groupId: number) {

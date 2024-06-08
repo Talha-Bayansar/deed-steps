@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DeedTemplateForm } from "@/features/deeds/components/DeedTemplateForm";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
 import type { DeedTemplateInsert } from "@/features/deeds/models";
-import { createDeedTemplate } from "@/features/deeds/service";
+import { createDeedTemplate } from "@/features/deeds/actions/deeds";
 import { Nullable } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { Plus } from "lucide-react";

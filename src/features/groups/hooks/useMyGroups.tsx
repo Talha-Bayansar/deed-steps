@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getMyGroups } from "../service";
+import { getMyGroups } from "../actions/groups";
 
 export const useMyGroups = () => {
   const query = useQuery({

@@ -3,7 +3,7 @@ import type {
   GroupMessage,
   Message,
   PushSubscription as Subscription,
-} from "./models";
+} from "../models";
 import webPush, { WebPushError } from "web-push";
 import { db } from "@/db";
 import { pushSubscriptionTable } from "@/db/schema";

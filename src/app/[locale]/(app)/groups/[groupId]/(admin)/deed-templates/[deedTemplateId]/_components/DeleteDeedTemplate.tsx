@@ -2,7 +2,7 @@
 
 import { DeleteButton } from "@/components/DeleteButton";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
-import { deleteDeedTemplateById } from "@/features/deeds/service";
+import { deleteDeedTemplateById } from "@/features/deeds/actions/deeds";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { createGroup } from "../service";
+import { createGroup } from "../actions/groups";
 import { useRouter } from "@/navigation";
 import { routes } from "@/lib/routes";
 import { GroupForm } from "./GroupForm";
