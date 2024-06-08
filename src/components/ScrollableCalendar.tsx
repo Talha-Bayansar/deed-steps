@@ -8,12 +8,13 @@ import {
   startOfMonth,
   startOfToday,
 } from "date-fns";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn, getDayOfWeek } from "@/lib/utils";
 import { View } from "./layout/View";
 import { useFormatter, useTranslations } from "next-intl";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
   selectedDay: Date;
@@ -22,15 +23,15 @@ type Props = {
 
 export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
   const format = useFormatter();
-  const t = useTranslations("global");
   const days = useTranslations("global.days");
   const today = startOfToday();
-  const start = startOfMonth(today);
-  const end = endOfMonth(today);
-  const intervals = eachDayOfInterval({
-    start,
-    end,
-  });
+  const [selectedMonth, setSelectedMonth] = useState<Date>(startOfMonth(today));
+  const intervals = useMemo(() => {
+    return eachDayOfInterval({
+      start: startOfMonth(selectedMonth),
+      end: endOfMonth(selectedMonth),
+    });
+  }, [selectedMonth]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const getDay = (index: number) => {
@@ -52,6 +53,16 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
     }
   };
 
+  const changeMonth = (direction: "previous" | "next") => {
+    const month = startOfMonth(selectedMonth);
+    if (direction === "previous") {
+      month.setMonth(month.getMonth() - 1);
+    } else {
+      month.setMonth(month.getMonth() + 1);
+    }
+    setSelectedMonth(month);
+  };
+
   useEffect(() => {
     // Scroll to the selected day when it changes
     if (scrollContainerRef.current) {
@@ -59,14 +70,28 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
         scrollContainerRef.current.querySelector(".is-selected");
       if (selectedDayButton) {
         selectedDayButton.scrollIntoView({ block: "center" });
+      } else {
+        const firstDay = scrollContainerRef.current.querySelector(".first");
+        if (firstDay) {
+          firstDay.scrollIntoView({ block: "center" });
+        }
       }
     }
-  }, [selectedDay]);
+  }, [selectedMonth]);
 
   return (
     <View className="w-full gap-0">
       <div className="text-xl font-medium flex items-center capitalize">
-        {format.dateTime(today, { month: "long" })}
+        <button onClick={() => changeMonth("previous")}>
+          <ChevronLeft className="text-primary" />
+        </button>
+        {format.dateTime(selectedMonth, { month: "long" })}
+        <button
+          className="flex-grow flex justify-end items-center"
+          onClick={() => changeMonth("next")}
+        >
+          <ChevronRight className="text-primary" />
+        </button>
       </div>
       <ScrollArea ref={scrollContainerRef} className="w-full pb-2">
         <div className="flex">
@@ -79,6 +104,7 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
                 "flex h-auto w-12 flex-col items-center rounded p-2 hover:bg-primary/15",
                 {
                   "is-selected bg-primary/15": isSameDay(selectedDay, day),
+                  first: i === 0,
                 }
               )}
             >
