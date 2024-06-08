@@ -2,7 +2,7 @@
 import { ListTile } from "@/components/ListTile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { InviteUserToGroupForm } from "@/features/groups/components/InviteUserToGroupForm";
-import { inviteUserToGroup } from "@/features/groups/service";
+import { inviteUserToGroup } from "@/features/groups/actions/groups";
 import { useMutation } from "@tanstack/react-query";
 import { UserRoundPlus } from "lucide-react";
 import { useTranslations } from "next-intl";

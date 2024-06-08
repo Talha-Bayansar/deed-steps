@@ -18,7 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { LogOut } from "lucide-react";
-import { unregisterPushNotifications } from "@/features/notifications/service";
+import { unregisterPushNotifications } from "@/features/notifications/services/notifications";
 
 export const SignOutButton = () => {
   const t = useTranslations("global");

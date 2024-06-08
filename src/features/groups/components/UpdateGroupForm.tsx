@@ -6,7 +6,7 @@ import { GroupForm } from "./GroupForm";
 import { Users } from "lucide-react";
 import type { Group, GroupInsert } from "../models";
 import { useMutation } from "@tanstack/react-query";
-import { updateGroup } from "../service";
+import { updateGroup } from "../actions/groups";
 import { type Nullable } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 

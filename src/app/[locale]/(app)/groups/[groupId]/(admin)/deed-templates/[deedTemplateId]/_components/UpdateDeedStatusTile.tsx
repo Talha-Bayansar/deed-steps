@@ -11,7 +11,7 @@ import type { DeedStatus, DeedStatusInsert } from "@/features/deeds/models";
 import {
   deleteDeedStatusById,
   updateDeedStatusById,
-} from "@/features/deeds/service";
+} from "@/features/deeds/actions/deeds";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

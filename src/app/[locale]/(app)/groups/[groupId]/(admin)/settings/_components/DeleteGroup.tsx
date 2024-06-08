@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteGroup } from "@/features/groups/service";
+import { deleteGroup } from "@/features/groups/actions/groups";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 
