@@ -75,7 +75,7 @@ export const DeedStatusForm = ({
     defaultValues: {
       name: status?.name ?? "",
       reward: status?.reward ?? 0,
-      color: status?.color ?? "#FFFFFF",
+      color: status?.color ?? colors[0],
     },
   });
 
