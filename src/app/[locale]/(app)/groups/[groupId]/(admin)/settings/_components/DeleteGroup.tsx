@@ -1,16 +1,4 @@
 "use client";
-import { ListTile } from "@/components/ListTile";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { deleteGroup } from "@/features/groups/actions/groups";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -22,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { useMyDeedTemplates } from "@/features/deeds/hooks/useMyDeedTemplates";
 import { useMyGroups } from "@/features/groups/hooks/useMyGroups";
 import { Trash2 } from "lucide-react";
+import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 
 export const DeleteGroup = () => {
   const t = useTranslations("global");
@@ -41,29 +30,19 @@ export const DeleteGroup = () => {
   });
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger asChild>
-        <ListTile className="text-destructive">
+    <DestructiveModalButton
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      title={tGroupSettingsPage("delete_group_modal_title")}
+      description={tGroupSettingsPage("delete_group_modal_description")}
+      type="listTile"
+      onContinue={() => mutation.mutate()}
+      triggerChildren={
+        <>
           <Trash2 className="text-destructive mr-2" size={16} />
           {tGroupSettingsPage("delete_group")}
-        </ListTile>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            {tGroupSettingsPage("delete_group_modal_title")}
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            {tGroupSettingsPage("delete_group_modal_description")}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutation.mutate()}>
-            {t("continue")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </>
+      }
+    />
   );
 };

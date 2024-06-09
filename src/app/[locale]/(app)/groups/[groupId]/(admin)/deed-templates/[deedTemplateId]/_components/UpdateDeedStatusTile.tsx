@@ -1,6 +1,6 @@
 "use client";
 
-import { DeleteButton } from "@/components/DeleteButton";
+import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 import { View } from "@/components/layout/View";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DeedStatusForm } from "@/features/deeds/components/DeedStatusForm";
@@ -67,10 +67,10 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
             }
             isLoading={mutation.isPending}
           />
-          <DeleteButton
-            deleteFn={() => deleteMutation.mutate()}
-            modalTitle={tEditDeedTemplatePage("delete_deed_status_modal_title")}
-            modalDescription={tEditDeedTemplatePage(
+          <DestructiveModalButton
+            onContinue={() => deleteMutation.mutate()}
+            title={tEditDeedTemplatePage("delete_deed_status_modal_title")}
+            description={tEditDeedTemplatePage(
               "delete_deed_status_modal_description"
             )}
           />

@@ -1,6 +1,6 @@
 "use client";
 
-import { DeleteButton } from "@/components/DeleteButton";
+import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
 import { deleteDeedTemplateById } from "@/features/deeds/actions/deeds";
 import { routes } from "@/lib/routes";
@@ -27,10 +27,10 @@ export const DeleteDeedTemplate = () => {
   });
 
   return (
-    <DeleteButton
-      deleteFn={() => mutation.mutate()}
-      modalTitle={tEditDeedTemplatePage("delete_deed_template_modal_title")}
-      modalDescription={tEditDeedTemplatePage(
+    <DestructiveModalButton
+      onContinue={() => mutation.mutate()}
+      title={tEditDeedTemplatePage("delete_deed_template_modal_title")}
+      description={tEditDeedTemplatePage(
         "delete_deed_template_modal_description"
       )}
     />

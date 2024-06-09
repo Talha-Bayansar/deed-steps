@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteUserFromGroup } from "../../actions/groups";
 import { useState } from "react";
 import { useGroupById } from "../../hooks/useGroupById";
-import { DeleteButton } from "@/components/DeleteButton";
+import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 import { View } from "@/components/layout/View";
 import { ListTile } from "@/components/ListTile";
 import { useTranslations } from "next-intl";
@@ -57,10 +57,10 @@ export const GroupMember = ({
       <DrawerContent>
         <View className="p-8 overflow-y-scroll">
           {isOwner && (
-            <DeleteButton
-              deleteFn={() => mutation.mutate()}
-              modalTitle={tGroupDetailsPage("delete_modal_title")}
-              modalDescription={tGroupDetailsPage("delete_modal_description")}
+            <DestructiveModalButton
+              onContinue={() => mutation.mutate()}
+              title={tGroupDetailsPage("delete_modal_title")}
+              description={tGroupDetailsPage("delete_modal_description")}
             />
           )}
         </View>
