@@ -12,6 +12,7 @@ import { ListTile } from "@/components/ListTile";
 import { isLastOfArray } from "@/lib/utils";
 import { useState } from "react";
 import { useMyDeedsByDate } from "../hooks/useMyDeedsByDate";
+import { endOfToday } from "date-fns";
 
 type Props = {
   deedTemplate: DeedTemplate & {
@@ -50,7 +51,7 @@ export const DeedTile = ({
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
+      <DrawerTrigger disabled={selectedDay > endOfToday()} asChild>
         <ListTile>
           <div className="flex gap-2 items-center">
             {isLoading ? (
