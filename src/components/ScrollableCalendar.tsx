@@ -65,6 +65,9 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
   };
 
   useEffect(() => {
+    console.log(selectedMonth);
+    console.log(format);
+    console.log(format.dateTime(selectedMonth, { month: "long" }));
     // Scroll to the selected day when it changes
     if (scrollContainerRef.current) {
       const selectedDayButton =
