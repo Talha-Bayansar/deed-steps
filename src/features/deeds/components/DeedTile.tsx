@@ -12,6 +12,7 @@ import { ListTile } from "@/components/ListTile";
 import { isLastOfArray } from "@/lib/utils";
 import { useState } from "react";
 import { endOfToday } from "date-fns";
+import { useMyDeedsByDate } from "../hooks/useMyDeedsByDate";
 
 type Props = {
   deedTemplate: DeedTemplate & {
@@ -30,15 +31,33 @@ export const DeedTile = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
+  const { refetch: refetchDeeds } = useMyDeedsByDate(selectedDay);
   const queryClient = useQueryClient();
 
   const saveDeedMutation = useMutation({
     mutationFn: async (deedDto: DeedInsert) => await saveDeed(deedDto),
     onMutate(variables) {
       queryClient.setQueryData(["myDeeds", selectedDay], (deeds: Deed[]) => {
-        return [...deeds, variables];
+        const deedToUpdate = deeds.find((deed) => deed.id === variables.id);
+        if (deedToUpdate) {
+          return deeds.map((deed) => {
+            if (deed.id === deedToUpdate.id) {
+              return {
+                ...deed,
+                deedStatusId: variables.deedStatusId,
+              };
+            } else {
+              return deed;
+            }
+          });
+        } else {
+          return [...deeds, { ...variables, id: Date.now() }];
+        }
       });
       setIsOpen(false);
+    },
+    onSuccess: () => {
+      refetchDeeds();
     },
   });
 
