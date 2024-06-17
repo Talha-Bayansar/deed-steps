@@ -37,6 +37,44 @@
         "long": "Pazar"
       }
     },
+    "months": {
+      "0": {
+        "long": "Ocak"
+      },
+      "1": {
+        "long": "Şubat"
+      },
+      "2": {
+        "long": "Mart"
+      },
+      "3": {
+        "long": "Nisan"
+      },
+      "4": {
+        "long": "Mayıs"
+      },
+      "5": {
+        "long": "Haziran"
+      },
+      "6": {
+        "long": "Temmuz"
+      },
+      "7": {
+        "long": "Ağustos"
+      },
+      "8": {
+        "long": "Eylül"
+      },
+      "9": {
+        "long": "Ekim"
+      },
+      "10": {
+        "long": "Kasım"
+      },
+      "11": {
+        "long": "Aralık"
+      }
+    },
     "messages": {
       "deed_created": "Birisi az önce iyi bir amel işledi.",
       "reminder_title": "Hatırlatma",

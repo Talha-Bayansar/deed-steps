@@ -37,6 +37,44 @@
         "long": "Zondag"
       }
     },
+    "months": {
+      "0": {
+        "long": "Januari"
+      },
+      "1": {
+        "long": "Februari"
+      },
+      "2": {
+        "long": "Maart"
+      },
+      "3": {
+        "long": "April"
+      },
+      "4": {
+        "long": "Mei"
+      },
+      "5": {
+        "long": "Juni"
+      },
+      "6": {
+        "long": "Juli"
+      },
+      "7": {
+        "long": "Augustus"
+      },
+      "8": {
+        "long": "September"
+      },
+      "9": {
+        "long": "Oktober"
+      },
+      "10": {
+        "long": "November"
+      },
+      "11": {
+        "long": "December"
+      }
+    },
     "messages": {
       "deed_created": "Iemand heeft zojuist een goede daad verricht.",
       "reminder_title": "Herinnering",

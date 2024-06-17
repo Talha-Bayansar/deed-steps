@@ -37,6 +37,44 @@
         "long": "Sunday"
       }
     },
+    "months": {
+      "0": {
+        "long": "January"
+      },
+      "1": {
+        "long": "February"
+      },
+      "2": {
+        "long": "March"
+      },
+      "3": {
+        "long": "April"
+      },
+      "4": {
+        "long": "May"
+      },
+      "5": {
+        "long": "June"
+      },
+      "6": {
+        "long": "July"
+      },
+      "7": {
+        "long": "August"
+      },
+      "8": {
+        "long": "September"
+      },
+      "9": {
+        "long": "October"
+      },
+      "10": {
+        "long": "November"
+      },
+      "11": {
+        "long": "December"
+      }
+    },
     "messages": {
       "deed_created": "Someone has just done a good deed.",
       "reminder_title": "Reminder",

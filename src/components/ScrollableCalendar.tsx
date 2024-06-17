@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn, getDayOfWeek } from "@/lib/utils";
 import { View } from "./layout/View";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
@@ -22,8 +22,8 @@ type Props = {
 };
 
 export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
-  const format = useFormatter();
   const days = useTranslations("global.days");
+  const months = useTranslations("global.months");
   const today = startOfToday();
   const [selectedMonth, setSelectedMonth] = useState<Date>(startOfMonth(today));
   const intervals = useMemo(() => {
@@ -53,6 +53,35 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
     }
   };
 
+  const getMonth = (index: number) => {
+    switch (index) {
+      case 0:
+        return months("0.long");
+      case 1:
+        return months("1.long");
+      case 2:
+        return months("2.long");
+      case 3:
+        return months("3.long");
+      case 4:
+        return months("4.long");
+      case 5:
+        return months("5.long");
+      case 6:
+        return months("6.long");
+      case 7:
+        return months("7.long");
+      case 8:
+        return months("8.long");
+      case 9:
+        return months("9.long");
+      case 10:
+        return months("10.long");
+      case 11:
+        return months("11.long");
+    }
+  };
+
   const changeMonth = (direction: "previous" | "next") => {
     const month = startOfMonth(selectedMonth);
     if (direction === "previous") {
@@ -65,9 +94,6 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
   };
 
   useEffect(() => {
-    console.log(selectedMonth);
-    console.log(format);
-    console.log(format.dateTime(selectedMonth, { month: "long" }));
     // Scroll to the selected day when it changes
     if (scrollContainerRef.current) {
       const selectedDayButton =
@@ -89,7 +115,7 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
         <button onClick={() => changeMonth("previous")}>
           <ChevronLeft className="text-primary" />
         </button>
-        {format.dateTime(selectedMonth, { month: "long" })}
+        {getMonth(selectedMonth.getMonth())}
         <button
           className="flex-grow flex justify-end items-center"
           onClick={() => changeMonth("next")}
