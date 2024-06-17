@@ -61,6 +61,7 @@ export const ScrollableCalendar = ({ selectedDay, onSelectDay }: Props) => {
       month.setMonth(month.getMonth() + 1);
     }
     setSelectedMonth(month);
+    onSelectDay(month);
   };
 
   useEffect(() => {

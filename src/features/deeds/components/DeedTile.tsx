@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import type { DeedInsert, DeedStatus, DeedTemplate, Deed } from "../models";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveDeed } from "../actions/deeds";
 import { useSession } from "@/features/auth/hooks/useSession";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,6 @@ import { View } from "@/components/layout/View";
 import { ListTile } from "@/components/ListTile";
 import { isLastOfArray } from "@/lib/utils";
 import { useState } from "react";
-import { useMyDeedsByDate } from "../hooks/useMyDeedsByDate";
 import { endOfToday } from "date-fns";
 
 type Props = {
@@ -31,12 +30,14 @@ export const DeedTile = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
-  const { refetch: refetchMyDeeds } = useMyDeedsByDate(selectedDay);
+  const queryClient = useQueryClient();
 
   const saveDeedMutation = useMutation({
     mutationFn: async (deedDto: DeedInsert) => await saveDeed(deedDto),
-    onSuccess: () => {
-      refetchMyDeeds();
+    onMutate(variables) {
+      queryClient.setQueryData(["myDeeds", selectedDay], (deeds: Deed[]) => {
+        return [...deeds, variables];
+      });
       setIsOpen(false);
     },
   });
