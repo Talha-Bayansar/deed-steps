@@ -46,13 +46,13 @@ export const deedTable = sqliteTable("deed", {
   id: integer("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   deedTemplateId: integer("deed_template_id")
     .notNull()
-    .references(() => deedTemplateTable.id),
+    .references(() => deedTemplateTable.id, { onDelete: "cascade" }),
   deedStatusId: integer("deed_status_id")
     .notNull()
-    .references(() => deedStatusTable.id),
+    .references(() => deedStatusTable.id, { onDelete: "cascade" }),
   date: integer("date", { mode: "timestamp" }).notNull(),
 });
 
@@ -60,7 +60,7 @@ export const deedTemplateTable = sqliteTable("deed_template", {
   id: integer("id").primaryKey(),
   groupId: integer("group_id")
     .notNull()
-    .references(() => groupTable.id),
+    .references(() => groupTable.id, { onDelete: "cascade" }),
   name: text("title").notNull(),
   order: integer("order").notNull(),
 });
@@ -72,27 +72,27 @@ export const deedStatusTable = sqliteTable("deed_status", {
   reward: integer("reward").notNull(),
   deedTemplateId: integer("deed_template_id")
     .notNull()
-    .references(() => deedTemplateTable.id),
+    .references(() => deedTemplateTable.id, { onDelete: "cascade" }),
 });
 
 export const invitationTable = sqliteTable("invitation", {
   id: integer("id").primaryKey(),
   groupId: integer("group_id")
     .notNull()
-    .references(() => groupTable.id),
+    .references(() => groupTable.id, { onDelete: "cascade" }),
   userId: integer("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
 });
 
 export const groupPointsTable = sqliteTable("group_points", {
   id: integer("id").primaryKey(),
   groupId: integer("group_id")
     .notNull()
-    .references(() => groupTable.id),
+    .references(() => groupTable.id, { onDelete: "cascade" }),
   userId: integer("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   points: integer("points").notNull(),
 });
 
@@ -100,10 +100,10 @@ export const transactionTable = sqliteTable("transaction", {
   id: integer("id").primaryKey(),
   groupId: integer("group_id")
     .notNull()
-    .references(() => groupTable.id),
+    .references(() => groupTable.id, { onDelete: "cascade" }),
   userId: integer("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   amount: integer("points").notNull(),
 });
 
@@ -111,7 +111,7 @@ export const pushSubscriptionTable = sqliteTable("push_subscription", {
   id: integer("id").primaryKey(),
   sessionId: text("session_id")
     .notNull()
-    .references(() => sessionTable.id),
+    .references(() => sessionTable.id, { onDelete: "cascade" }),
   subscription: text("subscription", { mode: "json" }).notNull(),
 });
 
@@ -121,10 +121,10 @@ export const userToGroupTable = sqliteTable(
   {
     userId: integer("user_id")
       .notNull()
-      .references(() => userTable.id),
+      .references(() => userTable.id, { onDelete: "cascade" }),
     groupId: integer("group_id")
       .notNull()
-      .references(() => groupTable.id),
+      .references(() => groupTable.id, { onDelete: "cascade" }),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userId, t.groupId] }),
