@@ -121,32 +121,6 @@ export async function deleteGroup(groupId: number) {
     columns: { id: true },
   });
 
-  await db
-    .delete(transactionTable)
-    .where(eq(transactionTable.groupId, groupId));
-
-  if (!isArrayEmpty(deedTemplates)) {
-    const deedTemplateIds = deedTemplates.map(({ id }) => id);
-
-    await db
-      .delete(deedTable)
-      .where(inArray(deedTable.deedTemplateId, deedTemplateIds));
-    await db
-      .delete(deedStatusTable)
-      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
-    await db
-      .delete(deedTemplateTable)
-      .where(eq(deedTemplateTable.groupId, groupId));
-  }
-
-  await db
-    .delete(userToGroupTable)
-    .where(eq(userToGroupTable.groupId, groupId));
-  await db
-    .delete(groupPointsTable)
-    .where(eq(groupPointsTable.groupId, groupId));
-
-  await db.delete(invitationTable).where(eq(invitationTable.groupId, groupId));
   await db.delete(groupTable).where(eq(groupTable.id, groupId));
   return true;
 }

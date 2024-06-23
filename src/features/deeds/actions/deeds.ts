@@ -367,12 +367,6 @@ export async function deleteDeedTemplateById(id: number) {
       message: "Not authenticated",
     });
 
-  await db.delete(deedTable).where(eq(deedTable.deedTemplateId, id));
-
-  await db
-    .delete(deedStatusTable)
-    .where(eq(deedStatusTable.deedTemplateId, id));
-
   await db.delete(deedTemplateTable).where(eq(deedTemplateTable.id, id));
 
   const deedTemplates = await getMyDeedTemplates();
@@ -397,8 +391,6 @@ export async function deleteDeedStatusById(id: number) {
     throw new DrizzleError({
       message: "Not authenticated",
     });
-
-  await db.delete(deedTable).where(eq(deedTable.deedStatusId, id));
 
   await db.delete(deedStatusTable).where(eq(deedStatusTable.id, id));
 
