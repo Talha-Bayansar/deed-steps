@@ -2,9 +2,9 @@
 
 import { ListTile } from "@/components/ListTile";
 import { View } from "@/components/layout/View";
+import { changeOrderDeedTemplates } from "@/features/deeds/actions/deedTemplates";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
 import type { DeedTemplate } from "@/features/deeds/models";
-import { changeOrderDeedTemplates } from "@/features/deeds/actions/deeds";
 import { routes } from "@/lib/routes";
 import { Link } from "@/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

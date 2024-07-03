@@ -17,6 +17,18 @@ import type { DeedStatus } from "../models";
 import { View } from "@/components/layout/View";
 import ColorPicker from "@uiw/react-color-circle";
 import { useTranslations } from "next-intl";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const colors = [
   "#F44335",
@@ -41,7 +53,12 @@ const colors = [
 
 type Props = {
   status?: DeedStatus;
-  onSubmit: (values: { name: string; color: string; reward: number }) => any;
+  onSubmit: (values: {
+    reward: number;
+    color: string;
+    name: string;
+    updateAllInstances: boolean;
+  }) => any;
   isLoading?: boolean;
 };
 
@@ -69,6 +86,7 @@ export const DeedStatusForm = ({
         .min(0, t("errors.min_value", { value: 0 }))
         .max(100, t("errors.max_value", { value: 100 }))
     ),
+    updateAllInstances: z.boolean().default(true),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,6 +94,7 @@ export const DeedStatusForm = ({
       name: status?.name ?? "",
       reward: status?.reward ?? 0,
       color: status?.color ?? colors[0],
+      updateAllInstances: true,
     },
   });
 
@@ -133,8 +152,26 @@ export const DeedStatusForm = ({
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="updateAllInstances"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="!m-0">
+                  {tEditDeedTemplatePage("update_all_instances")}
+                </FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </View>
-        <Button type="submit" disabled={isLoading}>
+        <Button type={"submit"} disabled={isLoading}>
           {t("submit")}
         </Button>
       </form>

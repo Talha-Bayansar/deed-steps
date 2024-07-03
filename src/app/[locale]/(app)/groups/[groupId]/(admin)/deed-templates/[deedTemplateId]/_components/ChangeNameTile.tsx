@@ -6,7 +6,7 @@ import { DeedTemplateForm } from "@/features/deeds/components/DeedTemplateForm";
 import { useDeedTemplateById } from "@/features/deeds/hooks/useDeedTemplateById";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
 import { DeedTemplateInsert } from "@/features/deeds/models";
-import { updateDeedTemplateById } from "@/features/deeds/actions/deeds";
+import { updateDeedTemplateById } from "@/features/deeds/actions/deedTemplates";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

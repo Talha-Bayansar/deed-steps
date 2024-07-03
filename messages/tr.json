@@ -82,6 +82,8 @@
       "group_invited_title": "Grup davetiyesi",
       "group_invited_body": "{groupName} grubundan bir davetiye aldınız."
     },
+    "yes": "Evet",
+    "no": "Hayır",
     "email": "E-posta",
     "home": "Anasayfa",
     "groups": "Gruplar",
@@ -163,7 +165,8 @@
     "delete_deed_status_modal_title": "Bu amel durumunu silmek istediğinizden emin misiniz?",
     "delete_deed_status_modal_description": "Bu amel durumu ve buna bağlı tüm veriler kalıcı olarak silinecektir.",
     "delete_deed_template_modal_title": "Bu amel şablonunu silmek istediğinizden emin misiniz?",
-    "delete_deed_template_modal_description": "Bu amel şablonu ve ilgili tüm durumlar kalıcı olarak silinecektir."
+    "delete_deed_template_modal_description": "Bu amel şablonu ve ilgili tüm durumlar kalıcı olarak silinecektir.",
+    "update_all_instances": "Tüm örnekleri güncelle"
   },
   "InvitationsPage": {
     "title": "Davetiyeler",

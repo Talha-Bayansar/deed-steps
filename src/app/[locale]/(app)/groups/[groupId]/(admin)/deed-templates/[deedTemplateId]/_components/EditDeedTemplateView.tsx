@@ -43,7 +43,10 @@ export const EditDeedTemplateView = () => {
         </h2>
         <View className="gap-0">
           {data.statuses.map((status) => (
-            <UpdateDeedStatusTile key={status.id} status={status} />
+            <UpdateDeedStatusTile
+              key={status.deedStatusId}
+              status={status.deedStatus}
+            />
           ))}
         </View>
       </View>

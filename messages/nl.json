@@ -82,6 +82,8 @@
       "group_invited_title": "Groep uitnodiging",
       "group_invited_body": "Je hebt een groepsuitnodiging gekregen van {groupName}."
     },
+    "yes": "Ja",
+    "no": "Nee",
     "email": "E-mail",
     "home": "Startpagina",
     "groups": "Groepen",
@@ -163,7 +165,8 @@
     "delete_deed_status_modal_title": "Weet je zeker dat je deze daad status wilt verwijderen?",
     "delete_deed_status_modal_description": "Deze daad status en alle bijbehorende gegevens worden permanent verwijderd.",
     "delete_deed_template_modal_title": "Weet je zeker dat je deze daad sjabloon wilt verwijderen?",
-    "delete_deed_template_modal_description": "Deze daad sjabloon en alle gerelateerde statussen zullen permanent worden verwijderd."
+    "delete_deed_template_modal_description": "Deze daad sjabloon en alle gerelateerde statussen zullen permanent worden verwijderd.",
+    "update_all_instances": "Alle instanties bijwerken"
   },
   "InvitationsPage": {
     "title": "Uitnodigingen",

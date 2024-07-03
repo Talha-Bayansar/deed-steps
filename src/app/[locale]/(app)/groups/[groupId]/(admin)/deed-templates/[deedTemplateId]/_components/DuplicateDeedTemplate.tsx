@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DeedTemplateForm } from "@/features/deeds/components/DeedTemplateForm";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
-import { duplicateDeedTemplate } from "@/features/deeds/actions/deeds";
+import { duplicateDeedTemplate } from "@/features/deeds/actions/deedTemplates";
 import { routes } from "@/lib/routes";
 import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";

@@ -82,6 +82,8 @@
       "group_invited_title": "Group invitation",
       "group_invited_body": "You have got a group invitation from {groupName}."
     },
+    "yes": "Yes",
+    "no": "No",
     "email": "Email",
     "home": "Home",
     "groups": "Groups",
@@ -163,7 +165,8 @@
     "delete_deed_status_modal_title": "Are you sure you want to delete this deed status?",
     "delete_deed_status_modal_description": "This deed status and all depending data will be permanently deleted.",
     "delete_deed_template_modal_title": "Are you sure you want to delete this deed template?",
-    "delete_deed_template_modal_description": "This deed template and all related statuses will be permanently deleted."
+    "delete_deed_template_modal_description": "This deed template and all related statuses will be permanently deleted.",
+    "update_all_instances": "Update all instances"
   },
   "InvitationsPage": {
     "title": "Invitations",

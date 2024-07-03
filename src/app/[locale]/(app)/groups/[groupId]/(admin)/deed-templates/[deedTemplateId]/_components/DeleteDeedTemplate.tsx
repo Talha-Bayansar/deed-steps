@@ -2,12 +2,13 @@
 
 import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
-import { deleteDeedTemplateById } from "@/features/deeds/actions/deeds";
+
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { deleteDeedTemplateById } from "@/features/deeds/actions/deedTemplates";
 
 export const DeleteDeedTemplate = () => {
   const tEditDeedTemplatePage = useTranslations("EditDeedTemplatePage");

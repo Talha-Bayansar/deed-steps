@@ -11,7 +11,7 @@ import type { DeedStatus, DeedStatusInsert } from "@/features/deeds/models";
 import {
   deleteDeedStatusById,
   updateDeedStatusById,
-} from "@/features/deeds/actions/deeds";
+} from "@/features/deeds/actions/deedStatuses";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -34,8 +34,17 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
   const { refetch: refetchGroupTemplates } = useDeedTemplatesByGroupId(groupId);
 
   const mutation = useMutation({
-    mutationFn: async (values: DeedStatusInsert) =>
-      await updateDeedStatusById(status.id, values),
+    mutationFn: async (values: {
+      status: DeedStatusInsert;
+      deedTemplateId?: number;
+    }) => {
+      console.log("Submitted");
+      await updateDeedStatusById(
+        status.id,
+        values.status,
+        values.deedTemplateId
+      );
+    },
     onSuccess: async () => {
       await Promise.all([refetchTemplate(), refetchGroupTemplates()]);
       setIsOpen(false);
@@ -61,12 +70,19 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
             status={status}
             onSubmit={(values) =>
               mutation.mutate({
-                ...values,
-                deedTemplateId: status.deedTemplateId,
+                status: {
+                  name: values.name,
+                  reward: values.reward,
+                  color: values.color,
+                },
+                deedTemplateId: !values.updateAllInstances
+                  ? Number(deedTemplateId)
+                  : undefined,
               })
             }
             isLoading={mutation.isPending}
           />
+
           <DestructiveModalButton
             onContinue={() => deleteMutation.mutate()}
             title={tEditDeedTemplatePage("delete_deed_status_modal_title")}

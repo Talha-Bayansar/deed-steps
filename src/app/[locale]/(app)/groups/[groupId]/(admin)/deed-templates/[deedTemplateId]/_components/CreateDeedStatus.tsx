@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DeedStatusForm } from "@/features/deeds/components/DeedStatusForm";
 import { useDeedTemplateById } from "@/features/deeds/hooks/useDeedTemplateById";
 import type { DeedStatusInsert } from "@/features/deeds/models";
-import { createDeedStatus } from "@/features/deeds/actions/deeds";
+import { createDeedStatus } from "@/features/deeds/actions/deedStatuses";
 import { useMutation } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -17,7 +17,7 @@ export const CreateDeedStatus = () => {
 
   const mutation = useMutation({
     mutationFn: async (deedStatus: DeedStatusInsert) =>
-      await createDeedStatus(deedStatus),
+      await createDeedStatus(deedStatus, Number(deedTemplateId)),
     onSuccess: async () => {
       await refetch();
       setIsOpen(false);
@@ -34,12 +34,7 @@ export const CreateDeedStatus = () => {
       <DrawerContent>
         <div className="p-8 overflow-y-scroll">
           <DeedStatusForm
-            onSubmit={(values) =>
-              mutation.mutate({
-                ...values,
-                deedTemplateId: Number(deedTemplateId),
-              })
-            }
+            onSubmit={(values) => mutation.mutate(values)}
             isLoading={mutation.isPending}
           />
         </div>
