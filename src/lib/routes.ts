@@ -1,32 +1,33 @@
 export const routes = {
-  root: "/",
-  signin: {
-    root: "/signin",
+  landingPage: { root: "/" },
+  root: "/app",
+  signIn: {
+    root: "/sign-in",
   },
   groups: {
-    root: "/groups",
+    root: "/app/groups",
     create: {
-      root: "/groups/create",
+      root: "/app/groups/create",
     },
     invitations: {
-      root: "/groups/invitations",
+      root: "/app/groups/invitations",
     },
     id: (groupId: string) => ({
-      root: `/groups/${groupId}`,
-      settings: { root: `/groups/${groupId}/settings` },
-      transaction: { root: `/groups/${groupId}/transaction` },
+      root: `/app/groups/${groupId}`,
+      settings: { root: `/app/groups/${groupId}/settings` },
+      transaction: { root: `/app/groups/${groupId}/transaction` },
       deedTemplates: {
-        root: `/groups/${groupId}/deed-templates`,
+        root: `/app/groups/${groupId}/deed-templates`,
         id: (deedTemplateId: string) => ({
-          root: `/groups/${groupId}/deed-templates/${deedTemplateId}`,
+          root: `/app/groups/${groupId}/deed-templates/${deedTemplateId}`,
           edit: {
-            root: `/groups/${groupId}/deed-templates/${deedTemplateId}/edit`,
+            root: `/app/groups/${groupId}/deed-templates/${deedTemplateId}/edit`,
           },
         }),
       },
     }),
   },
   settings: {
-    root: "/settings",
+    root: "/app/settings",
   },
 };

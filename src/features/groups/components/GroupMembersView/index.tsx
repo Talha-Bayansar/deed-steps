@@ -2,11 +2,11 @@
 
 import { EmptyView } from "@/components/EmptyView";
 import { Users } from "lucide-react";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { GroupMember } from "./GroupMember";
 import { useGroupById } from "../../hooks/useGroupById";
 import { generateArray } from "@/lib/utils";
-import { ListTileSkeleton } from "@/components/ListTile";
+import { ListTileSkeleton } from "@/components/list-tile";
 import { useTranslations } from "next-intl";
 
 type Props = {

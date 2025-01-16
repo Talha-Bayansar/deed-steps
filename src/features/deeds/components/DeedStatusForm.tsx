@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { DeedStatus } from "../models";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import ColorPicker from "@uiw/react-color-circle";
 import { useTranslations } from "next-intl";
 

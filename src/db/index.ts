@@ -1,20 +1,23 @@
-import "dotenv/config";
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
-import * as schema from "./schema";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
-const client = createClient({
-  url: process.env.TURSO_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN!,
-});
+const dbClient = postgres(process.env.POSTGRES_URL!);
 
-export const db = drizzle(client, {
-  schema: schema,
-});
+function singleton(
+  name: string,
+  value: ReturnType<typeof drizzle>
+): ReturnType<typeof drizzle> {
+  const globalAny: any = global;
+  globalAny.__singletons = globalAny.__singletons || {};
 
-export const adapter = new DrizzleSQLiteAdapter(
-  db,
-  schema.sessionTable,
-  schema.userTable
-);
+  if (!globalAny.__singletons[name]) {
+    globalAny.__singletons[name] = value;
+  }
+
+  return globalAny.__singletons[name];
+}
+
+export const db =
+  process.env.NODE_ENV !== "production"
+    ? singleton("db", drizzle(dbClient))
+    : drizzle(dbClient);

@@ -1,8 +1,8 @@
 "use client";
 
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { useMyDeedTemplates } from "../hooks/useMyDeedTemplates";
-import { ListTileSkeleton } from "@/components/ListTile";
+import { ListTileSkeleton } from "@/components/list-tile";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { EmptyView } from "@/components/EmptyView";
 import { ListChecks } from "lucide-react";

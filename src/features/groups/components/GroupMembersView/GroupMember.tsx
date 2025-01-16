@@ -6,8 +6,8 @@ import { deleteUserFromGroup } from "../../actions/groups";
 import { useState } from "react";
 import { useGroupById } from "../../hooks/useGroupById";
 import { DestructiveModalButton } from "@/components/DestructiveModalButton";
-import { View } from "@/components/layout/View";
-import { ListTile } from "@/components/ListTile";
+import { View } from "@/components/layout/ror";
+import { ListTile } from "@/components/list-tile";
 import { useTranslations } from "next-intl";
 import type { GroupPoints } from "@/features/groups/models";
 

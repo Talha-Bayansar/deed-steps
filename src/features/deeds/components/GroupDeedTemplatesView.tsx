@@ -1,12 +1,12 @@
 "use client";
 
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { useDeedTemplatesByGroupId } from "../hooks/useDeedTemplatesByGroupId";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { EmptyView } from "@/components/EmptyView";
 import { ListChecks } from "lucide-react";
 import { DeedTemplateTile } from "./DeedTemplateTile";
-import { ListTileSkeleton } from "@/components/ListTile";
+import { ListTileSkeleton } from "@/components/list-tile";
 import { useTranslations } from "next-intl";
 
 type Props = {

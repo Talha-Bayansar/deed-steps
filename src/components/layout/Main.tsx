@@ -1,13 +1,16 @@
 import { cn } from "@/lib/utils";
 
-type Props = {
-  className?: string;
-  children?: React.ReactNode;
-};
+type Props = React.HTMLAttributes<HTMLElement>;
 
-export const Main = ({ className, children }: Props) => {
+export const Main = ({ children, className, ...rest }: Props) => {
   return (
-    <main className={cn("flex w-full max-w-3xl flex-grow flex-col", className)}>
+    <main
+      className={cn(
+        "flex flex-col flex-grow w-full p-8 md:items-start",
+        className
+      )}
+      {...rest}
+    >
       {children}
     </main>
   );

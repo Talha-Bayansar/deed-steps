@@ -10,6 +10,52 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// RESPONSES
+export const createSuccessResponse = <T>(data?: T) => {
+  return {
+    success: true,
+    data,
+    message: null,
+  };
+};
+
+export const createErrorResponse = (message: string) => {
+  return {
+    success: false,
+    data: null,
+    message,
+  };
+};
+
+type Response = {
+  success: boolean;
+  data: unknown | null;
+  message: string | null;
+};
+
+export const handleResponse = ({
+  onSuccess,
+  onError,
+  response,
+  t,
+}: {
+  response?: Response;
+  t: any;
+  onSuccess?: () => void;
+  onError?: (message: string) => void;
+}) => {
+  if (response?.success) {
+    onSuccess?.();
+  } else {
+    onError?.(response?.message ?? t("somethingWentWrong"));
+  }
+};
+
+export const extractError = (response: Response, t: any): string | null => {
+  if (!response.success) return response.message ?? t("somethingWentWrong");
+  return null;
+};
+
 // ARRAY UTILITY FUNCTIONS
 export const isArrayEmpty = (array: unknown[]) => {
   return array.length < 1;

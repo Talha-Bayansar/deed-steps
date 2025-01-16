@@ -1,10 +1,10 @@
 "use client";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { useMyGroupInvitations } from "../hooks/useMyGroupInvitations";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { EmptyView } from "@/components/EmptyView";
 import { Check, Inbox, X } from "lucide-react";
-import { ListTile, ListTileSkeleton } from "@/components/ListTile";
+import { ListTile, ListTileSkeleton } from "@/components/list-tile";
 import { IconButton } from "@/components/IconButton";
 import { useMutation } from "@tanstack/react-query";
 import { acceptInvitation, declineInvitation } from "../actions/groups";

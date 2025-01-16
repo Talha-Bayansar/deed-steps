@@ -1,7 +1,7 @@
 "use client";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { GroupCard, GroupCardSkeleton } from "./GroupCard";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { EmptyView } from "@/components/EmptyView";
 import { Users } from "lucide-react";
 import { routes } from "@/lib/routes";

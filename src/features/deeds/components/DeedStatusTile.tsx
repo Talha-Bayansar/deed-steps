@@ -1,9 +1,9 @@
 "use client";
 
-import { ListTile } from "@/components/ListTile";
+import { ListTile } from "@/components/list-tile";
 import type { DeedStatus } from "../models";
 import { Badge } from "@/components/ui/badge";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 import { ButtonProps } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 

@@ -19,7 +19,7 @@ import { useParams } from "next/navigation";
 import { Link } from "@/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { View } from "@/components/layout/View";
+import { View } from "@/components/layout/ror";
 
 export const GenerateTransactionLinkForm = () => {
   const t = useTranslations("global");

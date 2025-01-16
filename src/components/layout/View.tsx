@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils";
 
 type Props = React.HTMLAttributes<HTMLDivElement>;
 
-export const View = ({ className, children, ...rest }: Props) => {
+export const View = ({ children, className, ...rest }: Props) => {
   return (
-    <div className={cn("flex flex-col gap-4", className)} {...rest}>
+    <div className={cn("flex flex-col gap-4 w-full", className)} {...rest}>
       {children}
     </div>
   );
