@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { Group } from "../types";
 import { useTranslations } from "next-intl";
 import { AppForm } from "@/components/app-form";
 import { LoadingButton } from "@/components/loading-button";
@@ -23,11 +22,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 
-type Props = {
-  group: Group;
-};
-
-export const GroupForm = ({ group }: Props) => {
+export const CreateGroupForm = () => {
   const t = useTranslations();
   const router = useRouter();
 
@@ -41,7 +36,7 @@ export const GroupForm = ({ group }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: group?.name ?? "",
+      name: "",
     },
   });
 

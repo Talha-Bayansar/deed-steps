@@ -343,5 +343,6 @@
   "group": "Group",
   "session": "Session",
   "role": "Role",
-  "member": "Member"
+  "member": "Member",
+  "createGroup": "Create group"
 }
