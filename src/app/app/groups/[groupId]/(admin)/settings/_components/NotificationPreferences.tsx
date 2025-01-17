@@ -5,11 +5,11 @@ import { ListTile } from "@/components/list-tile";
 import { View } from "@/components/layout/ror";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Switch } from "@/components/ui/switch";
-import { useGroupById } from "@/features/groups/hooks/useGroupById";
+import { useGroupById } from "@/features/group/hooks/useGroupById";
 import {
   sendReminderNotification,
   updateGroup,
-} from "@/features/groups/actions/groups";
+} from "@/features/group/actions/groups";
 import { useMutation } from "@tanstack/react-query";
 import { Bell, BellRing, ListChecks } from "lucide-react";
 import { useTranslations } from "next-intl";

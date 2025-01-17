@@ -1,5 +1,5 @@
 "use client";
-import { deleteGroup } from "@/features/groups/actions/groups";
+import { deleteGroup } from "@/features/group/actions/groups";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 
@@ -7,8 +7,8 @@ import { useParams } from "next/navigation";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useMyDeedTemplates } from "@/features/deeds/hooks/useMyDeedTemplates";
-import { useMyGroups } from "@/features/groups/hooks/useMyGroups";
+import { useMyDeedTemplates } from "@/features/deed/hooks/useMyDeedTemplates";
+import { useMyGroups } from "@/features/group/hooks/useMyGroups";
 import { Trash2 } from "lucide-react";
 import { DestructiveModalButton } from "@/components/DestructiveModalButton";
 

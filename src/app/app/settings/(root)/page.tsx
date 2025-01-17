@@ -4,9 +4,8 @@ import { NotificationsPreference } from "../_components/notifications-preference
 import { requireAuth } from "@/features/auth/api";
 import { getLocale } from "@/i18n/api";
 import { ChangeLocaleDrawer } from "../_components/change-locale-drawer";
-import { SignOutAlertDialog } from "@/features/auth/components/sign-out-alert-dialog";
-import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
+import { SignOutTile } from "../_components/sign-out-tile";
 
 const SettingsRootPage = async () => {
   const t = await getTranslations();
@@ -25,10 +24,10 @@ const SettingsRootPage = async () => {
         <div className="list-tile flex items-center">
           <NotificationsPreference />
         </div>
+        <div className="list-tile flex items-center">
+          <SignOutTile />
+        </div>
       </View>
-      <SignOutAlertDialog>
-        <Button variant={"destructive"}>{t("signOut")}</Button>
-      </SignOutAlertDialog>
     </View>
   );
 };

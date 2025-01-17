@@ -1,4 +1,4 @@
-import { MemberWrapper } from "@/features/groups/components/MemberWrapper";
+import { MemberWrapper } from "@/features/group/components/MemberWrapper";
 
 type Props = {
   params: Promise<{
@@ -10,13 +10,9 @@ type Props = {
 const GroupLayout = async (props: Props) => {
   const params = await props.params;
 
-  const {
-    groupId
-  } = params;
+  const { groupId } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   return <MemberWrapper groupId={groupId}>{children}</MemberWrapper>;
 };

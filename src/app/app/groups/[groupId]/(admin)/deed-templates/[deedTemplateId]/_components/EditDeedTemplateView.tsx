@@ -2,7 +2,7 @@
 
 import { EmptyView } from "@/components/EmptyView";
 import { View } from "@/components/layout/ror";
-import { useDeedTemplateById } from "@/features/deeds/hooks/useDeedTemplateById";
+import { useDeedTemplateById } from "@/features/deed/hooks/useDeedTemplateById";
 import { generateArray } from "@/lib/utils";
 import { ListChecks } from "lucide-react";
 import { useParams } from "next/navigation";

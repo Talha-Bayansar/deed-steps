@@ -1,7 +1,7 @@
 "use client";
 import { ListTile } from "@/components/list-tile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { UpdateGroupForm } from "@/features/groups/components/UpdateGroupForm";
+import { UpdateGroupForm } from "@/features/group/components/UpdateGroupForm";
 import { Pen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

@@ -1,4 +1,4 @@
-import { AdminWrapper } from "@/features/groups/components/AdminWrapper";
+import { AdminWrapper } from "@/features/group/components/AdminWrapper";
 
 type Props = {
   params: Promise<{
@@ -10,13 +10,9 @@ type Props = {
 const AdminLayout = async (props: Props) => {
   const params = await props.params;
 
-  const {
-    groupId
-  } = params;
+  const { groupId } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   return <AdminWrapper groupId={groupId}>{children}</AdminWrapper>;
 };

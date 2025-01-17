@@ -20,7 +20,7 @@ import { View } from "./layout/view";
 
 type Props = {
   selectedDay: Date;
-  onSelectDay: (day: Date) => void;
+  onSelectDay?: (day: Date) => void;
 };
 
 export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
@@ -78,7 +78,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
             <Button
               variant="ghost"
               key={`day_${i}`}
-              onClick={() => onSelectDay(day)}
+              onClick={() => onSelectDay?.(day)}
               className={cn(
                 "flex h-auto w-12 flex-col items-center rounded p-2 hover:bg-primary/15",
                 {

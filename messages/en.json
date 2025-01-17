@@ -332,5 +332,11 @@
   "changeName": "Change name",
   "changeLanguage": "Change language",
   "changeLocaleDescription": "Select your preferred language for the app.",
-  "allowNotifications": "Allow notifications"
+  "allowNotifications": "Allow notifications",
+  "deeds": "Deeds",
+  "deedTemplate": "Deed template",
+  "deedStatus": "Deed status",
+  "groupPoints": "Group points",
+  "deed": "Deed",
+  "someoneDidDeed": "Someone has just done a good deed."
 }

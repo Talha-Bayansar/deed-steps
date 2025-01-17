@@ -1,6 +1,7 @@
-import { validateRequest } from "@/features/auth/actions/auth";
 import { db } from "@/db";
 import { pushSubscriptionTable } from "@/db/schema";
+import { validateRequest } from "@/features/auth/api";
+import { isArrayEmpty } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { PushSubscription } from "web-push";
@@ -16,8 +17,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("Received push subscription to add: ", newSubscription);
-
     const { user, session } = await validateRequest();
 
     if (!user || !session) {
@@ -27,18 +26,12 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("Inserted values:", {
-      sessionId: session.id,
-      subscription: JSON.stringify(newSubscription),
-    });
+    const existingSubscriptionRows = await db
+      .select()
+      .from(pushSubscriptionTable)
+      .where(eq(pushSubscriptionTable.sessionId, session.id));
 
-    const existingSubscription = await db.query.pushSubscriptionTable.findFirst(
-      {
-        where: eq(pushSubscriptionTable.sessionId, session.id),
-      }
-    );
-
-    if (!existingSubscription) {
+    if (isArrayEmpty(existingSubscriptionRows)) {
       await db.insert(pushSubscriptionTable).values({
         sessionId: session.id,
         subscription: JSON.stringify(newSubscription),

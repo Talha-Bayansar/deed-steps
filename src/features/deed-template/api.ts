@@ -1,0 +1,350 @@
+"use server";
+
+import { getTranslations } from "next-intl/server";
+import { requireAuth } from "../auth/api";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  isArrayEmpty,
+} from "@/lib/utils";
+import { db } from "@/db";
+import {
+  deedStatusTable,
+  deedTemplateTable,
+  groupTable,
+  userToGroupTable,
+} from "@/db/schema";
+import { desc, eq, inArray } from "drizzle-orm";
+import { safeAction } from "@/lib/safe-action";
+import { z } from "zod";
+import { DeedTemplate } from "./types";
+import { DeedStatus } from "../deed-status/types";
+
+const transformTemplatesWithStatus = (
+  templatesWithStatus: {
+    deed_template: DeedTemplate;
+    deed_status: DeedStatus | null;
+  }[]
+) => {
+  let transformedTemplates: (DeedTemplate & {
+    deedStatuses: DeedStatus[];
+  })[] = [];
+
+  for (const template of templatesWithStatus) {
+    const existingTemplate = transformedTemplates.find(
+      (t) => template.deed_template.id === t.id
+    );
+    if (existingTemplate) {
+      const newEntry = {
+        ...existingTemplate,
+        deedStatuses: [
+          ...existingTemplate.deedStatuses,
+          template.deed_status,
+        ].filter((status) => status !== null),
+      };
+      transformedTemplates = [
+        ...transformedTemplates.filter((t) => t.id !== existingTemplate.id),
+        newEntry,
+      ];
+    } else {
+      transformedTemplates.push({
+        ...template.deed_template,
+        deedStatuses: [template.deed_status].filter(
+          (status) => status !== null
+        ),
+      });
+    }
+
+    return transformedTemplates;
+  }
+};
+
+export async function getDeedTemplatesByGroupId(groupId: number) {
+  await requireAuth();
+  const t = await getTranslations();
+
+  try {
+    const deedTemplates = await db
+      .select()
+      .from(deedTemplateTable)
+      .where(eq(deedTemplateTable.groupId, groupId))
+      .leftJoin(
+        deedStatusTable,
+        eq(deedTemplateTable.id, deedStatusTable.deedTemplateId)
+      );
+
+    const transformedResponse =
+      transformTemplatesWithStatus(deedTemplates) || [];
+
+    return createSuccessResponse(transformedResponse);
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+}
+
+export async function getDeedTemplateById(id: number) {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    const deedTemplateRows = await db
+      .select()
+      .from(deedTemplateTable)
+      .where(eq(deedTemplateTable.id, id))
+      .leftJoin(
+        deedStatusTable,
+        eq(deedTemplateTable.id, deedStatusTable.deedTemplateId)
+      );
+
+    if (isArrayEmpty(deedTemplateRows))
+      return createErrorResponse(t("notFound", { subject: t("deedTemplate") }));
+
+    return createSuccessResponse({
+      ...deedTemplateRows[0].deed_template,
+      deedStatuses: deedTemplateRows
+        .map((dtr) => dtr.deed_status)
+        .filter((status) => status !== null),
+    });
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+}
+
+export async function getMyDeedTemplates() {
+  const t = await getTranslations();
+  const user = await requireAuth();
+
+  try {
+    const groups = await db
+      .select()
+      .from(userToGroupTable)
+      .where(eq(userToGroupTable.userId, user.id))
+      .innerJoin(groupTable, eq(groupTable.id, userToGroupTable.groupId));
+
+    if (isArrayEmpty(groups)) return createSuccessResponse([]);
+
+    const groupIds = groups.map((item) => item.user_to_group.groupId);
+
+    const deedTemplates = await db
+      .select()
+      .from(deedTemplateTable)
+      .innerJoin(
+        deedStatusTable,
+        eq(deedStatusTable.deedTemplateId, deedTemplateTable.id)
+      )
+      .where(inArray(deedTemplateTable.groupId, groupIds));
+
+    const response = groups.map((group) => {
+      const groupTemplates = deedTemplates.filter(
+        (templ) => templ.deed_template.groupId === group.user_to_group.groupId
+      );
+
+      return {
+        group: group.group,
+        templates: groupTemplates.map((templ) => ({
+          ...templ.deed_template,
+          statuses: deedTemplates
+            .filter((v) => v.deed_template.id === templ.deed_template.id)
+            .map((v) => v.deed_status),
+        })),
+      };
+    });
+
+    return createSuccessResponse(response);
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+}
+
+export const changeOrderDeedTemplates = safeAction
+  .schema(
+    z.object({
+      orderedTemplateIds: z.array(z.number()),
+    })
+  )
+  .action(async ({ parsedInput: { orderedTemplateIds } }) => {
+    await requireAuth();
+    const t = await getTranslations();
+
+    try {
+      for (let index = 0; index < orderedTemplateIds.length; index++) {
+        const templateId = orderedTemplateIds[index];
+        await db
+          .update(deedTemplateTable)
+          .set({
+            order: index,
+          })
+          .where(eq(deedTemplateTable.id, templateId));
+      }
+
+      return createSuccessResponse();
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });
+
+export const createDeedTemplate = safeAction
+  .schema(
+    z.object({
+      name: z.string().min(1).max(50),
+      groupId: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { name, groupId } }) => {
+    await requireAuth();
+    const t = await getTranslations();
+
+    try {
+      const deedTemplates = await db
+        .select()
+        .from(deedTemplateTable)
+        .where(eq(deedTemplateTable.groupId, groupId))
+        .orderBy(desc(deedTemplateTable.order))
+        .limit(1);
+
+      if (isArrayEmpty(deedTemplates)) {
+        await db.insert(deedTemplateTable).values({
+          name,
+          groupId,
+          order: 0,
+        });
+      } else {
+        await db
+          .insert(deedTemplateTable)
+          .values({ name, groupId, order: deedTemplates[0].order + 1 });
+      }
+
+      return createSuccessResponse();
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });
+
+export const duplicateDeedTemplate = safeAction
+  .schema(
+    z.object({
+      deedTemplateId: z.number(),
+      newName: z.string().min(1).max(50),
+    })
+  )
+  .action(async ({ parsedInput: { deedTemplateId, newName } }) => {
+    await requireAuth();
+    const t = await getTranslations();
+
+    try {
+      const deedTemplateRows = await db
+        .select()
+        .from(deedTemplateTable)
+        .where(eq(deedTemplateTable.id, deedTemplateId))
+        .leftJoin(
+          deedStatusTable,
+          eq(deedStatusTable.deedTemplateId, deedTemplateTable.id)
+        );
+
+      if (isArrayEmpty(deedTemplateRows))
+        return createErrorResponse(
+          t("notFound", { subject: t("deedTemplate") })
+        );
+
+      const deedTemplate = deedTemplateRows[0].deed_template;
+      const deedTemplateStatuses = deedTemplateRows
+        .map((v) => v.deed_status)
+        .filter((v) => v !== null);
+
+      const highestOrderTemplate = await db
+        .select()
+        .from(deedTemplateTable)
+        .where(eq(deedTemplateTable.groupId, deedTemplate.groupId))
+        .orderBy(desc(deedTemplateTable.order))
+        .limit(1);
+
+      if (isArrayEmpty(highestOrderTemplate))
+        return createErrorResponse(t("somethingWentWrong"));
+
+      const newDeedTemplateResult = await db
+        .insert(deedTemplateTable)
+        .values({
+          name: newName,
+          groupId: deedTemplate.groupId,
+          order: highestOrderTemplate[0].order,
+        })
+        .returning({ id: deedTemplateTable.id });
+
+      const newDeedTemplate = newDeedTemplateResult[0];
+      const deedStatuses = deedTemplateStatuses.map((status) => ({
+        name: status.name,
+        reward: status.reward,
+        color: status.color,
+        deedTemplateId: newDeedTemplate.id,
+      }));
+      const response = await db.insert(deedStatusTable).values(deedStatuses);
+
+      return createSuccessResponse(response);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });
+
+export const updateDeedTemplateById = safeAction
+  .schema(
+    z.object({
+      id: z.number(),
+      name: z.string().min(1).max(50),
+    })
+  )
+  .action(async ({ parsedInput: { id, name } }) => {
+    await requireAuth();
+    const t = await getTranslations();
+
+    try {
+      const response = await db
+        .update(deedTemplateTable)
+        .set({
+          name,
+        })
+        .where(eq(deedTemplateTable.id, id));
+
+      return createSuccessResponse(response);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });
+
+export const deleteDeedTemplateById = safeAction
+  .schema(
+    z.object({
+      id: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { id } }) => {
+    await requireAuth();
+    const t = await getTranslations();
+
+    try {
+      const deletedTemplate = await db
+        .delete(deedTemplateTable)
+        .where(eq(deedTemplateTable.id, id))
+        .returning();
+
+      const deedTemplates = await db
+        .select()
+        .from(deedTemplateTable)
+        .where(eq(deedTemplateTable.groupId, deletedTemplate[0].groupId));
+
+      if (deedTemplates) {
+        for (let index = 0; index < deedTemplates.length; index++) {
+          const deedTemplate = deedTemplates[index];
+          await db
+            .update(deedTemplateTable)
+            .set({
+              order: index,
+            })
+            .where(eq(deedTemplateTable.id, deedTemplate.id));
+        }
+      }
+
+      return createSuccessResponse(deletedTemplate);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });

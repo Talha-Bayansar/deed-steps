@@ -1,8 +1,8 @@
 "use client";
 
 import { DestructiveModalButton } from "@/components/DestructiveModalButton";
-import { useDeedTemplatesByGroupId } from "@/features/deeds/hooks/useDeedTemplatesByGroupId";
-import { deleteDeedTemplateById } from "@/features/deeds/actions/deeds";
+import { useDeedTemplatesByGroupId } from "@/features/deed/hooks/useDeedTemplatesByGroupId";
+import { deleteDeedTemplateById } from "@/features/deed/api";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
