@@ -263,9 +263,7 @@ export default async function LocaleLayout(props: {
         <ReactQueryProvider>
           <NextIntlClientProvider messages={messages}>
             <ServiceWorkerWrapper>
-              <div className="flex min-h-screen w-full overflow-x-hidden bg-background">
-                {children}
-              </div>
+              {children}
               <Toaster position="top-center" />
             </ServiceWorkerWrapper>
           </NextIntlClientProvider>

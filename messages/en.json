@@ -338,5 +338,10 @@
   "deedStatus": "Deed status",
   "groupPoints": "Group points",
   "deed": "Deed",
-  "someoneDidDeed": "Someone has just done a good deed."
+  "someoneDidDeed": "Someone has just done a good deed.",
+  "notEnoughPoints": "You don't have enough points for the transaction.",
+  "group": "Group",
+  "session": "Session",
+  "role": "Role",
+  "member": "Member"
 }

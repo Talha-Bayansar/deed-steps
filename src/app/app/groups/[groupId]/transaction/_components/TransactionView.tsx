@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupById } from "@/features/group/hooks/useGroupById";
 import { useGroupPointsByGroupId } from "@/features/group/hooks/useGroupPointsByGroupId";
-import { createTransaction } from "@/features/group/actions/groups";
+import { createTransaction } from "@/features/group/api";
 import { useMutation } from "@tanstack/react-query";
 import { ArrowRightLeft, Check, X } from "lucide-react";
 import { useTranslations } from "next-intl";

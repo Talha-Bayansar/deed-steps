@@ -15,7 +15,7 @@ import {
 import { and, eq, inArray } from "drizzle-orm";
 import type { GroupMessage } from "@/features/notifications/models";
 import { getTranslations } from "next-intl/server";
-import { sendNotificationToSubscribers } from "@/features/notifications/actions/notifications";
+import { sendNotificationToSubscribers } from "@/features/notifications/api";
 import { requireAuth } from "../auth/api";
 import {
   createErrorResponse,

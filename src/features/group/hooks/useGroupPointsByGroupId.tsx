@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getGroupPointsByGroupId } from "../actions/groups";
+import { getGroupPointsByGroupId } from "../api";
 
 export const useGroupPointsByGroupId = (groupId: number) => {
   const query = useQuery({

@@ -2,7 +2,7 @@
 import type { User } from "@/features/auth/models";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useMutation } from "@tanstack/react-query";
-import { deleteUserFromGroup } from "../../actions/groups";
+import { deleteUserFromGroup } from "../../api";
 import { useState } from "react";
 import { useGroupById } from "../../hooks/useGroupById";
 import { DestructiveModalButton } from "@/components/DestructiveModalButton";

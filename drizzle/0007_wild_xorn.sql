@@ -1,0 +1,1 @@
+ALTER TABLE "group_points" ALTER COLUMN "points" SET DEFAULT '0';

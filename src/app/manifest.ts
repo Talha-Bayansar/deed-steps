@@ -1,3 +1,4 @@
+import { routes } from "@/lib/routes";
 import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -24,7 +25,7 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "nl-NL",
     name: "Deed Steps",
     short_name: "Deed Steps",
-    start_url: "/",
+    start_url: routes.root,
     description:
       "Deed Steps is an application to track your deeds on group level.",
   };

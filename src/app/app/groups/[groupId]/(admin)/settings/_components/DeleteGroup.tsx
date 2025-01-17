@@ -1,5 +1,5 @@
 "use client";
-import { deleteGroup } from "@/features/group/actions/groups";
+import { deleteGroup } from "@/features/group/api";
 import { routes } from "@/lib/routes";
 import { useMutation } from "@tanstack/react-query";
 

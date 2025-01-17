@@ -7,7 +7,7 @@ import { Check, Inbox, X } from "lucide-react";
 import { ListTile, ListTileSkeleton } from "@/components/list-tile";
 import { IconButton } from "@/components/IconButton";
 import { useMutation } from "@tanstack/react-query";
-import { acceptInvitation, declineInvitation } from "../actions/groups";
+import { acceptInvitation, declineInvitation } from "../api";
 import { useTranslations } from "next-intl";
 
 export const MyGroupInvitationsView = () => {

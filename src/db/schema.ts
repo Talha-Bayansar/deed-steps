@@ -98,7 +98,7 @@ export const groupPointsTable = pgTable("group_points", {
   userId: serial("user_id")
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
-  points: numeric("points").notNull(),
+  points: numeric("points").notNull().default("0"),
 });
 
 export const transactionTable = pgTable("transaction", {
