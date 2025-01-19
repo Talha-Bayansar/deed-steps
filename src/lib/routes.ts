@@ -12,16 +12,30 @@ export const routes = {
     invitations: {
       root: "/app/groups/invitations",
     },
-    id: (groupId: string | number) => ({
-      root: `/app/groups/${groupId}`,
-      settings: { root: `/app/groups/${groupId}/settings` },
-      transaction: { root: `/app/groups/${groupId}/transaction` },
+    nameId: (groupName: string, groupId: number | string) => ({
+      root: `/app/groups/${encodeURIComponent(`${groupName}_${groupId}`)}`,
+      settings: {
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/settings`,
+      },
+      transaction: {
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/transaction`,
+      },
       deedTemplates: {
-        root: `/app/groups/${groupId}/deed-templates`,
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/deed-templates`,
         id: (deedTemplateId: string | number) => ({
-          root: `/app/groups/${groupId}/deed-templates/${deedTemplateId}`,
+          root: `/app/groups/${encodeURIComponent(
+            `${groupName}_${groupId}`
+          )}/deed-templates/${deedTemplateId}`,
           edit: {
-            root: `/app/groups/${groupId}/deed-templates/${deedTemplateId}/edit`,
+            root: `/app/groups/${encodeURIComponent(
+              `${groupName}_${groupId}`
+            )}/deed-templates/${deedTemplateId}/edit`,
           },
         }),
       },

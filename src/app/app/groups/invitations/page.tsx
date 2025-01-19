@@ -1,24 +1,18 @@
-import { BackButton } from "@/components/BackButton";
-import { Heading } from "@/components/layout/Heading";
-import { Main } from "@/components/layout/main";
-import { Title } from "@/components/layout/Title";
-import { MyGroupInvitationsView } from "@/features/group/components/MyGroupInvitationsView";
-import { routes } from "@/lib/routes";
+import { ErrorState } from "@/components/error-state";
+import { InvitationsView } from "@/features/invitation/components/invitations-view";
+import { getMyInvitations } from "@/features/invitation/api";
+import { extractError } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 
-const Page = async () => {
-  const t = await getTranslations("InvitationsPage");
-  return (
-    <Main>
-      <Heading>
-        <div className="flex items-center">
-          <BackButton href={routes.groups.root} />
-          <Title>{t("title")}</Title>
-        </div>
-      </Heading>
-      <MyGroupInvitationsView />
-    </Main>
-  );
+const InvitationsRootPage = async () => {
+  const t = await getTranslations();
+
+  const invitations = await getMyInvitations();
+  const error = extractError(invitations, t);
+
+  if (error) return <ErrorState error={error} />;
+
+  return <InvitationsView invitations={invitations.data!} />;
 };
 
-export default Page;
+export default InvitationsRootPage;

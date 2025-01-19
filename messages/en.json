@@ -344,5 +344,8 @@
   "session": "Session",
   "role": "Role",
   "member": "Member",
-  "createGroup": "Create group"
+  "createGroup": "Create group",
+  "members": "Members",
+  "points": "Points",
+  "reward": "Reward"
 }

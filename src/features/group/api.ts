@@ -2,6 +2,8 @@
 
 import { db } from "@/db";
 import {
+  deedStatusTable,
+  deedTemplateTable,
   groupPointsTable,
   groupTable,
   pushSubscriptionTable,
@@ -22,29 +24,60 @@ import { requireAuth, validateRequest } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 
-export async function getGroupById(id: number) {
+export async function getGroupDetailsById(id: number) {
   const t = await getTranslations();
   const user = await requireAuth();
 
   try {
-    const groupWithMembersAndPoints = await db
+    const groupRows = await db
       .select()
       .from(groupTable)
-      .leftJoin(userToGroupTable, eq(groupTable.id, userToGroupTable.groupId))
-      .leftJoin(userTable, eq(userToGroupTable.userId, userTable.id))
-      .leftJoin(groupPointsTable, eq(userTable.id, groupPointsTable.userId))
-      .where(eq(groupTable.id, id));
+      .where(eq(groupTable.id, id))
+      .limit(1);
 
-    const formattedResponse = {
-      ...groupWithMembersAndPoints[0]?.group,
-      members: groupWithMembersAndPoints.map((row) => ({
-        ...row.user,
-        points: row.group_points,
-      })),
-      isOwner: user.id === groupWithMembersAndPoints[0].group.ownerId,
-    };
+    if (isArrayEmpty(groupRows))
+      return createErrorResponse(t("notFound", { subject: t("group") }));
 
-    return createSuccessResponse(formattedResponse);
+    const group = groupRows[0];
+
+    const groupMembersWithPoints = await db
+      .select({
+        member: userTable,
+        groupPoints: groupPointsTable,
+      })
+      .from(userToGroupTable)
+      .innerJoin(userTable, eq(userToGroupTable.userId, userTable.id))
+      .innerJoin(
+        groupPointsTable,
+        eq(userToGroupTable.id, groupPointsTable.userId)
+      )
+      .where(eq(userToGroupTable.groupId, id));
+
+    const deedTemplates = await db
+      .select()
+      .from(deedTemplateTable)
+      .where(eq(deedTemplateTable.groupId, id));
+    const deedStatuses = await db
+      .select()
+      .from(deedStatusTable)
+      .where(
+        inArray(
+          deedStatusTable.deedTemplateId,
+          deedTemplates.map((dt) => dt.id)
+        )
+      );
+
+    const groupMembers = groupMembersWithPoints.map((item) => item.member);
+    const groupPoints = groupMembersWithPoints.map((item) => item.groupPoints);
+
+    return createSuccessResponse({
+      group,
+      groupMembers,
+      groupPoints,
+      isOwner: group.ownerId === user.id,
+      deedTemplates: deedTemplates,
+      deedStatuses,
+    });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
@@ -188,6 +221,16 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
   const user = await requireAuth();
 
   try {
+    const groupRows = await db
+      .select({
+        ownerId: groupTable.ownerId,
+      })
+      .from(groupTable)
+      .where(eq(groupTable.id, groupId))
+      .limit(1);
+    if (isArrayEmpty(groupRows))
+      return createErrorResponse(t("notFound", { subject: t("group") }));
+
     const points = await db
       .select()
       .from(groupPointsTable)
@@ -202,7 +245,10 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
     if (isArrayEmpty(points))
       return createErrorResponse(t("notFound", { subject: t("groupPoints") }));
 
-    return createSuccessResponse(points);
+    return createSuccessResponse({
+      groupPoints: points[0],
+      isOwner: groupRows[0].ownerId === user.id,
+    });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }

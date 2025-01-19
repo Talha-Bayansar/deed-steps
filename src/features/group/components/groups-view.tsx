@@ -28,7 +28,10 @@ export const GroupsView = ({ groups }: Props) => {
   return (
     <View>
       {groups.map((group) => (
-        <Link key={group.id} href={routes.groups.id(group.id).root}>
+        <Link
+          key={group.id}
+          href={routes.groups.nameId(group.name, group.id).root}
+        >
           <GroupCard group={group} isOwner={group.isOwner} />
         </Link>
       ))}

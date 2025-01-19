@@ -26,7 +26,7 @@ export const GenerateTransactionLinkForm = () => {
   const { groupId, locale } = useParams<{ groupId: string; locale: string }>();
   const [transactionLink, setTransactionLink] = useState<string>(
     `${window.location.origin}/${locale}${
-      routes.groups.id(groupId).transaction.root
+      routes.groups.nameId(groupId).transaction.root
     }?amount=1`
   );
 
@@ -50,7 +50,7 @@ export const GenerateTransactionLinkForm = () => {
   const onSubmit = (values: { points: number }) => {
     setTransactionLink(
       `${window.location.origin}/${locale}${
-        routes.groups.id(groupId).transaction.root
+        routes.groups.nameId(groupId).transaction.root
       }?amount=${values.points}`
     );
   };

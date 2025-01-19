@@ -1,19 +1,39 @@
 "use server";
 
-export async function getMyGroupInvitations() {
-  const { user } = await validateRequest();
+import { getTranslations } from "next-intl/server";
+import { requireAuth } from "../auth/api";
+import { db } from "@/db";
+import {
+  groupPointsTable,
+  groupTable,
+  invitationTable,
+  userToGroupTable,
+} from "@/db/schema";
+import { and, eq } from "drizzle-orm";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  isArrayEmpty,
+} from "@/lib/utils";
+import { safeAction } from "@/lib/safe-action";
+import { z } from "zod";
 
-  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+export const getMyInvitations = async () => {
+  const t = await getTranslations();
+  const user = await requireAuth();
 
-  const invitations = await db.query.invitationTable.findMany({
-    where: eq(invitationTable.userId, user.id),
-    with: {
-      group: true,
-    },
-  });
+  try {
+    const invitations = await db
+      .select()
+      .from(invitationTable)
+      .innerJoin(groupTable, eq(invitationTable.groupId, groupTable.id))
+      .where(eq(invitationTable.userId, user.id));
 
-  return invitations;
-}
+    return createSuccessResponse(invitations);
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+};
 
 export async function inviteUserToGroup(email: string, groupId: number) {
   const { user } = await validateRequest();
@@ -78,64 +98,86 @@ export async function inviteUserToGroup(email: string, groupId: number) {
   return true;
 }
 
-export async function acceptInvitation(invitationId: number) {
-  const { user } = await validateRequest();
+export const acceptInvitation = safeAction
+  .schema(
+    z.object({
+      id: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { id } }) => {
+    const t = await getTranslations();
+    const user = await requireAuth();
 
-  if (!user) throw new DrizzleError({ message: "Not authenticated" });
-  const invitation = await db.query.invitationTable.findFirst({
-    where: and(
-      eq(invitationTable.id, invitationId),
-      eq(invitationTable.userId, user.id)
-    ),
+    try {
+      const invitation = await db
+        .select()
+        .from(invitationTable)
+        .where(
+          and(eq(invitationTable.id, id), eq(invitationTable.userId, user.id))
+        )
+        .limit(1);
+
+      if (isArrayEmpty(invitation))
+        return createErrorResponse(t("notFound", { subject: t("invitation") }));
+
+      await db.insert(userToGroupTable).values({
+        userId: invitation[0].userId,
+        groupId: invitation[0].groupId,
+      });
+
+      await db.insert(groupPointsTable).values({
+        groupId: invitation[0].groupId,
+        userId: invitation[0].userId,
+      });
+
+      await db
+        .delete(invitationTable)
+        .where(
+          and(
+            eq(invitationTable.groupId, invitation[0].groupId),
+            eq(invitationTable.userId, user.id)
+          )
+        );
+
+      return createSuccessResponse(invitation);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
   });
 
-  if (!invitation) throw new DrizzleError({ message: "Invitation not found" });
+export const declineInvitation = safeAction
+  .schema(
+    z.object({
+      id: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { id } }) => {
+    const t = await getTranslations();
+    const user = await requireAuth();
 
-  await db.insert(userToGroupTable).values({
-    userId: invitation.userId,
-    groupId: invitation.groupId,
+    try {
+      const invitation = await db
+        .select()
+        .from(invitationTable)
+        .where(
+          and(eq(invitationTable.id, id), eq(invitationTable.userId, user.id))
+        )
+        .limit(1);
+
+      if (isArrayEmpty(invitation))
+        return createErrorResponse(t("notFound", { subject: t("invitation") }));
+
+      const res = await db
+        .delete(invitationTable)
+        .where(
+          and(
+            eq(invitationTable.groupId, invitation[0].groupId),
+            eq(invitationTable.userId, user.id)
+          )
+        );
+
+      return createSuccessResponse(res);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
   });
-
-  await db.insert(groupPointsTable).values({
-    groupId: invitation.groupId,
-    userId: invitation.userId,
-    points: 0,
-  });
-
-  await db
-    .delete(invitationTable)
-    .where(
-      and(
-        eq(invitationTable.groupId, invitation.groupId),
-        eq(invitationTable.userId, user.id)
-      )
-    );
-
-  return true;
-}
-
-export async function declineInvitation(invitationId: number) {
-  const { user } = await validateRequest();
-
-  if (!user) throw new DrizzleError({ message: "Not authenticated" });
-
-  const invitation = await db.query.invitationTable.findFirst({
-    where: and(
-      eq(invitationTable.id, invitationId),
-      eq(invitationTable.userId, user.id)
-    ),
-  });
-
-  if (!invitation) throw new DrizzleError({ message: "Invitation not found" });
-
-  await db
-    .delete(invitationTable)
-    .where(
-      and(
-        eq(invitationTable.groupId, invitation.groupId),
-        eq(invitationTable.userId, user.id)
-      )
-    );
-
-  return true;
-}
