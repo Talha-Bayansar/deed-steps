@@ -11,23 +11,25 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import QRCode from "react-qr-code";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import QRCode from "react-qr-code";
 import { routes } from "@/lib/routes";
-import { useParams } from "next/navigation";
-import { Link } from "@/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { View } from "@/components/layout/ror";
+import { View } from "@/components/layout/view";
+import Link from "next/link";
+import { AppForm } from "@/components/app-form";
 
-export const GenerateTransactionLinkForm = () => {
-  const t = useTranslations("global");
-  const { groupId, locale } = useParams<{ groupId: string; locale: string }>();
+type Props = {
+  groupName: string;
+  groupId: number;
+};
+
+export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
+  const t = useTranslations();
   const [transactionLink, setTransactionLink] = useState<string>(
-    `${window.location.origin}/${locale}${
-      routes.groups.nameId(groupId).transaction.root
-    }?amount=1`
+    `${routes.groups.nameId(groupName, groupId).transaction.root}?amount=1`
   );
 
   const formSchema = z.object({
@@ -35,8 +37,11 @@ export const GenerateTransactionLinkForm = () => {
       (value) => Number(value),
       z
         .number()
-        .min(1, t("errors.min_value", { value: 1 }))
-        .max(1000000, t("errors.max_value", { value: 1000000 }))
+        .min(1, t("validations.minValue", { field: t("points"), value: 1 }))
+        .max(
+          1000000,
+          t("validations.maxValue", { field: t("points"), value: 1000000 })
+        )
     ),
   });
 
@@ -49,21 +54,24 @@ export const GenerateTransactionLinkForm = () => {
 
   const onSubmit = (values: { points: number }) => {
     setTransactionLink(
-      `${window.location.origin}/${locale}${
-        routes.groups.nameId(groupId).transaction.root
-      }?amount=${values.points}`
+      `${routes.groups.nameId(groupName, groupId).transaction.root}?amount=${
+        values.points
+      }`
     );
   };
 
   return (
     <Form {...form}>
-      <form
+      <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-8 flex-grow justify-between md:justify-start"
+        submitButton={<Button>{t("generate")}</Button>}
       >
         <View className="items-center">
           <QRCode value={transactionLink} />
-          <Link className="text-primary underline" href={transactionLink}>
+          <Link
+            className="text-primary underline text-wrap"
+            href={transactionLink}
+          >
             {transactionLink}
           </Link>
         </View>
@@ -80,8 +88,7 @@ export const GenerateTransactionLinkForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">{t("generate")}</Button>
-      </form>
+      </AppForm>
     </Form>
   );
 };

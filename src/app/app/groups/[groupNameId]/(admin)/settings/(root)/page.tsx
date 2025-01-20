@@ -1,8 +1,8 @@
 import { UpdateGroupTile } from "../_components/update-group-tile";
-import { DeleteGroup } from "../_components/DeleteGroup";
+import { DeleteGroupTile } from "../_components/delete-group-tile";
 import { InviteUserTile } from "../_components/invite-user-tile";
 import { ManageDeedsTile } from "../_components/manage-deeds-tile";
-import { GenerateTransactionLink } from "../_components/GenerateTransactionLink";
+import { TransactionTile } from "../_components/transaction-tile";
 import { NotificationPreferencesTile } from "../_components/notification-preferences-tile";
 import { View } from "@/components/layout/view";
 
@@ -22,8 +22,8 @@ const GroupSettingsPage = async ({ params }: Props) => {
       <InviteUserTile />
       <ManageDeedsTile groupName={name} groupId={Number(id)} />
       <NotificationPreferencesTile groupId={Number(id)} />
-      {/* <GenerateTransactionLink /> */}
-      {/* <DeleteGroup /> */}
+      <TransactionTile groupName={name} groupId={Number(id)} />
+      <DeleteGroupTile groupId={Number(id)} />
     </View>
   );
 };

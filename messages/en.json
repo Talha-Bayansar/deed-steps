@@ -359,5 +359,8 @@
   "notifyEveryDeed": "Notify every deed",
   "sendReminderSuccess": "Reminder sent successfully",
   "reminderTitle": "Reminder",
-  "reminderBody": "Don't forget to do good deeds today."
+  "reminderBody": "Don't forget to do good deeds today.",
+  "generateTransactionLink": "Generate transaction link",
+  "generate": "Generate",
+  "deleteGroup": "Delete group"
 }

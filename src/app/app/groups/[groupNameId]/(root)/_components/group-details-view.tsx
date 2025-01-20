@@ -19,6 +19,7 @@ type Props = {
 };
 
 export const GroupDetailsView = ({
+  group,
   members,
   points,
   isOwner = false,
@@ -37,7 +38,12 @@ export const GroupDetailsView = ({
         className="flex flex-col flex-grow data-[state=inactive]:hidden"
         value="members"
       >
-        <GroupMembersView members={members} points={points} isOwner={isOwner} />
+        <GroupMembersView
+          groupId={group.id}
+          members={members}
+          points={points}
+          isOwner={isOwner}
+        />
       </TabsContent>
       <TabsContent
         className="flex flex-col flex-grow data-[state=inactive]:hidden"

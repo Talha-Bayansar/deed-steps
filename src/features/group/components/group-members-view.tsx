@@ -6,31 +6,32 @@ import { isArrayEmpty } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
 import { View } from "@/components/layout/view";
-import { useState } from "react";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { ListTile } from "@/components/list-tile";
+import { DeleteMemberAlertDialog } from "./delete-member-alert-dialog";
+import { Button } from "@/components/ui/button";
 
 type Props = {
+  groupId: number;
   members: User[];
   points: GroupPoints[];
   isOwner?: boolean;
 };
 
 export const GroupMembersView = ({
+  groupId,
   members,
   points,
   isOwner = false,
 }: Props) => {
   const t = useTranslations();
-  const [isOpen, setIsOpen] = useState(false);
-
-  //   const mutation = useMutation({
-  //     mutationFn: async () => await deleteUserFromGroup(member.id!, groupId),
-  //     onSuccess: async () => {
-  //       await refetch();
-  //       setIsOpen(false);
-  //     },
-  //   });
 
   if (isArrayEmpty(members))
     return (
@@ -43,9 +44,9 @@ export const GroupMembersView = ({
   return (
     <View className="gap-0">
       {members.map((member) => (
-        <Drawer open={isOpen} onOpenChange={setIsOpen} shouldScaleBackground>
-          <DrawerTrigger>
-            <ListTile className="list-tile">
+        <Drawer key={member.id}>
+          <DrawerTrigger disabled={!isOwner} className="list-tile">
+            <ListTile hideChevron={!isOwner}>
               <View className="items-start gap-0">
                 <div>
                   {member.firstName} {member.lastName}
@@ -59,7 +60,20 @@ export const GroupMembersView = ({
               </View>
             </ListTile>
           </DrawerTrigger>
-          <DrawerContent>test</DrawerContent>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {`${member.firstName} ${member.lastName}`}
+              </DrawerTitle>
+            </DrawerHeader>
+            <DrawerFooter>
+              {isOwner && (
+                <DeleteMemberAlertDialog groupId={groupId} userId={member.id}>
+                  <Button variant="destructive">{t("delete")}</Button>
+                </DeleteMemberAlertDialog>
+              )}
+            </DrawerFooter>
+          </DrawerContent>
         </Drawer>
       ))}
     </View>

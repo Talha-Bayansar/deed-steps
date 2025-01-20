@@ -12,7 +12,7 @@ import {
   userTable,
   userToGroupTable,
 } from "@/db/schema";
-import { DrizzleError, and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import {
   createErrorResponse,
   createSuccessResponse,
@@ -71,7 +71,7 @@ export async function getGroupDetailsById(id: number) {
       .innerJoin(userTable, eq(userToGroupTable.userId, userTable.id))
       .innerJoin(
         groupPointsTable,
-        eq(userToGroupTable.id, groupPointsTable.userId)
+        eq(userToGroupTable.userId, groupPointsTable.userId)
       )
       .where(eq(userToGroupTable.groupId, id));
 
@@ -89,8 +89,16 @@ export async function getGroupDetailsById(id: number) {
         )
       );
 
-    const groupMembers = groupMembersWithPoints.map((item) => item.member);
-    const groupPoints = groupMembersWithPoints.map((item) => item.groupPoints);
+    const duplicateMembers = groupMembersWithPoints.map((item) => item.member);
+    const duplicateGroupPoints = groupMembersWithPoints.map(
+      (item) => item.groupPoints
+    );
+    const groupMembers = Array.from(
+      new Set(duplicateMembers.map((item) => item.id))
+    ).map((id) => duplicateMembers.find((member) => member.id === id)!);
+    const groupPoints = Array.from(
+      new Set(duplicateGroupPoints.map((item) => item.id))
+    ).map((id) => duplicateGroupPoints.find((points) => points.id === id)!);
 
     return createSuccessResponse({
       group,
@@ -221,21 +229,32 @@ export const deleteGroup = safeAction
     }
   });
 
-export async function deleteUserFromGroup(userId: number, groupId: number) {
-  const { user } = await validateRequest();
+export const deleteUserFromGroup = safeAction
+  .schema(
+    z.object({
+      userId: z.number(),
+      groupId: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { userId, groupId } }) => {
+    const t = await getTranslations();
+    await requireAuth();
 
-  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+    try {
+      const res = await db
+        .delete(userToGroupTable)
+        .where(
+          and(
+            eq(userToGroupTable.userId, userId),
+            eq(userToGroupTable.groupId, groupId)
+          )
+        );
 
-  await db
-    .delete(userToGroupTable)
-    .where(
-      and(
-        eq(userToGroupTable.userId, userId),
-        eq(userToGroupTable.groupId, groupId)
-      )
-    );
-  return true;
-}
+      return createSuccessResponse(res);
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
+  });
 
 export const getGroupPointsByGroupId = async (groupId: number) => {
   const t = await getTranslations();
@@ -263,11 +282,8 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
       )
       .limit(1);
 
-    if (isArrayEmpty(points))
-      return createErrorResponse(t("notFound", { subject: t("groupPoints") }));
-
     return createSuccessResponse({
-      groupPoints: points[0],
+      groupPoints: points?.[0] || null,
       isOwner: groupRows[0].ownerId === user.id,
     });
   } catch {
