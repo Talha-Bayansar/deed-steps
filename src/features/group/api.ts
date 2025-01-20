@@ -145,11 +145,10 @@ export const createGroup = safeAction
     }
   });
 
-export const updateGroup = safeAction
+export const updateGroupById = safeAction
   .schema(
     z.object({
       groupId: z.number(),
-
       name: z.string().optional(),
       notifyDeeds: z.boolean().optional(),
       ownerId: z.number().optional(),

@@ -6,7 +6,10 @@ import { View } from "@/components/layout/ror";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Switch } from "@/components/ui/switch";
 import { useGroupById } from "@/features/group/hooks/useGroupById";
-import { sendReminderNotification, updateGroup } from "@/features/group/api";
+import {
+  sendReminderNotification,
+  updateGroupById,
+} from "@/features/group/api";
 import { useMutation } from "@tanstack/react-query";
 import { Bell, BellRing, ListChecks } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -41,7 +44,7 @@ export const NotificationPreferences = () => {
   });
   const updateGroupMutation = useMutation({
     mutationFn: async (value: boolean) =>
-      await updateGroup(Number(groupId), { hasDeedNotifications: value }),
+      await updateGroupById(Number(groupId), { hasDeedNotifications: value }),
   });
   const handleCheck = (value: boolean) => {
     updateGroupMutation.mutate(value);

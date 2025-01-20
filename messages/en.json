@@ -347,5 +347,10 @@
   "createGroup": "Create group",
   "members": "Members",
   "points": "Points",
-  "reward": "Reward"
+  "reward": "Reward",
+  "inviteUser": "Invite user",
+  "userAlreadyInGroup": "This user is already in this group.",
+  "userAlreadyInvited": "This user is already invited to this group.",
+  "groupInvitedTitle": "You got invited by a group",
+  "groupInvitedBody": "You got an invitation from {groupName}."
 }

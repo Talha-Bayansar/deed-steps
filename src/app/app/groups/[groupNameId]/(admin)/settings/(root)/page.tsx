@@ -1,23 +1,17 @@
-import { ChangeName } from "../_components/ChangeName";
+import { UpdateGroupTile } from "../_components/update-group-tile";
 import { DeleteGroup } from "../_components/DeleteGroup";
-import { InviteUser } from "../_components/InviteUser";
+import { InviteUserTile } from "../_components/invite-user-tile";
 import { ManageDeeds } from "../_components/ManageDeeds";
 import { GenerateTransactionLink } from "../_components/GenerateTransactionLink";
 import { NotificationPreferences } from "../_components/NotificationPreferences";
 import { View } from "@/components/layout/view";
 
-type Props = {
-  params: Promise<{
-    groupId: string;
-  }>;
-};
-
-const Page = async (props: Props) => {
+const GroupSettingsPage = () => {
   return (
     <View className="gap-0">
-      {/* <ChangeName />
-      <InviteUser />
-      <ManageDeeds />
+      <UpdateGroupTile />
+      <InviteUserTile />
+      {/* <ManageDeeds />
       <NotificationPreferences />
       <GenerateTransactionLink />
       <DeleteGroup /> */}
@@ -25,4 +19,4 @@ const Page = async (props: Props) => {
   );
 };
 
-export default Page;
+export default GroupSettingsPage;

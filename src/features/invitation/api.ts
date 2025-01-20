@@ -7,9 +7,12 @@ import {
   groupPointsTable,
   groupTable,
   invitationTable,
+  pushSubscriptionTable,
+  sessionTable,
+  userTable,
   userToGroupTable,
 } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import {
   createErrorResponse,
   createSuccessResponse,
@@ -17,6 +20,7 @@ import {
 } from "@/lib/utils";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
+import { sendNotificationToSubscribers } from "../notifications/api";
 
 export const getMyInvitations = async () => {
   const t = await getTranslations();
@@ -35,68 +39,93 @@ export const getMyInvitations = async () => {
   }
 };
 
-export async function inviteUserToGroup(email: string, groupId: number) {
-  const { user } = await validateRequest();
+export const inviteUserToGroup = safeAction
+  .schema(
+    z.object({
+      email: z.string().email(),
+      groupId: z.number(),
+    })
+  )
+  .action(async ({ parsedInput: { email, groupId } }) => {
+    const t = await getTranslations();
+    await requireAuth();
 
-  if (!user) throw new DrizzleError({ message: "Not authenticated" });
+    try {
+      const invitedUser = await db
+        .select()
+        .from(userTable)
+        .where(eq(userTable.email, email.toLowerCase()))
+        .leftJoin(sessionTable, eq(userTable.id, sessionTable.userId))
+        .limit(1);
 
-  const invitedUser = await db.query.userTable.findFirst({
-    where: eq(userTable.email, email.toLowerCase()),
-    with: {
-      sessions: true,
-    },
+      if (isArrayEmpty(invitedUser))
+        return createErrorResponse(t("notFound", { subject: t("user") }));
+
+      const group = await db
+        .select()
+        .from(groupTable)
+        .where(eq(groupTable.id, groupId))
+        .limit(1);
+
+      if (isArrayEmpty(group))
+        return createErrorResponse(t("notFound", { subject: t("group") }));
+
+      const isUserAlreadyInGroup = await db
+        .select()
+        .from(userToGroupTable)
+        .where(
+          and(
+            eq(userToGroupTable.userId, invitedUser[0].user.id),
+            eq(userToGroupTable.groupId, groupId)
+          )
+        )
+        .limit(1);
+
+      if (!isArrayEmpty(isUserAlreadyInGroup))
+        return createErrorResponse(t("userAlreadyInGroup"));
+
+      const isUserAlreadyInvited = await db
+        .select()
+        .from(invitationTable)
+        .where(
+          and(
+            eq(invitationTable.userId, invitedUser[0].user.id),
+            eq(invitationTable.groupId, groupId)
+          )
+        )
+        .limit(1);
+
+      if (!isArrayEmpty(isUserAlreadyInvited))
+        return createErrorResponse(t("userAlreadyInvited"));
+
+      await db.insert(invitationTable).values({
+        userId: invitedUser[0].user.id,
+        groupId,
+      });
+
+      const sessionIds = invitedUser
+        .map((u) => u.session?.id)
+        .filter((s) => s !== null && s !== undefined);
+
+      const subscriptions = await db
+        .select()
+        .from(pushSubscriptionTable)
+        .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
+
+      await sendNotificationToSubscribers(
+        {
+          title: t("groupInvitedTitle"),
+          body: t("groupInvitedBody", { groupName: group[0].name }),
+          userId: invitedUser[0].user.id,
+        },
+        subscriptions
+      );
+
+      return createSuccessResponse();
+    } catch {
+      return createErrorResponse(t("somethingWentWrong"));
+    }
   });
-
-  if (!invitedUser) throw new DrizzleError({ message: "User not found" });
-
-  const group = await db.query.groupTable.findFirst({
-    where: eq(groupTable.id, groupId),
-  });
-
-  if (!group) throw new DrizzleError({ message: "Group not found" });
-
-  const isUserAlreadyInGroup = await db.query.userToGroupTable.findFirst({
-    where: and(
-      eq(userToGroupTable.userId, invitedUser.id),
-      eq(userToGroupTable.groupId, groupId)
-    ),
-  });
-
-  if (isUserAlreadyInGroup)
-    throw new DrizzleError({ message: "User already in group" });
-
-  const isUserAlreadyInvited = await db.query.invitationTable.findFirst({
-    where: and(
-      eq(invitationTable.userId, invitedUser.id),
-      eq(invitationTable.groupId, groupId)
-    ),
-  });
-
-  if (isUserAlreadyInvited)
-    throw new DrizzleError({ message: "User already invited" });
-
-  await db.insert(invitationTable).values({
-    userId: invitedUser.id,
-    groupId,
-  });
-
-  const sessionIds = invitedUser.sessions.map((s) => s.id);
-  const subscriptions = await db.query.pushSubscriptionTable.findMany({
-    where: inArray(pushSubscriptionTable.sessionId, sessionIds),
-  });
-  const t = await getTranslations("global.messages");
-
-  await sendNotificationToSubscribers(
-    {
-      title: t("group_invited_title"),
-      body: t("group_invited_body", { groupName: group.name }),
-      userId: invitedUser.id,
-    },
-    subscriptions
-  );
-
-  return true;
-}
 
 export const acceptInvitation = safeAction
   .schema(
