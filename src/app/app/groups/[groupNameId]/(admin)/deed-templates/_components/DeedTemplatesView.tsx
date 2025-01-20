@@ -5,7 +5,7 @@ import { ListTileSkeleton } from "@/components/list-tile";
 import { Title, TitleSkeleton } from "@/components/layout/Title";
 import { View } from "@/components/layout/ror";
 import { useDeedTemplatesByGroupId } from "@/features/deed/hooks/useDeedTemplatesByGroupId";
-import { useGroupById } from "@/features/group/hooks/useGroupById";
+import { useGroupById } from "@/features/group/hooks/use-group-by-id";
 import { routes } from "@/lib/routes";
 import { generateArray, isArrayEmpty } from "@/lib/utils";
 import { ListChecks, Users } from "lucide-react";

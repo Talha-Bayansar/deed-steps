@@ -1,33 +1,32 @@
-import { Heading } from "@/components/layout/Heading";
-import { Main } from "@/components/layout/main";
-import { Title } from "@/components/layout/Title";
 import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { TransactionView } from "./_components/TransactionView";
+import { TransactionView } from "./_components/transaction-view";
+import { ErrorState } from "@/components/error-state";
 
 type Props = {
   searchParams: Promise<{
     amount?: string;
   }>;
+  params: Promise<{
+    groupNameId: string;
+  }>;
 };
 
-const Page = async (props: Props) => {
-  const searchParams = await props.searchParams;
+const TransactionPage = async ({ searchParams, params }: Props) => {
+  const { amount } = await searchParams;
+  const { groupNameId } = await params;
+  const t = await getTranslations();
+  const [name, id] = decodeURIComponent(groupNameId).split("_");
 
-  const { amount } = searchParams;
-
-  if (!amount || Number(amount) < 1 || Number(amount) > 1000000) notFound();
-
-  const t = await getTranslations("TransactionPage");
+  if (!amount || Number(amount) < 1 || Number(amount) > 1000000)
+    return <ErrorState error={t("invalidAmount")} />;
 
   return (
-    <Main>
-      <Heading>
-        <Title>{t("title")}</Title>
-      </Heading>
-      <TransactionView />
-    </Main>
+    <TransactionView
+      amount={Number(amount)}
+      groupId={Number(id)}
+      groupName={name}
+    />
   );
 };
 
-export default Page;
+export default TransactionPage;

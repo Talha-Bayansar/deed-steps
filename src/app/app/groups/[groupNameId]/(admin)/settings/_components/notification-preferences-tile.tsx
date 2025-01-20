@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Switch } from "@/components/ui/switch";
-import { useGroupById } from "@/features/group/hooks/useGroupById";
+import { useGroupById } from "@/features/group/hooks/use-group-by-id";
 import {
   sendReminderNotification,
   updateGroupById,

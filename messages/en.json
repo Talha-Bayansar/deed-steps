@@ -253,7 +253,8 @@
     "generate_transaction_link": "Generate transaction link",
     "no_group": "This group could not be found.",
     "success": "Transaction was successful.",
-    "error": "Transaction failed.\nEither the group does not exist or your points are not enough."
+    "error": "Transaction failed.\nEither the group does not exist or your points are not enough.",
+    "transactionFailed": "Transaction failed"
   },
   "GroupSettingsPage": {
     "title": "Settings",
@@ -362,5 +363,9 @@
   "reminderBody": "Don't forget to do good deeds today.",
   "generateTransactionLink": "Generate transaction link",
   "generate": "Generate",
-  "deleteGroup": "Delete group"
+  "deleteGroup": "Delete group",
+  "transaction": "Transaction",
+  "invalidAmount": "The amount should be between 1 and 1.000.000.",
+  "transactionSuccess": "Transaction was successful",
+  "transactionFailed": "Transaction failed"
 }

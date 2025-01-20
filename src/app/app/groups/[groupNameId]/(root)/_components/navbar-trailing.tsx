@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useGroupPointsByGroupId } from "@/features/group/hooks/useGroupPointsByGroupId";
+import { useGroupPointsByGroupId } from "@/features/group/hooks/use-group-points-by-group-id";
 import { routes } from "@/lib/routes";
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { Camera, Coins, Settings } from "lucide-react";
