@@ -24,6 +24,28 @@ import { requireAuth, validateRequest } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 
+export async function getGroupById(id: number) {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    const groupRows = await db
+      .select()
+      .from(groupTable)
+      .where(eq(groupTable.id, id))
+      .limit(1);
+
+    if (isArrayEmpty(groupRows))
+      return createErrorResponse(t("notFound", { subject: t("group") }));
+
+    const group = groupRows[0];
+
+    return createSuccessResponse(group);
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+}
+
 export async function getGroupDetailsById(id: number) {
   const t = await getTranslations();
   const user = await requireAuth();
@@ -307,15 +329,14 @@ export const createTransaction = safeAction
 export const sendReminderNotification = safeAction
   .schema(
     z.object({
-      userId: z.number(),
       groupId: z.number(),
       title: z.string(),
       body: z.string(),
     })
   )
-  .action(async ({ parsedInput: { userId, groupId, title, body } }) => {
+  .action(async ({ parsedInput: { groupId, title, body } }) => {
     const t = await getTranslations();
-    await requireAuth();
+    const user = await requireAuth();
 
     try {
       const group = await db
@@ -337,7 +358,7 @@ export const sendReminderNotification = safeAction
         return createErrorResponse(t("notFound", { subject: t("group") }));
 
       const sessionIds = group
-        .filter((row) => row.members.userId !== userId)
+        .filter((row) => row.members.userId !== user.id)
         .map((row) => row.sessions?.id)
         .flat()
         .filter((id): id is string => !!id);
@@ -351,7 +372,7 @@ export const sendReminderNotification = safeAction
         .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
 
       await sendNotificationToSubscribers(
-        { body, title, groupId, userId },
+        { body, title, groupId, userId: user.id },
         subscriptions
       );
 

@@ -352,5 +352,12 @@
   "userAlreadyInGroup": "This user is already in this group.",
   "userAlreadyInvited": "This user is already invited to this group.",
   "groupInvitedTitle": "You got invited by a group",
-  "groupInvitedBody": "You got an invitation from {groupName}."
+  "groupInvitedBody": "You got an invitation from {groupName}.",
+  "manage-deeds": "Manage deeds",
+  "notificationPreferences": "Notification preferences",
+  "sendReminder": "Send reminder",
+  "notifyEveryDeed": "Notify every deed",
+  "sendReminderSuccess": "Reminder sent successfully",
+  "reminderTitle": "Reminder",
+  "reminderBody": "Don't forget to do good deeds today."
 }
