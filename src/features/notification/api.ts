@@ -19,7 +19,7 @@ export async function sendNotificationToSubscribers(
   const pushPromises = subscriptions.map((subscription) =>
     webPush
       .sendNotification(
-        JSON.parse(subscription.subscription as string),
+        subscription.subscription as webPush.PushSubscription,
         JSON.stringify(message),
         {
           vapidDetails: {
