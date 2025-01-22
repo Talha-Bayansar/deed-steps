@@ -162,7 +162,8 @@ export const saveDeed = safeAction
       }
 
       return createSuccessResponse();
-    } catch {
+    } catch (error) {
+      console.error(error);
       return createErrorResponse(t("somethingWentWrong"));
     }
   });
