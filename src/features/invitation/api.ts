@@ -126,7 +126,8 @@ export const inviteUserToGroup = safeAction
       }
 
       return createSuccessResponse();
-    } catch {
+    } catch (error) {
+      console.error(error);
       return createErrorResponse(t("somethingWentWrong"));
     }
   });
