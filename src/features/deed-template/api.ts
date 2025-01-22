@@ -98,11 +98,13 @@ export async function getDeedTemplateById(id: number) {
     if (isArrayEmpty(deedTemplateRows))
       return createErrorResponse(t("notFound", { subject: t("deedTemplate") }));
 
+    const deedStatuses = deedTemplateRows
+      .map((dtr) => dtr.deed_status)
+      .filter((status) => status !== null);
+
     return createSuccessResponse({
       ...deedTemplateRows[0].deed_template,
-      deedStatuses: deedTemplateRows
-        .map((dtr) => dtr.deed_status)
-        .filter((status) => status !== null),
+      deedStatuses,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
