@@ -4,7 +4,7 @@ import { InviteUserTile } from "../_components/invite-user-tile";
 import { ManageDeedsTile } from "../_components/manage-deeds-tile";
 import { TransactionTile } from "../_components/transaction-tile";
 import { NotificationPreferencesTile } from "../_components/notification-preferences-tile";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 
 type Props = {
   params: Promise<{

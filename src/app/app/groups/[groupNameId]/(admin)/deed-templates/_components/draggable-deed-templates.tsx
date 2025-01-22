@@ -1,6 +1,6 @@
 "use client";
 
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { ListTile } from "@/components/list-tile";
 import { changeOrderDeedTemplates } from "@/features/deed-template/api";
 import { DeedTemplate } from "@/features/deed-template/types";

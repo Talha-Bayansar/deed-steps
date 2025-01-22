@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
-import { View } from "../layout/a-new-view";
+import { View } from "../layout/view";
 
 export const CardSkeleton = () => {
   return (

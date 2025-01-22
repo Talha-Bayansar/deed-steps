@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import { DeedTemplate } from "../types";
 import { DeedStatus } from "@/features/deed-status/types";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { DeedStatusTile } from "@/features/deed-status/components/deed-status-tile";
 
 type Props = {

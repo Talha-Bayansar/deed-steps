@@ -1,4 +1,4 @@
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { ScrollableCalendar } from "@/components/scrollable-calendar";
 import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 

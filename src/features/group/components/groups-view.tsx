@@ -4,7 +4,7 @@ import { GroupCard } from "./group-card";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { Group } from "../types";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { EmptyState } from "@/components/empty-state";
 import Link from "next/link";
 

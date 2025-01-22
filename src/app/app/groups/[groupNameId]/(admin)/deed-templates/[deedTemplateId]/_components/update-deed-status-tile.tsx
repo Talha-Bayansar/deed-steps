@@ -15,7 +15,7 @@ import { DeedStatus } from "@/features/deed-status/types";
 import { UpdateDeedStatusForm } from "@/features/deed-status/components/update-deed-status-form";
 import { DeleteDeedStatusAlertDialog } from "@/features/deed-status/components/delete-deed-status-alert-dialog";
 import { Button } from "@/components/ui/button";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 
 type Props = {
   status: DeedStatus;

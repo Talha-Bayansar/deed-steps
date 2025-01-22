@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Invitation } from "../types";
 import { Group } from "@/features/group/types";
 import { EmptyState } from "@/components/empty-state";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { useAction } from "next-safe-action/hooks";
 import { acceptInvitation, declineInvitation } from "../api";
 import { toast } from "sonner";

@@ -1,4 +1,4 @@
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { ChangeName } from "../_components/change-name";
 import { NotificationsPreference } from "../_components/notifications-preference";
 import { requireAuth } from "@/features/auth/api";

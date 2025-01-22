@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useFormatter } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { View } from "./layout/a-new-view";
+import { View } from "./layout/view";
 
 type Props = {
   selectedDay: Date;

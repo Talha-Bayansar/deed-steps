@@ -5,7 +5,7 @@ import { useState } from "react";
 import { DeedTile } from "./deed-tile";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { DeedTemplate } from "@/features/deed-template/types";
 import { isArrayEmpty } from "@/lib/utils";
 import { ScrollableCalendar } from "@/components/scrollable-calendar";

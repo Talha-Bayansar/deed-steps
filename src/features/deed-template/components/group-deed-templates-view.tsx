@@ -5,7 +5,7 @@ import { DeedTemplateTile } from "./deed-template-tile";
 import { useTranslations } from "next-intl";
 import { DeedTemplate } from "../types";
 import { EmptyState } from "@/components/empty-state";
-import { View } from "@/components/layout/a-new-view";
+import { View } from "@/components/layout/view";
 import { DeedStatus } from "@/features/deed-status/types";
 
 type Props = {
