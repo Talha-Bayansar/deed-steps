@@ -100,7 +100,6 @@ export const DeedTile = ({
             ],
           };
         }
-        console.log(newResponse);
         return newResponse;
       }
     );
