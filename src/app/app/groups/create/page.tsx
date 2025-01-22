@@ -1,4 +1,4 @@
-import { Main } from "@/components/layout/no";
+import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { CreateGroupForm } from "@/features/group/components/create-group-form";
