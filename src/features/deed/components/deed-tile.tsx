@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   useMyDeedsByDate,
-  useMyDeedsByDateKey,
+  getMyDeedsByDateKey,
 } from "../hooks/use-my-deeds-by-date";
 
 type Props = {
@@ -60,7 +60,7 @@ export const DeedTile = ({
     deedStatusId: number;
   }) => {
     queryClient.setQueryData(
-      useMyDeedsByDateKey(selectedDay),
+      getMyDeedsByDateKey(selectedDay),
       (response: CustomResponse<Deed[]>) => {
         const deeds = response.data;
 
