@@ -107,6 +107,8 @@ export const inviteUserToGroup = safeAction
         .from(sessionTable)
         .where(eq(sessionTable.userId, invitedUser[0].id));
 
+      console.log("Sessions", sessions);
+
       if (!isArrayEmpty(sessions)) {
         const sessionIds = sessions.map((s) => s.id);
 
@@ -114,6 +116,8 @@ export const inviteUserToGroup = safeAction
           .select()
           .from(pushSubscriptionTable)
           .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
+
+        console.log("Subscriptions", subscriptions);
 
         await sendNotificationToSubscribers(
           {
