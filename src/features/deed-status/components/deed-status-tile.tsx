@@ -1,6 +1,6 @@
 "use client";
 
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 import { ListTile } from "@/components/list-tile";
 import { Badge } from "@/components/ui/badge";
 import { DeedStatus } from "@/features/deed-status/types";

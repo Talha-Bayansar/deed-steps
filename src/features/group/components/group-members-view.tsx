@@ -5,7 +5,7 @@ import { GroupPoints } from "../types";
 import { isArrayEmpty } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 import {
   Drawer,
   DrawerContent,

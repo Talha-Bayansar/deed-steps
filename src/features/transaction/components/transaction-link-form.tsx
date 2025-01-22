@@ -17,7 +17,7 @@ import { useTranslations } from "next-intl";
 import { routes } from "@/lib/routes";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 import Link from "next/link";
 import { AppForm } from "@/components/app-form";
 

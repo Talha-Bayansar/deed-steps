@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { LoadingButton } from "@/components/loading-button";
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 
 type Props = {
   groupId: number;

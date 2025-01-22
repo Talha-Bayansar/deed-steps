@@ -1,4 +1,4 @@
-import { View } from "../layout/view";
+import { View } from "../layout/a-new-view";
 import { Skeleton } from "../ui/skeleton";
 
 export const FormFieldSkeleton = () => {

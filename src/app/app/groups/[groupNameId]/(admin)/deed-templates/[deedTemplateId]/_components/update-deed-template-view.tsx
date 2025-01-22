@@ -6,7 +6,7 @@ import { UpdateDeedStatusTile } from "./update-deed-status-tile";
 import { DeleteDeedTemplate } from "./delete-deed-template";
 import { useTranslations } from "next-intl";
 import { DuplicateDeedTemplate } from "./duplicate-deed-template";
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 import { DeedTemplate } from "@/features/deed-template/types";
 import { DeedStatus } from "@/features/deed-status/types";
 import { EmptyState } from "@/components/empty-state";

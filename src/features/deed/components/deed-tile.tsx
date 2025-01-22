@@ -19,7 +19,7 @@ import { endOfToday } from "date-fns";
 import { DeedTemplate } from "@/features/deed-template/types";
 import { DeedStatus } from "@/features/deed-status/types";
 import { useAction } from "next-safe-action/hooks";
-import { View } from "@/components/layout/view";
+import { View } from "@/components/layout/a-new-view";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
