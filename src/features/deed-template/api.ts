@@ -17,46 +17,6 @@ import {
 import { desc, eq, inArray } from "drizzle-orm";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
-import { DeedTemplate } from "./types";
-import { DeedStatus } from "../deed-status/types";
-
-const transformTemplatesWithStatus = (
-  templatesWithStatus: {
-    deed_template: DeedTemplate;
-    deed_status: DeedStatus | null;
-  }[]
-) => {
-  let transformedTemplates: (DeedTemplate & {
-    deedStatuses: DeedStatus[];
-  })[] = [];
-
-  for (const template of templatesWithStatus) {
-    const existingTemplate = transformedTemplates.find(
-      (t) => template.deed_template.id === t.id
-    );
-    if (existingTemplate) {
-      const newEntry = {
-        ...existingTemplate,
-        deedStatuses: [
-          ...existingTemplate.deedStatuses,
-          template.deed_status,
-        ].filter((status) => status !== null),
-      };
-      transformedTemplates = [
-        ...transformedTemplates.filter((t) => t.id !== existingTemplate.id),
-        newEntry,
-      ];
-    } else {
-      transformedTemplates.push({
-        ...template.deed_template,
-        deedStatuses: [template.deed_status].filter(
-          (status) => status !== null
-        ),
-      });
-    }
-  }
-  return transformedTemplates;
-};
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
   await requireAuth();
@@ -66,16 +26,25 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
     const deedTemplates = await db
       .select()
       .from(deedTemplateTable)
-      .where(eq(deedTemplateTable.groupId, groupId))
-      .leftJoin(
-        deedStatusTable,
-        eq(deedTemplateTable.id, deedStatusTable.deedTemplateId)
-      );
+      .where(eq(deedTemplateTable.groupId, groupId));
 
-    const transformedResponse =
-      transformTemplatesWithStatus(deedTemplates) || [];
+    if (isArrayEmpty(deedTemplates))
+      return createSuccessResponse({
+        deedTemplates: [],
+        deedStatuses: [],
+      });
 
-    return createSuccessResponse(transformedResponse);
+    const deedTemplateIds = deedTemplates.map((dt) => dt.id);
+
+    const deedStatuses = await db
+      .select()
+      .from(deedStatusTable)
+      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
+
+    return createSuccessResponse({
+      deedTemplates,
+      deedStatuses,
+    });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }

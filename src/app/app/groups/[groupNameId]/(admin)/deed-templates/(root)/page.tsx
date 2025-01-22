@@ -21,7 +21,7 @@ const DeedTemplatesRootPage = async ({ params }: Props) => {
 
   if (error) return <ErrorState error={error} />;
 
-  if (isArrayEmpty(deedTemplates.data!))
+  if (isArrayEmpty(deedTemplates.data!.deedTemplates))
     return (
       <EmptyState
         title={t("emptyWarning")}
@@ -31,7 +31,9 @@ const DeedTemplatesRootPage = async ({ params }: Props) => {
 
   return (
     <DraggableDeedTemplates
-      deedTemplates={deedTemplates.data!.sort((a, b) => a.order - b.order)}
+      deedTemplates={deedTemplates.data!.deedTemplates.sort(
+        (a, b) => a.order - b.order
+      )}
       groupId={Number(id)}
       groupName={name}
     />

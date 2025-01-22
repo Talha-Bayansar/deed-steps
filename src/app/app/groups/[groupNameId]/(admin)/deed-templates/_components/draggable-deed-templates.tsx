@@ -65,7 +65,6 @@ const DraggableListTile = ({
   return (
     <div className="list-tile">
       <Reorder.Item
-        style={{}}
         value={deedTemplate}
         dragListener={false}
         dragControls={controls}
