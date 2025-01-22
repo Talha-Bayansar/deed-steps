@@ -29,7 +29,7 @@ export const GroupDetailsView = ({
   const t = useTranslations();
 
   return (
-    <Tabs className="flex flex-col flex-grow" defaultValue="members">
+    <Tabs className="flex flex-col flex-grow w-full" defaultValue="members">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="members">{t("members")}</TabsTrigger>
         <TabsTrigger value="deeds">{t("deeds")}</TabsTrigger>

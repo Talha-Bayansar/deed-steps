@@ -8,15 +8,16 @@ import { useTranslations } from "next-intl";
 
 type Props = {
   status: DeedStatus;
-};
+  hideChevron?: boolean;
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const DeedStatusTile = ({ status }: Props) => {
+export const DeedStatusTile = ({ status, ...props }: Props) => {
   const t = useTranslations();
   return (
-    <ListTile className="list-tile">
+    <ListTile {...props}>
       <div className="flex items-center gap-2">
         <Badge
-          className="h-4 w-4 p-0 border border-gray-100"
+          className="h-4 w-4 p-0 border border-gray-100 shrink-0"
           style={{
             backgroundColor: status.color,
           }}

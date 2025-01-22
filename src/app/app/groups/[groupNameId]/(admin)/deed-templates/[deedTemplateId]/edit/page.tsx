@@ -1,36 +1,33 @@
-import { Main } from "@/components/layout/main";
-import { EditDeedTemplateView } from "../_components/EditDeedTemplateView";
-import { Title } from "@/components/layout/Title";
-import { CreateDeedStatus } from "../_components/CreateDeedStatus";
-import { Heading } from "@/components/layout/Heading";
+import { getDeedTemplateById } from "@/features/deed-template/api";
+import { UpdateDeedTemplateView } from "../_components/update-deed-template-view";
+import { extractError } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
-import { BackButton } from "@/components/BackButton";
-import { routes } from "@/lib/routes";
+import { ErrorState } from "@/components/error-state";
 
 type Props = {
   params: Promise<{
-    groupId: string;
+    groupNameId: string;
+    deedTemplateId: string;
   }>;
 };
 
-const Page = async (props: Props) => {
-  const params = await props.params;
+const UpdateDeedTemplatePage = async ({ params }: Props) => {
+  const t = await getTranslations();
+  const { groupNameId, deedTemplateId } = await params;
+  const [name, id] = decodeURIComponent(groupNameId).split("_");
 
-  const { groupId } = params;
+  const deedTemplate = await getDeedTemplateById(Number(deedTemplateId));
+  const error = extractError(deedTemplate, t);
 
-  const t = await getTranslations("EditDeedTemplatePage");
+  if (error) return <ErrorState error={error} />;
+
   return (
-    <Main>
-      <Heading>
-        <div className="flex items-center">
-          <BackButton href={routes.groups.nameId(groupId).deedTemplates.root} />
-          <Title>{t("title")}</Title>
-        </div>
-        <CreateDeedStatus />
-      </Heading>
-      <EditDeedTemplateView />
-    </Main>
+    <UpdateDeedTemplateView
+      deedTemplate={deedTemplate.data!}
+      groupId={Number(id)}
+      groupName={name}
+    />
   );
 };
 
-export default Page;
+export default UpdateDeedTemplatePage;

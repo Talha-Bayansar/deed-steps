@@ -20,7 +20,7 @@ import {
 } from "@/lib/utils";
 import { sendNotificationToSubscribers } from "@/features/notifications/api";
 import { getTranslations } from "next-intl/server";
-import { requireAuth, validateRequest } from "../auth/api";
+import { requireAuth } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 
@@ -65,14 +65,9 @@ export async function getGroupDetailsById(id: number) {
     const groupMembersWithPoints = await db
       .select({
         member: userTable,
-        groupPoints: groupPointsTable,
       })
       .from(userToGroupTable)
       .innerJoin(userTable, eq(userToGroupTable.userId, userTable.id))
-      .innerJoin(
-        groupPointsTable,
-        eq(userToGroupTable.userId, groupPointsTable.userId)
-      )
       .where(eq(userToGroupTable.groupId, id));
 
     const deedTemplates = await db
@@ -90,15 +85,22 @@ export async function getGroupDetailsById(id: number) {
       );
 
     const duplicateMembers = groupMembersWithPoints.map((item) => item.member);
-    const duplicateGroupPoints = groupMembersWithPoints.map(
-      (item) => item.groupPoints
-    );
     const groupMembers = Array.from(
       new Set(duplicateMembers.map((item) => item.id))
     ).map((id) => duplicateMembers.find((member) => member.id === id)!);
-    const groupPoints = Array.from(
-      new Set(duplicateGroupPoints.map((item) => item.id))
-    ).map((id) => duplicateGroupPoints.find((points) => points.id === id)!);
+
+    const groupPoints = await db
+      .select()
+      .from(groupPointsTable)
+      .where(
+        and(
+          inArray(
+            groupPointsTable.userId,
+            groupMembers.map((gp) => gp.id)
+          ),
+          eq(groupPointsTable.groupId, id)
+        )
+      );
 
     return createSuccessResponse({
       group,

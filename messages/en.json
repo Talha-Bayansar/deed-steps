@@ -367,5 +367,14 @@
   "transaction": "Transaction",
   "invalidAmount": "The amount should be between 1 and 1.000.000.",
   "transactionSuccess": "Transaction was successful",
-  "transactionFailed": "Transaction failed"
+  "transactionFailed": "Transaction failed",
+  "deedTemplates": "Deed templates",
+  "createDeedTemplate": "Create deed template",
+  "updateDeedTemplate": "Update deed template",
+  "deedStatuses": "Deed statuses",
+  "color": "Color",
+  "duplicate": "Duplicate",
+  "duplicateSuccess": "Duplicated successfully",
+  "deleteDeedTemplate": "Delete deed template",
+  "createDeedStatus": "Create deed status"
 }

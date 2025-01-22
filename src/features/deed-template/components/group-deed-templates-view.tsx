@@ -33,7 +33,9 @@ export const GroupDeedTemplatesView = ({
         <DeedTemplateTile
           key={deedTemplate.id}
           deedTemplate={deedTemplate}
-          deedStatuses={deedStatuses}
+          deedStatuses={deedStatuses
+            .filter((ds) => ds.deedTemplateId === deedTemplate.id)
+            .sort((a, b) => Number(a.reward) - Number(b.reward))}
         />
       ))}
     </View>

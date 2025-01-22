@@ -27,19 +27,19 @@ export const createErrorResponse = (message: string) => {
   };
 };
 
-type Response = {
+export type CustomResponse<T> = {
   success: boolean;
-  data: unknown | null;
+  data: T | null;
   message: string | null;
 };
 
-export const handleResponse = ({
+export const handleResponse = <T>({
   onSuccess,
   onError,
   response,
   t,
 }: {
-  response?: Response;
+  response?: CustomResponse<T>;
   t: any;
   onSuccess?: () => void;
   onError?: (message: string) => void;
@@ -51,7 +51,10 @@ export const handleResponse = ({
   }
 };
 
-export const extractError = (response: Response, t: any): string | null => {
+export const extractError = <T>(
+  response: CustomResponse<T>,
+  t: any
+): string | null => {
   if (!response.success) return response.message ?? t("somethingWentWrong");
   return null;
 };

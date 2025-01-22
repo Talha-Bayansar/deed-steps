@@ -12,5 +12,11 @@ export default async function AppRootPage() {
   const error = extractError(deedTemplates, t);
   if (error) return <ErrorState error={error} />;
 
-  return <DeedsView groupedDeedTemplates={deedTemplates.data!} />;
+  return (
+    <DeedsView
+      deedStatuses={deedTemplates.data!.deedStatuses}
+      groups={deedTemplates.data!.groups}
+      deedTemplates={deedTemplates.data!.deedTemplates}
+    />
+  );
 }

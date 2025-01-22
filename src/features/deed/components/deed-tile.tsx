@@ -13,7 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ListTile } from "@/components/list-tile";
-import { handleResponse } from "@/lib/utils";
+import { CustomResponse, handleResponse } from "@/lib/utils";
 import { useState } from "react";
 import { endOfToday } from "date-fns";
 import { DeedTemplate } from "@/features/deed-template/types";
@@ -23,34 +23,33 @@ import { View } from "@/components/layout/view";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  useMyDeedsByDate,
+  useMyDeedsByDateKey,
+} from "../hooks/use-my-deeds-by-date";
 
 type Props = {
-  deedTemplate: DeedTemplate & {
-    statuses: DeedStatus[];
-  };
-  deed?: Deed;
+  deedTemplate: DeedTemplate;
+  deedStatuses: DeedStatus[];
   selectedDay: string;
-  isLoading: boolean;
 };
 
 export const DeedTile = ({
   deedTemplate,
-  deed,
+  deedStatuses,
   selectedDay,
-  isLoading,
 }: Props) => {
+  const queryClient = useQueryClient();
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const { data, isLoading } = useMyDeedsByDate(selectedDay);
+  const deeds = data?.data;
+  const deed = deeds?.find((d) => d.deedTemplateId === deedTemplate.id);
 
   const { executeAsync } = useAction(saveDeed);
 
-  const getStatus = (
-    deedTemplate: DeedTemplate & { statuses: DeedStatus[] }
-  ) => {
-    return deedTemplate.statuses.find(
-      (status) => status.id === deed?.deedStatusId
-    );
+  const getStatus = () => {
+    return deedStatuses.find((status) => status.id === deed?.deedStatusId);
   };
 
   const handleSaveDeed = async ({
@@ -60,30 +59,58 @@ export const DeedTile = ({
     deedId?: number;
     deedStatusId: number;
   }) => {
+    queryClient.setQueryData(
+      useMyDeedsByDateKey(selectedDay),
+      (response: CustomResponse<Deed[]>) => {
+        const deeds = response.data;
+
+        if (!deeds) return response;
+
+        const deedToUpdate = deeds.find((d) => d.id === deedId);
+
+        let newResponse = response;
+
+        if (deedToUpdate) {
+          const data = deeds.map((d) => {
+            if (d.id === deedToUpdate.id) {
+              return {
+                ...d,
+                deedStatusId: deedStatusId,
+              };
+            } else {
+              return d;
+            }
+          });
+          newResponse = {
+            ...response,
+            data,
+          };
+        } else {
+          newResponse = {
+            ...response,
+            data: [
+              ...deeds,
+              {
+                id: Date.now(),
+                date: selectedDay,
+                deedTemplateId: deedTemplate.id,
+                deedStatusId,
+                userId: Date.now(),
+              },
+            ],
+          };
+        }
+        console.log(newResponse);
+        return newResponse;
+      }
+    );
+    setIsOpen(false);
+
     const res = await executeAsync({
       deedStatusId: deedStatusId,
       deedTemplateId: deedTemplate.id,
       date: selectedDay,
     });
-
-    queryClient.setQueryData(["myDeeds", selectedDay], (deeds: Deed[]) => {
-      const deedToUpdate = deeds.find((d) => d.id === deedId);
-      if (deedToUpdate) {
-        return deeds.map((d) => {
-          if (d.id === deedToUpdate.id) {
-            return {
-              ...d,
-              deedStatusId: deedStatusId,
-            };
-          } else {
-            return deed;
-          }
-        });
-      } else {
-        return [...deeds, { ...deed, id: Date.now() }];
-      }
-    });
-    setIsOpen(false);
 
     handleResponse({
       t,
@@ -97,8 +124,8 @@ export const DeedTile = ({
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger
+        className="list-tile"
         disabled={new Date(`${selectedDay}T00:00:00Z`) > endOfToday()}
-        asChild
       >
         <ListTile>
           <div className="flex gap-2 items-center">
@@ -108,8 +135,8 @@ export const DeedTile = ({
               <Badge
                 className="h-4 w-4 p-0 border border-gray-100"
                 style={{
-                  backgroundColor: getStatus(deedTemplate)
-                    ? getStatus(deedTemplate)?.color
+                  backgroundColor: getStatus()
+                    ? getStatus()?.color
                     : "transparent",
                 }}
               />
@@ -125,8 +152,9 @@ export const DeedTile = ({
         </DrawerHeader>
         <DrawerFooter>
           <View className="gap-0">
-            {deedTemplate.statuses.map((status, i) => (
-              <ListTile
+            {deedStatuses.map((status) => (
+              <button
+                className="list-tile"
                 key={status.id}
                 onClick={() =>
                   handleSaveDeed({
@@ -135,16 +163,18 @@ export const DeedTile = ({
                   })
                 }
               >
-                <div className="flex gap-2 items-center">
-                  <Badge
-                    className="h-4 w-4 p-0 border border-gray-100"
-                    style={{
-                      backgroundColor: status.color,
-                    }}
-                  />
-                  <span>{status.name}</span>
-                </div>
-              </ListTile>
+                <ListTile>
+                  <div className="flex gap-2 items-center">
+                    <Badge
+                      className="h-4 w-4 p-0 border border-gray-100"
+                      style={{
+                        backgroundColor: status.color,
+                      }}
+                    />
+                    <span>{status.name}</span>
+                  </div>
+                </ListTile>
+              </button>
             ))}
           </View>
         </DrawerFooter>

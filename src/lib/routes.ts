@@ -28,6 +28,11 @@ export const routes = {
         root: `/app/groups/${encodeURIComponent(
           `${groupName}_${groupId}`
         )}/deed-templates`,
+        create: {
+          root: `/app/groups/${encodeURIComponent(
+            `${groupName}_${groupId}`
+          )}/deed-templates/create`,
+        },
         id: (deedTemplateId: string | number) => ({
           root: `/app/groups/${encodeURIComponent(
             `${groupName}_${groupId}`

@@ -35,7 +35,12 @@ export const DeedTemplateTile = ({ deedTemplate, deedStatuses }: Props) => {
         <DrawerFooter>
           <View className="gap-0">
             {deedStatuses.map((status) => (
-              <DeedStatusTile key={status.id} status={status} />
+              <DeedStatusTile
+                key={status.id}
+                className="list-tile"
+                status={status}
+                hideChevron
+              />
             ))}
           </View>
         </DrawerFooter>

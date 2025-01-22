@@ -54,9 +54,8 @@ const transformTemplatesWithStatus = (
         ),
       });
     }
-
-    return transformedTemplates;
   }
+  return transformedTemplates;
 };
 
 export async function getDeedTemplatesByGroupId(groupId: number) {
@@ -115,40 +114,47 @@ export async function getMyDeedTemplates() {
   const user = await requireAuth();
 
   try {
-    const groups = await db
+    const groupRows = await db
       .select()
       .from(userToGroupTable)
       .where(eq(userToGroupTable.userId, user.id))
       .innerJoin(groupTable, eq(groupTable.id, userToGroupTable.groupId));
 
-    if (isArrayEmpty(groups)) return createSuccessResponse([]);
+    const groups = groupRows.map((gr) => gr.group);
 
-    const groupIds = groups.map((item) => item.user_to_group.groupId);
+    if (isArrayEmpty(groups))
+      return createSuccessResponse({
+        groups: [],
+        deedTemplates: [],
+        deedStatuses: [],
+      });
+
+    const groupIds = groups.map((item) => item.id);
 
     const deedTemplates = await db
       .select()
       .from(deedTemplateTable)
-      .innerJoin(
-        deedStatusTable,
-        eq(deedStatusTable.deedTemplateId, deedTemplateTable.id)
-      )
       .where(inArray(deedTemplateTable.groupId, groupIds));
 
-    const response = groups.map((group) => {
-      const groupTemplates = deedTemplates.filter(
-        (templ) => templ.deed_template.groupId === group.user_to_group.groupId
-      );
+    if (isArrayEmpty(deedTemplates))
+      return createSuccessResponse({
+        groups: groups,
+        deedTemplates: [],
+        deedStatuses: [],
+      });
 
-      return {
-        group: group.group,
-        templates: groupTemplates.map((templ) => ({
-          ...templ.deed_template,
-          statuses: deedTemplates
-            .filter((v) => v.deed_template.id === templ.deed_template.id)
-            .map((v) => v.deed_status),
-        })),
-      };
-    });
+    const deedTemplateIds = deedTemplates.map((item) => item.id);
+
+    const deedStatuses = await db
+      .select()
+      .from(deedStatusTable)
+      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
+
+    const response = {
+      groups,
+      deedTemplates,
+      deedStatuses,
+    };
 
     return createSuccessResponse(response);
   } catch {
@@ -266,7 +272,7 @@ export const duplicateDeedTemplate = safeAction
         .values({
           name: newName,
           groupId: deedTemplate.groupId,
-          order: highestOrderTemplate[0].order,
+          order: highestOrderTemplate[0].order + 1,
         })
         .returning({ id: deedTemplateTable.id });
 
