@@ -72,6 +72,6 @@
     @apply font-bold text-xl;
   }
   .list-tile {
-    @apply border-b py-4 last:border-b-0 w-full;
+    @apply border-b py-4 last:border-b-0 w-full hover:bg-muted active:bg-muted;
   }
 }
