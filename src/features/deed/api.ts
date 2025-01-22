@@ -13,9 +13,9 @@ import {
   userToGroupTable,
 } from "@/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
-import type { GroupMessage } from "@/features/notifications/types";
+import type { GroupMessage } from "@/features/notification/types";
 import { getTranslations } from "next-intl/server";
-import { sendNotificationToSubscribers } from "@/features/notifications/api";
+import { sendNotificationToSubscribers } from "@/features/notification/api";
 import { requireAuth } from "../auth/api";
 import {
   createErrorResponse,

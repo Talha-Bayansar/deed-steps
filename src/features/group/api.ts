@@ -18,7 +18,7 @@ import {
   createSuccessResponse,
   isArrayEmpty,
 } from "@/lib/utils";
-import { sendNotificationToSubscribers } from "@/features/notifications/api";
+import { sendNotificationToSubscribers } from "@/features/notification/api";
 import { getTranslations } from "next-intl/server";
 import { requireAuth } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";

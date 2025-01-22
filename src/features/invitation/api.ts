@@ -20,7 +20,7 @@ import {
 } from "@/lib/utils";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
-import { sendNotificationToSubscribers } from "../notifications/api";
+import { sendNotificationToSubscribers } from "../notification/api";
 
 export const getMyInvitations = async () => {
   const t = await getTranslations();
@@ -55,7 +55,6 @@ export const inviteUserToGroup = safeAction
         .select()
         .from(userTable)
         .where(eq(userTable.email, email.toLowerCase()))
-        .leftJoin(sessionTable, eq(userTable.id, sessionTable.userId))
         .limit(1);
 
       if (isArrayEmpty(invitedUser))
@@ -75,7 +74,7 @@ export const inviteUserToGroup = safeAction
         .from(userToGroupTable)
         .where(
           and(
-            eq(userToGroupTable.userId, invitedUser[0].user.id),
+            eq(userToGroupTable.userId, invitedUser[0].id),
             eq(userToGroupTable.groupId, groupId)
           )
         )
@@ -89,7 +88,7 @@ export const inviteUserToGroup = safeAction
         .from(invitationTable)
         .where(
           and(
-            eq(invitationTable.userId, invitedUser[0].user.id),
+            eq(invitationTable.userId, invitedUser[0].id),
             eq(invitationTable.groupId, groupId)
           )
         )
@@ -99,27 +98,32 @@ export const inviteUserToGroup = safeAction
         return createErrorResponse(t("userAlreadyInvited"));
 
       await db.insert(invitationTable).values({
-        userId: invitedUser[0].user.id,
+        userId: invitedUser[0].id,
         groupId,
       });
 
-      const sessionIds = invitedUser
-        .map((u) => u.session?.id)
-        .filter((s) => s !== null && s !== undefined);
-
-      const subscriptions = await db
+      const sessions = await db
         .select()
-        .from(pushSubscriptionTable)
-        .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
+        .from(sessionTable)
+        .where(eq(sessionTable.userId, invitedUser[0].id));
 
-      await sendNotificationToSubscribers(
-        {
-          title: t("groupInvitedTitle"),
-          body: t("groupInvitedBody", { groupName: group[0].name }),
-          userId: invitedUser[0].user.id,
-        },
-        subscriptions
-      );
+      if (!isArrayEmpty(sessions)) {
+        const sessionIds = sessions.map((s) => s.id);
+
+        const subscriptions = await db
+          .select()
+          .from(pushSubscriptionTable)
+          .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
+
+        await sendNotificationToSubscribers(
+          {
+            title: t("groupInvitedTitle"),
+            body: t("groupInvitedBody", { groupName: group[0].name }),
+            userId: invitedUser[0].id,
+          },
+          subscriptions
+        );
+      }
 
       return createSuccessResponse();
     } catch {

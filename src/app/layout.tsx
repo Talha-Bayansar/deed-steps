@@ -3,7 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
-import { ServiceWorkerWrapper } from "@/features/notifications/components/service-worker-wrapper";
+import { ServiceWorkerWrapper } from "@/features/notification/components/service-worker-wrapper";
 import { APP_NAME } from "@/lib/constants";
 import { getLocale, getMessages } from "next-intl/server";
 import { ReactQueryProvider } from "@/components/react-query-provider";
