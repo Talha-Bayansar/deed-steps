@@ -4,8 +4,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { User } from "@/db/schema";
 import { useTranslations } from "next-intl";
+import { User } from "../types";
 
 type Props = {
   user: User;
