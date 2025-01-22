@@ -19,9 +19,9 @@ import { Bell, BellRing, ListChecks } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import { View } from "@/components/layout/view";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
+import { View } from "@/components/layout/view";
 
 type Props = {
   groupId: number;

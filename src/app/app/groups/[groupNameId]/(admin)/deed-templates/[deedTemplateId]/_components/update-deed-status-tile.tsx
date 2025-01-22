@@ -12,10 +12,10 @@ import { DeedStatusTile } from "@/features/deed-status/components/deed-status-ti
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DeedStatus } from "@/features/deed-status/types";
-import { View } from "@/components/layout/view";
 import { UpdateDeedStatusForm } from "@/features/deed-status/components/update-deed-status-form";
 import { DeleteDeedStatusAlertDialog } from "@/features/deed-status/components/delete-deed-status-alert-dialog";
 import { Button } from "@/components/ui/button";
+import { View } from "@/components/layout/view";
 
 type Props = {
   status: DeedStatus;

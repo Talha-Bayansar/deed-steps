@@ -1,204 +1,178 @@
 {
-  "global": {
-    "errors": {
-      "min": "Minimaal {amount} karakters",
-      "max": "Maximaal {amount} karakters",
-      "min_value": "Minimumwaarde is {value}",
-      "max_value": "Maximale waarde is {value}",
-      "email": "Geen geldig e-mailadres"
-    },
-    "days": {
-      "0": {
-        "short": "Ma",
-        "long": "Maandag"
-      },
-      "1": {
-        "short": "Di",
-        "long": "Dinsdag"
-      },
-      "2": {
-        "short": "Wo",
-        "long": "Woensdag"
-      },
-      "3": {
-        "short": "Do",
-        "long": "Donderdag"
-      },
-      "4": {
-        "short": "Vr",
-        "long": "Vrijdag"
-      },
-      "5": {
-        "short": "Za",
-        "long": "Zaterdag"
-      },
-      "6": {
-        "short": "Zo",
-        "long": "Zondag"
-      }
-    },
-    "months": {
-      "0": {
-        "long": "Januari"
-      },
-      "1": {
-        "long": "Februari"
-      },
-      "2": {
-        "long": "Maart"
-      },
-      "3": {
-        "long": "April"
-      },
-      "4": {
-        "long": "Mei"
-      },
-      "5": {
-        "long": "Juni"
-      },
-      "6": {
-        "long": "Juli"
-      },
-      "7": {
-        "long": "Augustus"
-      },
-      "8": {
-        "long": "September"
-      },
-      "9": {
-        "long": "Oktober"
-      },
-      "10": {
-        "long": "November"
-      },
-      "11": {
-        "long": "December"
-      }
-    },
-    "messages": {
-      "deed_created": "Iemand heeft zojuist een goede daad verricht.",
-      "reminder_title": "Herinnering",
-      "reminder_body": "Vergeet niet om vandaag goede daden te verrichten.",
-      "group_invited_title": "Groep uitnodiging",
-      "group_invited_body": "Je hebt een groepsuitnodiging gekregen van {groupName}."
-    },
-    "email": "E-mail",
-    "home": "Startpagina",
-    "groups": "Groepen",
-    "settings": "Instellingen",
-    "submit": "Bevestigen",
-    "continue": "Doorgaan",
-    "cancel": "Annuleren",
-    "first_name": "Voornaam",
-    "last_name": "Achternaam",
-    "status": "Status",
-    "owner": "Eigenaar",
-    "member": "Lid",
-    "members": "Leden",
-    "deeds": "Daden",
-    "delete": "Verwijderen",
-    "reward": "Beloning",
-    "points": "Punten",
-    "duplicate": "Dupliceren",
-    "role": "Rol",
-    "generate": "Genereren"
+  "en": "English",
+  "fr": "Français",
+  "nl": "Nederlands",
+  "tr": "Türkçe",
+  "validations": {
+    "required": "{veld} is verplicht.",
+    "email": "Voer een geldig e-mailadres in.",
+    "minLength": "{field} moet minimaal {length} tekens lang zijn.",
+    "maxLength": "{field} mag niet langer zijn dan {length} tekens.",
+    "minValue": "{field} moet een minimumwaarde van {value} hebben.",
+    "maxValue": "{field} moet een maximale waarde van {value} hebben."
   },
-  "HomePage": {
-    "title": "Mijn daden",
-    "no_deeds": "Je hebt nog geen daden."
+  "dayOfWeek": {
+    "monday": "Maandag",
+    "tuesday": "Dinsdag",
+    "wednesday": "Woensdag",
+    "thursday": "Donderdag",
+    "friday": "Vrijdag",
+    "saturday": "Zaterdag",
+    "sunday": "Zondag"
   },
-  "GroupsPage": {
-    "title": "Groepen",
-    "no_groups": "Je bent nog geen lid van een groep.",
-    "create_group": "Groep maken"
-  },
-  "CreateGroupPage": {
-    "title": "Groep maken",
-    "group_name": "Groep naam"
-  },
-  "GroupDetailsPage": {
-    "no_group": "Deze groep kon niet worden gevonden.",
-    "no_members": "Deze groep heeft nog geen leden.",
-    "delete_modal_title": "Weet je zeker dat je deze gebruiker uit de groep wilt verwijderen?",
-    "delete_modal_description": "Deze actie kan niet ongedaan worden. Hierdoor worden alle gegevens van deze gebruiker permanent verwijderd.",
-    "no_deeds": "Deze groep heeft nog geen daden."
-  },
-  "TransactionPage": {
-    "title": "Transactie",
-    "generate_transaction_link": "Genereer transactielink",
-    "no_group": "Deze groep kon niet worden gevonden.",
-    "success": "Transactie was succesvol.",
-    "error": "Transactie mislukt.\nOf de groep bestaat niet of je hebt niet genoeg punten."
-  },
-  "GroupSettingsPage": {
-    "title": "Instellingen",
-    "change_name": "Naam wijzigen",
-    "invite_success": "Gebruiker succesvol uitgenodigd",
-    "invite_user": "Gebruiker uitnodigen",
-    "email_user": "E-mail gebruiker",
-    "manage_deeds": "Daden beheren",
-    "delete_group": "Groep verwijderen",
-    "delete_group_modal_title": "Weet je zeker dat je deze groep wilt verwijderen?",
-    "delete_group_modal_description": "Deze actie kan niet ongedaan worden. Alle gegevens gekoppeld aan deze groep zullen verloren gaan.",
-    "notification_preferences": "Voorkeuren meldingen",
-    "send_reminder": "Herinneringsbericht verzenden",
-    "send_notification_deeds": "Melding verzenden per daad",
-    "send_reminder_success": "Herinneringsbericht was succesvol verzonden",
-    "send_reminder_error": "Er liep iets mis tijdens het verzenden"
-  },
-  "DeedTemplatesPage": {
-    "title": "Daad sjablonen",
-    "no_group": "De groep die je zoekt bestaat niet.",
-    "no_deed_templates": "Het lijkt erop dat deze groep nog geen daad sjablonen heeft.",
-    "deed_template_name": "Daad sjabloon naam"
-  },
-  "EditDeedTemplatePage": {
-    "title": "Daad sjabloon wijzigen",
-    "status_name": "Status naam",
-    "color": "Kleur",
-    "reward": "Beloning",
-    "no_deed_template": "Deze daad sjabloon kon niet worden gevonden.",
-    "change_name": "Naam wijzigen",
-    "statuses": "Statussen",
-    "delete_deed_status_modal_title": "Weet je zeker dat je deze daad status wilt verwijderen?",
-    "delete_deed_status_modal_description": "Deze daad status en alle bijbehorende gegevens worden permanent verwijderd.",
-    "delete_deed_template_modal_title": "Weet je zeker dat je deze daad sjabloon wilt verwijderen?",
-    "delete_deed_template_modal_description": "Deze daad sjabloon en alle gerelateerde statussen zullen permanent worden verwijderd."
-  },
-  "InvitationsPage": {
-    "title": "Uitnodigingen",
-    "no_invitations": "Het lijkt erop dat je geen uitnodigingen hebt."
-  },
-  "SignInPage": {
-    "title": "Aanmelden",
-    "verification_code": "Verificatiecode",
-    "send_verification_code": "Verificatiecode verzenden"
-  },
-  "OfflinePage": {
-    "description": "Het lijkt erop dat je offline bent."
-  },
-  "AuthWrapper": {
-    "title": "Authenticeren",
-    "description": "Wacht even terwijl we je gegevens controleren."
-  },
-  "SettingsPage": {
-    "title": "Instellingen",
-    "change_name": "Naam wijzigen",
-    "change_name_success": "Naam succesvol bijgewerkt.",
-    "sign_out": "Afmelden",
-    "sign_out_modal_title": "Weet je zeker dat je je wilt afmelden?",
-    "sign_out_modal_description": "Je wordt afgemeld bij je account.",
-    "change_language": "Taal veranderen",
-    "language_description": "Selecteer de taal van je voorkeur voor de app.",
-    "select_language": "Selecteer taal",
-    "allow_notifications": "Meldingen toestaan"
-  },
-  "AdminWrapper": {
-    "title": "Rechten controleren",
-    "description": "Wacht even terwijl we je rechten controleren."
-  },
-  "MemberWrapper": {
-    "title": "Rechten controleren",
-    "description": "Wacht even terwijl we je rechten controleren."
-  }
+  "home": "Thuis",
+  "settings": "Instellingen",
+  "signOut": "Meld u af",
+  "mySubscription": "Mijn abonnement",
+  "currentPlan": "Huidig ​​abonnement",
+  "free": "Vrij",
+  "billedMonthly": "Maandelijks gefactureerd",
+  "trialPeriod": "Proefperiode",
+  "noActiveSubscription": "Geen actief abonnement",
+  "manageSubscription": "Beheer abonnement",
+  "signIntoAccount": "Log in op uw account",
+  "enterEmailToSignIn": "Voer hieronder uw e-mailadres in om in te loggen op uw account",
+  "signInToAgree": "Door u aan te melden, gaat u akkoord met onze",
+  "termsOfService": "Servicevoorwaarden",
+  "and": "En",
+  "privacyPolicy": "Privacybeleid",
+  "email": "E-mail",
+  "verificationCode": "Verificatiecode",
+  "verifyCode": "Controleer code",
+  "sendVerificationCode": "Verificatiecode verzenden",
+  "sendVerificationCodeSuccess": "Verificatiecode is verzonden.",
+  "sendVerificationCodeError": "Er is iets misgegaan bij het verzenden van de verificatiecode.",
+  "areYouSure": "Weet je het zeker?",
+  "signOutWarning": "U staat op het punt zich af te melden.",
+  "signInError": "Er is iets misgegaan tijdens het inloggen.",
+  "signOutError": "Kan niet uitloggen.",
+  "deleteWarning": "Het verwijderen van deze entiteit kan gevolgen hebben voor andere gerelateerde entiteiten. ",
+  "cancel": "Annuleren",
+  "continue": "Doorgaan",
+  "language": "Taal",
+  "name": "Naam",
+  "notImplemented": "Niet geïmplementeerd",
+  "street": "Straat",
+  "zipCode": "Postcode",
+  "city": "Stad",
+  "phone": "Telefoon",
+  "verified": "Geverifieerd",
+  "owner": "Eigenaar",
+  "somethingWentWrong": "Er is iets misgegaan!",
+  "confirm": "Bevestigen",
+  "submit": "Indienen",
+  "invalidSubscription": "U heeft geen geldig abonnement. ",
+  "notFound": "{onderwerp} kan niet worden gevonden.",
+  "emptyWarning": "Een open doos, met niets erin!",
+  "emptyWarningAction": "Het is gewoon een lege doos... voorlopig!",
+  "add": "Toevoegen",
+  "create": "Creëren",
+  "delete": "Verwijderen",
+  "update": "Update",
+  "edit": "Bewerking",
+  "title": "Titel",
+  "description": "Beschrijving",
+  "price": "Prijs",
+  "duration": "Duur",
+  "createPriceItem": "Prijsitem maken",
+  "inMinutes": "Binnen enkele minuten",
+  "minutes": "Notulen",
+  "updatePriceItem": "Prijsitem bijwerken",
+  "priceItem": "Prijs artikel",
+  "createSuccess": "Succesvol aangemaakt",
+  "updateSuccess": "Succesvol bijgewerkt",
+  "deleteSuccess": "Succesvol verwijderd",
+  "closed": "Gesloten",
+  "withReservation": "Onder voorbehoud",
+  "openingTime": "Openingstijd",
+  "closingTime": "Sluitingstijd",
+  "dayOfTheWeek": "Dag van de week",
+  "with_reservation_description": "Selecteer of reserveringen tussen deze tijden zijn toegestaan.",
+  "manageWorkingHours": "Beheer werktijden",
+  "createWorkingHours": "Maak werktijden aan",
+  "updateWorkingHours": "Werktijden bijwerken",
+  "user": "Gebruiker",
+  "alreadyInvited": "{email} is al uitgenodigd voor deze groep.",
+  "alreadyInGroup": "{email} zit al in deze groep.",
+  "invite": "Uitnodiging",
+  "inviteSuccess": "Uitgenodigd",
+  "invitations": "Uitnodigingen",
+  "invitation": "Uitnodiging",
+  "profile": "Profiel",
+  "declineInvitationWarning": "Na een afwijzing kunt u deze uitnodiging achteraf niet meer accepteren.",
+  "declineSuccess": "Met succes afgewezen",
+  "acceptSuccess": "Succesvol geaccepteerd.",
+  "favorites": "Favorieten",
+  "searchBy": "Zoek op",
+  "zip": "ZIP",
+  "select": "Selecteer",
+  "contact": "Contact",
+  "notMentioned": "Niet vermeld",
+  "info": "Info",
+  "location": "Locatie",
+  "back": "Rug",
+  "next": "Volgende",
+  "selectTreatment": "Behandeling selecteren",
+  "noPreference": "Geen voorkeur",
+  "selectDateAndTime": "Selecteer datum en tijd",
+  "selectTime": "Selecteer tijd",
+  "date": "Datum",
+  "time": "Tijd",
+  "connectedAccount": "Verbonden account",
+  "none": "Geen",
+  "connectAccount": "Account koppelen",
+  "accountLinked": "Verbonden account.",
+  "onboarding": "Aan boord",
+  "manageAccount": "Beheer account",
+  "groups": "Groepen",
+  "firstName": "Voornaam",
+  "lastName": "Achternaam",
+  "changeName": "Naam wijzigen",
+  "changeLanguage": "Taal wijzigen",
+  "changeLocaleDescription": "Selecteer uw voorkeurstaal voor de app.",
+  "allowNotifications": "Meldingen toestaan",
+  "deeds": "Daden",
+  "deedTemplate": "Akte sjabloon",
+  "deedStatus": "Aktestatus",
+  "groupPoints": "Groepspunten",
+  "deed": "Daad",
+  "someoneDidDeed": "Iemand heeft zojuist een goede daad gedaan.",
+  "notEnoughPoints": "U heeft niet genoeg punten voor de transactie.",
+  "group": "Groep",
+  "session": "Sessie",
+  "role": "Rol",
+  "member": "Lid",
+  "createGroup": "Groep aanmaken",
+  "members": "Leden",
+  "points": "Punten",
+  "reward": "Beloning",
+  "inviteUser": "Gebruiker uitnodigen",
+  "userAlreadyInGroup": "Deze gebruiker zit al in deze groep.",
+  "userAlreadyInvited": "Deze gebruiker is al uitgenodigd voor deze groep.",
+  "groupInvitedTitle": "Je bent uitgenodigd door een groep",
+  "groupInvitedBody": "Je hebt een uitnodiging gekregen van {groupName}.",
+  "manage-deeds": "Beheer daden",
+  "notificationPreferences": "Meldingsvoorkeuren",
+  "sendReminder": "Herinnering verzenden",
+  "notifyEveryDeed": "Meld elke akte",
+  "sendReminderSuccess": "Herinnering succesvol verzonden",
+  "reminderTitle": "Herinnering",
+  "reminderBody": "Vergeet vandaag niet om goede daden te doen.",
+  "generateTransactionLink": "Transactielink genereren",
+  "generate": "Genereer",
+  "deleteGroup": "Groep verwijderen",
+  "transaction": "Transactie",
+  "invalidAmount": "Het bedrag moet tussen de 1 en 1.000.000 liggen.",
+  "transactionSuccess": "Transactie was succesvol",
+  "transactionFailed": "Transactie mislukt",
+  "deedTemplates": "Akte-sjablonen",
+  "createDeedTemplate": "Aktesjabloon maken",
+  "updateDeedTemplate": "Aktesjabloon bijwerken",
+  "deedStatuses": "Aktestatussen",
+  "color": "Kleur",
+  "duplicate": "Duplicaat",
+  "duplicateSuccess": "Gedupliceerd",
+  "deleteDeedTemplate": "Aktesjabloon verwijderen",
+  "createDeedStatus": "Aktestatus creëren",
+  "offlineDescription": "Het lijkt erop dat je offline bent."
 }
