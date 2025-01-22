@@ -14,6 +14,8 @@ export async function sendNotificationToSubscribers(
   message: Message | GroupMessage,
   subscriptions: Subscription[]
 ) {
+  console.log("Message", message);
+  console.log("Subscriptions", subscriptions);
   const pushPromises = subscriptions.map((subscription) =>
     webPush
       .sendNotification(
