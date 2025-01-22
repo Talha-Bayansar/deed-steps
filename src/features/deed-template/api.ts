@@ -209,21 +209,19 @@ export const duplicateDeedTemplate = safeAction
       const deedTemplateRows = await db
         .select()
         .from(deedTemplateTable)
-        .where(eq(deedTemplateTable.id, deedTemplateId))
-        .leftJoin(
-          deedStatusTable,
-          eq(deedStatusTable.deedTemplateId, deedTemplateTable.id)
-        );
+        .where(eq(deedTemplateTable.id, deedTemplateId));
 
       if (isArrayEmpty(deedTemplateRows))
         return createErrorResponse(
           t("notFound", { subject: t("deedTemplate") })
         );
 
-      const deedTemplate = deedTemplateRows[0].deed_template;
-      const deedTemplateStatuses = deedTemplateRows
-        .map((v) => v.deed_status)
-        .filter((v) => v !== null);
+      const deedTemplate = deedTemplateRows[0];
+
+      const deedTemplateStatuses = await db
+        .select()
+        .from(deedStatusTable)
+        .where(eq(deedStatusTable.deedTemplateId, deedTemplateId));
 
       const highestOrderTemplate = await db
         .select()
