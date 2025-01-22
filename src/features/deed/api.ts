@@ -13,7 +13,7 @@ import {
   userToGroupTable,
 } from "@/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
-import type { GroupMessage } from "@/features/notifications/models";
+import type { GroupMessage } from "@/features/notifications/types";
 import { getTranslations } from "next-intl/server";
 import { sendNotificationToSubscribers } from "@/features/notifications/api";
 import { requireAuth } from "../auth/api";
