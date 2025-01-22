@@ -1,4 +1,4 @@
-import { Main } from "@/components/layout/main";
+import { Main } from "@/components/layout/no";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { routes } from "@/lib/routes";

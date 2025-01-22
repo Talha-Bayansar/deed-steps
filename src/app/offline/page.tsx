@@ -1,4 +1,4 @@
-import { Main } from "@/components/layout/main";
+import { Main } from "@/components/layout/no";
 import { WifiOff } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
