@@ -12,21 +12,21 @@ import { DeedStatus } from "@/features/deed-status/types";
 import { EmptyState } from "@/components/empty-state";
 
 type Props = {
-  deedTemplate: DeedTemplate & {
-    deedStatuses: DeedStatus[];
-  };
+  deedTemplate: DeedTemplate;
+  deedStatuses: DeedStatus[];
   groupName: string;
   groupId: number;
 };
 
 export const UpdateDeedTemplateView = ({
   deedTemplate,
+  deedStatuses,
   groupId,
   groupName,
 }: Props) => {
   const t = useTranslations();
 
-  if (isArrayEmpty(deedTemplate.deedStatuses))
+  if (isArrayEmpty(deedStatuses))
     return (
       <EmptyState
         title={t("emptyWarning")}
@@ -47,7 +47,7 @@ export const UpdateDeedTemplateView = ({
       <View className="gap-0">
         <h2 className="text-xl font-semibold">{t("deedStatuses")}</h2>
         <View className="gap-0">
-          {deedTemplate.deedStatuses
+          {deedStatuses
             .sort((a, b) => Number(a.reward) - Number(b.reward))
             .map((status) => (
               <UpdateDeedStatusTile key={status.id} status={status} />

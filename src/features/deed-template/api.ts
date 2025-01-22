@@ -89,21 +89,18 @@ export async function getDeedTemplateById(id: number) {
     const deedTemplateRows = await db
       .select()
       .from(deedTemplateTable)
-      .where(eq(deedTemplateTable.id, id))
-      .leftJoin(
-        deedStatusTable,
-        eq(deedTemplateTable.id, deedStatusTable.deedTemplateId)
-      );
+      .where(eq(deedTemplateTable.id, id));
 
     if (isArrayEmpty(deedTemplateRows))
       return createErrorResponse(t("notFound", { subject: t("deedTemplate") }));
 
-    const deedStatuses = deedTemplateRows
-      .map((dtr) => dtr.deed_status)
-      .filter((status) => status !== null);
+    const deedStatuses = await db
+      .select()
+      .from(deedStatusTable)
+      .where(eq(deedStatusTable.deedTemplateId, id));
 
     return createSuccessResponse({
-      ...deedTemplateRows[0].deed_template,
+      deedTemplate: deedTemplateRows[0],
       deedStatuses,
     });
   } catch {

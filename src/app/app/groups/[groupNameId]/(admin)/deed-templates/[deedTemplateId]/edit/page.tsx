@@ -23,7 +23,8 @@ const UpdateDeedTemplatePage = async ({ params }: Props) => {
 
   return (
     <UpdateDeedTemplateView
-      deedTemplate={deedTemplate.data!}
+      deedTemplate={deedTemplate.data!.deedTemplate}
+      deedStatuses={deedTemplate.data!.deedStatuses}
       groupId={Number(id)}
       groupName={name}
     />
