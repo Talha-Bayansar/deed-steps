@@ -1,6 +1,7 @@
 import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
+import { InvitationsBadge } from "@/features/invitation/components/invitations-badge";
 import { routes } from "@/lib/routes";
 import { Inbox, Plus } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -23,7 +24,7 @@ const GroupsRootLayout = async ({ children }: Props) => {
               className="text-primary relative"
             >
               <Inbox />
-              {/* <InvitationsBadge /> */}
+              <InvitationsBadge />
             </Link>
             <Link href={routes.groups.create.root}>
               <Plus className="text-primary" />
