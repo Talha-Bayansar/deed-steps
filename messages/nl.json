@@ -4,7 +4,7 @@
   "nl": "Nederlands",
   "tr": "Türkçe",
   "validations": {
-    "required": "{veld} is verplicht.",
+    "required": "{field} is verplicht.",
     "email": "Voer een geldig e-mailadres in.",
     "minLength": "{field} moet minimaal {length} tekens lang zijn.",
     "maxLength": "{field} mag niet langer zijn dan {length} tekens.",
@@ -62,7 +62,7 @@
   "confirm": "Bevestigen",
   "submit": "Indienen",
   "invalidSubscription": "U heeft geen geldig abonnement. ",
-  "notFound": "{onderwerp} kan niet worden gevonden.",
+  "notFound": "{subject} kan niet worden gevonden.",
   "emptyWarning": "Een open doos, met niets erin!",
   "emptyWarningAction": "Het is gewoon een lege doos... voorlopig!",
   "add": "Toevoegen",

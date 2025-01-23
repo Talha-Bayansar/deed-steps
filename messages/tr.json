@@ -62,7 +62,7 @@
   "confirm": "Onayla",
   "submit": "Gönder",
   "invalidSubscription": "Geçerli bir aboneliğiniz yok. ",
-  "notFound": "{konu} bulunamadı.",
+  "notFound": "{subject} bulunamadı.",
   "emptyWarning": "İçinde hiçbir şey olmayan açık bir kutu!",
   "emptyWarningAction": "Bu sadece boş bir kutu… şimdilik!",
   "add": "Ekle",

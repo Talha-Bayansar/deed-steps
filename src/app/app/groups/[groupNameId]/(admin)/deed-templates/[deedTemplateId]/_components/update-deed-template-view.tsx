@@ -26,14 +26,6 @@ export const UpdateDeedTemplateView = ({
 }: Props) => {
   const t = useTranslations();
 
-  if (isArrayEmpty(deedStatuses))
-    return (
-      <EmptyState
-        title={t("emptyWarning")}
-        description={t("emptyWarningAction")}
-      />
-    );
-
   return (
     <View>
       <View className="gap-0">
@@ -46,13 +38,22 @@ export const UpdateDeedTemplateView = ({
       </View>
       <View className="gap-0">
         <h2 className="text-xl font-semibold">{t("deedStatuses")}</h2>
-        <View className="gap-0">
-          {deedStatuses
-            .sort((a, b) => Number(a.reward) - Number(b.reward))
-            .map((status) => (
-              <UpdateDeedStatusTile key={status.id} status={status} />
-            ))}
-        </View>
+        {isArrayEmpty(deedStatuses) ? (
+          <div className="mt-12 mb-8">
+            <EmptyState
+              title={t("emptyWarning")}
+              description={t("emptyWarningAction")}
+            />
+          </div>
+        ) : (
+          <View className="gap-0">
+            {deedStatuses
+              .sort((a, b) => Number(a.reward) - Number(b.reward))
+              .map((status) => (
+                <UpdateDeedStatusTile key={status.id} status={status} />
+              ))}
+          </View>
+        )}
       </View>
       <DuplicateDeedTemplate
         deedTemplateId={deedTemplate.id}

@@ -62,7 +62,7 @@
   "confirm": "Confirmer",
   "submit": "Envoyer",
   "invalidSubscription": "Vous n'avez pas d'abonnement valide. ",
-  "notFound": "{sujet} introuvable.",
+  "notFound": "{subject} introuvable.",
   "emptyWarning": "Une boîte ouverte sans rien dedans !",
   "emptyWarningAction": "Ce n'est qu'une boîte vide… pour l'instant !",
   "add": "Ajouter",
