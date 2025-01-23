@@ -218,6 +218,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+  other: { "apple-mobile-web-app-capable": "yes" },
   openGraph: {
     type: "website",
     siteName: APP_NAME,
