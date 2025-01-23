@@ -25,7 +25,7 @@ export const NavbarTrailing = ({ groupId, groupName }: Props) => {
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-2 bg-gray-50 rounded p-2">
         <Coins className="text-yellow-400" />{" "}
-        {data?.data?.groupPoints.points ?? "?"}
+        {data?.data?.groupPoints?.points ?? "?"}
       </div>
       <Dialog>
         <DialogTrigger asChild>
