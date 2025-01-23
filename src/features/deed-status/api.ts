@@ -8,6 +8,8 @@ import { deedStatusTable } from "@/db/schema";
 import { z } from "zod";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
+import { deedStatusesKey } from "./queries";
 
 export const createDeedStatus = safeAction
   .schema(
@@ -29,6 +31,8 @@ export const createDeedStatus = safeAction
         reward: reward.toString(),
         deedTemplateId,
       });
+
+      revalidateTag(deedStatusesKey);
 
       return createSuccessResponse(res);
     } catch {
@@ -62,6 +66,8 @@ export const updateDeedStatusById = safeAction
           })
           .where(eq(deedStatusTable.id, id));
 
+        revalidateTag(deedStatusesKey);
+
         return createSuccessResponse(res);
       } catch {
         return createErrorResponse(t("somethingWentWrong"));
@@ -83,6 +89,8 @@ export const deleteDeedStatusById = safeAction
       const res = await db
         .delete(deedStatusTable)
         .where(eq(deedStatusTable.id, id));
+
+      revalidateTag(deedStatusesKey);
 
       return createSuccessResponse(res);
     } catch {

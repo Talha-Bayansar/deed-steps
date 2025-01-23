@@ -2,13 +2,10 @@
 
 import { db } from "@/db";
 import {
-  deedStatusTable,
-  deedTemplateTable,
   groupPointsTable,
   groupTable,
   pushSubscriptionTable,
   sessionTable,
-  transactionTable,
   userTable,
   userToGroupTable,
 } from "@/db/schema";
@@ -23,119 +20,81 @@ import { getTranslations } from "next-intl/server";
 import { requireAuth } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
+import { cache } from "react";
+import { findGroupById, findGroupsByUserId, groupsKey } from "./queries";
+import { findUsersByGroupId, usersKey } from "../auth/queries";
+import { findDeedTemplatesByGroupId } from "../deed-template/queries";
+import { findDeedStatusesByTemplateIds } from "../deed-status/queries";
+import { findGroupPointsByGroupId } from "../group-points/queries";
+import { revalidateTag } from "next/cache";
 
-export async function getGroupById(id: number) {
+export const getGroupById = cache(async (id: number) => {
   const t = await getTranslations();
   await requireAuth();
 
   try {
-    const groupRows = await db
-      .select()
-      .from(groupTable)
-      .where(eq(groupTable.id, id))
-      .limit(1);
+    const group = await findGroupById(id);
 
-    if (isArrayEmpty(groupRows))
+    if (!group)
       return createErrorResponse(t("notFound", { subject: t("group") }));
-
-    const group = groupRows[0];
 
     return createSuccessResponse(group);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+});
 
-export async function getGroupDetailsById(id: number) {
+export const getGroupDetailsById = cache(async (id: number) => {
+  console.log("Getting group details...");
   const t = await getTranslations();
   const user = await requireAuth();
 
   try {
-    const groupRows = await db
-      .select()
-      .from(groupTable)
-      .where(eq(groupTable.id, id))
-      .limit(1);
+    const group = await findGroupById(id);
 
-    if (isArrayEmpty(groupRows))
+    if (!group)
       return createErrorResponse(t("notFound", { subject: t("group") }));
 
-    const group = groupRows[0];
+    const groupMembers = await findUsersByGroupId(id);
 
-    const groupMembersWithPoints = await db
-      .select({
-        member: userTable,
-      })
-      .from(userToGroupTable)
-      .innerJoin(userTable, eq(userToGroupTable.userId, userTable.id))
-      .where(eq(userToGroupTable.groupId, id));
+    const deedTemplates = await findDeedTemplatesByGroupId(id);
 
-    const deedTemplates = await db
-      .select()
-      .from(deedTemplateTable)
-      .where(eq(deedTemplateTable.groupId, id));
-    const deedStatuses = await db
-      .select()
-      .from(deedStatusTable)
-      .where(
-        inArray(
-          deedStatusTable.deedTemplateId,
-          deedTemplates.map((dt) => dt.id)
-        )
-      );
+    const deedStatuses = await findDeedStatusesByTemplateIds(
+      deedTemplates.map((dt) => dt.id)
+    );
 
-    const duplicateMembers = groupMembersWithPoints.map((item) => item.member);
-    const groupMembers = Array.from(
-      new Set(duplicateMembers.map((item) => item.id))
-    ).map((id) => duplicateMembers.find((member) => member.id === id)!);
-
-    const groupPoints = await db
-      .select()
-      .from(groupPointsTable)
-      .where(
-        and(
-          inArray(
-            groupPointsTable.userId,
-            groupMembers.map((gp) => gp.id)
-          ),
-          eq(groupPointsTable.groupId, id)
-        )
-      );
+    const groupPoints = await findGroupPointsByGroupId(id);
 
     return createSuccessResponse({
       group,
       groupMembers,
       groupPoints,
       isOwner: group.ownerId === user.id,
-      deedTemplates: deedTemplates,
+      deedTemplates,
       deedStatuses,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+});
 
-export async function getMyGroups() {
+export const getMyGroups = cache(async () => {
   const t = await getTranslations();
   const user = await requireAuth();
 
   try {
-    const myGroups = await db
-      .select()
-      .from(userToGroupTable)
-      .innerJoin(groupTable, eq(userToGroupTable.groupId, groupTable.id))
-      .where(eq(userToGroupTable.userId, user.id));
+    const groups = await findGroupsByUserId(user.id);
 
-    const formattedResponse = myGroups.map((item) => ({
-      ...item.group,
-      isOwner: item.group.ownerId === user.id,
+    const formattedResponse = groups.map((item) => ({
+      ...item,
+      isOwner: item.ownerId === user.id,
     }));
 
     return createSuccessResponse(formattedResponse);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+});
 
 export const createGroup = safeAction
   .schema(
@@ -171,6 +130,8 @@ export const createGroup = safeAction
         userId: user.id,
       });
 
+      revalidateTag(groupsKey);
+
       return createSuccessResponse(newGroup[0]);
     } catch {
       return createErrorResponse(t("somethingWentWrong"));
@@ -203,6 +164,8 @@ export const updateGroupById = safeAction
           and(eq(groupTable.id, groupId), eq(groupTable.ownerId, user.id))
         );
 
+      revalidateTag(groupsKey);
+
       return createSuccessResponse(res);
     } catch {
       return createErrorResponse(t("somethingWentWrong"));
@@ -224,6 +187,8 @@ export const deleteGroup = safeAction
       const res = await db
         .delete(groupTable)
         .where(and(eq(groupTable.id, id), eq(groupTable.ownerId, user.id)));
+
+      revalidateTag(groupsKey);
 
       return createSuccessResponse(res);
     } catch {
@@ -252,91 +217,7 @@ export const deleteUserFromGroup = safeAction
           )
         );
 
-      return createSuccessResponse(res);
-    } catch {
-      return createErrorResponse(t("somethingWentWrong"));
-    }
-  });
-
-export const getGroupPointsByGroupId = async (groupId: number) => {
-  const t = await getTranslations();
-  const user = await requireAuth();
-
-  try {
-    const groupRows = await db
-      .select({
-        ownerId: groupTable.ownerId,
-      })
-      .from(groupTable)
-      .where(eq(groupTable.id, groupId))
-      .limit(1);
-    if (isArrayEmpty(groupRows))
-      return createErrorResponse(t("notFound", { subject: t("group") }));
-
-    const points = await db
-      .select()
-      .from(groupPointsTable)
-      .where(
-        and(
-          eq(groupPointsTable.groupId, groupId),
-          eq(groupPointsTable.userId, user.id)
-        )
-      )
-      .limit(1);
-
-    return createSuccessResponse({
-      groupPoints: points?.[0] || null,
-      isOwner: groupRows[0].ownerId === user.id,
-    });
-  } catch {
-    return createErrorResponse(t("somethingWentWrong"));
-  }
-};
-
-export const createTransaction = safeAction
-  .schema(
-    z.object({
-      groupId: z.number(),
-      amount: z.number(),
-    })
-  )
-  .action(async ({ parsedInput: { groupId, amount } }) => {
-    const t = await getTranslations();
-    const user = await requireAuth();
-
-    try {
-      await db.insert(transactionTable).values({
-        userId: user.id,
-        groupId,
-        amount: amount.toString(),
-      });
-
-      const groupPoints = await db
-        .select()
-        .from(groupPointsTable)
-        .where(
-          and(
-            eq(groupPointsTable.groupId, groupId),
-            eq(groupPointsTable.userId, user.id)
-          )
-        )
-        .limit(1);
-
-      if (isArrayEmpty(groupPoints))
-        return createErrorResponse(
-          t("notFound", { subject: t("groupPoints") })
-        );
-
-      const userPoints = Number(groupPoints[0].points);
-
-      if (userPoints < amount) return createErrorResponse(t("notEnoughPoints"));
-
-      const res = await db
-        .update(groupPointsTable)
-        .set({
-          points: (userPoints - amount).toString(),
-        })
-        .where(eq(groupPointsTable.id, groupPoints[0].id));
+      revalidateTag(usersKey);
 
       return createSuccessResponse(res);
     } catch {

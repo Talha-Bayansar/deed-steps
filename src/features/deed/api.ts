@@ -9,7 +9,6 @@ import {
   groupTable,
   pushSubscriptionTable,
   sessionTable,
-  userTable,
   userToGroupTable,
 } from "@/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
@@ -25,7 +24,7 @@ import {
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 
-export async function getMyDeedsByDate(date: string) {
+export const getMyDeedsByDate = async (date: string) => {
   const user = await requireAuth();
   const t = await getTranslations();
 
@@ -39,7 +38,7 @@ export async function getMyDeedsByDate(date: string) {
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+};
 
 export const saveDeed = safeAction
   .schema(

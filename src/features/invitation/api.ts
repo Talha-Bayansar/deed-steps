@@ -21,23 +21,23 @@ import {
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 import { sendNotificationToSubscribers } from "../notification/api";
+import { cache } from "react";
+import { findInvitationsByUserId, invitationsKey } from "./queries";
+import { revalidateTag } from "next/cache";
+import { groupsKey } from "../group/queries";
 
-export const getMyInvitations = async () => {
+export const getMyInvitations = cache(async () => {
   const t = await getTranslations();
   const user = await requireAuth();
 
   try {
-    const invitations = await db
-      .select()
-      .from(invitationTable)
-      .innerJoin(groupTable, eq(invitationTable.groupId, groupTable.id))
-      .where(eq(invitationTable.userId, user.id));
+    const invitations = await findInvitationsByUserId(user.id);
 
     return createSuccessResponse(invitations);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-};
+});
 
 export const inviteUserToGroup = safeAction
   .schema(
@@ -125,6 +125,8 @@ export const inviteUserToGroup = safeAction
         );
       }
 
+      revalidateTag(invitationsKey);
+
       return createSuccessResponse();
     } catch (error) {
       console.error(error);
@@ -173,6 +175,9 @@ export const acceptInvitation = safeAction
           )
         );
 
+      revalidateTag(invitationsKey);
+      revalidateTag(groupsKey);
+
       return createSuccessResponse(invitation);
     } catch {
       return createErrorResponse(t("somethingWentWrong"));
@@ -209,6 +214,8 @@ export const declineInvitation = safeAction
             eq(invitationTable.userId, user.id)
           )
         );
+
+      revalidateTag(invitationsKey);
 
       return createSuccessResponse(res);
     } catch {

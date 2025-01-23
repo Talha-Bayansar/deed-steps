@@ -8,25 +8,29 @@ import {
   isArrayEmpty,
 } from "@/lib/utils";
 import { db } from "@/db";
-import {
-  deedStatusTable,
-  deedTemplateTable,
-  groupTable,
-  userToGroupTable,
-} from "@/db/schema";
-import { desc, eq, inArray } from "drizzle-orm";
+import { deedStatusTable, deedTemplateTable } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
+import { revalidateTag } from "next/cache";
+import { findGroupsByUserId } from "../group/queries";
+import {
+  deedTemplatesKey,
+  findDeedTemplateById,
+  findDeedTemplatesByGroupId,
+  findDeedTemplatesByGroupIds,
+} from "./queries";
+import {
+  findDeedStatusesByTemplateId,
+  findDeedStatusesByTemplateIds,
+} from "../deed-status/queries";
 
-export async function getDeedTemplatesByGroupId(groupId: number) {
+export const getDeedTemplatesByGroupId = async (groupId: number) => {
   await requireAuth();
   const t = await getTranslations();
 
   try {
-    const deedTemplates = await db
-      .select()
-      .from(deedTemplateTable)
-      .where(eq(deedTemplateTable.groupId, groupId));
+    const deedTemplates = await findDeedTemplatesByGroupId(groupId);
 
     if (isArrayEmpty(deedTemplates))
       return createSuccessResponse({
@@ -36,10 +40,7 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
 
     const deedTemplateIds = deedTemplates.map((dt) => dt.id);
 
-    const deedStatuses = await db
-      .select()
-      .from(deedStatusTable)
-      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
+    const deedStatuses = await findDeedStatusesByTemplateIds(deedTemplateIds);
 
     return createSuccessResponse({
       deedTemplates,
@@ -48,47 +49,37 @@ export async function getDeedTemplatesByGroupId(groupId: number) {
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+};
 
-export async function getDeedTemplateById(id: number) {
-  const t = await getTranslations();
+export const getDeedTemplateById = async (id: number) => {
   await requireAuth();
+  const t = await getTranslations();
 
   try {
-    const deedTemplateRows = await db
-      .select()
-      .from(deedTemplateTable)
-      .where(eq(deedTemplateTable.id, id));
+    const deedTemplate = await findDeedTemplateById(id);
 
-    if (isArrayEmpty(deedTemplateRows))
+    if (!deedTemplate)
       return createErrorResponse(t("notFound", { subject: t("deedTemplate") }));
 
-    const deedStatuses = await db
-      .select()
-      .from(deedStatusTable)
-      .where(eq(deedStatusTable.deedTemplateId, id));
+    const deedStatuses = await findDeedStatusesByTemplateId(id);
 
     return createSuccessResponse({
-      deedTemplate: deedTemplateRows[0],
+      deedTemplate,
       deedStatuses,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+};
 
-export async function getMyDeedTemplates() {
-  const t = await getTranslations();
+export const getMyDeedTemplates = async () => {
   const user = await requireAuth();
+  const t = await getTranslations();
+
+  console.log("Getting my templates");
 
   try {
-    const groupRows = await db
-      .select()
-      .from(userToGroupTable)
-      .where(eq(userToGroupTable.userId, user.id))
-      .innerJoin(groupTable, eq(groupTable.id, userToGroupTable.groupId));
-
-    const groups = groupRows.map((gr) => gr.group);
+    const groups = await findGroupsByUserId(user.id);
 
     if (isArrayEmpty(groups))
       return createSuccessResponse({
@@ -99,10 +90,7 @@ export async function getMyDeedTemplates() {
 
     const groupIds = groups.map((item) => item.id);
 
-    const deedTemplates = await db
-      .select()
-      .from(deedTemplateTable)
-      .where(inArray(deedTemplateTable.groupId, groupIds));
+    const deedTemplates = await findDeedTemplatesByGroupIds(groupIds);
 
     if (isArrayEmpty(deedTemplates))
       return createSuccessResponse({
@@ -113,10 +101,7 @@ export async function getMyDeedTemplates() {
 
     const deedTemplateIds = deedTemplates.map((item) => item.id);
 
-    const deedStatuses = await db
-      .select()
-      .from(deedStatusTable)
-      .where(inArray(deedStatusTable.deedTemplateId, deedTemplateIds));
+    const deedStatuses = await findDeedStatusesByTemplateIds(deedTemplateIds);
 
     const response = {
       groups,
@@ -128,7 +113,7 @@ export async function getMyDeedTemplates() {
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
-}
+};
 
 export const changeOrderDeedTemplates = safeAction
   .schema(
@@ -150,6 +135,8 @@ export const changeOrderDeedTemplates = safeAction
           })
           .where(eq(deedTemplateTable.id, templateId));
       }
+
+      revalidateTag(deedTemplatesKey);
 
       return createSuccessResponse();
     } catch {
@@ -187,6 +174,8 @@ export const createDeedTemplate = safeAction
           .insert(deedTemplateTable)
           .values({ name, groupId, order: deedTemplates[0].order + 1 });
       }
+
+      revalidateTag(deedTemplatesKey);
 
       return createSuccessResponse();
     } catch {
@@ -251,6 +240,8 @@ export const duplicateDeedTemplate = safeAction
       }));
       const response = await db.insert(deedStatusTable).values(deedStatuses);
 
+      revalidateTag(deedTemplatesKey);
+
       return createSuccessResponse(response);
     } catch {
       return createErrorResponse(t("somethingWentWrong"));
@@ -275,6 +266,8 @@ export const updateDeedTemplateById = safeAction
           name,
         })
         .where(eq(deedTemplateTable.id, id));
+
+      revalidateTag(deedTemplatesKey);
 
       return createSuccessResponse(response);
     } catch {
@@ -314,6 +307,8 @@ export const deleteDeedTemplateById = safeAction
             .where(eq(deedTemplateTable.id, deedTemplate.id));
         }
       }
+
+      revalidateTag(deedTemplatesKey);
 
       return createSuccessResponse(deletedTemplate);
     } catch {
