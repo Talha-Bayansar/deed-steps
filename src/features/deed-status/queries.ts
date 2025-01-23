@@ -22,8 +22,6 @@ export const findDeedStatusesByTemplateId = unstable_cache(
 
 export const findDeedStatusesByTemplateIds = unstable_cache(
   async (deedTemplateIds: number[]) => {
-    console.log("Getting Deed Statuses by template ids");
-
     const rows = await db
       .select()
       .from(deedStatusTable)

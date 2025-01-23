@@ -26,8 +26,6 @@ export const findGroupById = unstable_cache(
 
 export const findGroupsByUserId = unstable_cache(
   async (userId: number) => {
-    console.log("Getting groups by user id");
-
     const rows = await db
       .select()
       .from(userToGroupTable)

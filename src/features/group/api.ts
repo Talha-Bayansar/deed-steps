@@ -45,7 +45,6 @@ export const getGroupById = cache(async (id: number) => {
 });
 
 export const getGroupDetailsById = cache(async (id: number) => {
-  console.log("Getting group details...");
   const t = await getTranslations();
   const user = await requireAuth();
 

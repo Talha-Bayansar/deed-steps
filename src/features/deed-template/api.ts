@@ -76,8 +76,6 @@ export const getMyDeedTemplates = async () => {
   const user = await requireAuth();
   const t = await getTranslations();
 
-  console.log("Getting my templates");
-
   try {
     const groups = await findGroupsByUserId(user.id);
 

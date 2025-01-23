@@ -39,8 +39,6 @@ export const findDeedTemplatesByGroupId = unstable_cache(
 
 export const findDeedTemplatesByGroupIds = unstable_cache(
   async (groupIds: number[]) => {
-    console.log("Getting deed templates by groupIds");
-
     const rows = await db
       .select()
       .from(deedTemplateTable)
