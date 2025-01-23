@@ -6,15 +6,15 @@ type Props = {
 };
 
 export const RevalidateButton = ({ tags }: Props) => {
+  const revalidate = async () => {
+    "use server";
+    for (const tag of tags) {
+      revalidateTag(tag);
+    }
+  };
+
   return (
-    <form
-      action={async () => {
-        "use server";
-        for (const tag of tags) {
-          revalidateTag(tag);
-        }
-      }}
-    >
+    <form action={revalidate}>
       <button type="submit" className="text-primary flex items-center">
         <RefreshCw />
       </button>
