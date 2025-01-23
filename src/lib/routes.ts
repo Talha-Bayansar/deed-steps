@@ -9,9 +9,6 @@ export const routes = {
     create: {
       root: "/app/groups/create",
     },
-    invitations: {
-      root: "/app/groups/invitations",
-    },
     nameId: (groupName: string, groupId: number | string) => ({
       root: `/app/groups/${encodeURIComponent(`${groupName}_${groupId}`)}`,
       settings: {
@@ -45,6 +42,9 @@ export const routes = {
         }),
       },
     }),
+  },
+  invitations: {
+    root: "/app/invitations",
   },
   settings: {
     root: "/app/settings",

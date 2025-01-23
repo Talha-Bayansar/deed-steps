@@ -131,7 +131,7 @@
   "changeLanguage": "Dili değiştir",
   "changeLocaleDescription": "Uygulama için tercih ettiğiniz dili seçin.",
   "allowNotifications": "Bildirimlere izin ver",
-  "deeds": "Amellr",
+  "deeds": "Ameller",
   "deedTemplate": "Amel şablonu",
   "deedStatus": "Amel durumu",
   "groupPoints": "Grup puanları",
@@ -174,5 +174,6 @@
   "duplicateSuccess": "Başarıyla kopyalandı",
   "deleteDeedTemplate": "Amel şablonunu sil",
   "createDeedStatus": "Amel durumu oluştur",
-  "offlineDescription": "Çevrimdışı olduğunuz anlaşılıyor."
+  "offlineDescription": "Çevrimdışı olduğunuz anlaşılıyor.",
+  "scanCode": "Kodu tarayın"
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Settings, Users } from "lucide-react";
+import { Home, Inbox, Settings, Users } from "lucide-react";
 import { routes } from "@/lib/routes";
 import {
   BottomNavigation,
@@ -21,6 +21,11 @@ export const RootBottomNavigation = () => {
       label: t("groups"),
       href: routes.groups.root,
       Icon: Users,
+    },
+    {
+      label: t("invitations"),
+      href: routes.invitations.root,
+      Icon: Inbox,
     },
     {
       label: t("settings"),

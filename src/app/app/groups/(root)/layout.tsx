@@ -1,9 +1,10 @@
 import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
-import { InvitationsBadge } from "@/features/invitation/components/invitations-badge";
+import { RevalidateButton } from "@/components/revalidate-button";
+import { groupsKey } from "@/features/group/queries";
 import { routes } from "@/lib/routes";
-import { Inbox, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
@@ -19,13 +20,7 @@ const GroupsRootLayout = async ({ children }: Props) => {
       <Navbar
         trailing={
           <div className="flex items-center gap-4">
-            <Link
-              href={routes.groups.invitations.root}
-              className="text-primary relative"
-            >
-              <Inbox />
-              <InvitationsBadge />
-            </Link>
+            <RevalidateButton tags={[groupsKey]} />
             <Link href={routes.groups.create.root}>
               <Plus className="text-primary" />
             </Link>

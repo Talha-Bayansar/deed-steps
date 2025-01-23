@@ -23,7 +23,7 @@ export const BottomNavigation = ({ tabs }: Props) => {
       <div className="flex w-full space-x-2 rounded-xl border border-zinc-950/10 bg-white p-2">
         <AnimatedBackground
           defaultValue={tabs.find((tab) => tab.href === pathName)?.label}
-          className="rounded-lg bg-zinc-100"
+          className="rounded-lg bg-primary/10"
           transition={{
             type: "spring",
             bounce: 0.2,

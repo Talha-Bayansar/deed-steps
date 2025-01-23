@@ -174,5 +174,6 @@
   "duplicateSuccess": "Gedupliceerd",
   "deleteDeedTemplate": "Daadsjabloon verwijderen",
   "createDeedStatus": "Daadstatus aanmaken",
-  "offlineDescription": "Het lijkt erop dat je offline bent."
+  "offlineDescription": "Het lijkt erop dat je offline bent.",
+  "scanCode": "Scan code"
 }

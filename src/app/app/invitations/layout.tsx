@@ -1,7 +1,8 @@
 import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
-import { routes } from "@/lib/routes";
+import { RevalidateButton } from "@/components/revalidate-button";
+import { invitationsKey } from "@/features/invitation/queries";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
@@ -13,7 +14,9 @@ const InvitationsRootLayout = async ({ children }: Props) => {
 
   return (
     <PageContainer>
-      <Navbar hrefBackButton={routes.groups.root}>{t("invitations")}</Navbar>
+      <Navbar trailing={<RevalidateButton tags={[invitationsKey]} />}>
+        {t("invitations")}
+      </Navbar>
       <Main>{children}</Main>
     </PageContainer>
   );
