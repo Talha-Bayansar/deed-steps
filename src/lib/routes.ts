@@ -1,6 +1,6 @@
 export const routes = {
   landingPage: { root: "/" },
-  root: "/app",
+  app: "/app",
   signIn: {
     root: "/sign-in",
   },

@@ -14,7 +14,7 @@ export const RootBottomNavigation = () => {
   const tabs: BottomNavigationTab[] = [
     {
       label: t("home"),
-      href: routes.root,
+      href: routes.app,
       Icon: Home,
     },
     {

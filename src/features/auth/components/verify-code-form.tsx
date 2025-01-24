@@ -52,7 +52,7 @@ export const VerifyCodeForm = ({ email }: Props) => {
     });
 
     if (response?.data?.success) {
-      router.push(routes.root);
+      router.push(routes.app);
     } else {
       toast.error(response?.data?.message);
     }

@@ -25,7 +25,7 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "nl-NL",
     name: "Deed Steps",
     short_name: "Deed Steps",
-    start_url: routes.root,
+    start_url: routes.app,
     description:
       "Deed Steps is an application to track your deeds on group level.",
   };

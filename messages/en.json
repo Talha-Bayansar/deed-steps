@@ -175,5 +175,9 @@
   "deleteDeedTemplate": "Delete deed template",
   "createDeedStatus": "Create deed status",
   "offlineDescription": "It looks like you are offline.",
-  "scanCode": "Scan code"
+  "scanCode": "Scan code",
+  "page": "Page",
+  "goToLandingPage": "Go to landing page",
+  "error": "Error",
+  "tryAgain": "Try again"
 }
