@@ -38,8 +38,8 @@ const Features = () => {
             A better way to work
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            {APP_NAME} offers a suite of powerful features to help you and your
-            team work smarter, not harder.
+            {`${APP_NAME} offers a suite of powerful features to help you and your
+            team work smarter, not harder.`}
           </p>
         </div>
 
