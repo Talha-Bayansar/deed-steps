@@ -79,6 +79,9 @@ export const getDayOfWeek = (date: string | number | Date) => {
   else return day - 1;
 };
 
+export const normalizeDate = (date: Date) =>
+  new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+
 // SERVICE WORKER FUNCTIONS
 export async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {

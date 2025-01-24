@@ -7,10 +7,11 @@ import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
 import { View } from "@/components/layout/view";
 import { DeedTemplate } from "@/features/deed-template/types";
-import { isArrayEmpty } from "@/lib/utils";
+import { isArrayEmpty, normalizeDate } from "@/lib/utils";
 import { ScrollableCalendar } from "@/components/scrollable-calendar";
 import { Group } from "@/features/group/types";
 import { DeedStatus } from "@/features/deed-status/types";
+import { RRule } from "rrule";
 
 type Props = {
   groups: Group[];
@@ -31,6 +32,22 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
       />
     );
 
+  const isDateMatchingRRule = (rruleString: string, date: Date) => {
+    try {
+      const normalizedDate = normalizeDate(date); // Strip time
+      const rule = RRule.fromString(rruleString);
+      return rule
+        .all()
+        .some(
+          (occurrence) =>
+            normalizeDate(occurrence).getTime() === normalizedDate.getTime()
+        );
+    } catch (error) {
+      console.error("Invalid RRule string:", rruleString, error);
+      return false;
+    }
+  };
+
   return (
     <View>
       <ScrollableCalendar
@@ -44,7 +61,11 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
             <h2 className="font-medium">{group.name}</h2>
             <View className="gap-0">
               {deedTemplates
-                .filter((dt) => dt.groupId === group.id)
+                .filter(
+                  (dt) =>
+                    dt.groupId === group.id &&
+                    isDateMatchingRRule(dt.recurrencyRule, selectedDay)
+                )
                 .sort((a, b) => a.order - b.order)
                 .map((template) => (
                   <DeedTile

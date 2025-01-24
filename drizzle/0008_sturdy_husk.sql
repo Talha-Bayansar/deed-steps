@@ -1,0 +1,1 @@
+ALTER TABLE "deed_template" ADD COLUMN "recurrency_rule" text DEFAULT 'FREQ=DAILY' NOT NULL;

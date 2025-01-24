@@ -27,19 +27,22 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
   const formatter = useFormatter();
   const today = startOfToday();
   const [selectedMonth, setSelectedMonth] = useState<Date>(startOfMonth(today));
+
   const intervals = useMemo(() => {
     return eachDayOfInterval({
       start: startOfMonth(selectedMonth),
       end: endOfMonth(selectedMonth),
     });
   }, [selectedMonth]);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Automatically detect user's local timezone
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  useEffect(() => {
+    // Ensure the selected day’s month is displayed
+    setSelectedMonth(startOfMonth(selectedDay));
+  }, [selectedDay]);
 
   useEffect(() => {
-    // Scroll to the selected day when it changes
     if (scrollContainerRef.current) {
       const selectedDayButton =
         scrollContainerRef.current.querySelector(".is-selected");
@@ -69,7 +72,6 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
           {formatter.dateTime(selectedMonth, {
             month: "long",
             year: "numeric",
-            timeZone,
           })}
         </span>
         <button onClick={handleNextMonth}>
@@ -80,6 +82,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
         <div className="flex">
           {intervals.map((day, i) => (
             <Button
+              aria-selected={isSameDay(selectedDay, day)}
               variant="ghost"
               key={`day_${i}`}
               onClick={() => onSelectDay?.(day)}
@@ -96,10 +99,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
                   "text-primary": isToday(day),
                 })}
               >
-                {formatter.dateTime(day, {
-                  weekday: "short",
-                  timeZone, // Use the dynamically detected timezone
-                })}
+                {formatter.dateTime(day, { weekday: "short" })}
               </span>
               <span
                 className={cn("text-lg font-normal", {

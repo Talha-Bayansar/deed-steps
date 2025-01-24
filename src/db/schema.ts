@@ -68,6 +68,7 @@ export const deedTemplateTable = pgTable("deed_template", {
     .references(() => groupTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   order: integer("order").notNull(),
+  recurrencyRule: text("recurrency_rule").notNull().default("FREQ=DAILY"),
 });
 
 export const deedStatusTable = pgTable("deed_status", {

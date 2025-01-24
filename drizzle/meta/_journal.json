@@ -57,6 +57,13 @@
       "when": 1737128974743,
       "tag": "0007_wild_xorn",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1737728352068,
+      "tag": "0008_sturdy_husk",
+      "breakpoints": true
     }
   ]
 }
