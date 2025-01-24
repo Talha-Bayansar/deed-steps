@@ -42,7 +42,7 @@ const Testimonials = () => {
               >
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <blockquote className="mt-2 text-xl font-semibold text-gray-900">
-                    "{testimonial.quote}"
+                    {`"${testimonial.quote}"`}
                   </blockquote>
                   <div className="mt-6 flex items-center">
                     <div className="flex-shrink-0">
