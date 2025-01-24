@@ -35,6 +35,9 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
   }, [selectedMonth]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Automatically detect user's local timezone
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   useEffect(() => {
     // Scroll to the selected day when it changes
     if (scrollContainerRef.current) {
@@ -66,6 +69,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
           {formatter.dateTime(selectedMonth, {
             month: "long",
             year: "numeric",
+            timeZone,
           })}
         </span>
         <button onClick={handleNextMonth}>
@@ -94,6 +98,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
               >
                 {formatter.dateTime(day, {
                   weekday: "short",
+                  timeZone, // Use the dynamically detected timezone
                 })}
               </span>
               <span
