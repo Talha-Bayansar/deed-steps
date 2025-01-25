@@ -72,6 +72,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
           {formatter.dateTime(selectedMonth, {
             month: "long",
             year: "numeric",
+            timeZone: "UTC",
           })}
         </span>
         <button onClick={handleNextMonth}>
