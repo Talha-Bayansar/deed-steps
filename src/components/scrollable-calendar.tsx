@@ -26,7 +26,9 @@ type Props = {
 export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
   const formatter = useFormatter();
   const today = startOfToday();
-  const [selectedMonth, setSelectedMonth] = useState<Date>(startOfMonth(today));
+  const [selectedMonth, setSelectedMonth] = useState<Date>(
+    normalizeDate(startOfMonth(today))
+  );
 
   const intervals = useMemo(() => {
     return eachDayOfInterval({
@@ -39,7 +41,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
 
   useEffect(() => {
     // Ensure the selected day’s month is displayed
-    setSelectedMonth(startOfMonth(selectedDay));
+    setSelectedMonth(normalizeDate(startOfMonth(selectedDay)));
   }, [selectedDay]);
 
   useEffect(() => {
@@ -82,6 +84,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
           {formatter.dateTime(selectedMonth, {
             month: "long",
             year: "numeric",
+            timeZone: "UTC",
           })}
         </span>
         <button onClick={handleNextMonth}>
