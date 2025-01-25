@@ -172,7 +172,12 @@ export const createDeedTemplate = safeAction
       } else {
         await db
           .insert(deedTemplateTable)
-          .values({ name, groupId, order: deedTemplates[0].order + 1 });
+          .values({
+            name,
+            groupId,
+            order: deedTemplates[0].order + 1,
+            recurrencyRule: recurrence,
+          });
       }
 
       revalidateTag(deedTemplatesKey);

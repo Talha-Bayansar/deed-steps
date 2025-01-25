@@ -47,7 +47,7 @@ export function RecurrenceForm({ value, onChange }: Props) {
         setStartDate(options.dtstart?.toISOString().split("T")[0] || "");
         setEndDate(options.until?.toISOString().split("T")[0] || "");
 
-        setWeekdays(options.byweekday);
+        setWeekdays(options.byweekday ?? []);
 
         // setMonths(options.bymonth || []);
         // setMonthDays(options.bymonthday || []);

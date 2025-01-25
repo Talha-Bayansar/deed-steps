@@ -35,7 +35,8 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
   const isDateMatchingRRule = (rruleString: string) => {
     try {
       const normalizedDate = normalizeDate(selectedDay); // Strip time
-      const rule = RRule.fromString(rruleString);
+      // const rule = new RRule(RRule) RRule.fromString(rruleString);
+      const rule = new RRule(RRule.parseString(rruleString));
 
       // Define a range to check occurrences (1 day before and after)
       const start = new Date(normalizedDate);
