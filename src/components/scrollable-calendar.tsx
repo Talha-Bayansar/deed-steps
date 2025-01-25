@@ -14,7 +14,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFormatter } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn, normalizeDate } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { View } from "./layout/view";
 
@@ -99,7 +99,10 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
                   "text-primary": isToday(day),
                 })}
               >
-                {formatter.dateTime(day, { weekday: "short" })}
+                {formatter.dateTime(normalizeDate(day), {
+                  weekday: "short",
+                  timeZone: "UTC",
+                })}
               </span>
               <span
                 className={cn("text-lg font-normal", {

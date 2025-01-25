@@ -147,9 +147,10 @@ export const createDeedTemplate = safeAction
     z.object({
       name: z.string().min(1).max(50),
       groupId: z.number(),
+      recurrence: z.string(),
     })
   )
-  .action(async ({ parsedInput: { name, groupId } }) => {
+  .action(async ({ parsedInput: { name, groupId, recurrence } }) => {
     await requireAuth();
     const t = await getTranslations();
 
@@ -166,6 +167,7 @@ export const createDeedTemplate = safeAction
           name,
           groupId,
           order: 0,
+          recurrencyRule: recurrence,
         });
       } else {
         await db
@@ -251,9 +253,10 @@ export const updateDeedTemplateById = safeAction
     z.object({
       id: z.number(),
       name: z.string().min(1).max(50),
+      recurrence: z.string(),
     })
   )
-  .action(async ({ parsedInput: { id, name } }) => {
+  .action(async ({ parsedInput: { id, name, recurrence } }) => {
     await requireAuth();
     const t = await getTranslations();
 
@@ -262,6 +265,7 @@ export const updateDeedTemplateById = safeAction
         .update(deedTemplateTable)
         .set({
           name,
+          recurrencyRule: recurrence,
         })
         .where(eq(deedTemplateTable.id, id));
 

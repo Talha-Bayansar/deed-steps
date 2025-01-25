@@ -21,6 +21,7 @@ import { AppForm } from "@/components/app-form";
 import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { RecurrenceForm } from "./recurrence-form";
 
 type Props = {
   groupId: number;
@@ -36,12 +37,15 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
       .string()
       .min(3, t("validations.minLength", { field: t("name"), length: 3 }))
       .max(50, t("validations.maxLength", { field: t("name"), length: 50 })),
+    recurrence: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      recurrence:
+        "DTSTART:20250125T000000Z\nRRULE:FREQ=DAILY;INTERVAL=1;WKST=MO",
     },
   });
 
@@ -51,6 +55,7 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
     const res = await executeAsync({
       name: values.name,
       groupId,
+      recurrence: values.recurrence,
     });
 
     handleResponse({
@@ -80,6 +85,7 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
             {t("create")}
           </LoadingButton>
         }
+        className="overflow-y-visible"
       >
         <FormField
           control={form.control}
@@ -93,6 +99,10 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
               <FormMessage />
             </FormItem>
           )}
+        />
+        <RecurrenceForm
+          value={form.getValues("recurrence")}
+          onChange={(value) => form.setValue("recurrence", value)}
         />
       </AppForm>
     </Form>

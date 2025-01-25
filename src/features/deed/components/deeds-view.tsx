@@ -32,16 +32,25 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
       />
     );
 
-  const isDateMatchingRRule = (rruleString: string, date: Date) => {
+  const isDateMatchingRRule = (rruleString: string) => {
     try {
-      const normalizedDate = normalizeDate(date); // Strip time
+      const normalizedDate = normalizeDate(selectedDay); // Strip time
       const rule = RRule.fromString(rruleString);
-      return rule
-        .all()
-        .some(
-          (occurrence) =>
-            normalizeDate(occurrence).getTime() === normalizedDate.getTime()
-        );
+
+      // Define a range to check occurrences (1 day before and after)
+      const start = new Date(normalizedDate);
+      start.setDate(normalizedDate.getDate() - 1); // Previous day
+      const end = new Date(normalizedDate);
+      end.setDate(normalizedDate.getDate() + 1); // Next day
+
+      // Check occurrences within the range
+      const occurrences = rule.between(start, end, false);
+
+      return occurrences.some(
+        (occurrence) =>
+          format(normalizeDate(occurrence), "yyyy-MM-dd") ===
+          format(normalizedDate, "yyyy-MM-dd")
+      );
     } catch (error) {
       console.error("Invalid RRule string:", rruleString, error);
       return false;
@@ -64,7 +73,7 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
                 .filter(
                   (dt) =>
                     dt.groupId === group.id &&
-                    isDateMatchingRRule(dt.recurrencyRule, selectedDay)
+                    isDateMatchingRRule(dt.recurrencyRule)
                 )
                 .sort((a, b) => a.order - b.order)
                 .map((template) => (

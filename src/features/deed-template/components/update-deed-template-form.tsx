@@ -22,6 +22,7 @@ import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { DeedTemplate } from "../types";
+import { RecurrenceForm } from "./recurrence-form";
 
 type Props = {
   deedTemplate: DeedTemplate;
@@ -42,12 +43,14 @@ export const UpdateDeedTemplateForm = ({
       .string()
       .min(3, t("validations.minLength", { field: t("name"), length: 3 }))
       .max(50, t("validations.maxLength", { field: t("name"), length: 50 })),
+    recurrence: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: deedTemplate.name,
+      recurrence: deedTemplate.recurrencyRule,
     },
   });
 
@@ -57,6 +60,7 @@ export const UpdateDeedTemplateForm = ({
     const res = await executeAsync({
       id: deedTemplate.id,
       name: values.name,
+      recurrence: values.recurrence,
     });
 
     handleResponse({
@@ -79,13 +83,9 @@ export const UpdateDeedTemplateForm = ({
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
-            isLoading={isPending}
-            disabled={!form.formState.isDirty}
-          >
-            {t("update")}
-          </LoadingButton>
+          <LoadingButton isLoading={isPending}>{t("update")}</LoadingButton>
         }
+        className="overflow-y-scroll"
       >
         <FormField
           control={form.control}
@@ -99,6 +99,10 @@ export const UpdateDeedTemplateForm = ({
               <FormMessage />
             </FormItem>
           )}
+        />
+        <RecurrenceForm
+          value={form.getValues("recurrence")}
+          onChange={(value) => form.setValue("recurrence", value)}
         />
       </AppForm>
     </Form>

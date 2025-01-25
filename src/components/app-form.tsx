@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 type Props = {
-  submitButton: React.ReactNode;
+  submitButton?: React.ReactNode;
 } & React.FormHTMLAttributes<HTMLFormElement>;
 
 export const AppForm = ({

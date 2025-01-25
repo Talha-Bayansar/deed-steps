@@ -179,5 +179,32 @@
   "page": "Page",
   "goToLandingPage": "Go to landing page",
   "error": "Error",
-  "tryAgain": "Try again"
+  "tryAgain": "Try again",
+  "nameOfMonth": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
+  "startDate": "Start date",
+  "endDate": "End date",
+  "frequency": "Frequency",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "monthly": "Monthly",
+  "yearly": "Yearly",
+  "interval": "Interval",
+  "weekdays": "Week days",
+  "monthDays": "Month days",
+  "yearDays": "Year days",
+  "weekNumbers": "Week numbers",
+  "months": "Months"
 }

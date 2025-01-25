@@ -64,6 +64,20 @@
       "when": 1737728352068,
       "tag": "0008_sturdy_husk",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1737742201629,
+      "tag": "0009_green_screwball",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1737812536004,
+      "tag": "0010_silly_cerise",
+      "breakpoints": true
     }
   ]
 }
