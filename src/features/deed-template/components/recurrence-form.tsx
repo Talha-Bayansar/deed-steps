@@ -59,46 +59,46 @@ export function RecurrenceForm({ value, onChange }: Props) {
     }
   }, [value]);
 
-  const handleGenerateRRule = () => {
-    try {
-      const options: Options = {
-        freq: frequency,
-        interval,
-        dtstart: startDate ? normalizeDate(new Date(startDate)) : null,
-        until: endDate ? normalizeDate(new Date(endDate)) : null,
-        byweekday: weekdays,
-        // bymonth: months,
-        // bymonthday: monthDays,
-        // byyearday: yearDays,
-        // byweekno: weekNumbers,
-        bymonth: null,
-        bymonthday: null,
-        byyearday: null,
-        byweekno: null,
-        wkst: RRule.MO,
-        count: null,
-        tzid: null,
-        bysetpos: null,
-        bynmonthday: null,
-        bynweekday: null,
-        byhour: null,
-        byminute: null,
-        bysecond: null,
-        byeaster: null,
-      };
-
-      const rule = new RRule(options);
-      const ruleString = rule.toString();
-
-      if (onChange) {
-        onChange(ruleString); // Pass the updated rule string to the parent
-      }
-    } catch (error) {
-      console.error("Error generating RRule:", error);
-    }
-  };
-
   useEffect(() => {
+    const handleGenerateRRule = () => {
+      try {
+        const options: Options = {
+          freq: frequency,
+          interval,
+          dtstart: startDate ? normalizeDate(new Date(startDate)) : null,
+          until: endDate ? normalizeDate(new Date(endDate)) : null,
+          byweekday: weekdays,
+          // bymonth: months,
+          // bymonthday: monthDays,
+          // byyearday: yearDays,
+          // byweekno: weekNumbers,
+          bymonth: null,
+          bymonthday: null,
+          byyearday: null,
+          byweekno: null,
+          wkst: RRule.MO,
+          count: null,
+          tzid: null,
+          bysetpos: null,
+          bynmonthday: null,
+          bynweekday: null,
+          byhour: null,
+          byminute: null,
+          bysecond: null,
+          byeaster: null,
+        };
+
+        const rule = new RRule(options);
+        const ruleString = rule.toString();
+
+        if (onChange) {
+          onChange(ruleString); // Pass the updated rule string to the parent
+        }
+      } catch (error) {
+        console.error("Error generating RRule:", error);
+      }
+    };
+
     handleGenerateRRule(); // Generate rule string on every state change
   }, [
     frequency,
