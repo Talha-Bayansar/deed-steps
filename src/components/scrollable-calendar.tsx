@@ -62,6 +62,16 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
   const handleNextMonth = () =>
     setSelectedMonth(startOfMonth(addMonths(selectedMonth, 1)));
 
+  console.log(
+    "formatter",
+    formatter.dateTime(selectedMonth, {
+      month: "long",
+      year: "numeric",
+    })
+  );
+  console.log("selectedMonth", selectedMonth);
+  console.log("selectedDay", selectedDay);
+
   return (
     <View className="w-full gap-0">
       <div className="text-lg font-medium flex items-center capitalize">
@@ -72,7 +82,6 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
           {formatter.dateTime(selectedMonth, {
             month: "long",
             year: "numeric",
-            timeZone: "UTC",
           })}
         </span>
         <button onClick={handleNextMonth}>
