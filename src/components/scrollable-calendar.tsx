@@ -60,9 +60,9 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
   }, [selectedMonth]);
 
   const handlePrevMonth = () =>
-    setSelectedMonth(startOfMonth(subMonths(selectedMonth, 1)));
+    setSelectedMonth(normalizeDate(startOfMonth(subMonths(selectedMonth, 1))));
   const handleNextMonth = () =>
-    setSelectedMonth(startOfMonth(addMonths(selectedMonth, 1)));
+    setSelectedMonth(normalizeDate(startOfMonth(addMonths(selectedMonth, 1))));
 
   return (
     <View className="w-full gap-0">
