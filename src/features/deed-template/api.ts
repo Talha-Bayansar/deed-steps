@@ -170,14 +170,12 @@ export const createDeedTemplate = safeAction
           recurrencyRule: recurrence,
         });
       } else {
-        await db
-          .insert(deedTemplateTable)
-          .values({
-            name,
-            groupId,
-            order: deedTemplates[0].order + 1,
-            recurrencyRule: recurrence,
-          });
+        await db.insert(deedTemplateTable).values({
+          name,
+          groupId,
+          order: deedTemplates[0].order + 1,
+          recurrencyRule: recurrence,
+        });
       }
 
       revalidateTag(deedTemplatesKey);
@@ -217,6 +215,9 @@ export const duplicateDeedTemplate = safeAction
         .from(deedStatusTable)
         .where(eq(deedStatusTable.deedTemplateId, deedTemplateId));
 
+      if (isArrayEmpty(deedTemplateStatuses))
+        return createErrorResponse(t("notFound", { subject: t("deedStatus") }));
+
       const highestOrderTemplate = await db
         .select()
         .from(deedTemplateTable)
@@ -232,6 +233,7 @@ export const duplicateDeedTemplate = safeAction
         .values({
           name: newName,
           groupId: deedTemplate.groupId,
+          recurrencyRule: deedTemplate.recurrencyRule,
           order: highestOrderTemplate[0].order + 1,
         })
         .returning({ id: deedTemplateTable.id });
