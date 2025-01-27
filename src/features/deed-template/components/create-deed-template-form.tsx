@@ -100,9 +100,20 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
             </FormItem>
           )}
         />
-        <RecurrenceForm
-          value={form.getValues("recurrence")}
-          onChange={(value) => form.setValue("recurrence", value)}
+        <FormField
+          control={form.control}
+          name="recurrence"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <RecurrenceForm
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </AppForm>
     </Form>
