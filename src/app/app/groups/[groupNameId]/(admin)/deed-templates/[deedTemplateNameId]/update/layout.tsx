@@ -3,32 +3,29 @@ import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { routes } from "@/lib/routes";
 import { getTranslations } from "next-intl/server";
-import { CreateDeedStatus } from "../_components/create-deed-status";
-import { RevalidateButton } from "@/components/revalidate-button";
-import { deedStatusesKey } from "@/features/deed-status/queries";
 
 type Props = {
   children: React.ReactNode;
   params: Promise<{
     groupNameId: string;
-    deedTemplateId: string;
+    deedTemplateNameId: string;
   }>;
 };
 
 const UpdateDeedTemplateLayout = async ({ children, params }: Props) => {
   const t = await getTranslations();
-  const { groupNameId, deedTemplateId } = await params;
+  const { groupNameId, deedTemplateNameId } = await params;
   const [name, id] = decodeURIComponent(groupNameId).split("_");
+  const [templateName, templateId] =
+    decodeURIComponent(deedTemplateNameId).split("_");
 
   return (
     <PageContainer>
       <Navbar
-        hrefBackButton={routes.groups.nameId(name, id).deedTemplates.root}
-        trailing={
-          <div className="flex items-center gap-4">
-            <RevalidateButton tags={[deedStatusesKey]} />{" "}
-            <CreateDeedStatus deedTemplateId={Number(deedTemplateId)} />
-          </div>
+        hrefBackButton={
+          routes.groups
+            .nameId(name, id)
+            .deedTemplates.nameId(templateName, templateId).root
         }
       >
         {t("updateDeedTemplate")}

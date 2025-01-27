@@ -61,7 +61,7 @@ export const DeleteDeedTemplate = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>{t("deleteDeedTemplate")}</Button>
+        <Button variant={"destructive"}>{t("delete")}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

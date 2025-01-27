@@ -1,20 +1,21 @@
+import { ErrorState } from "@/components/error-state";
 import { getDeedTemplateById } from "@/features/deed-template/api";
-import { UpdateDeedTemplateView } from "../_components/update-deed-template-view";
+import { UpdateDeedTemplateForm } from "@/features/deed-template/components/update-deed-template-form";
 import { extractError } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
-import { ErrorState } from "@/components/error-state";
 
 type Props = {
   params: Promise<{
     groupNameId: string;
-    deedTemplateId: string;
+    deedTemplateNameId: string;
   }>;
 };
 
 const UpdateDeedTemplatePage = async ({ params }: Props) => {
   const t = await getTranslations();
-  const { groupNameId, deedTemplateId } = await params;
+  const { groupNameId, deedTemplateNameId } = await params;
   const [name, id] = decodeURIComponent(groupNameId).split("_");
+  const deedTemplateId = decodeURIComponent(deedTemplateNameId).split("_")[1];
 
   const deedTemplate = await getDeedTemplateById(Number(deedTemplateId));
   const error = extractError(deedTemplate, t);
@@ -22,11 +23,10 @@ const UpdateDeedTemplatePage = async ({ params }: Props) => {
   if (error) return <ErrorState error={error} />;
 
   return (
-    <UpdateDeedTemplateView
-      deedTemplate={deedTemplate.data!.deedTemplate}
-      deedStatuses={deedTemplate.data!.deedStatuses}
+    <UpdateDeedTemplateForm
       groupId={Number(id)}
       groupName={name}
+      deedTemplate={deedTemplate.data!.deedTemplate}
     />
   );
 };

@@ -80,7 +80,7 @@ const DraggableListTile = ({
             href={
               routes.groups
                 .nameId(groupName, groupId)
-                .deedTemplates.id(deedTemplate.id).edit.root
+                .deedTemplates.nameId(deedTemplate.name, deedTemplate.id).root
             }
           >
             <ListTile>{deedTemplate.name}</ListTile>

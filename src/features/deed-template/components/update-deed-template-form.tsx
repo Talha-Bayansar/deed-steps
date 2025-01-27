@@ -69,7 +69,9 @@ export const UpdateDeedTemplateForm = ({
       onSuccess() {
         toast.success(t("updateSuccess"));
         router.push(
-          routes.groups.nameId(groupName, groupId).deedTemplates.root
+          routes.groups
+            .nameId(groupName, groupId)
+            .deedTemplates.nameId(values.name, deedTemplate.id).root
         );
       },
       onError(message) {
@@ -100,9 +102,20 @@ export const UpdateDeedTemplateForm = ({
             </FormItem>
           )}
         />
-        <RecurrenceForm
-          value={form.getValues("recurrence")}
-          onChange={(value) => form.setValue("recurrence", value)}
+        <FormField
+          control={form.control}
+          name="recurrence"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <RecurrenceForm
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </AppForm>
     </Form>

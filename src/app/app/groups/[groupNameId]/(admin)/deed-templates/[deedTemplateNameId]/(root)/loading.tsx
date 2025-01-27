@@ -1,7 +1,7 @@
 import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 
-const UpdateDeedTemplateLoading = () => {
+const DeedTemplateDetailsLoading = () => {
   return <ListSkeleton />;
 };
 
-export default UpdateDeedTemplateLoading;
+export default DeedTemplateDetailsLoading;

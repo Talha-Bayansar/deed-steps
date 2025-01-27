@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { ALL_WEEKDAYS, ByWeekday, Frequency, Options, RRule } from "rrule";
+import { ALL_WEEKDAYS, Frequency, Options, RRule } from "rrule";
 import {
   Select,
   SelectContent,
@@ -16,101 +15,90 @@ import MultiSelect, { Option } from "@/components/multi-select";
 import { useTranslations } from "next-intl";
 import { normalizeDate } from "@/lib/utils";
 
+enum RecurrenceEventType {
+  FREQUENCY,
+  INTERVAL,
+  START_DATE,
+  END_DATE,
+  WEEKDAYS,
+  // MONTHS,
+  // MONTH_DAYS,
+  // YEAR_DAYS,
+  // WEEK_NUMBERS,
+}
+
 type Props = {
-  value?: string; // RRule string passed from the parent
-  onChange?: (newRule: string) => void; // Callback to pass the updated rule string
+  value: string; // RRule string passed from the parent
+  onChange: (newRule: string) => void; // Callback to pass the updated rule string
 };
 
 export function RecurrenceForm({ value, onChange }: Props) {
   const t = useTranslations();
-  const [frequency, setFrequency] = useState<Frequency>(RRule.DAILY);
-  const [interval, setInterval] = useState<number>(1);
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
-  const [weekdays, setWeekdays] = useState<ByWeekday[]>([]);
-  //   const [months, setMonths] = useState<number[]>([]);
-  //   const [monthDays, setMonthDays] = useState<number[]>([]);
-  //   const [yearDays, setYearDays] = useState<number[]>([]);
-  //   const [weekNumbers, setWeekNumbers] = useState<number[]>([]);
+  const rule = RRule.fromString(value);
 
-  useEffect(() => {
-    // Parse the initial RRule string if provided
-    if (value) {
-      try {
-        const rule = RRule.fromString(value);
-        const options = rule.options;
+  const { freq, interval, dtstart, until, byweekday } = rule.options;
 
-        // Map frequency using RRule.FREQUENCIES
-        setFrequency(options.freq);
+  const frequency = freq ?? RRule.DAILY;
+  const startDate = dtstart?.toISOString().split("T")[0] ?? "";
+  const endDate = until?.toISOString().split("T")[0] ?? "";
+  const weekdays = byweekday ?? [];
 
-        setInterval(options.interval || 1);
-        setStartDate(options.dtstart?.toISOString().split("T")[0] || "");
-        setEndDate(options.until?.toISOString().split("T")[0] || "");
+  const handleChange = (type: RecurrenceEventType, value: string) => {
+    let rFrequency = frequency;
+    let rStartDate = startDate;
+    let rEndDate = endDate;
+    let rWeekdays = weekdays;
+    let rInterval = interval;
 
-        setWeekdays(options.byweekday ?? []);
-
-        // setMonths(options.bymonth || []);
-        // setMonthDays(options.bymonthday || []);
-        // setYearDays(options.byyearday || []);
-        // setWeekNumbers(options.byweekno || []);
-      } catch (error) {
-        console.error("Invalid RRule string:", error);
-      }
+    switch (type) {
+      case RecurrenceEventType.FREQUENCY:
+        rFrequency = Number(value);
+        break;
+      case RecurrenceEventType.START_DATE:
+        rStartDate = value;
+        break;
+      case RecurrenceEventType.END_DATE:
+        rEndDate = value;
+        break;
+      case RecurrenceEventType.INTERVAL:
+        rInterval = Number(value);
+        break;
+      case RecurrenceEventType.WEEKDAYS:
+        rWeekdays = value.split(",").map((v) => Number(v));
+        break;
     }
-  }, [value]);
 
-  useEffect(() => {
-    const handleGenerateRRule = () => {
-      try {
-        const options: Options = {
-          freq: frequency,
-          interval,
-          dtstart: startDate ? normalizeDate(new Date(startDate)) : null,
-          until: endDate ? normalizeDate(new Date(endDate)) : null,
-          byweekday: weekdays,
-          // bymonth: months,
-          // bymonthday: monthDays,
-          // byyearday: yearDays,
-          // byweekno: weekNumbers,
-          bymonth: null,
-          bymonthday: null,
-          byyearday: null,
-          byweekno: null,
-          wkst: RRule.MO,
-          count: null,
-          tzid: null,
-          bysetpos: null,
-          bynmonthday: null,
-          bynweekday: null,
-          byhour: null,
-          byminute: null,
-          bysecond: null,
-          byeaster: null,
-        };
-
-        const rule = new RRule(options);
-        const ruleString = rule.toString();
-
-        if (onChange) {
-          onChange(ruleString); // Pass the updated rule string to the parent
-        }
-      } catch (error) {
-        console.error("Error generating RRule:", error);
-      }
+    const options: Options = {
+      freq: rFrequency,
+      interval: rInterval,
+      dtstart: rStartDate ? normalizeDate(new Date(rStartDate)) : null,
+      until: rEndDate ? normalizeDate(new Date(rEndDate)) : null,
+      byweekday: rWeekdays,
+      // bymonth: months,
+      // bymonthday: monthDays,
+      // byyearday: yearDays,
+      // byweekno: weekNumbers,
+      bymonth: null,
+      bymonthday: null,
+      byyearday: null,
+      byweekno: null,
+      wkst: RRule.MO,
+      count: null,
+      tzid: null,
+      bysetpos: null,
+      bynmonthday: null,
+      bynweekday: null,
+      byhour: null,
+      byminute: null,
+      bysecond: null,
+      byeaster: null,
     };
 
-    handleGenerateRRule(); // Generate rule string on every state change
-  }, [
-    frequency,
-    interval,
-    startDate,
-    endDate,
-    weekdays,
-    // months,
-    // monthDays,
-    // yearDays,
-    // weekNumbers,
-  ]);
+    const rule = new RRule(options);
+    const ruleString = rule.toString();
+
+    onChange(ruleString);
+  };
 
   const dayOptions: Option[] = [
     {
@@ -202,7 +190,9 @@ export function RecurrenceForm({ value, onChange }: Props) {
           id="startDate"
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={(e) =>
+            handleChange(RecurrenceEventType.START_DATE, e.target.value)
+          }
         />
       </View>
       <View className="gap-2">
@@ -211,14 +201,18 @@ export function RecurrenceForm({ value, onChange }: Props) {
           id="endDate"
           type="date"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={(e) =>
+            handleChange(RecurrenceEventType.END_DATE, e.target.value)
+          }
         />
       </View>
       <View className="gap-2">
         <Label htmlFor="frequency">{t("frequency")}</Label>
         <Select
           value={frequency.toString()}
-          onValueChange={(value) => setFrequency(Number(value) as Frequency)}
+          onValueChange={(value) =>
+            handleChange(RecurrenceEventType.FREQUENCY, value)
+          }
         >
           <SelectTrigger id="frequency">
             <SelectValue />
@@ -245,7 +239,9 @@ export function RecurrenceForm({ value, onChange }: Props) {
           id="interval"
           type="number"
           value={interval}
-          onChange={(e) => setInterval(Number(e.target.value))}
+          onChange={(e) =>
+            handleChange(RecurrenceEventType.INTERVAL, e.target.value)
+          }
           min={1}
         />
       </View>
@@ -261,10 +257,13 @@ export function RecurrenceForm({ value, onChange }: Props) {
             };
           })}
           onChange={(values) =>
-            setWeekdays(
-              values.map((option) =>
-                ALL_WEEKDAYS.findIndex((item) => item === option.value)
-              )
+            handleChange(
+              RecurrenceEventType.WEEKDAYS,
+              values
+                .map((option) =>
+                  ALL_WEEKDAYS.findIndex((item) => item === option.value)
+                )
+                .toString()
             )
           }
           placeholder={t("weekdays")}

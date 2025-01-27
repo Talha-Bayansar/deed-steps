@@ -30,14 +30,21 @@ export const routes = {
             `${groupName}_${groupId}`
           )}/deed-templates/create`,
         },
-        id: (deedTemplateId: string | number) => ({
+        nameId: (
+          deedTemplateName: string,
+          deedTemplateId: string | number
+        ) => ({
           root: `/app/groups/${encodeURIComponent(
             `${groupName}_${groupId}`
-          )}/deed-templates/${deedTemplateId}`,
-          edit: {
+          )}/deed-templates/${encodeURIComponent(
+            `${deedTemplateName}_${deedTemplateId}`
+          )}`,
+          update: {
             root: `/app/groups/${encodeURIComponent(
               `${groupName}_${groupId}`
-            )}/deed-templates/${deedTemplateId}/edit`,
+            )}/deed-templates/${encodeURIComponent(
+              `${deedTemplateName}_${deedTemplateId}`
+            )}/update`,
           },
         }),
       },
