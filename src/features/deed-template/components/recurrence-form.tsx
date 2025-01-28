@@ -186,11 +186,10 @@ export function RecurrenceForm({ value, onChange }: Props) {
 
   return (
     <View className="gap-8">
-      <View className="gap-2">
+      <View className="gap-2 items-stretch">
         <Label htmlFor="startDate">{t("startDate")}</Label>
         <Input
           id="startDate"
-          className="min-w-full"
           type="date"
           value={startDate}
           onChange={(e) =>
