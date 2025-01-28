@@ -195,10 +195,10 @@
     "december": "Aralık"
   },
   "startDate": "Başlangıç ​​tarihi",
-  "endDate": "Son vermek",
+  "endDate": "Bitiş tarihi",
   "frequency": "Sıklık",
   "daily": "Günlük",
-  "weekly": "Haftalık",
+  "weekly": "Hafta günleri",
   "monthly": "Aylık",
   "yearly": "Yıllık",
   "interval": "Aralık",
@@ -206,5 +206,6 @@
   "monthDays": "Ay Günleri",
   "yearDays": "Yıllar",
   "weekNumbers": "Haftalık Numaralar",
-  "months": "Aylar"
+  "months": "Aylar",
+  "contactSupport": "Sorun devam ederse, lütfen destekle iletişime geçin."
 }
