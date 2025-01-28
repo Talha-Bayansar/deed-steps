@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import MultiSelect, { Option } from "@/components/multi-select";
 import { useTranslations } from "next-intl";
 import { normalizeDate } from "@/lib/utils";
+import { X } from "lucide-react";
 
 enum RecurrenceEventType {
   FREQUENCY,
@@ -53,6 +54,7 @@ export function RecurrenceForm({ value, onChange }: Props) {
     switch (type) {
       case RecurrenceEventType.FREQUENCY:
         rFrequency = Number(value);
+        rWeekdays = [];
         break;
       case RecurrenceEventType.START_DATE:
         rStartDate = value;
@@ -197,14 +199,24 @@ export function RecurrenceForm({ value, onChange }: Props) {
       </View>
       <View className="gap-2">
         <Label htmlFor="endDate">{t("endDate")}</Label>
-        <Input
-          id="endDate"
-          type="date"
-          value={endDate}
-          onChange={(e) =>
-            handleChange(RecurrenceEventType.END_DATE, e.target.value)
-          }
-        />
+        <div className="w-full flex items-center relative">
+          <Input
+            id="endDate"
+            className="pr-8"
+            type="date"
+            value={endDate}
+            onChange={(e) =>
+              handleChange(RecurrenceEventType.END_DATE, e.target.value)
+            }
+          />
+          <button
+            className="absolute right-2"
+            type="button"
+            onClick={() => handleChange(RecurrenceEventType.END_DATE, "")}
+          >
+            <X />
+          </button>
+        </div>
       </View>
       <View className="gap-2">
         <Label htmlFor="frequency">{t("frequency")}</Label>
@@ -224,12 +236,12 @@ export function RecurrenceForm({ value, onChange }: Props) {
             <SelectItem value={Frequency.WEEKLY.toString()}>
               {t("weekly")}
             </SelectItem>
-            <SelectItem value={Frequency.MONTHLY.toString()}>
+            {/* <SelectItem value={Frequency.MONTHLY.toString()}>
               {t("monthly")}
             </SelectItem>
             <SelectItem value={Frequency.YEARLY.toString()}>
               {t("yearly")}
-            </SelectItem>
+            </SelectItem> */}
           </SelectContent>
         </Select>
       </View>
@@ -248,6 +260,7 @@ export function RecurrenceForm({ value, onChange }: Props) {
       <View className="gap-2">
         <Label htmlFor="weekdays">{t("weekdays")}</Label>
         <MultiSelect
+          disabled={frequency !== Frequency.WEEKLY}
           defaultOptions={dayOptions}
           value={weekdays.map((weekday) => {
             const option = dayOptions.find((_, i) => i === weekday)!;
