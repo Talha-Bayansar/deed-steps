@@ -15,7 +15,7 @@ import {
 import { ListTile } from "@/components/list-tile";
 import { CustomResponse, handleResponse } from "@/lib/utils";
 import { useState } from "react";
-import { endOfToday } from "date-fns";
+import { endOfToday, startOfYesterday } from "date-fns";
 import { DeedTemplate } from "@/features/deed-template/types";
 import { DeedStatus } from "@/features/deed-status/types";
 import { useAction } from "next-safe-action/hooks";
@@ -45,6 +45,7 @@ export const DeedTile = ({
   const { data, isLoading } = useMyDeedsByDate(selectedDay);
   const deeds = data?.data;
   const deed = deeds?.find((d) => d.deedTemplateId === deedTemplate.id);
+  const selectedDate = new Date(`${selectedDay}T00:00:00`);
 
   const { executeAsync } = useAction(saveDeed);
 
@@ -124,7 +125,9 @@ export const DeedTile = ({
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger
         className="list-tile"
-        disabled={new Date(`${selectedDay}T00:00:00Z`) > endOfToday()}
+        disabled={
+          selectedDate > endOfToday() || startOfYesterday() > selectedDate
+        }
       >
         <ListTile>
           <div className="flex gap-2 items-center">
