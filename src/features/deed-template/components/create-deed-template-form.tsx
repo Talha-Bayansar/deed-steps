@@ -22,6 +22,7 @@ import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { RecurrenceForm } from "./recurrence-form";
+import { format, startOfToday } from "date-fns";
 
 type Props = {
   groupId: number;
@@ -31,6 +32,7 @@ type Props = {
 export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
   const t = useTranslations();
   const router = useRouter();
+  const dtStart = format(startOfToday(), "yyyyMMdd");
 
   const formSchema = z.object({
     name: z
@@ -44,8 +46,7 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      recurrence:
-        "DTSTART:20250125T000000Z\nRRULE:FREQ=DAILY;INTERVAL=1;WKST=MO",
+      recurrence: `DTSTART:${dtStart}T000000Z\nRRULE:FREQ=DAILY;INTERVAL=1;WKST=MO`,
     },
   });
 

@@ -190,6 +190,7 @@ export function RecurrenceForm({ value, onChange }: Props) {
         <Label htmlFor="startDate">{t("startDate")}</Label>
         <Input
           id="startDate"
+          className="min-w-full"
           type="date"
           value={startDate}
           onChange={(e) =>
@@ -199,10 +200,10 @@ export function RecurrenceForm({ value, onChange }: Props) {
       </View>
       <View className="gap-2">
         <Label htmlFor="endDate">{t("endDate")}</Label>
-        <div className="w-full flex items-center relative">
+        <div className="w-full flex gap-4 items-center">
           <Input
             id="endDate"
-            className="pr-8"
+            className="w-full"
             type="date"
             value={endDate}
             onChange={(e) =>
@@ -210,7 +211,6 @@ export function RecurrenceForm({ value, onChange }: Props) {
             }
           />
           <button
-            className="absolute right-2"
             type="button"
             onClick={() => handleChange(RecurrenceEventType.END_DATE, "")}
           >
