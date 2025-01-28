@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { View } from "@/components/layout/view";
 import Link from "next/link";
 import { AppForm } from "@/components/app-form";
+import { QrCodeIcon } from "lucide-react";
 
 type Props = {
   groupName: string;
@@ -28,9 +29,7 @@ type Props = {
 
 export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
   const t = useTranslations();
-  const [transactionLink, setTransactionLink] = useState<string>(
-    `${routes.groups.nameId(groupName, groupId).transaction.root}?amount=1`
-  );
+  const [transactionLink, setTransactionLink] = useState<string | null>(null);
 
   const formSchema = z.object({
     points: z.preprocess(
@@ -67,13 +66,15 @@ export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
         submitButton={<Button>{t("generate")}</Button>}
       >
         <View className="items-center">
-          <QRCode value={transactionLink} />
-          <Link
-            className="text-primary underline text-wrap"
-            href={transactionLink}
-          >
-            {transactionLink}
-          </Link>
+          {transactionLink ? (
+            <Link href={transactionLink}>
+              <QRCode value={transactionLink} />
+            </Link>
+          ) : (
+            <div className="border grid place-items-center w-64 h-64">
+              <QrCodeIcon className="text-zinc-300" size={80} />
+            </div>
+          )}
         </View>
         <FormField
           control={form.control}
@@ -82,7 +83,14 @@ export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
             <FormItem>
               <FormLabel>{t("points")}</FormLabel>
               <FormControl>
-                <Input inputMode="numeric" {...field} />
+                <Input
+                  inputMode="numeric"
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setTransactionLink(null);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
