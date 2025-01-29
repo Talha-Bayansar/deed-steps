@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     "/api/stripe/webhook/account",
     "/api/stripe/webhook/connect",
     "/api/subscribe",
+    "/api/deeds",
   ];
   if (apiEndpoints.includes(request.nextUrl.pathname)) {
     return NextResponse.next();
