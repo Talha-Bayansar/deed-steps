@@ -207,5 +207,12 @@
   "yearDays": "Yıllar",
   "weekNumbers": "Haftalık Numaralar",
   "months": "Aylar",
-  "contactSupport": "Sorun devam ederse, lütfen destekle iletişime geçin."
+  "contactSupport": "Sorun devam ederse, lütfen destekle iletişime geçin.",
+  "promoteToAdminWarning": "Bu kullanıcıyı terfi etmek bu grup için daha fazla izin verecektir.",
+  "promoteSuccess": "Başarıyla terfi edildi.",
+  "demoteSuccess": "Başarıyla indirildi.",
+  "demoteFromAdminWarning": "Bu kullanıcıyı indirmek bu grup için izinleri kısıtlayacaktır.",
+  "admin": "Yönetici",
+  "demote": "İndirmek",
+  "promote": "Terfi"
 }

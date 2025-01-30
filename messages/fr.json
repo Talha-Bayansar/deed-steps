@@ -207,5 +207,12 @@
   "yearDays": "Années",
   "weekNumbers": "Nombres hebdomadaires",
   "months": "Mois",
-  "contactSupport": "Si le problème persiste, veuillez contacter l'assistance."
+  "contactSupport": "Si le problème persiste, veuillez contacter l'assistance.",
+  "promoteToAdminWarning": "La promotion de cet utilisateur donnera plus d'autorisations pour ce groupe.",
+  "promoteSuccess": "Promu avec succès.",
+  "demoteSuccess": "Rétrogradé avec succès.",
+  "demoteFromAdminWarning": "La démonstration de cet utilisateur limitera les autorisations de ce groupe.",
+  "admin": "Administrer",
+  "demote": "Rétrograder",
+  "promote": "Promouvoir"
 }

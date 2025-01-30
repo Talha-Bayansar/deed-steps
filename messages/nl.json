@@ -207,5 +207,12 @@
   "yearDays": "Jaardagen",
   "weekNumbers": "Weeknummers",
   "months": "Maanden",
-  "contactSupport": "Als het probleem aanhoudt, neem dan contact op met de ondersteuning."
+  "contactSupport": "Als het probleem aanhoudt, neem dan contact op met de ondersteuning.",
+  "promoteToAdminWarning": "Het promoten van deze gebruiker geeft meer machtigingen voor deze groep.",
+  "promoteSuccess": "Succesvol gepromoot.",
+  "demoteSuccess": "Met succes gedegradeerd.",
+  "demoteFromAdminWarning": "Het degraderen van deze gebruiker beperken de machtigingen voor deze groep.",
+  "admin": "Admin",
+  "demote": "Degraderen",
+  "promote": "Promoten"
 }
