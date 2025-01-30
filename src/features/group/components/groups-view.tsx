@@ -11,6 +11,7 @@ import Link from "next/link";
 type Props = {
   groups: (Group & {
     isOwner: boolean;
+    isAdmin: boolean;
   })[];
 };
 
@@ -32,7 +33,11 @@ export const GroupsView = ({ groups }: Props) => {
           key={group.id}
           href={routes.groups.nameId(group.name, group.id).root}
         >
-          <GroupCard group={group} isOwner={group.isOwner} />
+          <GroupCard
+            group={group}
+            isOwner={group.isOwner}
+            isAdmin={group.isAdmin}
+          />
         </Link>
       ))}
     </View>

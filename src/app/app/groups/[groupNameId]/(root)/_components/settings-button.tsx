@@ -13,7 +13,7 @@ type Props = {
 export const SettingsButton = ({ groupId, groupName }: Props) => {
   const { data } = useGroupPointsByGroupId(Number(groupId));
 
-  if (data?.data?.isOwner)
+  if (data?.data?.isOwner || data?.data?.isAdmin)
     return (
       <Link
         className="text-primary"

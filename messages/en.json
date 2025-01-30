@@ -207,5 +207,12 @@
   "yearDays": "Year days",
   "weekNumbers": "Week numbers",
   "months": "Months",
-  "contactSupport": "If the problem persists, please contact support."
+  "contactSupport": "If the problem persists, please contact support.",
+  "promoteToAdminWarning": "Promoting this user will give more permissions for this group.",
+  "promoteSuccess": "Promoted successfully.",
+  "demoteSuccess": "Demoted successfully.",
+  "demoteFromAdminWarning": "Demoting this user will restrict permissions for this group.",
+  "admin": "Admin",
+  "demote": "Demote",
+  "promote": "Promote"
 }

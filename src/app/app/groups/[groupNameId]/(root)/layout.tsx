@@ -10,6 +10,7 @@ import { deedTemplatesKey } from "@/features/deed-template/queries";
 import { deedStatusesKey } from "@/features/deed-status/queries";
 import { SettingsButton } from "./_components/settings-button";
 import { PointsButton } from "./_components/points-button";
+import { groupAdminsKey } from "@/features/group-admin/queries";
 
 type Props = {
   params: Promise<{
@@ -36,6 +37,7 @@ const GroupDetailsLayout = async ({ params, children }: Props) => {
                 groupsKey,
                 deedTemplatesKey,
                 deedStatusesKey,
+                groupAdminsKey,
               ]}
             />
             <SettingsButton groupName={name} groupId={id} />

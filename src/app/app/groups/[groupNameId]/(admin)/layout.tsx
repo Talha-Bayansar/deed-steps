@@ -1,8 +1,7 @@
-import { db } from "@/db";
-import { groupTable } from "@/db/schema";
 import { getUser } from "@/features/auth/api";
+import { getGroupAdminsByGroupId } from "@/features/group-admin/api";
+import { getGroupById } from "@/features/group/api";
 import { routes } from "@/lib/routes";
-import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -16,15 +15,21 @@ const AdminLayout = async ({ params, children }: Props) => {
   const { groupNameId } = await params;
 
   const [name, id] = decodeURIComponent(groupNameId).split("_");
-  const group = await db
-    .select()
-    .from(groupTable)
-    .where(eq(groupTable.id, Number(id)))
-    .limit(1);
   const user = await getUser();
 
-  if (group[0].ownerId !== user?.id)
-    redirect(routes.groups.nameId(name, id).root);
+  if (!user) redirect(routes.signIn.root);
+
+  const groupAdmins = await getGroupAdminsByGroupId(Number(id));
+  if (!groupAdmins.success) throw Error(groupAdmins.message!);
+
+  const group = await getGroupById(Number(id));
+  if (!group.success) throw Error(group.message!);
+
+  const hasPermission =
+    group.data!.ownerId === user.id ||
+    !!groupAdmins.data!.find((ga) => ga.userId === user.id);
+
+  if (!hasPermission) redirect(routes.groups.nameId(name, id).root);
 
   return children;
 };

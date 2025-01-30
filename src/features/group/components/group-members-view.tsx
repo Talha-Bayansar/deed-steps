@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/features/auth/types";
-import { GroupPoints } from "../types";
+import { Group, GroupPoints } from "../types";
 import { isArrayEmpty } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
@@ -17,21 +17,30 @@ import {
 import { ListTile } from "@/components/list-tile";
 import { DeleteMemberAlertDialog } from "./delete-member-alert-dialog";
 import { Button } from "@/components/ui/button";
+import { GroupAdmin } from "@/features/group-admin/types";
+import { PromoteToAdminAlertDialog } from "@/features/group-admin/components/promote-to-admin-alert-dialog";
+import { DemoteFromAdminAlertDialog } from "@/features/group-admin/components/demote-from-admin-alert-dialog";
 
 type Props = {
-  groupId: number;
+  group: Group;
   members: User[];
   points: GroupPoints[];
   isOwner?: boolean;
+  isAdmin?: boolean;
+  groupAdmins: GroupAdmin[];
 };
 
 export const GroupMembersView = ({
-  groupId,
+  group,
   members,
   points,
   isOwner = false,
+  isAdmin = false,
+  groupAdmins,
 }: Props) => {
   const t = useTranslations();
+  const hasPermission = isOwner || isAdmin;
+  const ownerOnly = isOwner;
 
   if (isArrayEmpty(members))
     return (
@@ -45,13 +54,18 @@ export const GroupMembersView = ({
     <View className="gap-0">
       {members.map((member) => (
         <Drawer key={member.id}>
-          <DrawerTrigger disabled={!isOwner} className="list-tile">
-            <ListTile hideChevron={!isOwner}>
+          <DrawerTrigger
+            disabled={!hasPermission || group.ownerId === member.id}
+            className="list-tile"
+          >
+            <ListTile
+              hideChevron={!hasPermission || group.ownerId === member.id}
+            >
               <View className="items-start gap-0">
                 <div>
                   {member.firstName} {member.lastName}
                 </div>
-                {isOwner && (
+                {hasPermission && (
                   <div className="text-xs text-muted-foreground">
                     {t("points")}:{" "}
                     {points.find((p) => p.userId === member.id)?.points}
@@ -67,8 +81,24 @@ export const GroupMembersView = ({
               </DrawerTitle>
             </DrawerHeader>
             <DrawerFooter>
-              {isOwner && (
-                <DeleteMemberAlertDialog groupId={groupId} userId={member.id}>
+              {ownerOnly &&
+                (groupAdmins.some((ga) => ga.userId === member.id) ? (
+                  <DemoteFromAdminAlertDialog
+                    userId={member.id}
+                    groupId={group.id}
+                  >
+                    <Button variant={"outline"}>{t("demote")}</Button>
+                  </DemoteFromAdminAlertDialog>
+                ) : (
+                  <PromoteToAdminAlertDialog
+                    userId={member.id}
+                    groupId={group.id}
+                  >
+                    <Button>{t("promote")}</Button>
+                  </PromoteToAdminAlertDialog>
+                ))}
+              {hasPermission && (
+                <DeleteMemberAlertDialog groupId={group.id} userId={member.id}>
                   <Button variant="destructive">{t("delete")}</Button>
                 </DeleteMemberAlertDialog>
               )}

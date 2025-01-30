@@ -8,14 +8,17 @@ import { GroupMembersView } from "@/features/group/components/group-members-view
 import { Group, GroupPoints } from "@/features/group/types";
 import { useTranslations } from "next-intl";
 import { DeedStatus } from "@/features/deed-status/types";
+import { GroupAdmin } from "@/features/group-admin/types";
 
 type Props = {
   group: Group;
   members: User[];
   points: GroupPoints[];
   isOwner?: boolean;
+  isAdmin?: boolean;
   deedTemplates: DeedTemplate[];
   deedStatuses: DeedStatus[];
+  groupAdmins: GroupAdmin[];
 };
 
 export const GroupDetailsView = ({
@@ -23,8 +26,10 @@ export const GroupDetailsView = ({
   members,
   points,
   isOwner = false,
+  isAdmin = false,
   deedTemplates,
   deedStatuses,
+  groupAdmins,
 }: Props) => {
   const t = useTranslations();
 
@@ -39,10 +44,12 @@ export const GroupDetailsView = ({
         value="members"
       >
         <GroupMembersView
-          groupId={group.id}
+          group={group}
           members={members}
           points={points}
           isOwner={isOwner}
+          isAdmin={isAdmin}
+          groupAdmins={groupAdmins}
         />
       </TabsContent>
       <TabsContent

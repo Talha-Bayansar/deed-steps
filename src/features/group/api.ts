@@ -27,6 +27,10 @@ import { findDeedTemplatesByGroupId } from "../deed-template/queries";
 import { findDeedStatusesByTemplateIds } from "../deed-status/queries";
 import { findGroupPointsByGroupId } from "../group-points/queries";
 import { revalidateTag } from "next/cache";
+import {
+  findGroupAdminsByGroupId,
+  findGroupAdminsByUserId,
+} from "../group-admin/queries";
 
 export const getGroupById = cache(async (id: number) => {
   const t = await getTranslations();
@@ -63,14 +67,17 @@ export const getGroupDetailsById = cache(async (id: number) => {
     );
 
     const groupPoints = await findGroupPointsByGroupId(id);
+    const groupAdmins = await findGroupAdminsByGroupId(id);
 
     return createSuccessResponse({
       group,
       groupMembers,
       groupPoints,
       isOwner: group.ownerId === user.id,
+      isAdmin: !!groupAdmins.find((ga) => ga.userId === user.id),
       deedTemplates,
       deedStatuses,
+      groupAdmins,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
@@ -84,9 +91,12 @@ export const getMyGroups = cache(async () => {
   try {
     const groups = await findGroupsByUserId(user.id);
 
+    const groupAdmins = await findGroupAdminsByUserId(user.id);
+
     const formattedResponse = groups.map((item) => ({
       ...item,
       isOwner: item.ownerId === user.id,
+      isAdmin: !!groupAdmins.find((ga) => ga.groupId === item.id),
     }));
 
     return createSuccessResponse(formattedResponse);

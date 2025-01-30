@@ -47,6 +47,16 @@ export const groupTable = pgTable("group", {
     .references(() => userTable.id, { onDelete: "cascade" }),
 });
 
+export const groupAdminTable = pgTable("group_admin", {
+  id: serial("id").primaryKey(),
+  userId: serial("user_id")
+    .notNull()
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  groupId: serial("group_id")
+    .notNull()
+    .references(() => groupTable.id, { onDelete: "cascade" }),
+});
+
 export const deedTable = pgTable("deed", {
   id: serial("id").primaryKey(),
   userId: serial("user_id")

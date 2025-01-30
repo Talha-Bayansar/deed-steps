@@ -25,8 +25,10 @@ const GroupDetailsPage = async ({ params }: Props) => {
       members={groupDetails.data!.groupMembers}
       points={groupDetails.data!.groupPoints}
       isOwner={groupDetails.data!.isOwner}
+      isAdmin={groupDetails.data!.isAdmin}
       deedTemplates={groupDetails.data!.deedTemplates}
       deedStatuses={groupDetails.data!.deedStatuses}
+      groupAdmins={groupDetails.data!.groupAdmins}
     />
   );
 };

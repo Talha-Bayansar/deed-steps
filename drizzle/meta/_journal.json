@@ -78,6 +78,13 @@
       "when": 1737812536004,
       "tag": "0010_silly_cerise",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1738164232236,
+      "tag": "0011_demonic_excalibur",
+      "breakpoints": true
     }
   ]
 }

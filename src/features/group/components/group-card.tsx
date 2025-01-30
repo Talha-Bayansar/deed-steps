@@ -12,9 +12,10 @@ import { useTranslations } from "next-intl";
 type Props = {
   group: Group;
   isOwner: boolean;
+  isAdmin: boolean;
 };
 
-export const GroupCard = ({ group, isOwner }: Props) => {
+export const GroupCard = ({ group, isOwner, isAdmin }: Props) => {
   const t = useTranslations();
 
   return (
@@ -22,7 +23,8 @@ export const GroupCard = ({ group, isOwner }: Props) => {
       <CardHeader>
         <CardTitle>{group.name}</CardTitle>
         <CardDescription>
-          {t("role")}: {isOwner ? t("owner") : t("member")}
+          {t("role")}:{" "}
+          {isOwner ? t("owner") : isAdmin ? t("admin") : t("member")}
         </CardDescription>
       </CardHeader>
     </Card>
