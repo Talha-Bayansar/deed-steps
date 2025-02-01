@@ -31,10 +31,11 @@ import {
   findGroupAdminsByGroupId,
   findGroupAdminsByUserId,
 } from "../group-admin/queries";
+import { isUserAdmin } from "../group-admin/utils";
 
 export const getGroupById = cache(async (id: number) => {
   const t = await getTranslations();
-  await requireAuth();
+  const user = await requireAuth();
 
   try {
     const group = await findGroupById(id);
@@ -42,7 +43,10 @@ export const getGroupById = cache(async (id: number) => {
     if (!group)
       return createErrorResponse(t("notFound", { subject: t("group") }));
 
-    return createSuccessResponse(group);
+    return createSuccessResponse({
+      ...group,
+      isOwner: user.id === group.ownerId,
+    });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
@@ -74,7 +78,7 @@ export const getGroupDetailsById = cache(async (id: number) => {
       groupMembers,
       groupPoints,
       isOwner: group.ownerId === user.id,
-      isAdmin: !!groupAdmins.find((ga) => ga.userId === user.id),
+      isAdmin: isUserAdmin(user.id, groupAdmins),
       deedTemplates,
       deedStatuses,
       groupAdmins,

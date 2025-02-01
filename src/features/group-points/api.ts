@@ -6,6 +6,7 @@ import { findGroupById } from "../group/queries";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { findGroupPointsByUserIdAndGroupId } from "./queries";
 import { findGroupAdminsByGroupId } from "../group-admin/queries";
+import { isUserAdmin } from "../group-admin/utils";
 
 export const getGroupPointsByGroupId = async (groupId: number) => {
   const t = await getTranslations();
@@ -24,7 +25,7 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
     return createSuccessResponse({
       groupPoints: points,
       isOwner: group.ownerId === user.id,
-      isAdmin: !!groupAdmins.find((ga) => ga.userId === user.id),
+      isAdmin: isUserAdmin(user.id, groupAdmins),
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));

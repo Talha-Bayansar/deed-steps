@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { GroupAdmin } from "@/features/group-admin/types";
 import { PromoteToAdminAlertDialog } from "@/features/group-admin/components/promote-to-admin-alert-dialog";
 import { DemoteFromAdminAlertDialog } from "@/features/group-admin/components/demote-from-admin-alert-dialog";
+import { isUserAdmin } from "@/features/group-admin/utils";
 
 type Props = {
   group: Group;
@@ -82,7 +83,7 @@ export const GroupMembersView = ({
             </DrawerHeader>
             <DrawerFooter>
               {ownerOnly &&
-                (groupAdmins.some((ga) => ga.userId === member.id) ? (
+                (isUserAdmin(member.id, groupAdmins) ? (
                   <DemoteFromAdminAlertDialog
                     userId={member.id}
                     groupId={group.id}

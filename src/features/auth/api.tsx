@@ -234,7 +234,11 @@ const signinSchema = async () => {
       .email(t("validations.email"))
       .min(1, t("validations.minLength", { field: t("email"), length: "1" })),
     code: z
-      .string({ required_error: t("validations.required") })
+      .string({
+        required_error: t("validations.required", {
+          field: t("verificationCode"),
+        }),
+      })
       .min(
         8,
         t("validations.minLength", {
@@ -288,8 +292,8 @@ export const signin = safeAction
             .insert(userTable)
             .values({
               email: email.toLowerCase(),
-              firstName: name[0],
-              lastName: name[1],
+              firstName: name?.[0] ?? "",
+              lastName: name?.[1] ?? "",
             })
             .returning({ id: userTable.id });
 
