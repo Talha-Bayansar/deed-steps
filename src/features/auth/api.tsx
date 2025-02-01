@@ -218,7 +218,8 @@ export const sendEmailVerificationCode = safeAction
       const code = await generateEmailVerificationCode(email.toLowerCase());
       await sendEmail(email.toLowerCase(), code);
       return createSuccessResponse();
-    } catch {
+    } catch (error) {
+      console.error(error);
       return createErrorResponse(t("sendVerificationCodeSuccess"));
     }
   });
@@ -314,7 +315,8 @@ export const signin = safeAction
       } else {
         return createErrorResponse(t("signInError"));
       }
-    } catch {
+    } catch (error) {
+      console.error(error);
       return createErrorResponse(t("signInError"));
     }
   });
