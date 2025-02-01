@@ -13,8 +13,6 @@ export const findPushSubscriptionBySessionId = unstable_cache(
       .from(pushSubscriptionTable)
       .where(eq(pushSubscriptionTable.sessionId, sessionId));
 
-    console.log(sessionId, rows);
-
     if (isArrayEmpty(rows)) return null;
     return rows[0];
   },

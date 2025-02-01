@@ -12,8 +12,6 @@ const SettingsRootPage = async () => {
   const locale = await getLocale();
   const pushSubscription = await getMyPushSubscription();
 
-  console.log(pushSubscription);
-
   return (
     <View className="flex-grow justify-between">
       <View className="gap-0">
