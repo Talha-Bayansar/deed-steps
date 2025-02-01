@@ -1,8 +1,10 @@
 import { db } from "@/db";
 import { pushSubscriptionTable } from "@/db/schema";
 import { validateRequest } from "@/features/auth/api";
+import { pushSubscriptionsKey } from "@/features/notification/queries";
 import { isArrayEmpty } from "@/lib/utils";
 import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { PushSubscription } from "web-push";
 
@@ -37,6 +39,8 @@ export async function POST(req: Request) {
         subscription: JSON.stringify(newSubscription),
       });
     }
+
+    revalidateTag(pushSubscriptionsKey);
 
     return NextResponse.json(
       { message: "Push subscription saved" },
@@ -76,6 +80,8 @@ export async function DELETE(req: Request) {
     await db
       .delete(pushSubscriptionTable)
       .where(eq(pushSubscriptionTable.sessionId, session.id));
+
+    revalidateTag(pushSubscriptionsKey);
 
     return NextResponse.json(
       { message: "Push subscription deleted" },

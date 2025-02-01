@@ -9,14 +9,16 @@ import {
 import { Bell } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { PushSubscription } from "@/features/notification/types";
 
-export const NotificationsPreference = () => {
+type Props = {
+  pushScription?: PushSubscription | null;
+};
+
+export const NotificationsPreference = ({ pushScription }: Props) => {
   const t = useTranslations();
   const [isAllowed, setIsAllowed] = useState(
-    Notification.permission === "granted" &&
-      !!localStorage.getItem("notifications-allowed")
-      ? true
-      : false
+    (Notification.permission === "granted" && !!pushScription) ?? false
   );
 
   async function handleCheck(value: boolean) {
@@ -24,13 +26,11 @@ export const NotificationsPreference = () => {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
           setIsAllowed(value);
-          localStorage.setItem("notifications-allowed", "true");
           registerPushNotifications();
         }
       });
     } else {
       setIsAllowed(value);
-      localStorage.setItem("notifications-allowed", "false");
       unregisterPushNotifications();
     }
   }
