@@ -272,6 +272,8 @@ export const signin = safeAction
           )
         );
 
+      console.log("Verification code", verificationCode);
+
       if (verificationCode.length > 0) {
         const user = await db
           .select()
@@ -279,6 +281,7 @@ export const signin = safeAction
           .where(eq(userTable.email, verificationCode[0].email!));
 
         if (user.length > 0) {
+          console.log("User exists", user[0].email);
           const session = await createSession(user[0].id);
 
           setSessionTokenCookie(session.id);
@@ -289,6 +292,8 @@ export const signin = safeAction
         } else {
           const email = verificationCode[0].email!;
           const name = email.split("@")[0].split(".");
+          console.log("Creating new user");
+
           const newUser = await db
             .insert(userTable)
             .values({
@@ -297,6 +302,8 @@ export const signin = safeAction
               lastName: name?.[1] ?? "",
             })
             .returning({ id: userTable.id });
+
+          console.log("Created new user", email);
 
           if (newUser.length > 0) {
             const session = await createSession(newUser[0].id);
@@ -309,6 +316,7 @@ export const signin = safeAction
 
             return createSuccessResponse(response);
           } else {
+            console.log("Failed to create user", email);
             return createErrorResponse(t("signInError"));
           }
         }
