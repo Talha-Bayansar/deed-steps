@@ -262,6 +262,8 @@ export const signin = safeAction
   .action(async ({ parsedInput: { email, code } }) => {
     const t = await getTranslations();
     try {
+      console.log("Email", email);
+      console.log("Code", code);
       const verificationCode = await db
         .select()
         .from(emailVerificationCodeTable)
