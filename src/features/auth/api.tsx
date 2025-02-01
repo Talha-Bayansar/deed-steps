@@ -262,19 +262,16 @@ export const signin = safeAction
   .action(async ({ parsedInput: { email, code } }) => {
     const t = await getTranslations();
     try {
-      console.log("Email", email);
-      console.log("Code", code);
+      const lowerCaseEmail = email.toLowerCase();
       const verificationCode = await db
         .select()
         .from(emailVerificationCodeTable)
         .where(
           and(
-            eq(emailVerificationCodeTable.email, email),
+            eq(emailVerificationCodeTable.email, lowerCaseEmail),
             eq(emailVerificationCodeTable.code, code)
           )
         );
-
-      console.log("Verification code", verificationCode);
 
       if (verificationCode.length > 0) {
         const user = await db
@@ -283,7 +280,6 @@ export const signin = safeAction
           .where(eq(userTable.email, verificationCode[0].email!));
 
         if (user.length > 0) {
-          console.log("User exists", user[0].email);
           const session = await createSession(user[0].id);
 
           setSessionTokenCookie(session.id);
@@ -294,7 +290,6 @@ export const signin = safeAction
         } else {
           const email = verificationCode[0].email!;
           const name = email.split("@")[0].split(".");
-          console.log("Creating new user");
 
           const newUser = await db
             .insert(userTable)
@@ -304,8 +299,6 @@ export const signin = safeAction
               lastName: name?.[1] ?? "",
             })
             .returning({ id: userTable.id });
-
-          console.log("Created new user", email);
 
           if (newUser.length > 0) {
             const session = await createSession(newUser[0].id);
@@ -318,7 +311,6 @@ export const signin = safeAction
 
             return createSuccessResponse(response);
           } else {
-            console.log("Failed to create user", email);
             return createErrorResponse(t("signInError"));
           }
         }
