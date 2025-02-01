@@ -8,7 +8,7 @@ import {
 } from "@/features/notification/services/notifications";
 import { Bell } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PushSubscription } from "@/features/notification/types";
 
 type Props = {
@@ -17,9 +17,13 @@ type Props = {
 
 export const NotificationsPreference = ({ pushScription }: Props) => {
   const t = useTranslations();
-  const [isAllowed, setIsAllowed] = useState(
-    (Notification.permission === "granted" && !!pushScription) ?? false
-  );
+  const [isAllowed, setIsAllowed] = useState(false);
+
+  useEffect(() => {
+    setIsAllowed(
+      (Notification.permission === "granted" && !!pushScription) ?? false
+    );
+  }, []);
 
   async function handleCheck(value: boolean) {
     if (value) {
