@@ -15,17 +15,7 @@ export const groupPermissions: GroupPermissions = {
     "transaction:create",
     "settings:read",
   ],
-  admin: [
-    "member:add",
-    "member:edit",
-    "member:delete",
-    "deedTemplate:add",
-    "deedTemplate:edit",
-    "deedTemplate:delete",
-    "notification:edit",
-    "transaction:create",
-    "settings:read",
-  ],
+  admin: ["transaction:create", "settings:read"],
   member: [],
 };
 
