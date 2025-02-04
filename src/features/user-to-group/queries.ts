@@ -20,7 +20,7 @@ export const findGroupUsersByGroupId = unstable_cache(
   undefined,
   {
     tags: [userToGroupKey],
-    revalidate: 60 * 60 * 24,
+    revalidate: 60 * 5,
   }
 );
 
@@ -36,7 +36,7 @@ export const findUserGroupsByUserId = unstable_cache(
   undefined,
   {
     tags: [userToGroupKey],
-    revalidate: 60 * 60 * 24,
+    revalidate: 60 * 5,
   }
 );
 
@@ -59,6 +59,6 @@ export const findUserToGroupByUserIdAndGroupId = unstable_cache(
   undefined,
   {
     tags: [userToGroupKey],
-    revalidate: 60 * 60 * 24,
+    revalidate: 60 * 5,
   }
 );
