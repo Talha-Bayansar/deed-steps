@@ -27,7 +27,11 @@ type Props = {
 export const SendCodeForm = ({ prefill }: Props) => {
   const t = useTranslations();
   const formSchema = z.object({
-    email: z.string().email(),
+    email: z
+      .string({
+        required_error: t("validations.required", { field: t("email") }),
+      })
+      .email(t("validations.email")),
   });
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({

@@ -25,16 +25,29 @@ import { signin } from "../api";
 import { LoadingButton } from "@/components/loading-button";
 import { useTranslations } from "next-intl";
 
-const formSchema = z.object({
-  code: z.string().min(8).max(8),
-});
-
 type Props = {
   email: string;
 };
 
 export const VerifyCodeForm = ({ email }: Props) => {
   const t = useTranslations();
+  const formSchema = z.object({
+    code: z
+      .string({
+        required_error: t("validations.required", {
+          field: t("verificationCode"),
+        }),
+      })
+      .min(
+        8,
+        t("validations.minLength", { field: t("verificationCode"), length: 8 })
+      )
+      .max(
+        8,
+        t("validations.maxLength", { field: t("verificationCode"), length: 8 })
+      ),
+  });
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
