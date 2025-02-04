@@ -5,15 +5,15 @@ import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { View } from "@/components/layout/view";
-import { RevalidateButton } from "@/components/revalidate-button";
+// import { RevalidateButton } from "@/components/revalidate-button";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { deedStatusesKey } from "@/features/deed-status/queries";
-import { deedTemplatesKey } from "@/features/deed-template/queries";
-import { groupPointsKey } from "@/features/group-points/queries";
-import { groupsKey } from "@/features/group/queries";
-import { invitationsKey } from "@/features/invitation/queries";
-import { pushSubscriptionsKey } from "@/features/notification/queries";
-import { userToGroupKey } from "@/features/user-to-group/queries";
+// import { deedStatusesKey } from "@/features/deed-status/queries";
+// import { deedTemplatesKey } from "@/features/deed-template/queries";
+// import { groupPointsKey } from "@/features/group-points/queries";
+// import { groupsKey } from "@/features/group/queries";
+// import { invitationsKey } from "@/features/invitation/queries";
+// import { pushSubscriptionsKey } from "@/features/notification/queries";
+// import { userToGroupKey } from "@/features/user-to-group/queries";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -31,19 +31,19 @@ export default function Error({
   return (
     <PageContainer>
       <Navbar
-        trailing={
-          <RevalidateButton
-            tags={[
-              groupsKey,
-              pushSubscriptionsKey,
-              deedTemplatesKey,
-              userToGroupKey,
-              deedStatusesKey,
-              groupPointsKey,
-              invitationsKey,
-            ]}
-          />
-        }
+      // trailing={
+      //   <RevalidateButton
+      //     tags={[
+      //       groupsKey,
+      //       pushSubscriptionsKey,
+      //       deedTemplatesKey,
+      //       userToGroupKey,
+      //       deedStatusesKey,
+      //       groupPointsKey,
+      //       invitationsKey,
+      //     ]}
+      //   />
+      // }
       >
         {t("error")}
       </Navbar>
