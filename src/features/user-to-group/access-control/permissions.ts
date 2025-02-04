@@ -14,8 +14,9 @@ export const groupPermissions: GroupPermissions = {
     "notification:edit",
     "transaction:create",
     "settings:read",
+    "memberPoints:read",
   ],
-  admin: ["transaction:create", "settings:read"],
+  admin: ["transaction:create", "settings:read", "memberPoints:read"],
   member: [],
 };
 

@@ -1,6 +1,7 @@
 export type GroupRole = "owner" | "admin" | "member";
 
 export type GroupAction =
+  | "memberPoints:read"
   | "member:add"
   | "member:edit"
   | "member:delete"

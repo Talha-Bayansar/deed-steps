@@ -66,7 +66,10 @@ export const GroupMembersView = ({
                 <div>
                   {user.firstName} {user.lastName}
                 </div>
-                {hasGroupPermission(currentUserToGroup, "member:delete") && (
+                {hasGroupPermission(
+                  currentUserToGroup,
+                  "memberPoints:read"
+                ) && (
                   <div className="text-xs text-muted-foreground">
                     {t("points")}:{" "}
                     {points.find((p) => p.userId === user.id)?.points}
