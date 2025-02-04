@@ -8,28 +8,24 @@ import { GroupMembersView } from "@/features/group/components/group-members-view
 import { Group, GroupPoints } from "@/features/group/types";
 import { useTranslations } from "next-intl";
 import { DeedStatus } from "@/features/deed-status/types";
-import { GroupAdmin } from "@/features/group-admin/types";
+import { UserToGroup } from "@/features/user-to-group/types";
 
 type Props = {
   group: Group;
-  members: User[];
   points: GroupPoints[];
-  isOwner?: boolean;
-  isAdmin?: boolean;
   deedTemplates: DeedTemplate[];
   deedStatuses: DeedStatus[];
-  groupAdmins: GroupAdmin[];
+  groupUsers: { user_to_group: UserToGroup; user: User }[];
+  currentUserToGroup: UserToGroup;
 };
 
 export const GroupDetailsView = ({
   group,
-  members,
   points,
-  isOwner = false,
-  isAdmin = false,
   deedTemplates,
   deedStatuses,
-  groupAdmins,
+  groupUsers,
+  currentUserToGroup,
 }: Props) => {
   const t = useTranslations();
 
@@ -45,11 +41,9 @@ export const GroupDetailsView = ({
       >
         <GroupMembersView
           group={group}
-          members={members}
           points={points}
-          isOwner={isOwner}
-          isAdmin={isAdmin}
-          groupAdmins={groupAdmins}
+          groupUsers={groupUsers}
+          currentUserToGroup={currentUserToGroup}
         />
       </TabsContent>
       <TabsContent

@@ -4,13 +4,12 @@ import { PageContainer } from "@/components/layout/page-container";
 import { routes } from "@/lib/routes";
 import { RevalidateButton } from "@/components/revalidate-button";
 import { groupPointsKey } from "@/features/group-points/queries";
-import { usersKey } from "@/features/auth/queries";
 import { groupsKey } from "@/features/group/queries";
 import { deedTemplatesKey } from "@/features/deed-template/queries";
 import { deedStatusesKey } from "@/features/deed-status/queries";
 import { SettingsButton } from "./_components/settings-button";
 import { PointsButton } from "./_components/points-button";
-import { groupAdminsKey } from "@/features/group-admin/queries";
+import { userToGroupKey } from "@/features/user-to-group/queries";
 
 type Props = {
   params: Promise<{
@@ -33,11 +32,10 @@ const GroupDetailsLayout = async ({ params, children }: Props) => {
             <RevalidateButton
               tags={[
                 groupPointsKey,
-                usersKey,
                 groupsKey,
                 deedTemplatesKey,
                 deedStatusesKey,
-                groupAdminsKey,
+                userToGroupKey,
               ]}
             />
             <SettingsButton groupName={name} groupId={id} />

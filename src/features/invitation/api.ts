@@ -24,7 +24,8 @@ import { sendNotificationToSubscribers } from "../notification/api";
 import { cache } from "react";
 import { findInvitationsByUserId, invitationsKey } from "./queries";
 import { revalidateTag } from "next/cache";
-import { usersKey } from "../auth/queries";
+import { userToGroupKey } from "../user-to-group/queries";
+import { groupsKey } from "../group/queries";
 
 export const getMyInvitations = cache(async () => {
   const t = await getTranslations();
@@ -176,7 +177,8 @@ export const acceptInvitation = safeAction
         );
 
       revalidateTag(invitationsKey);
-      revalidateTag(usersKey);
+      revalidateTag(groupsKey);
+      revalidateTag(userToGroupKey);
 
       return createSuccessResponse(invitation);
     } catch {

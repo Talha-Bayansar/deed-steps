@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/card";
 import type { Group } from "../types";
 import { useTranslations } from "next-intl";
+import { UserToGroup } from "@/features/user-to-group/types";
 
 type Props = {
   group: Group;
-  isOwner: boolean;
-  isAdmin: boolean;
+  userToGroup: UserToGroup;
 };
 
-export const GroupCard = ({ group, isOwner, isAdmin }: Props) => {
+export const GroupCard = ({ group, userToGroup }: Props) => {
   const t = useTranslations();
 
   return (
@@ -23,8 +23,7 @@ export const GroupCard = ({ group, isOwner, isAdmin }: Props) => {
       <CardHeader>
         <CardTitle>{group.name}</CardTitle>
         <CardDescription>
-          {t("role")}:{" "}
-          {isOwner ? t("owner") : isAdmin ? t("admin") : t("member")}
+          {t("role")}: {t(userToGroup.role)}
         </CardDescription>
       </CardHeader>
     </Card>

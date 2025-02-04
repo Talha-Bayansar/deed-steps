@@ -5,8 +5,7 @@ import { requireAuth } from "../auth/api";
 import { findGroupById } from "../group/queries";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { findGroupPointsByUserIdAndGroupId } from "./queries";
-import { findGroupAdminsByGroupId } from "../group-admin/queries";
-import { isUserAdmin } from "../group-admin/utils";
+import { findUserToGroupByUserIdAndGroupId } from "../user-to-group/queries";
 
 export const getGroupPointsByGroupId = async (groupId: number) => {
   const t = await getTranslations();
@@ -20,12 +19,14 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
 
     const points = await findGroupPointsByUserIdAndGroupId(user.id, groupId);
 
-    const groupAdmins = await findGroupAdminsByGroupId(groupId);
+    const userToGroup = await findUserToGroupByUserIdAndGroupId(
+      user.id,
+      groupId
+    );
 
     return createSuccessResponse({
       groupPoints: points,
-      isOwner: group.ownerId === user.id,
-      isAdmin: isUserAdmin(user.id, groupAdmins),
+      userToGroup,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));

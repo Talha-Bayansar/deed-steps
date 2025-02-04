@@ -17,33 +17,27 @@ import {
 import { ListTile } from "@/components/list-tile";
 import { DeleteMemberAlertDialog } from "./delete-member-alert-dialog";
 import { Button } from "@/components/ui/button";
-import { GroupAdmin } from "@/features/group-admin/types";
-import { PromoteToAdminAlertDialog } from "@/features/group-admin/components/promote-to-admin-alert-dialog";
-import { DemoteFromAdminAlertDialog } from "@/features/group-admin/components/demote-from-admin-alert-dialog";
-import { isUserAdmin } from "@/features/group-admin/utils";
+import { PromoteToAdminAlertDialog } from "@/features/user-to-group/components/promote-to-admin-alert-dialog";
+import { DemoteFromAdminAlertDialog } from "@/features/user-to-group/components/demote-from-admin-alert-dialog";
+import { UserToGroup } from "@/features/user-to-group/types";
+import { hasGroupPermission } from "@/features/user-to-group/access-control/permissions";
 
 type Props = {
   group: Group;
-  members: User[];
   points: GroupPoints[];
-  isOwner?: boolean;
-  isAdmin?: boolean;
-  groupAdmins: GroupAdmin[];
+  groupUsers: { user_to_group: UserToGroup; user: User }[];
+  currentUserToGroup: UserToGroup;
 };
 
 export const GroupMembersView = ({
   group,
-  members,
   points,
-  isOwner = false,
-  isAdmin = false,
-  groupAdmins,
+  groupUsers,
+  currentUserToGroup,
 }: Props) => {
   const t = useTranslations();
-  const hasPermission = isOwner || isAdmin;
-  const ownerOnly = isOwner;
 
-  if (isArrayEmpty(members))
+  if (isArrayEmpty(groupUsers))
     return (
       <EmptyState
         title={t("emptyWarning")}
@@ -53,23 +47,29 @@ export const GroupMembersView = ({
 
   return (
     <View className="gap-0">
-      {members.map((member) => (
-        <Drawer key={member.id}>
+      {groupUsers.map(({ user, user_to_group }) => (
+        <Drawer key={user.id}>
           <DrawerTrigger
-            disabled={!hasPermission || group.ownerId === member.id}
+            disabled={
+              !hasGroupPermission(currentUserToGroup, "member:delete") ||
+              group.ownerId === user.id
+            }
             className="list-tile"
           >
             <ListTile
-              hideChevron={!hasPermission || group.ownerId === member.id}
+              hideChevron={
+                !hasGroupPermission(currentUserToGroup, "member:delete") ||
+                group.ownerId === user.id
+              }
             >
               <View className="items-start gap-0">
                 <div>
-                  {member.firstName} {member.lastName}
+                  {user.firstName} {user.lastName}
                 </div>
-                {hasPermission && (
+                {hasGroupPermission(currentUserToGroup, "member:delete") && (
                   <div className="text-xs text-muted-foreground">
                     {t("points")}:{" "}
-                    {points.find((p) => p.userId === member.id)?.points}
+                    {points.find((p) => p.userId === user.id)?.points}
                   </div>
                 )}
               </View>
@@ -77,29 +77,27 @@ export const GroupMembersView = ({
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle>
-                {`${member.firstName} ${member.lastName}`}
-              </DrawerTitle>
+              <DrawerTitle>{`${user.firstName} ${user.lastName}`}</DrawerTitle>
             </DrawerHeader>
             <DrawerFooter>
-              {ownerOnly &&
-                (isUserAdmin(member.id, groupAdmins) ? (
+              {hasGroupPermission(currentUserToGroup, "member:edit") &&
+                (user_to_group.role === "admin" ? (
                   <DemoteFromAdminAlertDialog
-                    userId={member.id}
+                    userId={user.id}
                     groupId={group.id}
                   >
                     <Button variant={"outline"}>{t("demote")}</Button>
                   </DemoteFromAdminAlertDialog>
                 ) : (
                   <PromoteToAdminAlertDialog
-                    userId={member.id}
+                    userId={user.id}
                     groupId={group.id}
                   >
                     <Button>{t("promote")}</Button>
                   </PromoteToAdminAlertDialog>
                 ))}
-              {hasPermission && (
-                <DeleteMemberAlertDialog groupId={group.id} userId={member.id}>
+              {hasGroupPermission(currentUserToGroup, "member:delete") && (
+                <DeleteMemberAlertDialog groupId={group.id} userId={user.id}>
                   <Button variant="destructive">{t("delete")}</Button>
                 </DeleteMemberAlertDialog>
               )}

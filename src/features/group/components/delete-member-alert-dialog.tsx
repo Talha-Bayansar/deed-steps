@@ -1,6 +1,5 @@
 "use client";
 
-import { deleteUserFromGroup } from "@/features/group/api";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import {
@@ -17,6 +16,7 @@ import { LoadingButton } from "@/components/loading-button";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
+import { deleteUserFromGroup } from "@/features/user-to-group/api";
 
 type Props = {
   groupId: number;

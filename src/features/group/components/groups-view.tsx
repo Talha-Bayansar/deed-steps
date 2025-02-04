@@ -1,4 +1,5 @@
 "use client";
+
 import { isArrayEmpty } from "@/lib/utils";
 import { GroupCard } from "./group-card";
 import { routes } from "@/lib/routes";
@@ -7,15 +8,14 @@ import { Group } from "../types";
 import { View } from "@/components/layout/view";
 import { EmptyState } from "@/components/empty-state";
 import Link from "next/link";
+import { UserToGroup } from "@/features/user-to-group/types";
 
 type Props = {
-  groups: (Group & {
-    isOwner: boolean;
-    isAdmin: boolean;
-  })[];
+  groups: Group[];
+  userGroups: UserToGroup[];
 };
 
-export const GroupsView = ({ groups }: Props) => {
+export const GroupsView = ({ groups, userGroups }: Props) => {
   const t = useTranslations();
 
   if (isArrayEmpty(groups))
@@ -35,8 +35,7 @@ export const GroupsView = ({ groups }: Props) => {
         >
           <GroupCard
             group={group}
-            isOwner={group.isOwner}
-            isAdmin={group.isAdmin}
+            userToGroup={userGroups.find((ug) => ug.groupId === group.id)!}
           />
         </Link>
       ))}

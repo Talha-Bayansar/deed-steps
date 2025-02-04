@@ -26,6 +26,8 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Session, User } from "./types";
 import { findUserBySessionId } from "./queries";
+import { revalidateTag } from "next/cache";
+import { userToGroupKey } from "../user-to-group/queries";
 
 async function generateSessionToken() {
   const bytes = new Uint8Array(20);
@@ -286,6 +288,8 @@ export const signin = safeAction
           await db
             .delete(emailVerificationCodeTable)
             .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
+
+          revalidateTag(userToGroupKey);
           return createSuccessResponse();
         } else {
           const email = verificationCode[0].email!;
@@ -309,6 +313,7 @@ export const signin = safeAction
               .delete(emailVerificationCodeTable)
               .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
 
+            revalidateTag(userToGroupKey);
             return createSuccessResponse(response);
           } else {
             return createErrorResponse(t("signInError"));
@@ -333,6 +338,7 @@ export const signOut = safeAction.action(async () => {
   await invalidateSession(session.id);
 
   deleteSessionTokenCookie();
+  revalidateTag(userToGroupKey);
   return createSuccessResponse();
 });
 

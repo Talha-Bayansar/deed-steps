@@ -22,20 +22,15 @@ import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 import { cache } from "react";
 import { findGroupById, findGroupsByUserId, groupsKey } from "./queries";
-import { findUsersByGroupId, usersKey } from "../auth/queries";
 import { findDeedTemplatesByGroupId } from "../deed-template/queries";
 import { findDeedStatusesByTemplateIds } from "../deed-status/queries";
 import { findGroupPointsByGroupId } from "../group-points/queries";
 import { revalidateTag } from "next/cache";
-import {
-  findGroupAdminsByGroupId,
-  findGroupAdminsByUserId,
-} from "../group-admin/queries";
-import { isUserAdmin } from "../group-admin/utils";
+import { userToGroupKey } from "../user-to-group/queries";
 
 export const getGroupById = cache(async (id: number) => {
   const t = await getTranslations();
-  const user = await requireAuth();
+  await requireAuth();
 
   try {
     const group = await findGroupById(id);
@@ -43,10 +38,7 @@ export const getGroupById = cache(async (id: number) => {
     if (!group)
       return createErrorResponse(t("notFound", { subject: t("group") }));
 
-    return createSuccessResponse({
-      ...group,
-      isOwner: user.id === group.ownerId,
-    });
+    return createSuccessResponse(group);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
@@ -54,15 +46,13 @@ export const getGroupById = cache(async (id: number) => {
 
 export const getGroupDetailsById = cache(async (id: number) => {
   const t = await getTranslations();
-  const user = await requireAuth();
+  await requireAuth();
 
   try {
     const group = await findGroupById(id);
 
     if (!group)
       return createErrorResponse(t("notFound", { subject: t("group") }));
-
-    const groupMembers = await findUsersByGroupId(id);
 
     const deedTemplates = await findDeedTemplatesByGroupId(id);
 
@@ -71,17 +61,12 @@ export const getGroupDetailsById = cache(async (id: number) => {
     );
 
     const groupPoints = await findGroupPointsByGroupId(id);
-    const groupAdmins = await findGroupAdminsByGroupId(id);
 
     return createSuccessResponse({
       group,
-      groupMembers,
       groupPoints,
-      isOwner: group.ownerId === user.id,
-      isAdmin: isUserAdmin(user.id, groupAdmins),
       deedTemplates,
       deedStatuses,
-      groupAdmins,
     });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
@@ -95,15 +80,7 @@ export const getMyGroups = cache(async () => {
   try {
     const groups = await findGroupsByUserId(user.id);
 
-    const groupAdmins = await findGroupAdminsByUserId(user.id);
-
-    const formattedResponse = groups.map((item) => ({
-      ...item,
-      isOwner: item.ownerId === user.id,
-      isAdmin: !!groupAdmins.find((ga) => ga.groupId === item.id),
-    }));
-
-    return createSuccessResponse(formattedResponse);
+    return createSuccessResponse(groups);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
@@ -135,6 +112,7 @@ export const createGroup = safeAction
       await db.insert(userToGroupTable).values({
         groupId: newGroup[0].id,
         userId: user.id,
+        role: "owner",
       });
 
       // Initialize group points for the user
@@ -144,6 +122,7 @@ export const createGroup = safeAction
       });
 
       revalidateTag(groupsKey);
+      revalidateTag(userToGroupKey);
 
       return createSuccessResponse(newGroup[0]);
     } catch {
@@ -178,6 +157,7 @@ export const updateGroupById = safeAction
         );
 
       revalidateTag(groupsKey);
+      revalidateTag(userToGroupKey);
 
       return createSuccessResponse(res);
     } catch {
@@ -202,35 +182,7 @@ export const deleteGroup = safeAction
         .where(and(eq(groupTable.id, id), eq(groupTable.ownerId, user.id)));
 
       revalidateTag(groupsKey);
-
-      return createSuccessResponse(res);
-    } catch {
-      return createErrorResponse(t("somethingWentWrong"));
-    }
-  });
-
-export const deleteUserFromGroup = safeAction
-  .schema(
-    z.object({
-      userId: z.number(),
-      groupId: z.number(),
-    })
-  )
-  .action(async ({ parsedInput: { userId, groupId } }) => {
-    const t = await getTranslations();
-    await requireAuth();
-
-    try {
-      const res = await db
-        .delete(userToGroupTable)
-        .where(
-          and(
-            eq(userToGroupTable.userId, userId),
-            eq(userToGroupTable.groupId, groupId)
-          )
-        );
-
-      revalidateTag(usersKey);
+      revalidateTag(userToGroupKey);
 
       return createSuccessResponse(res);
     } catch {

@@ -85,6 +85,13 @@
       "when": 1738164232236,
       "tag": "0011_demonic_excalibur",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1738686463454,
+      "tag": "0012_skinny_thunderbird",
+      "breakpoints": true
     }
   ]
 }

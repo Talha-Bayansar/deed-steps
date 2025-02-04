@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useGroupPointsByGroupId } from "@/features/group/hooks/use-group-points-by-group-id";
+import { useGroupPointsByGroupId } from "@/features/group-points/hooks/use-group-points-by-group-id";
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { Coins, ScanQrCode } from "lucide-react";
 import { useRouter } from "next/navigation";
