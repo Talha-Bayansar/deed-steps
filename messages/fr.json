@@ -214,5 +214,6 @@
   "demoteFromAdminWarning": "La démonstration de cet utilisateur limitera les autorisations de ce groupe.",
   "admin": "Administrer",
   "demote": "Rétrograder",
-  "promote": "Promouvoir"
+  "promote": "Promouvoir",
+  "transactions": "Transactions"
 }

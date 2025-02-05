@@ -214,5 +214,6 @@
   "demoteFromAdminWarning": "Bu kullanıcıyı indirmek bu grup için izinleri kısıtlayacaktır.",
   "admin": "Yönetici",
   "demote": "İndirmek",
-  "promote": "Terfi"
+  "promote": "Terfi",
+  "transactions": "İşlemler"
 }

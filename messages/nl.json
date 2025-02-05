@@ -214,5 +214,6 @@
   "demoteFromAdminWarning": "Het degraderen van deze gebruiker beperken de machtigingen voor deze groep.",
   "admin": "Admin",
   "demote": "Degraderen",
-  "promote": "Promoten"
+  "promote": "Promoten",
+  "transactions": "Transacties"
 }
