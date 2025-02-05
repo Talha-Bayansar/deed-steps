@@ -5,16 +5,7 @@ import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { View } from "@/components/layout/view";
-import { LoadingButton } from "@/components/loading-button";
-import { buttonVariants } from "@/components/ui/button";
-import { deedStatusesKey } from "@/features/deed-status/queries";
-import { deedTemplatesKey } from "@/features/deed-template/queries";
-import { groupPointsKey } from "@/features/group-points/queries";
-import { groupsKey } from "@/features/group/queries";
-import { invitationsKey } from "@/features/invitation/queries";
-import { pushSubscriptionsKey } from "@/features/notification/queries";
-import { transactionKey } from "@/features/transaction/queries";
-import { userToGroupKey } from "@/features/user-to-group/queries";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { refreshCache } from "@/lib/actions";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
@@ -30,10 +21,10 @@ export default function Error({
   reset: () => void;
 }) {
   const t = useTranslations();
-  const { executeAsync, isPending } = useAction(refreshCache);
+  const { execute } = useAction(refreshCache);
 
   const handleRefresh = async () => {
-    await executeAsync();
+    execute();
     reset();
   };
 
@@ -59,13 +50,9 @@ export default function Error({
             >
               {t("goToLandingPage")}
             </Link>
-            <LoadingButton
-              isLoading={isPending}
-              className="w-full"
-              onClick={handleRefresh}
-            >
+            <Button className="w-full" onClick={handleRefresh}>
               {t("tryAgain")}
-            </LoadingButton>
+            </Button>
           </div>
         </View>
       </Main>

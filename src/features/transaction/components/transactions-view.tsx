@@ -28,8 +28,8 @@ export const TransactionsView = ({ transactions }: Props) => {
       {transactions
         .sort(
           (a, b) =>
-            b.transaction.createdAt.getTime() -
-            a.transaction.createdAt.getTime()
+            new Date(b.transaction.createdAt).getTime() -
+            new Date(a.transaction.createdAt).getTime()
         )
         .map(({ transaction, user }) => (
           <div key={transaction.id} className="list-tile">
