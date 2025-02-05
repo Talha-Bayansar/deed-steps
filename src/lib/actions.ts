@@ -1,15 +1,35 @@
+"use server";
+
 import { revalidateTag } from "next/cache";
 import { safeAction } from "./safe-action";
-import { z } from "zod";
+import { createErrorResponse, createSuccessResponse } from "./utils";
+import { getTranslations } from "next-intl/server";
+import { requireAuth } from "@/features/auth/api";
+import { deedStatusesKey } from "@/features/deed-status/queries";
+import { deedTemplatesKey } from "@/features/deed-template/queries";
+import { groupPointsKey } from "@/features/group-points/queries";
+import { groupsKey } from "@/features/group/queries";
+import { invitationsKey } from "@/features/invitation/queries";
+import { pushSubscriptionsKey } from "@/features/notification/queries";
+import { transactionKey } from "@/features/transaction/queries";
+import { userToGroupKey } from "@/features/user-to-group/queries";
 
-export const refreshCache = safeAction
-  .schema(
-    z.object({
-      tags: z.string().array(),
-    })
-  )
-  .action(async ({ parsedInput: { tags } }) => {
-    for (const tag of tags) {
-      revalidateTag(tag);
-    }
-  });
+export const refreshCache = safeAction.action(async () => {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    revalidateTag(deedStatusesKey);
+    revalidateTag(deedTemplatesKey);
+    revalidateTag(groupsKey);
+    revalidateTag(groupPointsKey);
+    revalidateTag(invitationsKey);
+    revalidateTag(pushSubscriptionsKey);
+    revalidateTag(transactionKey);
+    revalidateTag(userToGroupKey);
+
+    return createSuccessResponse();
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+});
