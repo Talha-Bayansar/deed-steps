@@ -10,6 +10,7 @@ import { getTranslations } from "next-intl/server";
 import { ErrorState } from "@/components/error-state";
 import { getMyUserToGroupByGroupId } from "@/features/user-to-group/api";
 import { hasGroupPermission } from "@/features/user-to-group/access-control/permissions";
+import { TransactionsTile } from "../_components/transactions-tile";
 
 type Props = {
   params: Promise<{
@@ -40,6 +41,9 @@ const GroupSettingsPage = async ({ params }: Props) => {
       )}
       {hasGroupPermission(userToGroup.data!, "notification:edit") && (
         <NotificationPreferencesTile groupId={Number(id)} />
+      )}
+      {hasGroupPermission(userToGroup.data!, "transaction:read") && (
+        <TransactionsTile groupName={name} groupId={Number(id)} />
       )}
       {hasGroupPermission(userToGroup.data!, "transaction:create") && (
         <TransactionTile groupName={name} groupId={Number(id)} />

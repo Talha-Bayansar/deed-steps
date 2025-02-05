@@ -12,6 +12,22 @@ import { and, eq } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 import { requireAuth } from "../auth/api";
+import { revalidateTag } from "next/cache";
+import { findTransactionsByGroupId, transactionKey } from "./queries";
+import { groupPointsKey } from "../group-points/queries";
+
+export const getTransactionsByGroupId = async (groupId: number) => {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    const transactions = await findTransactionsByGroupId(groupId);
+
+    return createSuccessResponse(transactions);
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+};
 
 export const createTransaction = safeAction
   .schema(
@@ -57,6 +73,9 @@ export const createTransaction = safeAction
           points: (userPoints - amount).toString(),
         })
         .where(eq(groupPointsTable.id, groupPoints[0].id));
+
+      revalidateTag(transactionKey);
+      revalidateTag(groupPointsKey);
 
       return createSuccessResponse(res);
     } catch {

@@ -15,7 +15,11 @@ type Props = {
   amount: number;
 };
 
-export const TransactionView = ({ amount, groupId, groupName }: Props) => {
+export const CreateTransactionView = ({
+  amount,
+  groupId,
+  groupName,
+}: Props) => {
   const t = useTranslations();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);

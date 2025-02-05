@@ -214,5 +214,6 @@
   "demoteFromAdminWarning": "Demoting this user will restrict permissions for this group.",
   "admin": "Admin",
   "demote": "Demote",
-  "promote": "Promote"
+  "promote": "Promote",
+  "transactions": "Transactions"
 }

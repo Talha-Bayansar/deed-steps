@@ -53,9 +53,9 @@ export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
 
   const onSubmit = (values: { points: number }) => {
     setTransactionLink(
-      `${routes.groups.nameId(groupName, groupId).transaction.root}?amount=${
-        values.points
-      }`
+      `${
+        routes.groups.nameId(groupName, groupId).transactions.create.root
+      }?amount=${values.points}`
     );
   };
 

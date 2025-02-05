@@ -11,6 +11,7 @@ export type GroupAction =
   | "deedTemplate:edit"
   | "deedTemplate:delete"
   | "notification:edit"
+  | "transaction:read"
   | "transaction:create"
   | "settings:read";
 

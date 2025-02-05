@@ -16,10 +16,15 @@ export const routes = {
           `${groupName}_${groupId}`
         )}/settings`,
       },
-      transaction: {
+      transactions: {
         root: `/app/groups/${encodeURIComponent(
           `${groupName}_${groupId}`
-        )}/transaction`,
+        )}/transactions`,
+        create: {
+          root: `/app/groups/${encodeURIComponent(
+            `${groupName}_${groupId}`
+          )}/transactions/create`,
+        },
       },
       deedTemplates: {
         root: `/app/groups/${encodeURIComponent(

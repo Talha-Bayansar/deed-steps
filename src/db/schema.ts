@@ -113,6 +113,7 @@ export const transactionTable = pgTable("transaction", {
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
   amount: numeric("points").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const pushSubscriptionTable = pgTable("push_subscription", {
