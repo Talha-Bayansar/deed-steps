@@ -3,7 +3,7 @@ import { pushSubscriptionTable } from "@/db/schema";
 import { validateRequest } from "@/features/auth/api";
 import { pushSubscriptionsKey } from "@/features/notification/queries";
 import { isArrayEmpty } from "@/lib/utils";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { PushSubscription } from "web-push";
@@ -39,6 +39,52 @@ export async function POST(req: Request) {
         subscription: JSON.stringify(newSubscription),
       });
     }
+
+    revalidateTag(pushSubscriptionsKey);
+
+    return NextResponse.json(
+      { message: "Push subscription saved" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req: Request) {
+  try {
+    const sub:
+      | { newSubscription: PushSubscription; oldEndpoint: string }
+      | undefined = await req.json();
+
+    if (!sub) {
+      return NextResponse.json(
+        { error: "Missing push subscription in body" },
+        { status: 400 }
+      );
+    }
+
+    const { newSubscription, oldEndpoint } = sub;
+
+    const { user, session } = await validateRequest();
+
+    if (!user || !session) {
+      return NextResponse.json(
+        { error: "User not authenticated" },
+        { status: 401 }
+      );
+    }
+
+    await db
+      .update(pushSubscriptionTable)
+      .set({ subscription: JSON.stringify(newSubscription) })
+      .where(
+        sql`${pushSubscriptionTable.subscription}->>'endpoint' = ${oldEndpoint}`
+      );
 
     revalidateTag(pushSubscriptionsKey);
 

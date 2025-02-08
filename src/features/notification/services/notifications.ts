@@ -41,6 +41,7 @@ export async function unregisterPushNotifications() {
 export async function sendPushSubscriptionToServer(
   subscription: PushSubscription
 ) {
+  console.log("Subscribing to push notifications...");
   const response = await fetch("/api/subscribe", {
     method: "POST",
     body: JSON.stringify(subscription),
