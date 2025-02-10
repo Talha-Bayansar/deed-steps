@@ -6,6 +6,15 @@ import { User } from "@/features/auth/types";
 import { View } from "@/components/layout/view";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Coins } from "lucide-react";
 
 type Props = {
   transaction: Transaction;
@@ -15,23 +24,59 @@ type Props = {
 export const TransactionItem = ({ transaction, user }: Props) => {
   const t = useTranslations();
 
-  return (
-    <ListTile hideChevron>
-      <View className="gap-1.5">
-        <View className="gap-0">
-          <h2 className="font-medium">
-            {user.firstName} {user.lastName}
-          </h2>
-          <div className="text-xs text-muted-foreground">{user.email}</div>
-        </View>
+  const detailItems: { label: string; value: string }[] = [
+    {
+      label: t("name"),
+      value: `${user.firstName} ${user.lastName}`,
+    },
+    {
+      label: t("email"),
+      value: user.email,
+    },
+    {
+      label: t("points"),
+      value: transaction.amount,
+    },
+    {
+      label: t("date"),
+      value: format(transaction.createdAt, "dd/MM/yyyy HH:mm"),
+    },
+  ];
 
-        <div className="text-xs">
-          {t("points")}: <b>{transaction.amount}</b>
-        </div>
-        <div className="text-xs">
-          {format(transaction.createdAt, "dd/MM/yyyy HH:mm")}
-        </div>
-      </View>
-    </ListTile>
+  return (
+    <Drawer>
+      <DrawerTrigger className="w-full">
+        <ListTile hideChevron>
+          <div className="w-full flex gap-4 justify-between items-center">
+            <View className="gap-0 w-auto items-start">
+              <h2 className="font-medium">
+                {user.firstName} {user.lastName}
+              </h2>
+              <div className="text-xs text-muted-foreground">
+                {format(transaction.createdAt, "dd/MM/yyyy HH:mm")}
+              </div>
+            </View>
+            <div className="bg-muted p-1 rounded flex gap-2 items-center">
+              <Coins className="text-yellow-400" /> -{transaction.amount}
+            </div>
+          </div>
+        </ListTile>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{t("transaction")}</DrawerTitle>
+        </DrawerHeader>
+        <DrawerFooter>
+          <View className="gap-0">
+            {detailItems.map((v) => (
+              <View key={v.label} className="list-tile gap-0">
+                <div className="text-xs text-muted-foreground">{v.label}</div>
+                <div>{v.value}</div>
+              </View>
+            ))}
+          </View>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };

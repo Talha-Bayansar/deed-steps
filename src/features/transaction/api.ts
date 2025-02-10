@@ -41,12 +41,6 @@ export const createTransaction = safeAction
     const user = await requireAuth();
 
     try {
-      await db.insert(transactionTable).values({
-        userId: user.id,
-        groupId,
-        amount: amount.toString(),
-      });
-
       const groupPoints = await db
         .select()
         .from(groupPointsTable)
@@ -73,6 +67,12 @@ export const createTransaction = safeAction
           points: (userPoints - amount).toString(),
         })
         .where(eq(groupPointsTable.id, groupPoints[0].id));
+
+      await db.insert(transactionTable).values({
+        userId: user.id,
+        groupId,
+        amount: amount.toString(),
+      });
 
       revalidateTag(transactionKey);
       revalidateTag(groupPointsKey);
