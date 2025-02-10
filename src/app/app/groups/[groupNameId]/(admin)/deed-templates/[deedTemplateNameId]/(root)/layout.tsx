@@ -5,7 +5,7 @@ import { routes } from "@/lib/routes";
 import { RevalidateButton } from "@/components/revalidate-button";
 import { deedStatusesKey } from "@/features/deed-status/queries";
 import Link from "next/link";
-import { Edit } from "lucide-react";
+import { EditIconButton } from "@/components/icon-buttons/edit-icon-button";
 
 type Props = {
   children: React.ReactNode;
@@ -26,17 +26,16 @@ const DeedTemplateDetailsLayout = async ({ children, params }: Props) => {
       <Navbar
         hrefBackButton={routes.groups.nameId(name, id).deedTemplates.root}
         trailing={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <RevalidateButton tags={[deedStatusesKey]} />{" "}
             <Link
-              className="text-primary"
               href={
                 routes.groups
                   .nameId(name, id)
                   .deedTemplates.nameId(templateName, templateId).update.root
               }
             >
-              <Edit />
+              <EditIconButton />
             </Link>
           </div>
         }

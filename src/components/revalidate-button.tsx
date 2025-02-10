@@ -1,5 +1,5 @@
-import { RefreshCw } from "lucide-react";
 import { revalidateTag } from "next/cache";
+import { RefreshIconButton } from "./icon-buttons/refresh-icon-button";
 
 type Props = {
   tags: string[];
@@ -15,9 +15,7 @@ export const RevalidateButton = ({ tags }: Props) => {
 
   return (
     <form action={revalidate}>
-      <button type="submit" className="text-primary flex items-center">
-        <RefreshCw />
-      </button>
+      <RefreshIconButton type="submit" />
     </form>
   );
 };

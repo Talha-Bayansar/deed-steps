@@ -27,7 +27,7 @@ const GroupDetailsLayout = async ({ params, children }: Props) => {
       <Navbar
         hrefBackButton={routes.groups.root}
         trailing={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <PointsButton groupId={Number(id)} />
             <RevalidateButton
               tags={[

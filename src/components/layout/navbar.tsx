@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { BackIconButton } from "../icon-buttons/back-icon-button";
 
 type Props = {
   leading?: React.ReactNode;
@@ -21,7 +22,7 @@ export const Navbar = ({
           ? leading
           : hrefBackButton && (
               <Link href={hrefBackButton}>
-                <ArrowLeft className="text-primary" />
+                <BackIconButton />
               </Link>
             )}
       </div>

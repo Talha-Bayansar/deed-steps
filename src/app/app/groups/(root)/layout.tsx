@@ -5,9 +5,9 @@ import { RevalidateButton } from "@/components/revalidate-button";
 import { userToGroupKey } from "@/features/user-to-group/queries";
 import { groupsKey } from "@/features/group/queries";
 import { routes } from "@/lib/routes";
-import { Plus } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { AddIconButton } from "@/components/icon-buttons/plus-icon-button";
 
 type Props = {
   children: React.ReactNode;
@@ -20,10 +20,10 @@ const GroupsRootLayout = async ({ children }: Props) => {
     <PageContainer>
       <Navbar
         trailing={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <RevalidateButton tags={[groupsKey, userToGroupKey]} />
             <Link href={routes.groups.create.root}>
-              <Plus className="text-primary" />
+              <AddIconButton />
             </Link>
           </div>
         }

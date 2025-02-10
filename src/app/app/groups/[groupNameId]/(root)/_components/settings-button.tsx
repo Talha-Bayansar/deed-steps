@@ -1,9 +1,9 @@
 "use client";
 
+import { SettingsIconButton } from "@/components/icon-buttons/settings-icon-button";
 import { useGroupPointsByGroupId } from "@/features/group-points/hooks/use-group-points-by-group-id";
 import { hasGroupPermission } from "@/features/user-to-group/access-control/permissions";
 import { routes } from "@/lib/routes";
-import { Settings } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
@@ -19,11 +19,8 @@ export const SettingsButton = ({ groupId, groupName }: Props) => {
     hasGroupPermission(data.data.userToGroup, "settings:read")
   )
     return (
-      <Link
-        className="text-primary"
-        href={routes.groups.nameId(groupName, groupId).settings.root}
-      >
-        <Settings />
+      <Link href={routes.groups.nameId(groupName, groupId).settings.root}>
+        <SettingsIconButton />
       </Link>
     );
   else {

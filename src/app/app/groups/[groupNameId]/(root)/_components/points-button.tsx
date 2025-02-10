@@ -29,8 +29,8 @@ export const PointsButton = ({ groupId }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="flex items-center gap-2 bg-gray-50 rounded p-2">
-          <Coins className="text-yellow-400" />{" "}
+        <div className="flex items-center gap-2 bg-gray-50 rounded p-1">
+          <Coins className="text-yellow-400 w-5 h-5" />{" "}
           {data?.data?.groupPoints?.points ?? "?"}
         </div>
       </DropdownMenuTrigger>
