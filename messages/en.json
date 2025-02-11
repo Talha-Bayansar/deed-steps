@@ -215,5 +215,16 @@
   "admin": "Admin",
   "demote": "Demote",
   "promote": "Promote",
-  "transactions": "Transactions"
+  "transactions": "Transactions",
+  "basic": "Basic",
+  "pro": "Pro",
+  "joinUnlimitedGroups": "Join Unlimited Groups",
+  "trackGroupDeeds": "Track Group Deeds",
+  "everythingInPlan": "Everything in the {plan} plan",
+  "createGroupsDescription": "Create up to {amount} groups",
+  "createDeedTemplatesDescription": "Create up to {amount} deed templates per group",
+  "createDeedStatusesDescription": "Create up to {amount} statuses per deed template",
+  "month": "Month",
+  "year": "Year",
+  "getStarted": "Get started"
 }

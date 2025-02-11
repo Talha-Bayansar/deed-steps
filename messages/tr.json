@@ -215,5 +215,16 @@
   "admin": "Yönetici",
   "demote": "İndirmek",
   "promote": "Terfi",
-  "transactions": "İşlemler"
+  "transactions": "İşlemler",
+  "basic": "Temel",
+  "pro": "Profesyonel",
+  "joinUnlimitedGroups": "Sınırsız Gruplara Katılma",
+  "trackGroupDeeds": "Grup amellerini takip etme",
+  "everythingInPlan": "{plan} planındaki her şey",
+  "createGroupsDescription": "{amount} grup kadar oluşturun",
+  "createDeedTemplatesDescription": "Grup başına {amount} amel şablonuna kadar oluşturun",
+  "createDeedStatusesDescription": "Amel şablonu başına {amount} durum kadar oluşturun",
+  "month": "Ay",
+  "year": "Sene",
+  "getStarted": "Başla"
 }

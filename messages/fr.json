@@ -215,5 +215,16 @@
   "admin": "Administrer",
   "demote": "Rétrograder",
   "promote": "Promouvoir",
-  "transactions": "Transactions"
+  "transactions": "Transactions",
+  "basic": "Base",
+  "pro": "Pro",
+  "joinUnlimitedGroups": "Devenir membre de groupes illimités",
+  "trackGroupDeeds": "Gardez les actes de groupe",
+  "everythingInPlan": "Tout dans le plan de {plan}",
+  "createGroupsDescription": "À {amount} groupes",
+  "createDeedTemplatesDescription": "Jusqu'à {amount} modèles d'acte par groupe",
+  "createDeedStatusesDescription": "Jusqu'à {amount} statuts par modèle d'acte",
+  "month": "Mois",
+  "year": "Année",
+  "getStarted": "Commencer"
 }

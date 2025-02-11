@@ -7,6 +7,8 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const apiEndpoints = [
     "/api/stripe/webhook/account",
     "/api/stripe/webhook/connect",
+    "/api/stripe",
+    "/api/generate-stripe-checkout",
     "/api/subscribe",
     "/api/deeds",
   ];

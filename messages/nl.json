@@ -215,5 +215,16 @@
   "admin": "Admin",
   "demote": "Degraderen",
   "promote": "Promoten",
-  "transactions": "Transacties"
+  "transactions": "Transacties",
+  "basic": "Basis",
+  "pro": "Pro",
+  "joinUnlimitedGroups": "Word lid van onbeperkte groepen",
+  "trackGroupDeeds": "Houd groepsdaden bij",
+  "everythingInPlan": "Alles in de {plan} plan",
+  "createGroupsDescription": "Tot {amount} groepen aanmaken",
+  "createDeedTemplatesDescription": "Tot {amount} daadsjablonen per groep aanmaken",
+  "createDeedStatusesDescription": "Tot {amount} statussen per daadsjabloon aanmaken",
+  "month": "Maand",
+  "year": "Jaar",
+  "getStarted": "Start"
 }

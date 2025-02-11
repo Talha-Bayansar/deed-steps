@@ -141,7 +141,7 @@ export const getUser = cache(async () => {
 });
 
 export const requireAuth = async () => {
-  const { user } = await validateRequest();
+  const user = await getUser();
   if (!user) {
     redirect(routes.signIn.root);
   }
