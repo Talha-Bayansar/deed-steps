@@ -4,19 +4,19 @@ const testimonials = [
   {
     name: "John Doe",
     role: "CEO, TechCorp",
-    image: "/placeholder.svg?height=400&width=400",
+    // image: "/placeholder.svg?height=400&width=400",
     quote: `${APP_NAME} has revolutionized the way we work. Our team productivity has increased by 40% since we started using it.`,
   },
   {
     name: "Hassan Davis",
     role: "Project Manager, InnovateCo",
-    image: "/placeholder.svg?height=400&width=400",
+    // image: "/placeholder.svg?height=400&width=400",
     quote: `I can't imagine managing our projects without ${APP_NAME}. It's intuitive, powerful, and has all the features we need.`,
   },
   {
     name: "Abdulkadir Chen",
     role: "Freelance Designer",
-    image: "/placeholder.svg?height=400&width=400",
+    // image: "/placeholder.svg?height=400&width=400",
     quote: `As a freelancer, staying organized is crucial. ${APP_NAME} helps me manage multiple clients and projects effortlessly.`,
   },
 ];
@@ -45,13 +45,13 @@ const Testimonials = () => {
                     {`"${testimonial.quote}"`}
                   </blockquote>
                   <div className="mt-6 flex items-center">
-                    <div className="flex-shrink-0">
+                    {/* <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
                         src={testimonial.image || "/placeholder.svg"}
                         alt=""
                       />
-                    </div>
+                    </div> */}
                     <div className="ml-3">
                       <p className="text-sm font-medium text-gray-900">
                         {testimonial.name}

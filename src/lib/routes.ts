@@ -1,6 +1,7 @@
 export const routes = {
   landingPage: { root: "/" },
   app: "/app",
+  mySubscription: { root: "/my-subscription" },
   signIn: {
     root: "/sign-in",
   },

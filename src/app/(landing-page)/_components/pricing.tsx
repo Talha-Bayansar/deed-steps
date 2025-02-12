@@ -126,7 +126,7 @@ const PlanCard = async ({
           <span className="text-5xl font-extrabold tracking-tight">
             {`€${plan.price ? plan.price[type] : 0}`}
           </span>
-          <span className="ml-1 text-xl font-semibold">/{t("month")}</span>
+          <span className="ml-1 text-xl font-semibold">/{t(type)}</span>
         </p>
         <ul className="mt-6 space-y-6">
           {plan.features.map((feature) => (
@@ -144,7 +144,7 @@ const PlanCard = async ({
         <form
           action={async () => {
             "use server";
-            const url = await generateStripeCheckout(plan.priceId!.month!);
+            const url = await generateStripeCheckout(plan.priceId![type]);
             if (url) {
               redirect(url);
             }

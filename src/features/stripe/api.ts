@@ -165,7 +165,7 @@ export const getUserPlan = async () => {
       }
     }
 
-    return createSuccessResponse(plan);
+    return createSuccessResponse({ plan, subData });
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }
