@@ -1,7 +1,10 @@
+import { getLocale } from "@/i18n/api";
 import { routes } from "@/lib/routes";
 import type { MetadataRoute } from "next";
 
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const locale = await getLocale();
+
   return {
     theme_color: "#ffffff",
     background_color: "#7c3aed",
@@ -22,7 +25,7 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "any",
     display: "standalone",
     dir: "auto",
-    lang: "nl-NL",
+    lang: locale,
     name: "Deed Steps",
     short_name: "Deed Steps",
     start_url: routes.app,
