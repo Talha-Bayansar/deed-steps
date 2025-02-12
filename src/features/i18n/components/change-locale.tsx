@@ -31,7 +31,7 @@ export const ChangeLocale = ({ locale }: Props) => {
       case "tr":
         return t("tr");
       default:
-        return t("en");
+        return t("tr");
     }
   };
 
