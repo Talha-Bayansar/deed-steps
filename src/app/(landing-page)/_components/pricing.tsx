@@ -1,9 +1,9 @@
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { generateStripeCheckout } from "@/features/stripe/api";
 import { routes } from "@/lib/routes";
 import { Check } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Plan = {
@@ -66,35 +66,28 @@ const Pricing = async () => {
   ];
 
   return (
-    <div id="pricing" className="bg-white py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-            {"Pricing"}
-          </h2>
-          <p className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
-            {"Choose the right plan for your team"}
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 md:mx-auto">
-            {
-              "Whether you're a small team or a large enterprise, we have a plan that fits your needs."
-            }
-          </p>
-        </div>
-        <Tabs className="py-12" defaultValue="month">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="month">{t("month")}</TabsTrigger>
-            <TabsTrigger value="year">{t("year")}</TabsTrigger>
+    <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">
+          {t("chooseYourPath")}
+        </h2>
+        <p className="text-gray-500 dark:text-gray-400 text-center mb-8">
+          {t("chooseYourPathDescription")}
+        </p>
+        <Tabs defaultValue="month" className="w-full">
+          <TabsList className="mb-12 grid w-full max-w-md grid-cols-2 mx-auto">
+            <TabsTrigger value="month">{t("monthly")}</TabsTrigger>
+            <TabsTrigger value="year">{t("yearly")}</TabsTrigger>
           </TabsList>
           <TabsContent value="month">
-            <div className="mt-16 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {plans.map((plan) => (
                 <PlanCard key={`month_${plan.name}`} plan={plan} type="month" />
               ))}
             </div>
           </TabsContent>
           <TabsContent value="year">
-            <div className="mt-16 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {plans.map((plan) => (
                 <PlanCard key={`year_${plan.name}`} plan={plan} type="year" />
               ))}
@@ -102,7 +95,7 @@ const Pricing = async () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -118,53 +111,51 @@ const PlanCard = async ({
   return (
     <div
       key={plan.name}
-      className="relative p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col"
+      className="flex flex-col justify-between p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-purple-200 dark:border-purple-700"
     >
-      <div className="flex-1">
-        <h3 className="text-xl font-semibold text-gray-900">{plan.name}</h3>
-        <p className="mt-4 flex items-baseline text-gray-900">
-          <span className="text-5xl font-extrabold tracking-tight">
-            {`€${plan.price ? plan.price[type] : 0}`}
+      <div className="flex flex-col">
+        <h3 className="text-2xl font-bold text-center mb-4">{plan.name}</h3>
+        {/* <p className="text-center text-gray-500 dark:text-gray-400 mb-4">
+      {plan.description}
+    </p> */}
+        <p className="text-4xl font-bold text-center mb-6">
+          {`€${plan.price ? plan.price[type] : 0}`}
+          <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+            /{t(type)}
           </span>
-          <span className="ml-1 text-xl font-semibold">/{t(type)}</span>
         </p>
-        <ul className="mt-6 space-y-6">
-          {plan.features.map((feature) => (
-            <li key={feature} className="flex">
-              <Check
-                className="flex-shrink-0 w-6 h-6 text-green-500"
-                aria-hidden="true"
-              />
-              <span className="ml-3 text-gray-500">{feature}</span>
+        <ul className="space-y-2 mb-6">
+          {plan.features.map((feature, index) => (
+            <li key={index} className="flex items-center">
+              <Check className="w-5 h-5 text-purple-600 mr-2" />
+              <span>{feature}</span>
             </li>
           ))}
         </ul>
       </div>
-      {plan.priceId ? (
-        <form
-          action={async () => {
-            "use server";
-            const url = await generateStripeCheckout(plan.priceId![type]);
-            if (url) {
-              redirect(url);
-            }
-          }}
+
+      <form
+        action={async () => {
+          "use server";
+
+          if (!plan.price) {
+            redirect(routes.app);
+          }
+
+          const url = await generateStripeCheckout(plan.priceId![type]);
+          if (url) {
+            redirect(url);
+          }
+        }}
+      >
+        <Button
+          className={
+            "mt-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white w-full sm:w-auto"
+          }
         >
-          <button
-            type="submit"
-            className="mt-8 block w-full bg-indigo-600 border border-transparent rounded-md py-3 px-6 text-center font-medium text-white hover:bg-indigo-700"
-          >
-            {t("getStarted")}
-          </button>
-        </form>
-      ) : (
-        <Link
-          href={routes.app}
-          className="mt-8 block w-full bg-indigo-600 border border-transparent rounded-md py-3 px-6 text-center font-medium text-white hover:bg-indigo-700"
-        >
-          {t("getStarted")}
-        </Link>
-      )}
+          {!plan.price ? t("getStarted") : t("subscribe")}
+        </Button>
+      </form>
     </div>
   );
 };

@@ -1,25 +1,25 @@
-import CTA from "./_components/cta";
-import Features from "./_components/features";
-import Footer from "./_components/footer";
 import Header from "./_components/header";
-import Hero from "./_components/hero";
+import Footer from "./_components/footer";
 import Pricing from "./_components/pricing";
-import Testimonials from "./_components/testimonials";
+import Hero from "./_components/hero";
+import Features from "./_components/features";
+import { InstallSection } from "./_components/install-section";
+// import { FeatureComparison } from "./_components/feature-comparison";
+import CTA from "./_components/cta";
 
-const LandingPage = () => {
+export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main>
+      <main className="flex-1">
         <Hero />
         <Features />
-        <Testimonials />
         <Pricing />
+        {/* <FeatureComparison /> */}
+        <InstallSection />
         <CTA />
       </main>
       <Footer />
     </div>
   );
-};
-
-export default LandingPage;
+}

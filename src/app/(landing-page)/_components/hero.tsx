@@ -1,42 +1,37 @@
+import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+const Hero = async () => {
+  const t = await getTranslations();
 
-const Hero = () => {
   return (
-    <div className="bg-indigo-50">
-      <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-            <span className="block">{APP_NAME} Your Workflow</span>
-            <span className="block text-indigo-600">
-              {"Boost Your Productivity"}
-            </span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            {`${APP_NAME} helps teams collaborate, manage projects, and reach new
-            productivity peaks. Get more done with less effort.`}
-          </p>
-          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-            <div className="rounded-md shadow">
-              <Link
-                href="#cta"
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-              >
-                Get started
-              </Link>
-            </div>
-            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-              <Link
-                href="#features"
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-              >
-                Learn more
-              </Link>
-            </div>
-          </div>
+    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 px-4 bg-gradient-to-b from-purple-50 to-white dark:from-purple-900 dark:to-gray-900">
+      <div className="container mx-auto text-center">
+        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none xl:text-8xl/none max-w-3xl mx-auto mb-4">
+          {t("heroTitle")}{" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+            {APP_NAME}
+          </span>
+        </h1>
+        <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 mb-8">
+          {t("heroDescription")}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+          >
+            {t("getStarted")}
+          </Button>
+          <Link href="#features">
+            <Button size="lg" variant="outline">
+              {t("learnMore")}
+            </Button>
+          </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

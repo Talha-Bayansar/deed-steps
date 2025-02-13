@@ -7,17 +7,11 @@ import { requireAuth } from "../auth/api";
 import { getTranslations } from "next-intl/server";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { STRIPE_SUB_CACHE, StripePlan } from "./types";
+import { safeAction } from "@/lib/safe-action";
+import { routes } from "@/lib/routes";
+import { basicPrices, proPrices } from "./index";
 
 const baseUrl = process.env.BASE_URL!;
-
-const basicPrices = [
-  "price_1QqyjYGL1AGFWIgJ5Le6xFn1",
-  "price_1Qqyl4GL1AGFWIgJetL5FzXG",
-];
-const proPrices = [
-  "price_1Qqyk7GL1AGFWIgJ2UQ6GLFI",
-  "price_1QqykjGL1AGFWIgJR1sIG3My",
-];
 
 export async function generateStripeCheckout(priceId: string) {
   const user = await requireAuth();
@@ -170,3 +164,32 @@ export const getUserPlan = async () => {
     return createErrorResponse(t("somethingWentWrong"));
   }
 };
+
+export const manageUserSubscription = safeAction.action(async () => {
+  const t = await getTranslations();
+  const user = await requireAuth();
+
+  try {
+    const customerId = await kv.get(`stripe:user:${user.id}`);
+    let url = `${routes.landingPage.root}#pricing`;
+
+    if (customerId) {
+      const subData: STRIPE_SUB_CACHE | null = await kv.get(
+        `stripe:customer:${customerId}`
+      );
+
+      if (subData && subData.status !== "none" && subData.subscriptionId) {
+        const session = await stripe.billingPortal.sessions.create({
+          customer: customerId as string,
+          return_url: baseUrl,
+        });
+        url = session.url;
+      }
+    }
+
+    return createSuccessResponse({ url });
+  } catch (error) {
+    console.error(error);
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+});

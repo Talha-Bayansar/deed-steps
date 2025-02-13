@@ -1,7 +1,9 @@
 import { ErrorState } from "@/components/error-state";
 import { View } from "@/components/layout/view";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { monthPrices } from "@/features/stripe";
 import { getUserPlan } from "@/features/stripe/api";
+import { ManageSubscriptionButton } from "@/features/stripe/components/manage-subscription-button";
 import { extractError } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 
@@ -11,6 +13,15 @@ const MySubscriptionPage = async () => {
 
   const error = extractError(plan, t);
   if (error) return <ErrorState error={error} />;
+
+  const subData = plan.data!.subData;
+
+  const paymentInterval =
+    subData?.status === "active"
+      ? monthPrices.includes(subData.priceId ?? "")
+        ? "monthly"
+        : "yearly"
+      : "none";
 
   return (
     <View className="flex-grow justify-center items-center">
@@ -26,14 +37,17 @@ const MySubscriptionPage = async () => {
                   {t("currentPlan")}: {t(plan.data!.plan)}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {plan.data!.subData?.status === "active"
-                    ? t("billedMonthly")
+                  {subData?.status === "active"
+                    ? paymentInterval === "monthly"
+                      ? t("billedMonthly")
+                      : t("billedYearly")
                     : plan.data!.subData?.status === "trialing"
                     ? t("trialPeriod")
                     : t("noActiveSubscription")}
                 </p>
               </div>
-              {/* <ManageSubscriptionButton /> */}
+
+              <ManageSubscriptionButton />
             </div>
           </div>
         </CardContent>

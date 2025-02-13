@@ -1,26 +1,38 @@
+import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
 import { routes } from "@/lib/routes";
+import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-const CTA = () => {
+const CTA = async () => {
+  const t = await getTranslations();
+
   return (
-    <div id="cta" className="bg-indigo-700">
-      <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-          <span className="block">{"Ready to dive in?"}</span>
-          <span className="block">{"Start your free trial today."}</span>
-        </h2>
-        <p className="mt-4 text-lg leading-6 text-indigo-200">
-          {`Boost your team's productivity with ${APP_NAME}. No credit card required.`}
-        </p>
-        <Link
-          href={routes.app}
-          className="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto"
-        >
-          {"Sign up for free"}
-        </Link>
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center space-y-4 text-center">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              {t("ctaTitle")}
+            </h2>
+            <p className="mx-auto max-w-[700px] text-purple-100 md:text-xl">
+              {t("ctaDescription", { appName: APP_NAME })}
+            </p>
+          </div>
+          <Link href={routes.app}>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="bg-white text-purple-600 hover:bg-purple-50"
+            >
+              {t("getStarted")}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

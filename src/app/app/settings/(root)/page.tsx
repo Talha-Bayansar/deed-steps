@@ -6,7 +6,7 @@ import { getLocale } from "@/i18n/api";
 import { ChangeLocaleDrawer } from "../_components/change-locale-drawer";
 import { SignOutTile } from "../_components/sign-out-tile";
 import { getMyPushSubscription } from "@/features/notification/api";
-
+import { MySubscriptionTile } from "../_components/my-subscription-tile";
 const SettingsRootPage = async () => {
   const user = await requireAuth();
   const locale = await getLocale();
@@ -23,6 +23,9 @@ const SettingsRootPage = async () => {
         </div>
         <div className="list-tile flex items-center">
           <NotificationsPreference pushScription={pushSubscription.data} />
+        </div>
+        <div className="list-tile flex items-center">
+          <MySubscriptionTile />
         </div>
         <div className="list-tile flex items-center">
           <SignOutTile />

@@ -1,69 +1,60 @@
-import { APP_NAME } from "@/lib/constants";
-import { Zap, Clock, Users, TrendingUp } from "lucide-react";
+import { Users, CheckCircle, Star, Bell } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-const features = [
-  {
-    name: "Lightning Fast",
-    description:
-      "Our optimized platform ensures quick load times and smooth performance.",
-    icon: Zap,
-  },
-  {
-    name: "Time-Saving",
-    description: "Automate repetitive tasks and focus on what really matters.",
-    icon: Clock,
-  },
-  {
-    name: "Collaborative",
-    description: "Work seamlessly with your team, no matter where they are.",
-    icon: Users,
-  },
-  {
-    name: "Scalable",
-    description:
-      "Grow your business without worrying about outgrowing your tools.",
-    icon: TrendingUp,
-  },
-];
+const Features = async () => {
+  const t = await getTranslations();
 
-const Features = () => {
   return (
-    <div id="features" className="py-12 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center">
-          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-            Features
-          </h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            A better way to work
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            {`${APP_NAME} offers a suite of powerful features to help you and your
-            team work smarter, not harder.`}
-          </p>
-        </div>
-
-        <div className="mt-10">
-          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-            {features.map((feature) => (
-              <div key={feature.name} className="relative">
-                <dt>
-                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                    {feature.name}
-                  </p>
-                </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-500">
-                  {feature.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+    <section
+      id="features"
+      className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900"
+    >
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+          {t("featuresTitle")}
+        </h2>
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
+              <Users className="w-8 h-8 text-purple-600" />
+            </div>
+            <h3 className="text-xl font-bold">{t("groupManagement")}</h3>
+            <p className="text-gray-500 dark:text-gray-400">
+              {t("groupManagementDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <div className="w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mb-4">
+              <CheckCircle className="w-8 h-8 text-indigo-600" />
+            </div>
+            <h3 className="text-xl font-bold">
+              {t("customizableDeedTemplates")}
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400">
+              {t("customizableDeedTemplatesDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
+              <Star className="w-8 h-8 text-purple-600" />
+            </div>
+            <h3 className="text-xl font-bold">{t("pointSystem")}</h3>
+            <p className="text-gray-500 dark:text-gray-400">
+              {t("pointSystemDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <div className="w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mb-4">
+              <Bell className="w-8 h-8 text-indigo-600" />
+            </div>
+            <h3 className="text-xl font-bold">{t("pushNotifications")}</h3>
+            <p className="text-gray-500 dark:text-gray-400">
+              {t("pushNotificationsDescription")}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
