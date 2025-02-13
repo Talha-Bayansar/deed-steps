@@ -277,5 +277,6 @@
   "pricing": "Pricing",
   "install": "Install",
   "faq": "FAQ",
-  "limitReached": "It looks like you reached the limit of your current plan."
+  "limitReached": "It looks like you reached the limit of your current plan.",
+  "goToApp": "Go to app"
 }

@@ -277,5 +277,6 @@
   "pricing": "Fiyatlar",
   "install": "Yükle",
   "faq": "Sıkça Sorulan Sorular",
-  "limitReached": "Görünüşe göre mevcut planınızın limitini aştınız."
+  "limitReached": "Görünüşe göre mevcut planınızın limitini aştınız.",
+  "goToApp": "Uygulamaya git"
 }

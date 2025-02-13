@@ -16,18 +16,20 @@ export const Navbar = ({
   leading,
 }: Props) => {
   return (
-    <div className="flex w-full gap-2 p-8 pb-2 items-center">
-      <div className="flex-1 flex items-center justify-start">
-        {leading
-          ? leading
-          : hrefBackButton && (
-              <Link href={hrefBackButton}>
-                <BackIconButton />
-              </Link>
-            )}
+    <div className="flex flex-col gap-2 w-full items-start p-8 pb-0">
+      <div className="flex w-full gap-2 items-center justify-between">
+        <div className="flex items-center justify-start">
+          {leading
+            ? leading
+            : hrefBackButton && (
+                <Link href={hrefBackButton}>
+                  <BackIconButton />
+                </Link>
+              )}
+        </div>
+        <div className="flex items-center">{trailing}</div>
       </div>
-      <h1 className="header-3 flex-grow text-center">{children}</h1>
-      <div className="flex-1 flex items-center justify-end">{trailing}</div>
+      <h1 className="header-3">{children}</h1>
     </div>
   );
 };

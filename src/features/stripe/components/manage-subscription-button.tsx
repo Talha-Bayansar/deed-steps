@@ -26,7 +26,12 @@ export const ManageSubscriptionButton = () => {
   };
 
   return (
-    <LoadingButton onClick={handleClick} isLoading={isPending}>
+    <LoadingButton
+      className="w-full sm:w-auto"
+      onClick={handleClick}
+      isLoading={isPending}
+      variant={"outline"}
+    >
       {t("manageSubscription")}
     </LoadingButton>
   );
