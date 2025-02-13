@@ -272,5 +272,9 @@
   "faqAnswer3": "Grup üyeleri amellerini tamamladıkça, grup yöneticisi tarafından belirlenen kurallara göre puan kazanırlar. Bu puanlar ilerlemeyi takip etmek, dostça rekabet oluşturmak veya grup içinde ödüller için kullanılabilir. Grup sahipleri ve yöneticiler, puan kullanımı için QR kodları kullanarak bir ödül sistemi kurabilirler.",
   "faqAnswer4": "{appName}'deki anlık bildirimler iki ana amaca hizmet eder. İlk olarak, grup sahipleri grup üyelerine manuel hatırlatmalar gönderebilir. İkinci olarak, uygulama, gruptaki birisi iyi bir amel tamamladığında diğer üyeleri teşvik etmek ve motive etmek için otomatik olarak bildirimler gönderir.",
   "ctaTitle": "İman Yolculuğunuza Bugün Başlayın",
-  "ctaDescription": "{appName} ile inançlarını ve topluluklarını güçlendiren binlerce kişiye katılın."
+  "ctaDescription": "{appName} ile inançlarını ve topluluklarını güçlendiren binlerce kişiye katılın.",
+  "features": "Özellikler",
+  "pricing": "Fiyatlar",
+  "install": "Yükle",
+  "faq": "Sıkça Sorulan Sorular"
 }

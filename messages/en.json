@@ -272,5 +272,9 @@
   "faqAnswer3": "As group members complete their deeds, they earn points based on the rules set by the group admin. These points can be used to track progress, create friendly competition, or even be redeemed for rewards within the group. Group owners and admins can set up a reward system using QR codes for point redemption.",
   "faqAnswer4": "Push notifications in {appName} serve two main purposes. First, group owners can send manual reminders to group members. Second, the app automatically sends notifications when someone in the group completes a good deed, encouraging and motivating other members to participate.",
   "ctaTitle": "Start Your Journey of Faith Today",
-  "ctaDescription": "  Join thousands of others strengthening their faith and community with {appName}."
+  "ctaDescription": "  Join thousands of others strengthening their faith and community with {appName}.",
+  "features": "Features",
+  "pricing": "Pricing",
+  "install": "Install",
+  "faq": "FAQ"
 }

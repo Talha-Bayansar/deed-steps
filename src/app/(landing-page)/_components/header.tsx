@@ -17,14 +17,14 @@ const Header = () => {
         <div className="flex items-center justify-between w-full">
           <Link className="flex items-center justify-center" href="#">
             <Image
-              src="/placeholder.svg?height=32&width=32"
+              src="/icon512_maskable.png"
               width={32}
               height={32}
               alt={t("logoAlt", { appName: APP_NAME })}
               className="rounded-lg"
             />
             <span className="ml-2 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
-              Deed Steps
+              {APP_NAME}
             </span>
           </Link>
           <nav className="hidden sm:ml-auto sm:flex sm:gap-6">
@@ -32,26 +32,26 @@ const Header = () => {
               className="text-sm font-medium hover:text-purple-600 transition-colors"
               href="#features"
             >
-              Features
+              {t("features")}
             </Link>
             <Link
               className="text-sm font-medium hover:text-purple-600 transition-colors"
               href="#pricing"
             >
-              Pricing
+              {t("pricing")}
             </Link>
             <Link
               className="text-sm font-medium hover:text-purple-600 transition-colors"
               href="#install"
             >
-              Install
+              {t("install")}
             </Link>
-            <Link
+            {/* <Link
               className="text-sm font-medium hover:text-purple-600 transition-colors"
               href="#faq"
             >
-              FAQ
-            </Link>
+              {t("faq")}
+            </Link> */}
           </nav>
           <div className="-mr-2 flex items-center sm:hidden">
             <button
@@ -76,25 +76,25 @@ const Header = () => {
               href="#features"
               className="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             >
-              Features
-            </Link>
-            <Link
-              href="#testimonials"
-              className="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-            >
-              Testimonials
+              {t("features")}
             </Link>
             <Link
               href="#pricing"
               className="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             >
-              Pricing
+              {t("pricing")}
+            </Link>
+            <Link
+              href="#install"
+              className="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+            >
+              {t("install")}
             </Link>
             <Link
               href="#cta"
               className="block pl-3 pr-4 py-2 text-base font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             >
-              Get Started
+              {t("getStarted")}
             </Link>
           </nav>
         </div>

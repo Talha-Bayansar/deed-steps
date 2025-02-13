@@ -62,4 +62,13 @@ export const routes = {
   settings: {
     root: "/app/settings",
   },
+  legal: {
+    root: "/legal",
+    privacyPolicy: {
+      root: "/legal#privacy-policy",
+    },
+    termsOfService: {
+      root: "/legal#terms-of-service",
+    },
+  },
 };

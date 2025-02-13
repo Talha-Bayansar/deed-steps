@@ -272,5 +272,9 @@
   "faqAnswer3": "Lorsque les membres du groupe accomplissent leurs actions, ils gagnent des points selon les règles définies par l'administrateur du groupe. Ces points peuvent être utilisés pour suivre les progrès, créer une compétition amicale, ou même être échangés contre des récompenses au sein du groupe. Les propriétaires et administrateurs de groupe peuvent mettre en place un système de récompenses utilisant des codes QR pour l'échange de points.",
   "faqAnswer4": "Les notifications push dans {appName} servent deux objectifs principaux. Premièrement, les propriétaires de groupe peuvent envoyer des rappels manuels aux membres du groupe. Deuxièmement, l'application envoie automatiquement des notifications lorsque quelqu'un dans le groupe accomplit une bonne action, encourageant et motivant les autres membres à participer.",
   "ctaTitle": "Commencez Votre Voyage de Foi Aujourd'hui",
-  "ctaDescription": "Rejoignez des milliers d'autres personnes qui renforcent leur foi et leur communauté avec {appName}."
+  "ctaDescription": "Rejoignez des milliers d'autres personnes qui renforcent leur foi et leur communauté avec {appName}.",
+  "features": "Fonctionnalités",
+  "pricing": "Prix",
+  "install": "Installer",
+  "faq": "FAQ"
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { APP_NAME } from "@/lib/constants";
 import { getTranslations } from "next-intl/server";
+import { routes } from "@/lib/routes";
 
 const Footer = async () => {
   const t = await getTranslations();
@@ -12,7 +13,7 @@ const Footer = async () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-4 md:mb-0">
             <Image
-              src="/placeholder.svg?height=32&width=32"
+              src="/icon512_maskable.png"
               width={32}
               height={32}
               alt={t("logoAlt", { appName: APP_NAME })}
@@ -25,13 +26,13 @@ const Footer = async () => {
           <nav className="flex gap-4">
             <Link
               className="text-sm text-gray-500 hover:text-purple-600 transition-colors"
-              href="#"
+              href={routes.legal.termsOfService.root}
             >
               {t("termsOfService")}
             </Link>
             <Link
               className="text-sm text-gray-500 hover:text-purple-600 transition-colors"
-              href="#"
+              href={routes.legal.privacyPolicy.root}
             >
               {t("privacyPolicy")}
             </Link>
