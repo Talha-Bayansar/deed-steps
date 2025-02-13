@@ -38,7 +38,7 @@ export default function LegalPage() {
             <p>
               You agree to use Deed Steps only for lawful purposes and in a way
               that does not infringe the rights of, restrict or inhibit anyone
-              else's use and enjoyment of the service.
+              else&apos;s use and enjoyment of the service.
             </p>
 
             <h3>5. Content</h3>
@@ -77,7 +77,7 @@ export default function LegalPage() {
             <h3>9. Changes to Terms</h3>
             <p>
               We reserve the right to modify or replace these Terms at any time.
-              If a revision is material, we will provide at least 30 days'
+              If a revision is material, we will provide at least 30 days&apos;
               notice prior to any new terms taking effect.
             </p>
 
@@ -166,7 +166,7 @@ export default function LegalPage() {
               contacting us directly.
             </p>
 
-            <h3>7. Children's Privacy</h3>
+            <h3>7. Children&apos;s Privacy</h3>
             <p>
               Our service is not intended for use by children under the age of
               13. We do not knowingly collect personal information from children
@@ -177,7 +177,8 @@ export default function LegalPage() {
             <p>
               We may update our Privacy Policy from time to time. We will notify
               you of any changes by posting the new Privacy Policy on this page
-              and updating the "effective date" at the top of this page.
+              and updating the &quot;effective date&quot; at the top of this
+              page.
             </p>
 
             <h3>9. Contact Us</h3>
