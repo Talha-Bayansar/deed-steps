@@ -6,10 +6,10 @@ import Stripe from "stripe";
 import { requireAuth } from "../auth/api";
 import { getTranslations } from "next-intl/server";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
-import { STRIPE_SUB_CACHE, StripePlan } from "./types";
+import { STRIPE_SUB_CACHE } from "./types";
 import { safeAction } from "@/lib/safe-action";
 import { routes } from "@/lib/routes";
-import { basicPrices, proPrices } from "./index";
+import { findPlanSubscriptionByUserId } from "./queries";
 
 const baseUrl = process.env.BASE_URL!;
 
@@ -137,27 +137,7 @@ export const getUserPlan = async () => {
   const user = await requireAuth();
 
   try {
-    const stripeUserId = await kv.get(`stripe:user:${user.id}`);
-    const subData: STRIPE_SUB_CACHE | null = await kv.get(
-      `stripe:customer:${stripeUserId}`
-    );
-
-    let plan: StripePlan = "free";
-
-    if (!subData || subData.status === "none") {
-      plan = "free";
-    } else {
-      const priceId = subData.priceId;
-      if (!priceId) {
-        plan = "free";
-      } else {
-        if (basicPrices.includes(priceId)) {
-          plan = "basic";
-        } else if (proPrices.includes(priceId)) {
-          plan = "pro";
-        }
-      }
-    }
+    const { plan, subData } = await findPlanSubscriptionByUserId(user.id);
 
     return createSuccessResponse({ plan, subData });
   } catch {

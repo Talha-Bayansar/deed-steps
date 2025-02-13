@@ -276,5 +276,6 @@
   "features": "Fonctionnalités",
   "pricing": "Prix",
   "install": "Installer",
-  "faq": "FAQ"
+  "faq": "FAQ",
+  "limitReached": "Il semble que vous avez atteint la limite de votre plan actuel."
 }

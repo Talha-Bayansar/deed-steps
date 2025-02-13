@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { groupTable, userToGroupTable } from "@/db/schema";
 import { isArrayEmpty } from "@/lib/utils";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
 export const groupsKey = "groups";
@@ -41,3 +41,14 @@ export const findGroupsByUserId = unstable_cache(
     tags: [groupsKey],
   }
 );
+
+export const findOwnedGroupsCountByUserId = async (userId: number) => {
+  const rows = await db
+    .select({ count: count() })
+    .from(groupTable)
+    .where(eq(groupTable.ownerId, userId));
+
+  if (isArrayEmpty(rows)) return 0;
+
+  return rows[0].count;
+};

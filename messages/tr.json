@@ -276,5 +276,6 @@
   "features": "Özellikler",
   "pricing": "Fiyatlar",
   "install": "Yükle",
-  "faq": "Sıkça Sorulan Sorular"
+  "faq": "Sıkça Sorulan Sorular",
+  "limitReached": "Görünüşe göre mevcut planınızın limitini aştınız."
 }

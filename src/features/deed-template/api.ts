@@ -19,11 +19,14 @@ import {
   findDeedTemplateById,
   findDeedTemplatesByGroupId,
   findDeedTemplatesByGroupIds,
+  findDeedTemplatesCountByGroupId,
 } from "./queries";
 import {
   findDeedStatusesByTemplateId,
   findDeedStatusesByTemplateIds,
 } from "../deed-status/queries";
+import { findPlanSubscriptionByUserId } from "../stripe/queries";
+import { pricePlanLimits } from "../stripe/access-control/permissions";
 
 export const getDeedTemplatesByGroupId = async (groupId: number) => {
   await requireAuth();
@@ -151,10 +154,17 @@ export const createDeedTemplate = safeAction
     })
   )
   .action(async ({ parsedInput: { name, groupId, recurrence } }) => {
-    await requireAuth();
+    const user = await requireAuth();
     const t = await getTranslations();
 
     try {
+      const userPlan = await findPlanSubscriptionByUserId(user.id);
+      const deedTemplatesCount = await findDeedTemplatesCountByGroupId(groupId);
+      const userLimits = pricePlanLimits[userPlan.plan];
+
+      if (deedTemplatesCount >= userLimits.maxDeedTemplatesPerGroup)
+        return createErrorResponse(t("limitReached"));
+
       const deedTemplates = await db
         .select()
         .from(deedTemplateTable)
@@ -194,7 +204,7 @@ export const duplicateDeedTemplate = safeAction
     })
   )
   .action(async ({ parsedInput: { deedTemplateId, newName } }) => {
-    await requireAuth();
+    const user = await requireAuth();
     const t = await getTranslations();
 
     try {
@@ -209,6 +219,15 @@ export const duplicateDeedTemplate = safeAction
         );
 
       const deedTemplate = deedTemplateRows[0];
+
+      const userPlan = await findPlanSubscriptionByUserId(user.id);
+      const userLimits = pricePlanLimits[userPlan.plan];
+      const deedTemplatesCount = await findDeedTemplatesCountByGroupId(
+        deedTemplate.groupId
+      );
+
+      if (deedTemplatesCount >= userLimits.maxDeedTemplatesPerGroup)
+        return createErrorResponse(t("limitReached"));
 
       const deedTemplateStatuses = await db
         .select()

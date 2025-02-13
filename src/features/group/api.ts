@@ -21,12 +21,19 @@ import { requireAuth } from "../auth/api";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
 import { cache } from "react";
-import { findGroupById, findGroupsByUserId, groupsKey } from "./queries";
+import {
+  findGroupById,
+  findGroupsByUserId,
+  findOwnedGroupsCountByUserId,
+  groupsKey,
+} from "./queries";
 import { findDeedTemplatesByGroupId } from "../deed-template/queries";
 import { findDeedStatusesByTemplateIds } from "../deed-status/queries";
 import { findGroupPointsByGroupId } from "../group-points/queries";
 import { revalidateTag } from "next/cache";
 import { userToGroupKey } from "../user-to-group/queries";
+import { findPlanSubscriptionByUserId } from "../stripe/queries";
+import { pricePlanLimits } from "../stripe/access-control/permissions";
 
 export const getGroupById = cache(async (id: number) => {
   const t = await getTranslations();
@@ -97,6 +104,13 @@ export const createGroup = safeAction
     const t = await getTranslations();
 
     try {
+      const userPlan = await findPlanSubscriptionByUserId(user.id);
+      const ownedGroupsCount = await findOwnedGroupsCountByUserId(user.id);
+      const userLimits = pricePlanLimits[userPlan.plan];
+
+      if (ownedGroupsCount >= userLimits.maxOwnedGroups)
+        return createErrorResponse(t("limitReached"));
+
       // Insert the new group
       const newGroup = await db
         .insert(groupTable)

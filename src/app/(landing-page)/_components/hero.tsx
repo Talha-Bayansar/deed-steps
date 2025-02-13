@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { routes } from "@/lib/routes";
 const Hero = async () => {
   const t = await getTranslations();
 
@@ -18,12 +19,14 @@ const Hero = async () => {
           {t("heroDescription")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
-          >
-            {t("getStarted")}
-          </Button>
+          <Link href={routes.app}>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+            >
+              {t("getStarted")}
+            </Button>
+          </Link>
           <Link href="#features">
             <Button size="lg" variant="outline">
               {t("learnMore")}

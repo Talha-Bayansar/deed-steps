@@ -276,5 +276,6 @@
   "features": "Features",
   "pricing": "Pricing",
   "install": "Install",
-  "faq": "FAQ"
+  "faq": "FAQ",
+  "limitReached": "It looks like you reached the limit of your current plan."
 }

@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { deedStatusTable } from "@/db/schema";
-import { eq, inArray } from "drizzle-orm";
+import { count, eq, inArray } from "drizzle-orm";
+import { isArrayEmpty } from "@/lib/utils";
 import { unstable_cache } from "next/cache";
 
 export const deedStatusesKey = "deedStatuses";
@@ -32,3 +33,16 @@ export const findDeedStatusesByTemplateIds = unstable_cache(
   undefined,
   { tags: [deedStatusesKey] }
 );
+
+export const findDeedStatusesCountByTemplateId = async (
+  deedTemplateId: number
+) => {
+  const rows = await db
+    .select({ count: count() })
+    .from(deedStatusTable)
+    .where(eq(deedStatusTable.deedTemplateId, deedTemplateId));
+
+  if (isArrayEmpty(rows)) return 0;
+
+  return rows[0].count;
+};

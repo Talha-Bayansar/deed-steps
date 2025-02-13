@@ -276,5 +276,6 @@
   "features": "Functies",
   "pricing": "Prijzen",
   "install": "Installeren",
-  "faq": "Veelgestelde Vragen"
+  "faq": "Veelgestelde Vragen",
+  "limitReached": "Het lijkt erop dat je de limiet van je huidige plan hebt bereikt."
 }

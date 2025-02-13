@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { deedTemplateTable } from "@/db/schema";
 import { isArrayEmpty } from "@/lib/utils";
-import { eq, inArray } from "drizzle-orm";
+import { count, eq, inArray } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
 export const deedTemplatesKey = "deedTemplates";
@@ -51,3 +51,14 @@ export const findDeedTemplatesByGroupIds = unstable_cache(
     tags: [deedTemplatesKey],
   }
 );
+
+export const findDeedTemplatesCountByGroupId = async (groupId: number) => {
+  const rows = await db
+    .select({ count: count() })
+    .from(deedTemplateTable)
+    .where(eq(deedTemplateTable.groupId, groupId));
+
+  if (isArrayEmpty(rows)) return 0;
+
+  return rows[0].count;
+};

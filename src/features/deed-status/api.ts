@@ -9,7 +9,9 @@ import { z } from "zod";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
-import { deedStatusesKey } from "./queries";
+import { deedStatusesKey, findDeedStatusesCountByTemplateId } from "./queries";
+import { findPlanSubscriptionByUserId } from "../stripe/queries";
+import { pricePlanLimits } from "../stripe/access-control/permissions";
 
 export const createDeedStatus = safeAction
   .schema(
@@ -22,9 +24,18 @@ export const createDeedStatus = safeAction
   )
   .action(async ({ parsedInput: { name, color, reward, deedTemplateId } }) => {
     const t = await getTranslations();
-    await requireAuth();
+    const user = await requireAuth();
 
     try {
+      const userPlan = await findPlanSubscriptionByUserId(user.id);
+      const userLimits = pricePlanLimits[userPlan.plan];
+      const deedStatusesCount = await findDeedStatusesCountByTemplateId(
+        deedTemplateId
+      );
+
+      if (deedStatusesCount >= userLimits.maxDeedStatusesPerDeedTemplate)
+        return createErrorResponse(t("limitReached"));
+
       const res = await db.insert(deedStatusTable).values({
         name,
         color,
