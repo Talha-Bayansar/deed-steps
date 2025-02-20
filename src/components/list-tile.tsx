@@ -1,11 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from "@heroui/button";
 import { ChevronRight } from "lucide-react";
 
 type Props = {
   hideChevron?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & ButtonProps;
 
 export const ListTile = ({
   children,
@@ -14,14 +15,13 @@ export const ListTile = ({
   ...rest
 }: Props) => {
   return (
-    <div
+    <Button
       className={cn("flex w-full justify-between items-center", className)}
+      variant="faded"
       {...rest}
     >
       <div className="flex gap-2 items-center w-full">{children}</div>
-      {!hideChevron ? (
-        <ChevronRight className="text-muted-foreground" size={16} />
-      ) : null}
-    </div>
+      {!hideChevron ? <ChevronRight size={16} /> : null}
+    </Button>
   );
 };

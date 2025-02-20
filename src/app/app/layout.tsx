@@ -15,7 +15,7 @@ const AppLayout = async ({ children }: Props) => {
 
   return (
     <NotificationPermissionWrapper>
-      <div className="flex flex-grow mb-[86px]">
+      <div className="flex flex-col flex-grow mb-20">
         {children}
         <RootBottomNavigation />
       </div>

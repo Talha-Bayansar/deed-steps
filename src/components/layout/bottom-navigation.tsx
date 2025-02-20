@@ -19,11 +19,11 @@ export const BottomNavigation = ({ tabs }: Props) => {
   const pathName = usePathname();
 
   return (
-    <div className="fixed bottom-8 left-1/2 translate-x-[-50%]">
-      <div className="flex w-full space-x-2 rounded-xl border border-zinc-950/10 bg-white p-2">
+    <div className="fixed bottom-8 left-8 right-8">
+      <div className="flex justify-between w-full rounded-full border p-2 bg-black/90">
         <AnimatedBackground
           defaultValue={tabs.find((tab) => tab.href === pathName)?.label}
-          className="rounded-lg bg-primary/10"
+          className="rounded-full"
           transition={{
             type: "spring",
             bounce: 0.2,
@@ -35,9 +35,9 @@ export const BottomNavigation = ({ tabs }: Props) => {
               href={tab.href}
               key={tab.label}
               data-id={tab.label}
-              className="inline-flex h-9 w-9 items-center justify-center text-zinc-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-zinc-950"
+              className="inline-flex h-12 w-12 items-center justify-center text-muted-foreground transition-all active:scale-90 hover:scale-90"
             >
-              <tab.Icon className="h-5 w-5" />
+              <tab.Icon className="h-6 w-6" />
             </Link>
           ))}
         </AnimatedBackground>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
@@ -56,9 +56,9 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
 
-@layer utilities {
+/* @layer utilities {
   .header-1 {
     @apply font-bold text-4xl;
   }
@@ -77,4 +77,4 @@
   .icon-btn {
     @apply hover:opacity-50 active:opacity-50
   }
-}
+} */

@@ -3,7 +3,7 @@
 import { format, startOfToday } from "date-fns";
 import { useState } from "react";
 import { DeedTile } from "./deed-tile";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { EmptyState } from "@/components/empty-state";
 import { View } from "@/components/layout/view";
 import { DeedTemplate } from "@/features/deed-template/types";
@@ -12,6 +12,7 @@ import { ScrollableCalendar } from "@/components/scrollable-calendar";
 import { Group } from "@/features/group/types";
 import { DeedStatus } from "@/features/deed-status/types";
 import { RRule } from "rrule";
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
 
 type Props = {
   groups: Group[];
@@ -23,6 +24,7 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
   const t = useTranslations();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState<Date>(today);
+  const formatter = useFormatter();
 
   if (isArrayEmpty(groups))
     return (
@@ -59,17 +61,27 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
   };
 
   return (
-    <View>
+    <View className="gap-8">
       <ScrollableCalendar
         selectedDay={selectedDay}
         onSelectDay={setSelectedDay}
       />
-
       <View>
+        <h2 className="text-xl font-semibold">
+          {formatter.dateTime(normalizeDate(selectedDay), {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            timeZone: "UTC",
+          })}
+        </h2>
         {groups.map((group) => (
-          <View className="gap-0" key={group.id}>
-            <h2 className="font-medium">{group.name}</h2>
-            <View className="gap-0">
+          <Card className="gap-0" key={group.id}>
+            <CardHeader>
+              <h2 className="text-lg font-medium">{group.name}</h2>
+            </CardHeader>
+            <Divider />
+            <CardBody className="gap-2">
               {deedTemplates
                 .filter(
                   (dt) =>
@@ -87,8 +99,8 @@ export const DeedsView = ({ groups, deedTemplates, deedStatuses }: Props) => {
                     selectedDay={format(selectedDay, "yyyy-MM-dd")}
                   />
                 ))}
-            </View>
-          </View>
+            </CardBody>
+          </Card>
         ))}
       </View>
     </View>

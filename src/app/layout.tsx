@@ -8,6 +8,7 @@ import { APP_NAME } from "@/lib/constants";
 import { getMessages } from "next-intl/server";
 import { ReactQueryProvider } from "@/components/react-query-provider";
 import { getLocale } from "@/i18n/api";
+import { HerouiProvider } from "@/components/hero-ui-provider";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -260,12 +261,12 @@ export default async function LocaleLayout(props: {
   return (
     <html lang={locale} className="scroll-smooth">
       <body
-        className={`${spaceGrotesk.className} antialiased flex flex-col min-h-screen w-full overflow-x-hidden bg-background`}
+        className={`${spaceGrotesk.className} antialiased flex flex-col min-h-screen w-full overflow-x-hidden dark text-foreground bg-background`}
       >
         <ReactQueryProvider>
           <NextIntlClientProvider messages={messages}>
             <ServiceWorkerWrapper>
-              {children}
+              <HerouiProvider>{children}</HerouiProvider>
               <Toaster position="top-center" />
             </ServiceWorkerWrapper>
           </NextIntlClientProvider>

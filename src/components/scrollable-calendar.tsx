@@ -12,11 +12,9 @@ import {
   isToday,
 } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useFormatter } from "next-intl";
 import { cn, normalizeDate } from "@/lib/utils";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { View } from "./layout/view";
+import { Button, Card, CardBody, CardHeader, Divider } from "@heroui/react";
 
 type Props = {
   selectedDay: Date;
@@ -65,11 +63,11 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
     setSelectedMonth(normalizeDate(startOfMonth(addMonths(selectedMonth, 1))));
 
   return (
-    <View className="w-full gap-0">
-      <div className="text-lg font-medium flex items-center capitalize">
-        <button onClick={handlePrevMonth}>
+    <Card className="w-full gap-0">
+      <CardHeader className="text-lg font-medium flex items-center capitalize">
+        <Button isIconOnly variant="light" onPress={handlePrevMonth}>
           <ChevronLeft className="text-primary" />
-        </button>
+        </Button>
         <span className="flex-grow text-center">
           {formatter.dateTime(selectedMonth, {
             month: "long",
@@ -77,49 +75,50 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
             timeZone: "UTC",
           })}
         </span>
-        <button onClick={handleNextMonth}>
+        <Button isIconOnly variant="light" onPress={handleNextMonth}>
           <ChevronRight className="text-primary" />
-        </button>
-      </div>
-      <ScrollArea ref={scrollContainerRef} className="w-full pb-2">
-        <div className="flex">
-          {intervals.map((day, i) => (
-            <Button
-              aria-selected={isSameDay(selectedDay, day)}
-              variant="ghost"
-              key={`day_${i}`}
-              onClick={() => onSelectDay?.(day)}
-              className={cn(
-                "flex h-auto w-12 flex-col items-center rounded p-2 hover:bg-primary/15",
-                {
-                  "is-selected bg-primary/15": isSameDay(selectedDay, day),
-                  first: i === 0,
-                }
-              )}
-            >
-              <span
-                className={cn("text-sm font-normal", {
-                  "text-primary": isToday(day),
-                })}
+        </Button>
+      </CardHeader>
+      <Divider />
+      <CardBody>
+        <div ref={scrollContainerRef} className="w-full overflow-x-scroll">
+          <div className="flex">
+            {intervals.map((day, i) => (
+              <Button
+                aria-selected={isSameDay(selectedDay, day)}
+                variant="light"
+                key={`day_${i}`}
+                onPress={() => onSelectDay?.(day)}
+                className={cn(
+                  "min-w-min flex h-auto flex-col gap-2 items-center rounded-full p-2",
+                  {
+                    "is-selected bg-primary/20": isSameDay(selectedDay, day),
+                    first: i === 0,
+                  }
+                )}
               >
-                {formatter.dateTime(normalizeDate(day), {
-                  weekday: "short",
-                  timeZone: "UTC",
-                })}
-              </span>
-              <span
-                className={cn("text-lg font-normal", {
-                  "font-medium text-primary": isToday(day),
-                  "font-bold": isSameDay(selectedDay, day),
-                })}
-              >
-                {day.getDate()}
-              </span>
-            </Button>
-          ))}
+                <span
+                  className={cn("text-sm text-zinc-400 font-bold", {
+                    "text-primary": isToday(day),
+                  })}
+                >
+                  {formatter.dateTime(normalizeDate(day), {
+                    weekday: "short",
+                    timeZone: "UTC",
+                  })}
+                </span>
+                <span
+                  className={cn("font-normal", {
+                    "font-medium text-primary": isToday(day),
+                  })}
+                >
+                  {day.getDate()}
+                </span>
+              </Button>
+            ))}
+          </div>
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </View>
+      </CardBody>
+    </Card>
   );
 }

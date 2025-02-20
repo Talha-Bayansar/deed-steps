@@ -1,20 +1,10 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import type { Deed } from "../types";
 import { saveDeed } from "../api";
 import { Badge } from "@/components/ui/badge";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { ListTile } from "@/components/list-tile";
 import { CustomResponse, handleResponse } from "@/lib/utils";
-import { useState } from "react";
 import { endOfToday, startOfYesterday } from "date-fns";
 import { DeedTemplate } from "@/features/deed-template/types";
 import { DeedStatus } from "@/features/deed-status/types";
@@ -27,6 +17,15 @@ import {
   useMyDeedsByDate,
   getMyDeedsByDateKey,
 } from "../hooks/use-my-deeds-by-date";
+import {
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  Skeleton,
+  useDisclosure,
+} from "@heroui/react";
 
 type Props = {
   deedTemplate: DeedTemplate;
@@ -41,7 +40,7 @@ export const DeedTile = ({
 }: Props) => {
   const queryClient = useQueryClient();
   const t = useTranslations();
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
   const { data, isLoading } = useMyDeedsByDate(selectedDay);
   const deeds = data?.data;
   const deed = deeds?.find((d) => d.deedTemplateId === deedTemplate.id);
@@ -104,7 +103,7 @@ export const DeedTile = ({
         return newResponse;
       }
     );
-    setIsOpen(false);
+    onClose();
 
     const res = await executeAsync({
       deedStatusId: deedStatusId,
@@ -122,50 +121,45 @@ export const DeedTile = ({
   };
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger
-        className="list-tile"
+    <>
+      <ListTile
         disabled={
           selectedDate > endOfToday() || startOfYesterday() > selectedDate
         }
+        onPress={onOpen}
       >
-        <ListTile>
-          <div className="flex gap-2 items-center">
-            {isLoading ? (
-              <Skeleton className="h-4 w-4 rounded-full" />
-            ) : (
-              <Badge
-                className="h-4 w-4 p-0 border border-gray-100"
-                style={{
-                  backgroundColor: getStatus()
-                    ? getStatus()?.color
-                    : "transparent",
-                }}
-              />
-            )}
+        <div className="flex gap-2 items-center">
+          <Skeleton className="h-4 w-4 rounded-full" isLoaded={!isLoading}>
+            <Badge
+              className="h-4 w-4 p-0 border border-white"
+              style={{
+                backgroundColor: getStatus()
+                  ? getStatus()?.color
+                  : "transparent",
+              }}
+            />
+          </Skeleton>
 
-            <span>{deedTemplate.name}</span>
-          </div>
-        </ListTile>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{deedTemplate.name}</DrawerTitle>
-        </DrawerHeader>
-        <DrawerFooter>
-          <View className="gap-0">
-            {deedStatuses.map((status) => (
-              <button
-                className="list-tile"
-                key={status.id}
-                onClick={() =>
-                  handleSaveDeed({
-                    deedId: deed?.id,
-                    deedStatusId: status.id,
-                  })
-                }
-              >
-                <ListTile>
+          <span>{deedTemplate.name}</span>
+        </div>
+      </ListTile>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>{deedTemplate.name}</ModalHeader>
+          <Divider />
+          <ModalBody>
+            <View className="gap-2">
+              {deedStatuses.map((status) => (
+                <ListTile
+                  key={status.id}
+                  onPress={() =>
+                    handleSaveDeed({
+                      deedId: deed?.id,
+                      deedStatusId: status.id,
+                    })
+                  }
+                >
                   <div className="flex gap-2 items-center">
                     <Badge
                       className="h-4 w-4 p-0 border border-gray-100"
@@ -176,11 +170,11 @@ export const DeedTile = ({
                     <span>{status.name}</span>
                   </div>
                 </ListTile>
-              </button>
-            ))}
-          </View>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+              ))}
+            </View>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

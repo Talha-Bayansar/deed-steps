@@ -79,7 +79,7 @@ export const saveDeed = safeAction
         .from(groupPointsTable)
         .where(
           and(
-            eq(groupPointsTable.groupId, deedTemplateRows[0].group.id),
+            eq(groupPointsTable.groupId, deedTemplate.group.id),
             eq(groupPointsTable.userId, user.id)
           )
         );
