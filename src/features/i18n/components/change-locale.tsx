@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { languages } from "@/i18n";
 import { changeLocale } from "@/i18n/api";
+import { Select, SelectItem } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 
@@ -37,19 +31,17 @@ export const ChangeLocale = ({ locale }: Props) => {
 
   return (
     <Select
-      value={locale}
-      onValueChange={(v) => changeLocaleAction.execute({ locale: v })}
+      label={t("language")}
+      selectedKeys={[locale]}
+      onSelectionChange={(v) =>
+        changeLocaleAction.execute({
+          locale: v.currentKey ?? "tr",
+        })
+      }
     >
-      <SelectTrigger>
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {languages.map((language) => (
-          <SelectItem key={language} value={language}>
-            {getFullLanguage(language)}
-          </SelectItem>
-        ))}
-      </SelectContent>
+      {languages.map((language) => (
+        <SelectItem key={language}>{getFullLanguage(language)}</SelectItem>
+      ))}
     </Select>
   );
 };

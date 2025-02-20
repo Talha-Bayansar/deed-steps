@@ -10,11 +10,9 @@ export const MySubscriptionTile = () => {
   const t = useTranslations();
 
   return (
-    <Link href={routes.mySubscription.root} className="w-full">
-      <ListTile>
-        <CreditCard className="text-primary" />
-        {t("mySubscription")}
-      </ListTile>
-    </Link>
+    <ListTile as={Link} href={routes.mySubscription.root}>
+      <CreditCard className="text-primary" />
+      {t("mySubscription")}
+    </ListTile>
   );
 };

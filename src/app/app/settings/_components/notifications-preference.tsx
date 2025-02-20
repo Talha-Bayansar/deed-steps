@@ -1,7 +1,6 @@
 "use client";
 
 import { ListTile } from "@/components/list-tile";
-import { Switch } from "@/components/ui/switch";
 import {
   registerPushNotifications,
   unregisterPushNotifications,
@@ -10,6 +9,7 @@ import { Bell } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { PushSubscription } from "@/features/notification/types";
+import { Switch } from "@heroui/react";
 
 type Props = {
   pushScription?: PushSubscription | null;
@@ -40,12 +40,12 @@ export const NotificationsPreference = ({ pushScription }: Props) => {
   }
 
   return (
-    <ListTile hideChevron>
+    <ListTile as="div" disableAnimation disableRipple hideChevron>
       <div className="flex flex-grow items-center justify-between">
         <span className="flex items-center gap-2">
           <Bell className="text-primary" /> {t("allowNotifications")}
         </span>
-        <Switch onCheckedChange={handleCheck} checked={isAllowed} />
+        <Switch onValueChange={handleCheck} isSelected={isAllowed} />
       </div>
     </ListTile>
   );

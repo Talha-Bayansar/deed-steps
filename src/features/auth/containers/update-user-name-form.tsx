@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { User } from "../types";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useAction } from "next-safe-action/hooks";
 import { updateUserName } from "../api";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
+import { Button } from "@heroui/button";
 
 type Props = {
   user: User;
@@ -74,12 +74,14 @@ export const UpdateUserNameForm = ({ user, onSuccess }: Props) => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
+            type="submit"
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
+            color="primary"
           >
             {t("update")}
-          </LoadingButton>
+          </Button>
         }
       >
         <FormField

@@ -14,22 +14,12 @@ const SettingsRootPage = async () => {
 
   return (
     <View className="flex-grow justify-between">
-      <View className="gap-0">
-        <div className="list-tile flex items-center">
-          <ChangeName user={user} />
-        </div>
-        <div className="list-tile flex items-center">
-          <ChangeLocaleDrawer locale={locale} />
-        </div>
-        <div className="list-tile flex items-center">
-          <NotificationsPreference pushScription={pushSubscription.data} />
-        </div>
-        <div className="list-tile flex items-center">
-          <MySubscriptionTile />
-        </div>
-        <div className="list-tile flex items-center">
-          <SignOutTile />
-        </div>
+      <View className="gap-2">
+        <ChangeName user={user} />
+        <ChangeLocaleDrawer locale={locale} />
+        <NotificationsPreference pushScription={pushSubscription.data} />
+        <MySubscriptionTile />
+        <SignOutTile />
       </View>
     </View>
   );

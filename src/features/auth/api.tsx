@@ -28,7 +28,7 @@ import { Session, User } from "./types";
 import { findUserBySessionId } from "./queries";
 import { revalidateTag } from "next/cache";
 import { userToGroupKey } from "../user-to-group/queries";
-
+import { currentUserKey } from "./queries";
 async function generateSessionToken() {
   const bytes = new Uint8Array(20);
   crypto.getRandomValues(bytes);
@@ -361,6 +361,8 @@ export const updateUserName = safeAction
           lastName,
         })
         .where(eq(userTable.id, user.id));
+
+      revalidateTag(currentUserKey);
 
       return createSuccessResponse(res);
     } catch {
