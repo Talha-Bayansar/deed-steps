@@ -1,5 +1,7 @@
+"use client";
+
 import { View } from "../layout/view";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@heroui/react";
 
 export const FormFieldSkeleton = () => {
   return (

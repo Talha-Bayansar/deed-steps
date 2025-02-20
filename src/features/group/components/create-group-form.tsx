@@ -14,13 +14,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { createGroup } from "../api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { Button } from "@heroui/button";
 
 export const CreateGroupForm = () => {
   const t = useTranslations();
@@ -62,12 +62,13 @@ export const CreateGroupForm = () => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
+            color="primary"
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
           >
             {t("create")}
-          </LoadingButton>
+          </Button>
         }
       >
         <FormField

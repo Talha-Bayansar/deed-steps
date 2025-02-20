@@ -20,11 +20,9 @@ const GroupsRootLayout = async ({ children }: Props) => {
     <PageContainer>
       <Navbar
         trailing={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <RevalidateButton tags={[groupsKey, userToGroupKey]} />
-            <Link href={routes.groups.create.root}>
-              <AddIconButton />
-            </Link>
+            <AddIconButton as={Link} href={routes.groups.create.root} />
           </div>
         }
       >

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { BackIconButton } from "../icon-buttons/back-icon-button";
+import { Card, CardFooter, CardHeader } from "@heroui/react";
 
 type Props = {
   leading?: React.ReactNode;
@@ -15,23 +18,25 @@ export const Navbar = ({
   leading,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-0 w-full items-start p-8 pb-0">
-      {(leading || hrefBackButton || trailing) && (
-        <div className="flex w-full gap-2 items-center justify-between">
-          <div className="flex items-center justify-start">
-            {leading
-              ? leading
-              : hrefBackButton && (
-                  <Link href={hrefBackButton}>
-                    <BackIconButton />
-                  </Link>
-                )}
+    <Card className="rounded-t-none">
+      <CardHeader>
+        {(leading || hrefBackButton || trailing) && (
+          <div className="flex w-full gap-2 items-center justify-between">
+            <div className="flex items-center justify-start">
+              {leading
+                ? leading
+                : hrefBackButton && (
+                    <BackIconButton as={Link} href={hrefBackButton} />
+                  )}
+            </div>
+            <div className="flex items-center">{trailing}</div>
           </div>
-          <div className="flex items-center">{trailing}</div>
-        </div>
-      )}
+        )}
+      </CardHeader>
 
-      <h1 className="text-2xl font-semibold">{children}</h1>
-    </div>
+      <CardFooter>
+        <h1 className="text-2xl font-semibold">{children}</h1>
+      </CardFooter>
+    </Card>
   );
 };

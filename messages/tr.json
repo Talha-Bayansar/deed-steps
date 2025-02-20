@@ -278,5 +278,6 @@
   "install": "Yükle",
   "faq": "Sıkça Sorulan Sorular",
   "limitReached": "Görünüşe göre mevcut planınızın limitini aştınız.",
-  "goToApp": "Uygulamaya git"
+  "goToApp": "Uygulamaya git",
+  "view": "Görüntüle"
 }

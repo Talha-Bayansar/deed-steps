@@ -15,5 +15,9 @@ declare module "@react-types/shared" {
 export function HerouiProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  return <HeroUIProvider navigate={router.push}>{children}</HeroUIProvider>;
+  return (
+    <HeroUIProvider className="flex flex-col flex-grow" navigate={router.push}>
+      {children}
+    </HeroUIProvider>
+  );
 }
