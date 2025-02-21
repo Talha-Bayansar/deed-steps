@@ -79,7 +79,26 @@ const config = {
   plugins: [
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
-    heroui(),
+    heroui({
+      themes: {
+        dark: {
+          colors: {
+            primary: {
+              100: "#EBD7FE",
+              200: "#D5B0FD",
+              300: "#BA88F9",
+              400: "#A269F4",
+              500: "#7C3AED",
+              600: "#5F2ACB",
+              700: "#461DAA",
+              800: "#301289",
+              900: "#210B71",
+              DEFAULT: "#7C3AED",
+            },
+          },
+        },
+      },
+    }),
   ],
 } satisfies Config;
 

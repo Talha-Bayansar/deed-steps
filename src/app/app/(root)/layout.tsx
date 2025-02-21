@@ -8,6 +8,7 @@ import { deedTemplatesKey } from "@/features/deed-template/queries";
 import { groupsKey } from "@/features/group/queries";
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ type Props = {
 
 const AppRootLayout = async ({ children }: Props) => {
   const user = await getUser();
+  const t = await getTranslations();
 
   if (!user) redirect(routes.signIn.root);
 
@@ -27,7 +29,7 @@ const AppRootLayout = async ({ children }: Props) => {
           />
         }
       >
-        <span className="font-normal">Hey, </span>
+        <span className="font-normal">{t("hey")}, </span>
         <span className="font-bold">{user.firstName}</span>
       </Navbar>
       <Main>{children}</Main>

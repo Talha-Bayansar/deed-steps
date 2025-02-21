@@ -124,7 +124,7 @@ export const DeedTile = ({
   return (
     <>
       <ListTile
-        disabled={
+        isDisabled={
           selectedDate > endOfToday() || startOfYesterday() > selectedDate
         }
         onPress={onOpen}
