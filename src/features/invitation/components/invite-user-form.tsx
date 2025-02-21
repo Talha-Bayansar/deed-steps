@@ -14,12 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useAction } from "next-safe-action/hooks";
 import { inviteUserToGroup } from "../api";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
-
+import { Button } from "@heroui/button";
 type Props = {
   groupId: number;
   onSuccess?: () => void;
@@ -69,12 +68,14 @@ export const InviteUserForm = ({ groupId, onSuccess }: Props) => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
+            type="submit"
+            color="primary"
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
           >
             {t("invite")}
-          </LoadingButton>
+          </Button>
         }
       >
         <FormField

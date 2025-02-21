@@ -17,8 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@heroui/button";
 
 type Props = {
   group: {
@@ -71,12 +71,14 @@ export const UpdateGroupForm = ({ group, onSuccess }: Props) => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
+            type="submit"
+            color="primary"
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
           >
             {t("update")}
-          </LoadingButton>
+          </Button>
         }
       >
         <FormField

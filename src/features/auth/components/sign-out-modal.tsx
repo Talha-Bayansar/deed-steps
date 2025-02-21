@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import {
   Button,
   Modal,
+  ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -37,16 +38,12 @@ export const SignOutModal = (props: Props) => {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col">
-              <span>{t("areYouSure")}</span>
-              <span className="text-sm text-zinc-400 font-normal">
-                {t("signOutWarning")}
-              </span>
-            </ModalHeader>
+            <ModalHeader>{t("areYouSure")}</ModalHeader>
+            <ModalBody className="text-sm text-zinc-400">
+              {t("signOutWarning")}
+            </ModalBody>
             <ModalFooter>
-              <Button variant="bordered" onPress={onClose}>
-                {t("cancel")}
-              </Button>
+              <Button onPress={onClose}>{t("cancel")}</Button>
               <Button
                 onPress={handleClick}
                 color="danger"

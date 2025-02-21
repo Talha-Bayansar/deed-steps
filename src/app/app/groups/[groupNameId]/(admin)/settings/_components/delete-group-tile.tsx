@@ -2,25 +2,22 @@
 
 import { deleteGroup } from "@/features/group/api";
 import { routes } from "@/lib/routes";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Trash2 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { LoadingButton } from "@/components/loading-button";
 import { ListTile } from "@/components/list-tile";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@heroui/react";
 
 type Props = {
   groupId: number;
@@ -28,8 +25,8 @@ type Props = {
 
 export const DeleteGroupTile = ({ groupId }: Props) => {
   const t = useTranslations();
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
 
   const { executeAsync, isPending } = useAction(deleteGroup);
 
@@ -42,7 +39,7 @@ export const DeleteGroupTile = ({ groupId }: Props) => {
       t,
       response: res?.data,
       onSuccess: () => {
-        setIsOpen(false);
+        onClose();
         router.push(routes.groups.root);
       },
       onError(message) {
@@ -52,29 +49,26 @@ export const DeleteGroupTile = ({ groupId }: Props) => {
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger className="list-tile">
-        <ListTile className="text-destructive">
-          <Trash2 />
-          {t("deleteGroup")}
-        </ListTile>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("areYouSure")}</AlertDialogTitle>
-          <AlertDialogDescription>{t("deleteWarning")}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-          <LoadingButton
-            onClick={handleDelete}
-            variant={"destructive"}
-            isLoading={isPending}
-          >
-            {t("continue")}
-          </LoadingButton>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <>
+      <ListTile onPress={onOpen} className="text-danger-400">
+        <Trash2 />
+        {t("deleteGroup")}
+      </ListTile>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>{t("areYouSure")}</ModalHeader>
+          <ModalBody className="text-sm text-zinc-400">
+            {t("deleteWarning")}
+          </ModalBody>
+          <ModalFooter>
+            <Button onPress={onOpenChange}>{t("cancel")}</Button>
+            <Button color="danger" isLoading={isPending} onPress={handleDelete}>
+              {t("continue")}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

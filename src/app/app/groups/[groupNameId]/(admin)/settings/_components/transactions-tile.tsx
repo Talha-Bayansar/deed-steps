@@ -15,13 +15,12 @@ export const TransactionsTile = ({ groupName, groupId }: Props) => {
   const t = useTranslations();
 
   return (
-    <button className="list-tile">
-      <Link href={routes.groups.nameId(groupName, groupId).transactions.root}>
-        <ListTile>
-          <ArrowRightLeft className="text-primary" />
-          {t("transactions")}
-        </ListTile>
-      </Link>
-    </button>
+    <ListTile
+      as={Link}
+      href={routes.groups.nameId(groupName, groupId).transactions.root}
+    >
+      <ArrowRightLeft className="text-primary" />
+      {t("transactions")}
+    </ListTile>
   );
 };

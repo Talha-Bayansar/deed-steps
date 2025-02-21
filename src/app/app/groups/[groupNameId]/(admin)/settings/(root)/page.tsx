@@ -11,6 +11,7 @@ import { ErrorState } from "@/components/error-state";
 import { getMyUserToGroupByGroupId } from "@/features/user-to-group/api";
 import { hasGroupPermission } from "@/features/user-to-group/access-control/permissions";
 import { TransactionsTile } from "../_components/transactions-tile";
+import { getGroupById } from "@/features/group/api";
 
 type Props = {
   params: Promise<{
@@ -24,12 +25,14 @@ const GroupSettingsPage = async ({ params }: Props) => {
   const t = await getTranslations();
 
   const userToGroup = await getMyUserToGroupByGroupId(Number(id));
+  const group = await getGroupById(Number(id));
 
   const error = extractError(userToGroup, t);
-  if (error) return <ErrorState error={error} />;
+  const groupError = extractError(group, t);
+  if (error || groupError) return <ErrorState error={(error || groupError)!} />;
 
   return (
-    <View className="gap-0">
+    <View className="gap-2">
       {hasGroupPermission(userToGroup.data!, "group:update") && (
         <UpdateGroupTile />
       )}
@@ -40,7 +43,10 @@ const GroupSettingsPage = async ({ params }: Props) => {
         <ManageDeedsTile groupName={name} groupId={Number(id)} />
       )}
       {hasGroupPermission(userToGroup.data!, "notification:edit") && (
-        <NotificationPreferencesTile groupId={Number(id)} />
+        <NotificationPreferencesTile
+          groupId={Number(id)}
+          notifyDeeds={group.data!.notifyDeeds}
+        />
       )}
       {hasGroupPermission(userToGroup.data!, "transaction:read") && (
         <TransactionsTile groupName={name} groupId={Number(id)} />

@@ -1,17 +1,17 @@
 "use client";
 
 import { ListTile } from "@/components/list-tile";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { TransactionLinkForm } from "@/features/transaction/components/transaction-link-form";
 import { Link } from "lucide-react";
 import { useTranslations } from "next-intl";
+import {
+  Divider,
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@heroui/react";
 
 type Props = {
   groupName: string;
@@ -20,23 +20,24 @@ type Props = {
 
 export const TransactionTile = ({ groupName, groupId }: Props) => {
   const t = useTranslations();
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
 
   return (
-    <Drawer>
-      <DrawerTrigger className="list-tile">
-        <ListTile>
-          <Link className="text-primary" />
-          {t("generateTransactionLink")}
-        </ListTile>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{t("generateTransactionLink")}</DrawerTitle>
-        </DrawerHeader>
-        <DrawerFooter>
-          <TransactionLinkForm groupName={groupName} groupId={groupId} />
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <>
+      <ListTile onPress={onOpen}>
+        <Link className="text-primary" />
+        {t("generateTransactionLink")}
+      </ListTile>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>{t("generateTransactionLink")}</ModalHeader>
+          <Divider />
+          <ModalFooter>
+            <TransactionLinkForm groupName={groupName} groupId={groupId} />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

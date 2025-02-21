@@ -16,11 +16,11 @@ import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { routes } from "@/lib/routes";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { View } from "@/components/layout/view";
 import Link from "next/link";
 import { AppForm } from "@/components/app-form";
 import { QrCodeIcon } from "lucide-react";
+import { Button } from "@heroui/react";
 
 type Props = {
   groupName: string;
@@ -63,7 +63,11 @@ export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
     <Form {...form}>
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
-        submitButton={<Button>{t("generate")}</Button>}
+        submitButton={
+          <Button type="submit" color="primary">
+            {t("generate")}
+          </Button>
+        }
       >
         <View className="items-center">
           {transactionLink ? (

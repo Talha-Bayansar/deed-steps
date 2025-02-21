@@ -20,8 +20,8 @@ import {
 import {
   Divider,
   Modal,
-  ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   Skeleton,
   useDisclosure,
@@ -149,7 +149,7 @@ export const DeedTile = ({
         <ModalContent>
           <ModalHeader>{deedTemplate.name}</ModalHeader>
           <Divider />
-          <ModalBody>
+          <ModalFooter>
             <View className="gap-2">
               {deedStatuses.map((status) => (
                 <DeedStatusTile
@@ -165,7 +165,7 @@ export const DeedTile = ({
                 />
               ))}
             </View>
-          </ModalBody>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

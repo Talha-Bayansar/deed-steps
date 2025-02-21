@@ -8,8 +8,8 @@ import { DeedStatusTile } from "@/features/deed-status/components/deed-status-ti
 import {
   Divider,
   Modal,
-  ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   useDisclosure,
 } from "@heroui/react";
@@ -30,13 +30,13 @@ export const DeedTemplateTile = ({ deedTemplate, deedStatuses }: Props) => {
         <ModalContent>
           <ModalHeader>{deedTemplate.name}</ModalHeader>
           <Divider />
-          <ModalBody>
+          <ModalFooter>
             <View className="gap-2">
               {deedStatuses.map((status) => (
                 <DeedStatusTile key={status.id} status={status} hideChevron />
               ))}
             </View>
-          </ModalBody>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

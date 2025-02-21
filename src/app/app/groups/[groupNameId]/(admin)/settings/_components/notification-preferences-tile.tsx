@@ -2,16 +2,6 @@
 
 import { ListTile } from "@/components/list-tile";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Switch } from "@/components/ui/switch";
-import { useGroupById } from "@/features/group/hooks/use-group-by-id";
-import {
   sendReminderNotification,
   updateGroupById,
 } from "@/features/group/api";
@@ -22,16 +12,28 @@ import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { View } from "@/components/layout/view";
+import {
+  Divider,
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Switch,
+  useDisclosure,
+} from "@heroui/react";
 
 type Props = {
   groupId: number;
+  notifyDeeds: boolean;
 };
 
-export const NotificationPreferencesTile = ({ groupId }: Props) => {
+export const NotificationPreferencesTile = ({
+  groupId,
+  notifyDeeds,
+}: Props) => {
   const t = useTranslations();
-  const { data: group, isLoading: isGroupLoading } = useGroupById(groupId);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(group?.data?.notifyDeeds ?? false);
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
+  const [isChecked, setIsChecked] = useState(notifyDeeds);
 
   const sendReminderAction = useAction(sendReminderNotification);
   const updateGroupAction = useAction(updateGroupById);
@@ -63,41 +65,36 @@ export const NotificationPreferencesTile = ({ groupId }: Props) => {
   };
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger className="list-tile">
-        <ListTile>
-          <Bell className="text-primary" />
-          {t("notificationPreferences")}
-        </ListTile>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{t("notificationPreferences")}</DrawerTitle>
-        </DrawerHeader>
-        <DrawerFooter>
-          <View className="gap-0">
-            <button className="list-tile" onClick={sendReminder}>
-              <ListTile>
+    <>
+      <ListTile onPress={onOpen}>
+        <Bell className="text-primary" />
+        {t("notificationPreferences")}
+      </ListTile>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>{t("notificationPreferences")}</ModalHeader>
+          <Divider />
+          <ModalFooter>
+            <View className="gap-2">
+              <ListTile onPress={sendReminder}>
                 <BellRing className="text-primary" />
                 {t("sendReminder")}
               </ListTile>
-            </button>
-            <ListTile className="list-tile" hideChevron>
-              <div className="flex flex-grow justify-between items-center">
-                <div className="flex gap-2">
-                  <ListChecks className="text-primary" />
-                  {t("notifyEveryDeed")}
+
+              <ListTile disableAnimation disableRipple hideChevron>
+                <div className="flex flex-grow justify-between items-center">
+                  <div className="flex gap-2">
+                    <ListChecks className="text-primary" />
+                    {t("notifyEveryDeed")}
+                  </div>
+                  <Switch isSelected={isChecked} onValueChange={handleCheck} />
                 </div>
-                <Switch
-                  disabled={isGroupLoading}
-                  checked={isChecked}
-                  onCheckedChange={handleCheck}
-                />
-              </div>
-            </ListTile>
-          </View>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+              </ListTile>
+            </View>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

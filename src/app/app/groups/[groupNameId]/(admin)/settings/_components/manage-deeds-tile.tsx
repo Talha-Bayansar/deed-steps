@@ -15,13 +15,12 @@ export const ManageDeedsTile = ({ groupName, groupId }: Props) => {
   const t = useTranslations();
 
   return (
-    <button className="list-tile">
-      <Link href={routes.groups.nameId(groupName, groupId).deedTemplates.root}>
-        <ListTile>
-          <List className="text-primary" />
-          {t("manage-deeds")}
-        </ListTile>
-      </Link>
-    </button>
+    <ListTile
+      as={Link}
+      href={routes.groups.nameId(groupName, groupId).deedTemplates.root}
+    >
+      <List className="text-primary" />
+      {t("manage-deeds")}
+    </ListTile>
   );
 };
