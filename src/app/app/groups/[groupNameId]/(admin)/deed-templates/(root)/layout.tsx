@@ -27,11 +27,10 @@ const DeedTemplatesRootLayout = async ({ children, params }: Props) => {
         trailing={
           <div className="flex items-center">
             <RevalidateButton tags={[deedTemplatesKey]} />
-            <Link
+            <AddIconButton
+              as={Link}
               href={routes.groups.nameId(name, id).deedTemplates.create.root}
-            >
-              <AddIconButton />
-            </Link>
+            />
           </div>
         }
       >

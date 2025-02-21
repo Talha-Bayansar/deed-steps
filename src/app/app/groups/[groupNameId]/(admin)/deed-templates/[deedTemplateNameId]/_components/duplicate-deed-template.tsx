@@ -1,20 +1,19 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { DuplicateDeedTemplateForm } from "@/features/deed-template/components/duplicate-deed-template-form";
 import { routes } from "@/lib/routes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
+import {
+  Divider,
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@heroui/react";
+import { IconButton } from "@/components/icon-buttons";
+import { Copy } from "lucide-react";
 type Props = {
   deedTemplateId: number;
   groupName: string;
@@ -28,30 +27,29 @@ export const DuplicateDeedTemplate = ({
 }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <Button>{t("duplicate")}</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{t("duplicate")}</DrawerTitle>
-        </DrawerHeader>
+    <>
+      <IconButton Icon={Copy} onPress={onOpen} />
 
-        <DrawerFooter>
-          <DuplicateDeedTemplateForm
-            deedTemplateId={deedTemplateId}
-            onSuccess={() => {
-              setIsOpen(false);
-              router.push(
-                routes.groups.nameId(groupName, groupId).deedTemplates.root
-              );
-            }}
-          />
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader>{t("duplicate")}</ModalHeader>
+          <Divider />
+          <ModalFooter>
+            <DuplicateDeedTemplateForm
+              deedTemplateId={deedTemplateId}
+              onSuccess={() => {
+                onClose();
+                router.push(
+                  routes.groups.nameId(groupName, groupId).deedTemplates.root
+                );
+              }}
+            />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

@@ -8,7 +8,7 @@ type Props = {
 
 export const UpdateDeedStatusTileView = ({ deedStatuses }: Props) => {
   return (
-    <View className="gap-0">
+    <View className="gap-2">
       {deedStatuses
         .sort((a, b) => Number(a.reward) - Number(b.reward))
         .map((status) => (

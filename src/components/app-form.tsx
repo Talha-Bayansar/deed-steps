@@ -13,7 +13,7 @@ export const AppForm = ({
   return (
     <form
       className={cn(
-        "flex flex-col flex-grow w-full justify-between md:justify-start gap-8 overflow-hidden p-1",
+        "flex flex-col flex-grow w-full justify-between md:justify-start gap-8 overflow-hidden",
         className
       )}
       {...rest}

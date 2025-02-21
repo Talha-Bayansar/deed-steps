@@ -6,15 +6,13 @@ import { ErrorState } from "@/components/error-state";
 
 type Props = {
   params: Promise<{
-    groupNameId: string;
     deedTemplateNameId: string;
   }>;
 };
 
 const DeedTemplateDetailsPage = async ({ params }: Props) => {
   const t = await getTranslations();
-  const { groupNameId, deedTemplateNameId } = await params;
-  const [name, id] = decodeURIComponent(groupNameId).split("_");
+  const { deedTemplateNameId } = await params;
   const templateId = decodeURIComponent(deedTemplateNameId).split("_")[1];
 
   const deedTemplate = await getDeedTemplateById(Number(templateId));
@@ -26,8 +24,6 @@ const DeedTemplateDetailsPage = async ({ params }: Props) => {
     <UpdateDeedTemplateView
       deedTemplate={deedTemplate.data!.deedTemplate}
       deedStatuses={deedTemplate.data!.deedStatuses}
-      groupId={Number(id)}
-      groupName={name}
     />
   );
 };

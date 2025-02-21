@@ -16,12 +16,11 @@ import ColorPicker from "@uiw/react-color-circle";
 import { useTranslations } from "next-intl";
 import { deedStatusColors } from "../config";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useAction } from "next-safe-action/hooks";
 import { createDeedStatus } from "../api";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
-
+import { Button } from "@heroui/button";
 type Props = {
   deedTemplateId: number;
   onSuccess?: () => void;
@@ -81,12 +80,14 @@ export const CreateDeedStatusForm = ({ deedTemplateId, onSuccess }: Props) => {
     <Form {...form}>
       <AppForm
         submitButton={
-          <LoadingButton
+          <Button
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
+            type="submit"
+            color="primary"
           >
             {t("create")}
-          </LoadingButton>
+          </Button>
         }
         onSubmit={form.handleSubmit(onSubmit)}
       >
@@ -124,10 +125,11 @@ export const CreateDeedStatusForm = ({ deedTemplateId, onSuccess }: Props) => {
               <FormLabel>{t("color")}</FormLabel>
               <FormControl>
                 <ColorPicker
+                  {...field}
                   className="[&>*]:!h-8 [&>*]:!w-8"
                   colors={deedStatusColors}
                   color={field.value}
-                  onChange={(color) => form.setValue("color", color.hex)}
+                  onChange={(color) => field.onChange(color.hex)}
                 />
               </FormControl>
               <FormMessage />

@@ -6,13 +6,18 @@ type Props = ButtonProps & {
   Icon: LucideIcon;
 };
 
-export const IconButton = ({ className, Icon, ...props }: Props) => {
+export const IconButton = ({
+  className,
+  Icon,
+  color = "primary",
+  ...props
+}: Props) => {
   return (
     <Button
       {...props}
       className={cn(className)}
       isIconOnly
-      color="primary"
+      color={color}
       variant="light"
     >
       <Icon className="w-5 h-5" />

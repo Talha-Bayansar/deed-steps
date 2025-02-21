@@ -18,7 +18,7 @@ import { useAction } from "next-safe-action/hooks";
 import { duplicateDeedTemplate } from "../api";
 import { toast } from "sonner";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
+import { Button } from "@heroui/button";
 
 type Props = {
   deedTemplateId: number;
@@ -71,12 +71,14 @@ export const DuplicateDeedTemplateForm = ({
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
+            type="submit"
+            color="primary"
           >
             {t("duplicate")}
-          </LoadingButton>
+          </Button>
         }
       >
         <FormField

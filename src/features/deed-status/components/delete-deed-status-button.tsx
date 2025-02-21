@@ -1,15 +1,11 @@
 "use client";
 
-import { routes } from "@/lib/routes";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
-import { deleteDeedTemplateById } from "@/features/deed-template/api";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
 import {
   Button,
-  Divider,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,40 +13,27 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/react";
-import { IconButton } from "@/components/icon-buttons";
-import { Trash2 } from "lucide-react";
+import { deleteDeedStatusById } from "../api";
 
 type Props = {
-  deedTemplateId: number;
-  groupId: number;
-  groupName: string;
+  deedStatusId: number;
 };
 
-export const DeleteDeedTemplate = ({
-  deedTemplateId,
-  groupId,
-  groupName,
-}: Props) => {
+export const DeleteDeedStatusButton = ({ deedStatusId }: Props) => {
   const t = useTranslations();
-  const router = useRouter();
   const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
 
-  const { executeAsync, isPending } = useAction(deleteDeedTemplateById);
+  const { executeAsync, isPending } = useAction(deleteDeedStatusById);
 
   const handleDelete = async () => {
-    const res = await executeAsync({
-      id: deedTemplateId,
-    });
+    const res = await executeAsync({ id: deedStatusId });
 
     handleResponse({
       t,
       response: res?.data,
-      onSuccess: () => {
-        onClose();
+      onSuccess() {
         toast.success(t("deleteSuccess"));
-        router.push(
-          routes.groups.nameId(groupName, groupId).deedTemplates.root
-        );
+        onClose();
       },
       onError(message) {
         toast.error(message);
@@ -60,12 +43,13 @@ export const DeleteDeedTemplate = ({
 
   return (
     <>
-      <IconButton Icon={Trash2} color="danger" onPress={onOpen} />
+      <Button color="danger" onPress={onOpen}>
+        {t("delete")}
+      </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("areYouSure")}</ModalHeader>
-          <Divider />
           <ModalBody className="text-sm text-zinc-400">
             {t("deleteWarning")}
           </ModalBody>
