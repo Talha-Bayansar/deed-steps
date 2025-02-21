@@ -3,6 +3,7 @@
 import { routes } from "@/lib/routes";
 import { Tab, Tabs } from "@heroui/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 export const GroupDetailsTabs = () => {
@@ -18,11 +19,13 @@ export const GroupDetailsTabs = () => {
       selectedKey={pathname}
     >
       <Tab
+        as={Link}
         key={routes.groups.nameId(name, id).root}
         href={routes.groups.nameId(name, id).root}
         title={t("members")}
       />
       <Tab
+        as={Link}
         key={routes.groups.nameId(name, id).deeds.root}
         href={routes.groups.nameId(name, id).deeds.root}
         title={t("deeds")}

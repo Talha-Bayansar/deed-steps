@@ -24,7 +24,7 @@ export const TransactionsView = ({ transactions }: Props) => {
     );
 
   return (
-    <View className="gap-0">
+    <View className="gap-2">
       {transactions
         .sort(
           (a, b) =>
