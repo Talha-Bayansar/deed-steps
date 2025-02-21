@@ -1,11 +1,11 @@
 "use client";
 
-import { LoadingButton } from "@/components/loading-button";
 import { useTranslations } from "next-intl";
 import { manageUserSubscription } from "../api";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
 import { toast } from "sonner";
+import { Button } from "@heroui/button";
 
 export const ManageSubscriptionButton = () => {
   const t = useTranslations();
@@ -26,13 +26,13 @@ export const ManageSubscriptionButton = () => {
   };
 
   return (
-    <LoadingButton
+    <Button
       className="w-full sm:w-auto"
-      onClick={handleClick}
+      onPress={handleClick}
       isLoading={isPending}
-      variant={"outline"}
+      variant={"bordered"}
     >
       {t("manageSubscription")}
-    </LoadingButton>
+    </Button>
   );
 };
