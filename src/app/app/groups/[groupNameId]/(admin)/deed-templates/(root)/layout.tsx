@@ -25,7 +25,7 @@ const DeedTemplatesRootLayout = async ({ children, params }: Props) => {
       <Navbar
         hrefBackButton={routes.groups.nameId(name, id).settings.root}
         trailing={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <RevalidateButton tags={[deedTemplatesKey]} />
             <Link
               href={routes.groups.nameId(name, id).deedTemplates.create.root}

@@ -18,11 +18,11 @@ import { useAction } from "next-safe-action/hooks";
 import { createDeedTemplate } from "../api";
 import { toast } from "sonner";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { RecurrenceForm } from "./recurrence-form";
 import { format, startOfToday } from "date-fns";
+import { Button } from "@heroui/button";
 
 type Props = {
   groupId: number;
@@ -79,12 +79,14 @@ export const CreateDeedTemplateForm = ({ groupId, groupName }: Props) => {
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton
+          <Button
             isLoading={isPending}
-            disabled={!form.formState.isDirty}
+            isDisabled={!form.formState.isDirty}
+            type="submit"
+            color="primary"
           >
             {t("create")}
-          </LoadingButton>
+          </Button>
         }
         className="overflow-y-visible"
       >

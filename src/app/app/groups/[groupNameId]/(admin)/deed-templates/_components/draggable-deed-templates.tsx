@@ -1,6 +1,5 @@
 "use client";
 
-import { View } from "@/components/layout/view";
 import { ListTile } from "@/components/list-tile";
 import { changeOrderDeedTemplates } from "@/features/deed-template/api";
 import { DeedTemplate } from "@/features/deed-template/types";
@@ -27,27 +26,25 @@ export const DraggableDeedTemplates = ({
   const { execute } = useAction(changeOrderDeedTemplates);
 
   return (
-    <View className="gap-0">
-      <Reorder.Group
-        axis="y"
-        values={values}
-        onReorder={(newOrder) => {
-          execute({
-            orderedTemplateIds: newOrder.map((item) => item.id),
-          });
-          setValues(newOrder);
-        }}
-      >
-        {values.map((deedTemplate) => (
-          <DraggableListTile
-            key={deedTemplate.id}
-            deedTemplate={deedTemplate}
-            groupName={groupName}
-            groupId={groupId}
-          />
-        ))}
-      </Reorder.Group>
-    </View>
+    <Reorder.Group
+      axis="y"
+      values={values}
+      onReorder={(newOrder) => {
+        execute({
+          orderedTemplateIds: newOrder.map((item) => item.id),
+        });
+        setValues(newOrder);
+      }}
+    >
+      {values.map((deedTemplate) => (
+        <DraggableListTile
+          key={deedTemplate.id}
+          deedTemplate={deedTemplate}
+          groupName={groupName}
+          groupId={groupId}
+        />
+      ))}
+    </Reorder.Group>
   );
 };
 
@@ -63,7 +60,7 @@ const DraggableListTile = ({
   const controls = useDragControls();
 
   return (
-    <div className="list-tile">
+    <div className="mb-2 last:mb-0">
       <Reorder.Item
         value={deedTemplate}
         dragListener={false}
@@ -74,17 +71,16 @@ const DraggableListTile = ({
             className="cursor-move touch-none"
             onPointerDown={(e) => controls.start(e)}
           />
-
-          <Link
-            className="w-full"
+          <ListTile
+            as={Link}
             href={
               routes.groups
                 .nameId(groupName, groupId)
                 .deedTemplates.nameId(deedTemplate.name, deedTemplate.id).root
             }
           >
-            <ListTile>{deedTemplate.name}</ListTile>
-          </Link>
+            {deedTemplate.name}
+          </ListTile>
         </div>
       </Reorder.Item>
     </div>
