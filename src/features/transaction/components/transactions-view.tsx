@@ -32,9 +32,11 @@ export const TransactionsView = ({ transactions }: Props) => {
             new Date(a.transaction.createdAt).getTime()
         )
         .map(({ transaction, user }) => (
-          <div key={transaction.id} className="list-tile">
-            <TransactionItem transaction={transaction} user={user} />
-          </div>
+          <TransactionItem
+            key={transaction.id}
+            transaction={transaction}
+            user={user}
+          />
         ))}
     </View>
   );

@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { handleResponse } from "@/lib/utils";
-import { LoadingButton } from "@/components/loading-button";
 import { View } from "@/components/layout/view";
 import { createTransaction } from "@/features/transaction/api";
+import { Button } from "@heroui/button";
 
 type Props = {
   groupId: number;
@@ -60,13 +60,14 @@ export const CreateTransactionView = ({
         </View>
       </View>
 
-      <LoadingButton
+      <Button
         className="w-full"
-        onClick={handleTransaction}
+        onPress={handleTransaction}
         isLoading={isPending}
+        color="primary"
       >
         {t("submit")}
-      </LoadingButton>
+      </Button>
     </View>
   );
 };

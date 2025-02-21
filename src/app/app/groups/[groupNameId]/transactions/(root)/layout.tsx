@@ -21,7 +21,7 @@ const TransactionsRootLayout = async ({ children, params }: Props) => {
   return (
     <PageContainer>
       <Navbar
-        hrefBackButton={routes.groups.nameId(name, id).root}
+        hrefBackButton={routes.groups.nameId(name, id).settings.root}
         trailing={<RevalidateButton tags={[transactionKey]} />}
       >
         {t("transactions")}

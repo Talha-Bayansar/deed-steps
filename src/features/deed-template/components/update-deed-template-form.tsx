@@ -18,11 +18,11 @@ import { useAction } from "next-safe-action/hooks";
 import { updateDeedTemplateById } from "../api";
 import { toast } from "sonner";
 import { AppForm } from "@/components/app-form";
-import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { DeedTemplate } from "../types";
 import { RecurrenceForm } from "./recurrence-form";
+import { Button } from "@heroui/button";
 
 type Props = {
   deedTemplate: DeedTemplate;
@@ -85,7 +85,9 @@ export const UpdateDeedTemplateForm = ({
       <AppForm
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
-          <LoadingButton isLoading={isPending}>{t("update")}</LoadingButton>
+          <Button isLoading={isPending} type="submit" color="primary">
+            {t("update")}
+          </Button>
         }
         className="overflow-y-scroll"
       >
