@@ -11,6 +11,7 @@ import { View } from "@/components/layout/view";
 import { useAction } from "next-safe-action/hooks";
 import { acceptInvitation, declineInvitation } from "../api";
 import { toast } from "sonner";
+import { IconButton } from "@/components/icon-buttons";
 
 type Props = {
   invitations: {
@@ -67,30 +68,30 @@ export const InvitationsView = ({ invitations }: Props) => {
     );
 
   return (
-    <View className="gap-0">
+    <View className="gap-2">
       {invitations.map((invitation) => (
         <ListTile
           key={invitation.invitation.id}
-          className="list-tile"
+          className="h-auto pr-1"
+          as="div"
           hideChevron
+          disableAnimation
+          disableRipple
         >
           <div className="flex-grow flex justify-between items-center">
             <span>{invitation.group.name}</span>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => handleAccept(invitation.invitation.id)}
-                disabled={acceptInvitationAction.isPending}
-                className="text-primary"
-              >
-                <Check />
-              </button>
-              <button
-                onClick={() => handleDecline(invitation.invitation.id)}
-                disabled={declineInvitationAction.isPending}
-                className="text-destructive"
-              >
-                <X />
-              </button>
+            <div className="flex items-center">
+              <IconButton
+                onPress={() => handleAccept(invitation.invitation.id)}
+                isLoading={acceptInvitationAction.isPending}
+                Icon={Check}
+              />
+              <IconButton
+                onPress={() => handleDecline(invitation.invitation.id)}
+                isLoading={declineInvitationAction.isPending}
+                Icon={X}
+                color="danger"
+              />
             </div>
           </div>
         </ListTile>

@@ -3,14 +3,7 @@
 import type { Group } from "../types";
 import { useTranslations } from "next-intl";
 import { UserToGroup } from "@/features/user-to-group/types";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Button,
-} from "@heroui/react";
+import { Card, CardFooter, CardHeader, Divider, Button } from "@heroui/react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { routes } from "@/lib/routes";
