@@ -6,7 +6,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const locale = await getLocale();
 
   return {
-    theme_color: "#ffffff",
+    theme_color: "#000000",
     background_color: "#7c3aed",
     icons: [
       {

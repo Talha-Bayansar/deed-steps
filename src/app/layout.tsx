@@ -247,7 +247,7 @@ export const viewport = {
   shrinkToFit: "no",
   viewPortFit: "cover",
   userScalable: "no",
-  themeColor: "#ffffff",
+  themeColor: "#000000",
 };
 
 export default async function LocaleLayout(props: {
