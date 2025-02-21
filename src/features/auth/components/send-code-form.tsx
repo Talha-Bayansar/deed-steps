@@ -16,9 +16,9 @@ import { useAction } from "next-safe-action/hooks";
 import { sendEmailVerificationCode } from "../api";
 import { routes } from "@/lib/routes";
 import { toast } from "sonner";
-import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Button } from "@heroui/button";
 
 type Props = {
   prefill?: string;
@@ -81,9 +81,14 @@ export const SendCodeForm = ({ prefill }: Props) => {
             </FormItem>
           )}
         />
-        <LoadingButton type="submit" isLoading={isPending}>
+        <Button
+          className="w-full"
+          color="primary"
+          type="submit"
+          isLoading={isPending}
+        >
           {t("sendVerificationCode")}
-        </LoadingButton>
+        </Button>
       </form>
     </Form>
   );

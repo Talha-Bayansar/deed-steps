@@ -22,8 +22,8 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { toast } from "sonner";
 import { signin } from "../api";
-import { LoadingButton } from "@/components/loading-button";
 import { useTranslations } from "next-intl";
+import { Button } from "@heroui/button";
 
 type Props = {
   email: string;
@@ -104,9 +104,14 @@ export const VerifyCodeForm = ({ email }: Props) => {
             </FormItem>
           )}
         />
-        <LoadingButton className="w-full" type="submit" isLoading={isPending}>
+        <Button
+          color="primary"
+          className="w-full"
+          type="submit"
+          isLoading={isPending}
+        >
           {t("verifyCode")}
-        </LoadingButton>
+        </Button>
       </form>
     </Form>
   );
