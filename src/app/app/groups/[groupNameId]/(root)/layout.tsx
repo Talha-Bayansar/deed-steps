@@ -10,6 +10,7 @@ import { deedStatusesKey } from "@/features/deed-status/queries";
 import { SettingsButton } from "./_components/settings-button";
 import { PointsButton } from "./_components/points-button";
 import { userToGroupKey } from "@/features/user-to-group/queries";
+import { GroupDetailsTabs } from "./_components/group-details-tabs";
 
 type Props = {
   params: Promise<{
@@ -27,7 +28,7 @@ const GroupDetailsLayout = async ({ params, children }: Props) => {
       <Navbar
         hrefBackButton={routes.groups.root}
         trailing={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <PointsButton groupId={Number(id)} />
             <RevalidateButton
               tags={[
@@ -44,7 +45,10 @@ const GroupDetailsLayout = async ({ params, children }: Props) => {
       >
         {name}
       </Navbar>
-      <Main>{children}</Main>
+      <Main>
+        <GroupDetailsTabs />
+        {children}
+      </Main>
     </PageContainer>
   );
 };

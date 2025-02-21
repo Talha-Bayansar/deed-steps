@@ -63,6 +63,7 @@ export const CreateGroupForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         submitButton={
           <Button
+            type="submit"
             color="primary"
             isLoading={isPending}
             isDisabled={!form.formState.isDirty}

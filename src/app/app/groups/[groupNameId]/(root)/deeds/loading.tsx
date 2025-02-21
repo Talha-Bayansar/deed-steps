@@ -1,7 +1,7 @@
 import { ListSkeleton } from "@/components/skeletons/list-skeleton";
 
-const GroupDetailsLoading = () => {
+const GroupDeedsLoading = () => {
   return <ListSkeleton />;
 };
 
-export default GroupDetailsLoading;
+export default GroupDeedsLoading;

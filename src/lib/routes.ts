@@ -12,6 +12,11 @@ export const routes = {
     },
     nameId: (groupName: string, groupId: number | string) => ({
       root: `/app/groups/${encodeURIComponent(`${groupName}_${groupId}`)}`,
+      deeds: {
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/deeds`,
+      },
       settings: {
         root: `/app/groups/${encodeURIComponent(
           `${groupName}_${groupId}`

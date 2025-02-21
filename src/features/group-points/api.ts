@@ -4,10 +4,13 @@ import { getTranslations } from "next-intl/server";
 import { requireAuth } from "../auth/api";
 import { findGroupById } from "../group/queries";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
-import { findGroupPointsByUserIdAndGroupId } from "./queries";
+import {
+  findGroupPointsByGroupId,
+  findGroupPointsByUserIdAndGroupId,
+} from "./queries";
 import { findUserToGroupByUserIdAndGroupId } from "../user-to-group/queries";
 
-export const getGroupPointsByGroupId = async (groupId: number) => {
+export const getMyGroupPointsByGroupId = async (groupId: number) => {
   const t = await getTranslations();
   const user = await requireAuth();
 
@@ -28,6 +31,19 @@ export const getGroupPointsByGroupId = async (groupId: number) => {
       groupPoints: points,
       userToGroup,
     });
+  } catch {
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+};
+
+export const getGroupPointsByGroupId = async (groupId: number) => {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    const groupPoints = await findGroupPointsByGroupId(groupId);
+
+    return createSuccessResponse(groupPoints);
   } catch {
     return createErrorResponse(t("somethingWentWrong"));
   }

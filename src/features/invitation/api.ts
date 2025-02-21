@@ -26,6 +26,7 @@ import { findInvitationsByUserId, invitationsKey } from "./queries";
 import { revalidateTag } from "next/cache";
 import { userToGroupKey } from "../user-to-group/queries";
 import { groupsKey } from "../group/queries";
+import { findGroupPointsByUserIdAndGroupId } from "../group-points/queries";
 
 export const getMyInvitations = cache(async () => {
   const t = await getTranslations();
@@ -146,7 +147,7 @@ export const acceptInvitation = safeAction
     const user = await requireAuth();
 
     try {
-      const invitation = await db
+      const invitationRows = await db
         .select()
         .from(invitationTable)
         .where(
@@ -154,24 +155,32 @@ export const acceptInvitation = safeAction
         )
         .limit(1);
 
-      if (isArrayEmpty(invitation))
+      if (isArrayEmpty(invitationRows))
         return createErrorResponse(t("notFound", { subject: t("invitation") }));
 
+      const invitation = invitationRows[0];
+
       await db.insert(userToGroupTable).values({
-        userId: invitation[0].userId,
-        groupId: invitation[0].groupId,
+        userId: invitation.userId,
+        groupId: invitation.groupId,
       });
 
-      await db.insert(groupPointsTable).values({
-        groupId: invitation[0].groupId,
-        userId: invitation[0].userId,
-      });
+      const groupPoints = await findGroupPointsByUserIdAndGroupId(
+        invitation.userId,
+        invitation.groupId
+      );
+
+      if (!groupPoints)
+        await db.insert(groupPointsTable).values({
+          groupId: invitation.groupId,
+          userId: invitation.userId,
+        });
 
       await db
         .delete(invitationTable)
         .where(
           and(
-            eq(invitationTable.groupId, invitation[0].groupId),
+            eq(invitationTable.groupId, invitation.groupId),
             eq(invitationTable.userId, user.id)
           )
         );

@@ -12,7 +12,10 @@ export const ListSkeleton = ({ size }: Props) => {
   return (
     <View>
       {generateArray(size).map((i) => (
-        <Skeleton key={`priceItem_${i}`} className="w-full h-20 rounded" />
+        <Skeleton
+          key={`priceItem_${i}`}
+          className="w-full h-20 rounded-medium"
+        />
       ))}
     </View>
   );

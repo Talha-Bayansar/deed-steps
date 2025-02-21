@@ -19,9 +19,10 @@ export const SettingsButton = ({ groupId, groupName }: Props) => {
     hasGroupPermission(data.data.userToGroup, "settings:read")
   )
     return (
-      <Link href={routes.groups.nameId(groupName, groupId).settings.root}>
-        <SettingsIconButton />
-      </Link>
+      <SettingsIconButton
+        as={Link}
+        href={routes.groups.nameId(groupName, groupId).settings.root}
+      />
     );
   else {
     return null;

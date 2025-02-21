@@ -26,6 +26,7 @@ import {
   Skeleton,
   useDisclosure,
 } from "@heroui/react";
+import { DeedStatusTile } from "@/features/deed-status/components/deed-status-tile";
 
 type Props = {
   deedTemplate: DeedTemplate;
@@ -151,25 +152,17 @@ export const DeedTile = ({
           <ModalBody>
             <View className="gap-2">
               {deedStatuses.map((status) => (
-                <ListTile
+                <DeedStatusTile
                   key={status.id}
+                  status={status}
                   onPress={() =>
                     handleSaveDeed({
                       deedId: deed?.id,
                       deedStatusId: status.id,
                     })
                   }
-                >
-                  <div className="flex gap-2 items-center">
-                    <Badge
-                      className="h-4 w-4 p-0 border border-gray-100"
-                      style={{
-                        backgroundColor: status.color,
-                      }}
-                    />
-                    <span>{status.name}</span>
-                  </div>
-                </ListTile>
+                  hideReward
+                />
               ))}
             </View>
           </ModalBody>

@@ -28,7 +28,7 @@ export const GroupDeedTemplatesView = ({
     );
 
   return (
-    <View className="gap-0">
+    <View className="gap-2">
       {deedTemplates.map((deedTemplate) => (
         <DeedTemplateTile
           key={deedTemplate.id}
