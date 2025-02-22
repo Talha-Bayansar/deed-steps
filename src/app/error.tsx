@@ -5,10 +5,9 @@ import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { View } from "@/components/layout/view";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { refreshCache } from "@/lib/actions";
 import { routes } from "@/lib/routes";
-import { cn } from "@/lib/utils";
+import { Button } from "@heroui/button";
 import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
@@ -32,28 +31,23 @@ export default function Error({
     <PageContainer>
       <Navbar>{t("error")}</Navbar>
       <Main>
-        <View className="justify-between flex-grow">
+        <View className="justify-center flex-grow">
           <View>
-            <ErrorState error={error.message} />
+            <ErrorState
+              error={error.message}
+              controls={
+                <div className="flex gap-2 flex-wrap">
+                  <Button color="primary" onPress={handleRefresh}>
+                    {t("tryAgain")}
+                  </Button>
+                  <Button as={Link} href={routes.landingPage.root}>
+                    {t("goToLandingPage")}
+                  </Button>
+                </div>
+              }
+            />
             {error.digest && <p>{error.digest}</p>}
           </View>
-
-          <div className="flex flex-col gap-4">
-            <Link
-              className={cn(
-                buttonVariants({
-                  variant: "outline",
-                }),
-                "w-full"
-              )}
-              href={routes.landingPage.root}
-            >
-              {t("goToLandingPage")}
-            </Link>
-            <Button className="w-full" onClick={handleRefresh}>
-              {t("tryAgain")}
-            </Button>
-          </div>
         </View>
       </Main>
     </PageContainer>
