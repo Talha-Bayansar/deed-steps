@@ -1,12 +1,14 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import { APP_NAME } from "@/lib/constants";
 import { routes } from "@/lib/routes";
+import { Button } from "@heroui/button";
 import { ArrowRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const CTA = async () => {
-  const t = await getTranslations();
+const CTA = () => {
+  const t = useTranslations();
 
   return (
     <section
@@ -23,16 +25,11 @@ const CTA = async () => {
               {t("ctaDescription", { appName: APP_NAME })}
             </p>
           </div>
-          <Link href={routes.app}>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="bg-white text-purple-600 hover:bg-purple-50"
-            >
-              {t("getStarted")}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+
+          <Button as={Link} href={routes.app} size="lg">
+            {t("getStarted")}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       </div>
     </section>

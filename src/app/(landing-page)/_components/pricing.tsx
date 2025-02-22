@@ -1,10 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+"use client";
+
 import { generateStripeCheckout } from "@/features/stripe/api";
 import { routes } from "@/lib/routes";
+import { handleResponse } from "@/lib/utils";
+import { Button } from "@heroui/react";
+import { Tab, Tabs } from "@heroui/tabs";
 import { Check } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 
 type Plan = {
   priceId: null | {
@@ -19,8 +23,8 @@ type Plan = {
   features: string[];
 };
 
-const Pricing = async () => {
-  const t = await getTranslations();
+const Pricing = () => {
+  const t = useTranslations();
 
   const plans: Plan[] = [
     {
@@ -74,39 +78,31 @@ const Pricing = async () => {
         <p className="text-gray-500 dark:text-gray-400 text-center mb-8">
           {t("chooseYourPathDescription")}
         </p>
-        <Tabs defaultValue="month" className="w-full">
-          <TabsList className="mb-12 grid w-full max-w-md grid-cols-2 mx-auto">
-            <TabsTrigger value="month">{t("monthly")}</TabsTrigger>
-            <TabsTrigger value="year">{t("yearly")}</TabsTrigger>
-          </TabsList>
-          <TabsContent value="month">
+        <Tabs className="w-full [&>div]:w-full flex justify-center [&>div]:max-w-2xl">
+          <Tab key="monthly" title={t("monthly")}>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {plans.map((plan) => (
                 <PlanCard key={`month_${plan.name}`} plan={plan} type="month" />
               ))}
             </div>
-          </TabsContent>
-          <TabsContent value="year">
+          </Tab>
+          <Tab key="yearly" title={t("yearly")}>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {plans.map((plan) => (
                 <PlanCard key={`year_${plan.name}`} plan={plan} type="year" />
               ))}
             </div>
-          </TabsContent>
+          </Tab>
         </Tabs>
       </div>
     </section>
   );
 };
 
-const PlanCard = async ({
-  plan,
-  type,
-}: {
-  plan: Plan;
-  type: "month" | "year";
-}) => {
-  const t = await getTranslations();
+const PlanCard = ({ plan, type }: { plan: Plan; type: "month" | "year" }) => {
+  const t = useTranslations();
+  const router = useRouter();
+  const { executeAsync, isExecuting } = useAction(generateStripeCheckout);
 
   return (
     <div
@@ -134,28 +130,28 @@ const PlanCard = async ({
         </ul>
       </div>
 
-      <form
-        action={async () => {
-          "use server";
-
+      <Button
+        color="primary"
+        isLoading={isExecuting}
+        onPress={async () => {
           if (!plan.price) {
-            redirect(routes.app);
-          }
-
-          const url = await generateStripeCheckout(plan.priceId![type]);
-          if (url) {
-            redirect(url);
+            router.push(routes.app);
+          } else {
+            const url = await executeAsync({ priceId: plan.priceId![type] });
+            handleResponse({
+              t,
+              response: url?.data,
+              onSuccess: () => {
+                if (url?.data?.data) {
+                  router.push(url.data.data);
+                }
+              },
+            });
           }
         }}
       >
-        <Button
-          className={
-            "mt-auto bg-gradient-to-r from-purple-600 to-indigo-600 text-white w-full sm:w-auto"
-          }
-        >
-          {!plan.price ? t("getStarted") : t("subscribe")}
-        </Button>
-      </form>
+        {!plan.price ? t("getStarted") : t("subscribe")}
+      </Button>
     </div>
   );
 };

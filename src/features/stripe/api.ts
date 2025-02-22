@@ -10,45 +10,58 @@ import { STRIPE_SUB_CACHE } from "./types";
 import { safeAction } from "@/lib/safe-action";
 import { routes } from "@/lib/routes";
 import { findPlanSubscriptionByUserId } from "./queries";
+import { z } from "zod";
 
 const baseUrl = process.env.BASE_URL!;
 
-export async function generateStripeCheckout(priceId: string) {
-  const user = await requireAuth();
+export const generateStripeCheckout = safeAction
+  .schema(
+    z.object({
+      priceId: z.string(),
+    })
+  )
+  .action(async ({ parsedInput: { priceId } }) => {
+    const user = await requireAuth();
+    const t = await getTranslations();
 
-  // Get the stripeCustomerId from your KV store
-  let stripeCustomerId = await kv.get(`stripe:user:${user.id}`);
+    try {
+      // Get the stripeCustomerId from your KV store
+      let stripeCustomerId = await kv.get(`stripe:user:${user.id}`);
 
-  // Create a new Stripe customer if this user doesn't have one
-  if (!stripeCustomerId) {
-    const newCustomer = await stripe.customers.create({
-      email: user.email,
-      metadata: {
-        userId: user.id, // DO NOT FORGET THIS
-      },
-    });
+      // Create a new Stripe customer if this user doesn't have one
+      if (!stripeCustomerId) {
+        const newCustomer = await stripe.customers.create({
+          email: user.email,
+          metadata: {
+            userId: user.id, // DO NOT FORGET THIS
+          },
+        });
 
-    // Store the relation between userId and stripeCustomerId in your KV
-    await kv.set(`stripe:user:${user.id}`, newCustomer.id);
-    stripeCustomerId = newCustomer.id;
-  }
+        // Store the relation between userId and stripeCustomerId in your KV
+        await kv.set(`stripe:user:${user.id}`, newCustomer.id);
+        stripeCustomerId = newCustomer.id;
+      }
 
-  // ALWAYS create a checkout with a stripeCustomerId. They should enforce this.
-  const checkout = await stripe.checkout.sessions.create({
-    customer: stripeCustomerId as string,
-    success_url: `${baseUrl}/success`,
-    cancel_url: baseUrl,
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
-    mode: "subscription",
+      // ALWAYS create a checkout with a stripeCustomerId. They should enforce this.
+      const checkout = await stripe.checkout.sessions.create({
+        customer: stripeCustomerId as string,
+        success_url: `${baseUrl}/success`,
+        cancel_url: baseUrl,
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+        mode: "subscription",
+      });
+
+      return createSuccessResponse(checkout.url);
+    } catch (error) {
+      console.error(error);
+      return createErrorResponse(t("somethingWentWrong"));
+    }
   });
-
-  return checkout.url;
-}
 
 // The contents of this function should probably be wrapped in a try/catch
 export async function syncStripeDataToKV(customerId: string) {

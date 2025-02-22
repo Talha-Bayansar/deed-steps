@@ -44,14 +44,14 @@ export default async function SignInPage({ searchParams }: Props) {
           <p className="px-8 text-center text-sm text-muted-foreground">
             {t("signInToAgree")}{" "}
             <Link
-              href="/terms"
+              href={routes.legal.termsOfService.root}
               className="underline underline-offset-4 hover:text-primary"
             >
               {t("termsOfService")}
             </Link>{" "}
             <span className="lowercase">{t("and")} </span>
             <Link
-              href="/privacy"
+              href={routes.legal.privacyPolicy.root}
               className="underline underline-offset-4 hover:text-primary"
             >
               {t("privacyPolicy")}

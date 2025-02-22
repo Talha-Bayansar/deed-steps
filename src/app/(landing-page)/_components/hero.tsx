@@ -1,10 +1,13 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import { APP_NAME } from "@/lib/constants";
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
 import { routes } from "@/lib/routes";
-const Hero = async () => {
-  const t = await getTranslations();
+import { Button } from "@heroui/react";
+import { useTranslations } from "next-intl";
+
+const Hero = () => {
+  const t = useTranslations();
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 px-4 bg-gradient-to-b from-purple-50 to-white dark:from-purple-900 dark:to-gray-900">
@@ -19,19 +22,12 @@ const Hero = async () => {
           {t("heroDescription")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href={routes.app}>
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
-            >
-              {t("getStarted")}
-            </Button>
-          </Link>
-          <Link href="#features">
-            <Button size="lg" variant="outline">
-              {t("learnMore")}
-            </Button>
-          </Link>
+          <Button as={Link} href={routes.app} size="lg" color="primary">
+            {t("getStarted")}
+          </Button>
+          <Button as={Link} href={"#features"} size="lg" variant="bordered">
+            {t("learnMore")}
+          </Button>
         </div>
       </div>
     </section>
