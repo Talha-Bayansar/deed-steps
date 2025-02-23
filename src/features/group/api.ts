@@ -260,6 +260,13 @@ export const sendReminderNotification = safeAction
           group[0].group.notificationDelay * 1000 <
         Date.now()
       ) {
+        await db
+          .update(groupTable)
+          .set({
+            lastNotifiedAt: new Date(),
+          })
+          .where(eq(groupTable.id, groupId));
+
         await sendNotificationToSubscribers(
           { body, title, groupId, userId: user.id },
           subscriptions
