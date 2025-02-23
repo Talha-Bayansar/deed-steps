@@ -150,34 +150,40 @@ export const updateGroupById = safeAction
       groupId: z.number(),
       name: z.string().optional(),
       notifyDeeds: z.boolean().optional(),
+      notificationDelay: z.number().optional(),
       ownerId: z.number().optional(),
     })
   )
-  .action(async ({ parsedInput: { groupId, name, notifyDeeds, ownerId } }) => {
-    const user = await requireAuth();
-    const t = await getTranslations();
+  .action(
+    async ({
+      parsedInput: { groupId, name, notifyDeeds, ownerId, notificationDelay },
+    }) => {
+      const user = await requireAuth();
+      const t = await getTranslations();
 
-    try {
-      // Update the group
-      const res = await db
-        .update(groupTable)
-        .set({
-          name,
-          notifyDeeds,
-          ownerId,
-        })
-        .where(
-          and(eq(groupTable.id, groupId), eq(groupTable.ownerId, user.id))
-        );
+      try {
+        // Update the group
+        const res = await db
+          .update(groupTable)
+          .set({
+            name,
+            notifyDeeds,
+            ownerId,
+            notificationDelay,
+          })
+          .where(
+            and(eq(groupTable.id, groupId), eq(groupTable.ownerId, user.id))
+          );
 
-      revalidateTag(groupsKey);
-      revalidateTag(userToGroupKey);
+        revalidateTag(groupsKey);
+        revalidateTag(userToGroupKey);
 
-      return createSuccessResponse(res);
-    } catch {
-      return createErrorResponse(t("somethingWentWrong"));
+        return createSuccessResponse(res);
+      } catch {
+        return createErrorResponse(t("somethingWentWrong"));
+      }
     }
-  });
+  );
 
 export const deleteGroup = safeAction
   .schema(
@@ -249,10 +255,29 @@ export const sendReminderNotification = safeAction
         .from(pushSubscriptionTable)
         .where(inArray(pushSubscriptionTable.sessionId, sessionIds));
 
-      await sendNotificationToSubscribers(
-        { body, title, groupId, userId: user.id },
-        subscriptions
-      );
+      if (
+        new Date(group[0].group.lastNotifiedAt).getTime() +
+          group[0].group.notificationDelay * 1000 <
+        Date.now()
+      ) {
+        await sendNotificationToSubscribers(
+          { body, title, groupId, userId: user.id },
+          subscriptions
+        );
+      } else {
+        return createErrorResponse(
+          t("nextNotificationTime", {
+            minutes: Math.floor(
+              (new Date(
+                new Date(group[0].group.lastNotifiedAt).getTime() +
+                  group[0].group.notificationDelay * 1000
+              ).getTime() -
+                Date.now()) /
+                60000
+            ),
+          })
+        );
+      }
 
       return createSuccessResponse();
     } catch {

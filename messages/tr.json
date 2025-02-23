@@ -280,5 +280,6 @@
   "limitReached": "Görünüşe göre mevcut planınızın limitini aştınız.",
   "goToApp": "Uygulamaya git",
   "view": "Görüntüle",
-  "hey": "Merhaba"
+  "hey": "Merhaba",
+  "nextNotificationTime": "Bir sonraki bildirim için {minutes} dakika beklemeniz gerekiyor."
 }

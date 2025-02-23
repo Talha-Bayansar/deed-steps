@@ -150,7 +150,20 @@ export const saveDeed = safeAction
           })
           .where(eq(groupPointsTable.id, groupPoints.id));
 
-        if (!!deedTemplate.group.notifyDeeds && Number(deedStatus.reward) > 0) {
+        if (
+          !!deedTemplate.group.notifyDeeds &&
+          Number(deedStatus.reward) > 0 &&
+          new Date(deedTemplate.group.lastNotifiedAt).getTime() +
+            deedTemplate.group.notificationDelay * 1000 <
+            Date.now()
+        ) {
+          await db
+            .update(groupTable)
+            .set({
+              lastNotifiedAt: new Date(),
+            })
+            .where(eq(groupTable.id, deedTemplate.group.id));
+
           await sendDeedNotification({
             title: deedTemplate.group.name,
             body: t("someoneDidDeed"),

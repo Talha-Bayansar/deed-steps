@@ -280,5 +280,6 @@
   "limitReached": "Il semble que vous avez atteint la limite de votre plan actuel.",
   "goToApp": "Aller à l'application",
   "view": "Voir",
-  "hey": "Bonjour"
+  "hey": "Bonjour",
+  "nextNotificationTime": "Vous pouvez envoyer votre prochaine notification dans {minutes} minutes."
 }

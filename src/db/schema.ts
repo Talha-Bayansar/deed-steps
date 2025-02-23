@@ -42,6 +42,8 @@ export const groupTable = pgTable("group", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   notifyDeeds: boolean("notify_deeds").notNull().default(false),
+  notificationDelay: integer("notification_delay").notNull().default(300),
+  lastNotifiedAt: timestamp("last_notified_at").notNull().defaultNow(),
   ownerId: serial("owner_id")
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
