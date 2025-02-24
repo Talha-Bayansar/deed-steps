@@ -66,7 +66,7 @@ export const MemberTile = ({
         {hasPointsPermission && (
           <span className="flex items-center gap-1 text-zinc-400">
             <Coins className="text-yellow-500 w-5 h-5" />{" "}
-            <span className="font-medium">
+            <span className="font-medium text-lg">
               {groupPoints.points}
               <span className="text-xs font-normal">
                 /{groupPoints.totalPoints}
