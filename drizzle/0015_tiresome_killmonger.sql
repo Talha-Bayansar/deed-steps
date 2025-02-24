@@ -1,0 +1,1 @@
+ALTER TABLE "group_points" ADD COLUMN "total_points" numeric DEFAULT '0' NOT NULL;

@@ -281,5 +281,6 @@
   "goToApp": "Aller à l'application",
   "view": "Voir",
   "hey": "Bonjour",
-  "nextNotificationTime": "Vous pouvez envoyer votre prochaine notification dans {minutes} minutes."
+  "nextNotificationTime": "Vous pouvez envoyer votre prochaine notification dans {minutes} minutes.",
+  "totalPoints": "Points totaux"
 }

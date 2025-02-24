@@ -281,5 +281,6 @@
   "goToApp": "Uygulamaya git",
   "view": "Görüntüle",
   "hey": "Merhaba",
-  "nextNotificationTime": "Bir sonraki bildirim için {minutes} dakika beklemeniz gerekiyor."
+  "nextNotificationTime": "Bir sonraki bildirim için {minutes} dakika beklemeniz gerekiyor.",
+  "totalPoints": "Toplam puan"
 }

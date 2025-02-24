@@ -65,7 +65,13 @@ export const MemberTile = ({
         </View>
         {hasPointsPermission && (
           <span className="flex items-center gap-1 text-zinc-400">
-            <Coins className="text-yellow-500 w-5 h-5" /> {groupPoints.points}
+            <Coins className="text-yellow-500 w-5 h-5" />{" "}
+            <span className="font-medium">
+              {groupPoints.points}
+              <span className="text-xs font-normal">
+                /{groupPoints.totalPoints}
+              </span>
+            </span>
           </span>
         )}
       </ListTile>

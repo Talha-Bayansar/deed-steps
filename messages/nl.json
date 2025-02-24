@@ -281,5 +281,6 @@
   "goToApp": "Ga naar de app",
   "view": "Bekijk",
   "hey": "Hallo",
-  "nextNotificationTime": "Je kunt je volgende melding in {minutes} minuten sturen."
+  "nextNotificationTime": "Je kunt je volgende melding in {minutes} minuten sturen.",
+  "totalPoints": "Totaal punten"
 }

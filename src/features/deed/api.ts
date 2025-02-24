@@ -119,6 +119,11 @@ export const saveDeed = safeAction
               Number(deed.deed_status.reward) +
               Number(deedStatus.reward)
             ).toString(),
+            totalPoints: (
+              Number(groupPoints.totalPoints) -
+              Number(deed.deed_status.reward) +
+              Number(deedStatus.reward)
+            ).toString(),
           })
           .where(eq(groupPointsTable.id, groupPoints.id));
 
@@ -146,6 +151,9 @@ export const saveDeed = safeAction
           .set({
             points: (
               Number(groupPoints.points) + Number(deedStatus.reward)
+            ).toString(),
+            totalPoints: (
+              Number(groupPoints.totalPoints) + Number(deedStatus.reward)
             ).toString(),
           })
           .where(eq(groupPointsTable.id, groupPoints.id));

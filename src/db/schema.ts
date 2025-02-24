@@ -104,6 +104,7 @@ export const groupPointsTable = pgTable("group_points", {
     .notNull()
     .references(() => userTable.id, { onDelete: "cascade" }),
   points: numeric("points").notNull().default("0"),
+  totalPoints: numeric("total_points").notNull().default("0"),
 });
 
 export const transactionTable = pgTable("transaction", {
