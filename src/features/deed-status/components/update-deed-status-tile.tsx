@@ -27,7 +27,7 @@ export const UpdateDeedStatusTile = ({ status }: Props) => {
     <>
       <DeedStatusTile status={status} onPress={onOpen} />
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           <ModalHeader>{status.name}</ModalHeader>
           <Divider />

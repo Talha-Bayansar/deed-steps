@@ -27,7 +27,7 @@ export const InviteUserTile = () => {
         {t("inviteUser")}
       </ListTile>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           <ModalHeader>{t("inviteUser")}</ModalHeader>
           <Divider />

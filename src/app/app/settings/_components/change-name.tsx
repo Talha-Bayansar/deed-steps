@@ -27,7 +27,7 @@ export const ChangeName = ({ user }: Props) => {
         <Pen className="text-primary" />
         {t("changeName")}
       </ListTile>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           <ModalHeader>{t("changeName")}</ModalHeader>
           <ModalFooter>

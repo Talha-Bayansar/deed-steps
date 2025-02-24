@@ -29,7 +29,7 @@ export const TransactionTile = ({ groupName, groupId }: Props) => {
         {t("generateTransactionLink")}
       </ListTile>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           <ModalHeader>{t("generateTransactionLink")}</ModalHeader>
           <Divider />
