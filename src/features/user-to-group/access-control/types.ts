@@ -13,7 +13,9 @@ export type GroupAction =
   | "notification:edit"
   | "transaction:read"
   | "transaction:create"
-  | "settings:read";
+  | "settings:read"
+  | "groupSession:start"
+  | "groupSession:end";
 
 export type GroupPermissions = {
   [key: string]: GroupAction[];

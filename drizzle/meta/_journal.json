@@ -113,6 +113,20 @@
       "when": 1740398678450,
       "tag": "0015_tiresome_killmonger",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1740485867036,
+      "tag": "0016_glamorous_prowler",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1740489515643,
+      "tag": "0017_bent_joystick",
+      "breakpoints": true
     }
   ]
 }

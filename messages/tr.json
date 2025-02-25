@@ -282,5 +282,11 @@
   "view": "Görüntüle",
   "hey": "Merhaba",
   "nextNotificationTime": "Bir sonraki bildirim için {minutes} dakika beklemeniz gerekiyor.",
-  "totalPoints": "Toplam puan"
+  "totalPoints": "Toplam puan",
+  "groupSession": "Grup oturumu",
+  "startGroupSession": "Grup oturumunu başlat",
+  "startGroupSessionWarning": "Bir grup oturumu başlattığınızda, işlemleri takip etmeye devam edeceksiniz. Sonra oturumunu bitirmek için toplam puanı kaydetmek için oturumu sonlandırabilirsiniz.",
+  "groupSessionStarted": "Grup oturumu başladı.",
+  "endGroupSession": "Grup oturumunu bitir",
+  "endGroupSessionWarning": "Grup oturumunu bitirdiğinizde, tüm kişiler için toplam puanlar sıfırlanacak ve grup oturumu tarihi verilerine eklenecektir."
 }

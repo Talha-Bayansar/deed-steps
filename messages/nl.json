@@ -282,5 +282,11 @@
   "view": "Bekijk",
   "hey": "Hallo",
   "nextNotificationTime": "Je kunt je volgende melding in {minutes} minuten sturen.",
-  "totalPoints": "Totaal punten"
+  "totalPoints": "Totaal punten",
+  "groupSession": "Groepsessie",
+  "startGroupSession": "Groepsessie starten",
+  "startGroupSessionWarning": "Wanneer je een groepsessie start, zal je doorgaan met het bijhouden van de daden. Je kunt de sessie later beëindigen door de totale punten op te slaan voor historische gegevens.",
+  "groupSessionStarted": "De groepsessie is gestart.",
+  "endGroupSession": "Groepsessie beëindigen",
+  "endGroupSessionWarning": "Wanneer je een groepsessie beëindigt, zullen de totale punten worden hersteld voor iedereen en de groepsessie wordt toegevoegd als historische gegevens."
 }

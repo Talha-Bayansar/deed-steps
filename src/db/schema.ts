@@ -139,3 +139,25 @@ export const userToGroupTable = pgTable("user_to_group", {
     .notNull()
     .default("member"),
 });
+
+export const groupSessionTable = pgTable("group_session", {
+  id: serial("id").primaryKey(),
+  groupId: serial("group_id")
+    .notNull()
+    .references(() => groupTable.id, { onDelete: "cascade" }),
+  startedAt: timestamp("started_at").notNull().defaultNow(),
+  endedAt: timestamp("ended_at"),
+  name: text("name"),
+  description: text("description"),
+});
+
+export const historicalGroupPointsTable = pgTable("historical_group_points", {
+  id: serial("id").primaryKey(),
+  groupSessionId: serial("group_session_id")
+    .notNull()
+    .references(() => groupSessionTable.id, { onDelete: "cascade" }),
+  userId: serial("user_id")
+    .notNull()
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  finalPoints: numeric("final_points").notNull(),
+});

@@ -1,0 +1,1 @@
+ALTER TABLE "group_session" ALTER COLUMN "name" DROP NOT NULL;

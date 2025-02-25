@@ -12,6 +12,9 @@ import { getMyUserToGroupByGroupId } from "@/features/user-to-group/api";
 import { hasGroupPermission } from "@/features/user-to-group/access-control/permissions";
 import { TransactionsTile } from "../_components/transactions-tile";
 import { getGroupById } from "@/features/group/api";
+import { getActiveGroupSessionByGroupId } from "@/features/group-session/api";
+import { StartGroupSessionTile } from "../_components/start-group-session-tile";
+import { EndGroupSessionTile } from "../_components/end-group-session-tile";
 
 type Props = {
   params: Promise<{
@@ -26,10 +29,16 @@ const GroupSettingsPage = async ({ params }: Props) => {
 
   const userToGroup = await getMyUserToGroupByGroupId(Number(id));
   const group = await getGroupById(Number(id));
+  const activeGroupSession = await getActiveGroupSessionByGroupId(Number(id));
 
   const error = extractError(userToGroup, t);
   const groupError = extractError(group, t);
-  if (error || groupError) return <ErrorState error={(error || groupError)!} />;
+  const activeGroupSessionError = extractError(activeGroupSession, t);
+
+  if (error || groupError || activeGroupSessionError)
+    return (
+      <ErrorState error={(error || groupError || activeGroupSessionError)!} />
+    );
 
   return (
     <View className="gap-2">
@@ -54,6 +63,14 @@ const GroupSettingsPage = async ({ params }: Props) => {
       {hasGroupPermission(userToGroup.data!, "transaction:create") && (
         <TransactionTile groupName={name} groupId={Number(id)} />
       )}
+      {hasGroupPermission(userToGroup.data!, "groupSession:start") &&
+        !activeGroupSession.data && (
+          <StartGroupSessionTile groupId={Number(id)} />
+        )}
+      {hasGroupPermission(userToGroup.data!, "groupSession:end") &&
+        activeGroupSession.data && (
+          <EndGroupSessionTile groupSessionId={activeGroupSession.data.id} />
+        )}
       {hasGroupPermission(userToGroup.data!, "group:delete") && (
         <DeleteGroupTile groupId={Number(id)} />
       )}

@@ -99,11 +99,11 @@
   "invitations": "invitations",
   "invitation": "Invitation",
   "profile": "Profil",
-  "declineInvitationWarning": "Une fois que vous aurez refusé cette invitation, vous ne pourrez plus l’accepter plus tard.",
+  "declineInvitationWarning": "Une fois que vous aurez refusé cette invitation, vous ne pourrez plus l'accepter plus tard.",
   "declineSuccess": "Rejeté avec succès",
   "acceptSuccess": "Elle a été acceptée avec succès.",
   "favorites": "favoris",
-  "searchBy": "Rechercher par :",
+  "searchBy": "Rechercher par :",
   "zip": "Code Postal",
   "select": "Sélectionner",
   "contact": "Communication",
@@ -282,5 +282,11 @@
   "view": "Voir",
   "hey": "Bonjour",
   "nextNotificationTime": "Vous pouvez envoyer votre prochaine notification dans {minutes} minutes.",
-  "totalPoints": "Points totaux"
+  "totalPoints": "Points totaux",
+  "groupSession": "Session de groupe",
+  "startGroupSession": "Démarrer la session de groupe",
+  "startGroupSessionWarning": "En démarrant une session, vous continuerez à suivre les actions. Vous pourrez terminer la session par la suite en stockant les points totaux pour les données historiques.",
+  "groupSessionStarted": "La session de groupe a commencé.",
+  "endGroupSession": "Terminer la session de groupe",
+  "endGroupSessionWarning": "En terminant la session de groupe, les points totaux seront réinitialisés pour tout le monde et la session de groupe sera ajoutée comme données historiques."
 }
