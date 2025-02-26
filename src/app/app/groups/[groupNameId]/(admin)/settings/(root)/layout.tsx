@@ -4,6 +4,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { RevalidateButton } from "@/components/revalidate-button";
 import { deedStatusesKey } from "@/features/deed-status/queries";
 import { deedTemplatesKey } from "@/features/deed-template/queries";
+import { groupSessionsKey } from "@/features/group-session/queries";
 import { groupsKey } from "@/features/group/queries";
 import { transactionKey } from "@/features/transaction/queries";
 import { userToGroupKey } from "@/features/user-to-group/queries";
@@ -34,6 +35,7 @@ const GroupSettingsLayout = async ({ children, params }: Props) => {
               deedStatusesKey,
               transactionKey,
               groupsKey,
+              groupSessionsKey,
             ]}
           />
         }

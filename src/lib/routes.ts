@@ -17,6 +17,11 @@ export const routes = {
           `${groupName}_${groupId}`
         )}/deeds`,
       },
+      leaderboard: {
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/leaderboard`,
+      },
       settings: {
         root: `/app/groups/${encodeURIComponent(
           `${groupName}_${groupId}`

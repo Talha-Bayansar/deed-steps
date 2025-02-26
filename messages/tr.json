@@ -288,5 +288,6 @@
   "startGroupSessionWarning": "Bir grup oturumu başlattığınızda, işlemleri takip etmeye devam edeceksiniz. Sonra oturumunu bitirmek için toplam puanı kaydetmek için oturumu sonlandırabilirsiniz.",
   "groupSessionStarted": "Grup oturumu başladı.",
   "endGroupSession": "Grup oturumunu bitir",
-  "endGroupSessionWarning": "Grup oturumunu bitirdiğinizde, tüm kişiler için toplam puanlar sıfırlanacak ve grup oturumu tarihi verilerine eklenecektir."
+  "endGroupSessionWarning": "Grup oturumunu bitirdiğinizde, tüm kişiler için toplam puanlar sıfırlanacak ve grup oturumu tarihi verilerine eklenecektir.",
+  "leaderboard": "Sıralama"
 }

@@ -26,6 +26,12 @@ export const GroupDetailsTabs = () => {
       />
       <Tab
         as={Link}
+        key={routes.groups.nameId(name, id).leaderboard.root}
+        href={routes.groups.nameId(name, id).leaderboard.root}
+        title={t("leaderboard")}
+      />
+      <Tab
+        as={Link}
         key={routes.groups.nameId(name, id).deeds.root}
         href={routes.groups.nameId(name, id).deeds.root}
         title={t("deeds")}

@@ -288,5 +288,6 @@
   "startGroupSessionWarning": "En démarrant une session, vous continuerez à suivre les actions. Vous pourrez terminer la session par la suite en stockant les points totaux pour les données historiques.",
   "groupSessionStarted": "La session de groupe a commencé.",
   "endGroupSession": "Terminer la session de groupe",
-  "endGroupSessionWarning": "En terminant la session de groupe, les points totaux seront réinitialisés pour tout le monde et la session de groupe sera ajoutée comme données historiques."
+  "endGroupSessionWarning": "En terminant la session de groupe, les points totaux seront réinitialisés pour tout le monde et la session de groupe sera ajoutée comme données historiques.",
+  "leaderboard": "Classement"
 }

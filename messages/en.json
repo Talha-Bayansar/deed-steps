@@ -288,5 +288,6 @@
   "startGroupSessionWarning": "By starting a session, you will continue with tracking the deeds. You will be able to end the session afterwards by storing the total points for historical data.",
   "groupSessionStarted": "Group session has started.",
   "endGroupSession": "End group session",
-  "endGroupSessionWarning": "By ending the group session, the total points will be resetted for everyone and the group session will be added as historical data."
+  "endGroupSessionWarning": "By ending the group session, the total points will be resetted for everyone and the group session will be added as historical data.",
+  "leaderboard": "Leaderboard"
 }
