@@ -33,7 +33,7 @@ export const DuplicateDeedTemplate = ({
     <>
       <IconButton Icon={Copy} onPress={onOpen} />
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("duplicate")}</ModalHeader>
           <Divider />

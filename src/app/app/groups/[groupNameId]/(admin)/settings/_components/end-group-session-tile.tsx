@@ -27,7 +27,7 @@ export const EndGroupSessionTile = ({ groupSessionId }: Props) => {
         {t("endGroupSession")}
       </ListTile>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("endGroupSession")}</ModalHeader>
           <ModalBody className="text-sm text-zinc-400">

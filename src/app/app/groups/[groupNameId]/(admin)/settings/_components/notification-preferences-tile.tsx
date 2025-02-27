@@ -72,7 +72,7 @@ export const NotificationPreferencesTile = ({ group }: Props) => {
         {t("notificationPreferences")}
       </ListTile>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("notificationPreferences")}</ModalHeader>
           <Divider />

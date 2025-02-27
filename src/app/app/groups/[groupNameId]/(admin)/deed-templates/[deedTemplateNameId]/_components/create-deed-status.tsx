@@ -24,7 +24,7 @@ export const CreateDeedStatus = ({ deedTemplateId }: Props) => {
     <>
       <AddIconButton onPress={onOpen} />
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("createDeedStatus")}</ModalHeader>
           <Divider />

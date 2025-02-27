@@ -29,7 +29,7 @@ export const UpdateGroupTile = () => {
         {t("changeName")}
       </ListTile>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("changeName")}</ModalHeader>
           <Divider />
