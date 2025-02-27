@@ -259,7 +259,7 @@ export default async function LocaleLayout(props: {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="scroll-smooth">
+    <html lang={locale}>
       <body
         className={`${spaceGrotesk.className} antialiased flex flex-col min-h-screen w-full overflow-x-hidden dark text-foreground bg-background`}
       >
