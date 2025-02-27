@@ -1,19 +1,30 @@
 import { db } from "@/db";
-import { userTable, userToGroupTable } from "@/db/schema";
+import { userTable, userToGroupTable, groupPointsTable } from "@/db/schema";
+import { Pagination } from "@/lib/pagination/types";
 import { isArrayEmpty } from "@/lib/utils";
 
-import { and, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
 export const userToGroupKey = "userToGroup";
 
-export const findGroupUsersByGroupId = unstable_cache(
-  async (groupId: number) => {
+export const findGroupUserDetailsByGroupId = unstable_cache(
+  async (groupId: number, pagination?: Pagination) => {
     const rows = await db
       .select()
       .from(userToGroupTable)
       .innerJoin(userTable, eq(userToGroupTable.userId, userTable.id))
-      .where(eq(userToGroupTable.groupId, groupId));
+      .innerJoin(
+        groupPointsTable,
+        and(
+          eq(groupPointsTable.userId, userToGroupTable.userId),
+          eq(groupPointsTable.groupId, userToGroupTable.groupId)
+        )
+      )
+      .where(eq(userToGroupTable.groupId, groupId))
+      .orderBy(asc(userTable.firstName))
+      .limit(pagination?.limit ?? 20)
+      .offset(pagination?.offset ?? 0);
 
     return rows;
   },

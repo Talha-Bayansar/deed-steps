@@ -1,20 +1,15 @@
 import { db } from "@/db";
 import { groupTable, invitationTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { unstable_cache } from "next/cache";
 
 export const invitationsKey = "invitations";
 
-export const findInvitationsByUserId = unstable_cache(
-  async (userId: number) => {
-    const rows = await db
-      .select()
-      .from(invitationTable)
-      .innerJoin(groupTable, eq(invitationTable.groupId, groupTable.id))
-      .where(eq(invitationTable.userId, userId));
+export const findInvitationsByUserId = async (userId: number) => {
+  const rows = await db
+    .select()
+    .from(invitationTable)
+    .innerJoin(groupTable, eq(invitationTable.groupId, groupTable.id))
+    .where(eq(invitationTable.userId, userId));
 
-    return rows;
-  },
-  undefined,
-  { tags: [invitationsKey] }
-);
+  return rows;
+};

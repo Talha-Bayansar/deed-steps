@@ -20,5 +20,5 @@ export const findTransactionsByGroupId = unstable_cache(
     return rows;
   },
   undefined,
-  { tags: [transactionKey] }
+  { tags: [transactionKey], revalidate: 60 * 5 }
 );

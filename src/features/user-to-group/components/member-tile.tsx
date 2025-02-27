@@ -19,16 +19,15 @@ import { DeleteMemberButton } from "./delete-member-button";
 import { DemoteMemberButton } from "./demote-member-button";
 import { PromoteMemberButton } from "./promote-member-button";
 type Props = {
-  member: { user_to_group: UserToGroup; user: User };
-  groupPoints: GroupPoints;
+  member: {
+    user_to_group: UserToGroup;
+    user: User;
+    group_points: GroupPoints;
+  };
   currentUserToGroup: UserToGroup;
 };
 
-export const MemberTile = ({
-  member,
-  groupPoints,
-  currentUserToGroup,
-}: Props) => {
+export const MemberTile = ({ member, currentUserToGroup }: Props) => {
   const t = useTranslations();
   const { onOpenChange, isOpen, onOpen } = useDisclosure();
 
@@ -67,9 +66,9 @@ export const MemberTile = ({
           <span className="flex items-center gap-1 text-zinc-400">
             <Coins className="text-yellow-500 w-5 h-5" />{" "}
             <span className="font-medium text-lg">
-              {groupPoints.points}
+              {member.group_points.points}
               <span className="text-xs font-normal">
-                /{groupPoints.totalPoints}
+                /{member.group_points.totalPoints}
               </span>
             </span>
           </span>

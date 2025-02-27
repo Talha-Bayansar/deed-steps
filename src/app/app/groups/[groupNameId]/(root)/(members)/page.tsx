@@ -3,11 +3,10 @@ import { getTranslations } from "next-intl/server";
 import { ErrorState } from "@/components/error-state";
 
 import {
-  getGroupUsersByGroupId,
+  getGroupUserDetailsByGroupId,
   getMyUserToGroupByGroupId,
 } from "@/features/user-to-group/api";
 import { GroupMembersView } from "@/features/user-to-group/components/group-members-view";
-import { getGroupPointsByGroupId } from "@/features/group-points/api";
 
 type Props = {
   params: Promise<{
@@ -20,30 +19,22 @@ const GroupMembersPage = async ({ params }: Props) => {
   const t = await getTranslations();
   const id = decodeURIComponent(groupNameId).split("_")[1];
 
-  const [groupPoints, groupUsers, currentUserToGroup] = await Promise.all([
-    getGroupPointsByGroupId(Number(id)),
-    getGroupUsersByGroupId(Number(id)),
+  const [groupUsers, currentUserToGroup] = await Promise.all([
+    getGroupUserDetailsByGroupId(Number(id)),
     getMyUserToGroupByGroupId(Number(id)),
   ]);
 
-  const groupPointsError = extractError(groupPoints, t);
   const groupUsersError = extractError(groupUsers, t);
   const currentUserToGroupError = extractError(currentUserToGroup, t);
 
-  if (groupPointsError || groupUsersError || currentUserToGroupError)
-    return (
-      <ErrorState
-        error={
-          (groupPointsError || groupUsersError || currentUserToGroupError)!
-        }
-      />
-    );
+  if (groupUsersError || currentUserToGroupError)
+    return <ErrorState error={(groupUsersError || currentUserToGroupError)!} />;
 
   return (
     <GroupMembersView
-      groupMembers={groupUsers.data!}
-      groupPoints={groupPoints.data!}
+      initialData={groupUsers.data!}
       currentUserToGroup={currentUserToGroup.data!}
+      groupId={Number(id)}
     />
   );
 };

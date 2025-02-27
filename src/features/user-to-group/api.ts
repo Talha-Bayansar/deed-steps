@@ -9,20 +9,23 @@ import { db } from "@/db";
 import { findGroupById } from "../group/queries";
 import { revalidateTag } from "next/cache";
 import {
-  findGroupUsersByGroupId,
+  findGroupUserDetailsByGroupId,
   findUserGroupsByUserId,
   findUserToGroupByUserIdAndGroupId,
   userToGroupKey,
 } from "./queries";
 import { and, eq } from "drizzle-orm";
 import { userToGroupTable } from "@/db/schema";
-
-export const getGroupUsersByGroupId = async (groupId: number) => {
+import { Pagination } from "@/lib/pagination/types";
+export const getGroupUserDetailsByGroupId = async (
+  groupId: number,
+  pagination?: Pagination
+) => {
   const t = await getTranslations();
   await requireAuth();
 
   try {
-    const groupUsers = await findGroupUsersByGroupId(groupId);
+    const groupUsers = await findGroupUserDetailsByGroupId(groupId, pagination);
 
     return createSuccessResponse(groupUsers);
   } catch {

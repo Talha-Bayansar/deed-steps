@@ -290,5 +290,6 @@
   "endGroupSession": "Groepsessie beëindigen",
   "endGroupSessionWarning": "Wanneer je een groepsessie beëindigt, zullen de totale punten worden hersteld voor iedereen en de groepsessie wordt toegevoegd als historische gegevens.",
   "leaderboard": "Klassement",
-  "notificationDelay": "Melding vertraging"
+  "notificationDelay": "Melding vertraging",
+  "loadMore": "Meer laden"
 }

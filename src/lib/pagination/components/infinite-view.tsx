@@ -2,9 +2,10 @@
 
 import { View } from "@/components/layout/view";
 import { CustomResponse } from "@/lib/utils";
-import { Spinner } from "@heroui/react";
-import { useEffect, useRef, useState } from "react";
+import { Button } from "@heroui/react";
+import { useState, useCallback } from "react";
 import { Pagination } from "../types";
+import { useTranslations } from "next-intl";
 
 type Props<T> = {
   initialItems: T[];
@@ -25,54 +26,40 @@ export const InfiniteView = <T,>({
   const [hasMoreData, setHasMoreData] = useState(
     initialItems.length >= pageSize
   );
-  const scrollTrigger = useRef(null);
+  const t = useTranslations();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const loadMoreItems = async () => {
-    if (hasMoreData) {
-      const newItems = await fetchMore({ offset, limit: pageSize });
+  const loadMoreItems = useCallback(async () => {
+    if (hasMoreData && !isLoading) {
+      try {
+        setIsLoading(true);
+        const newItems = await fetchMore({ offset, limit: pageSize });
 
-      if (!newItems.data?.length || newItems.data.length < pageSize) {
-        setHasMoreData(false);
-      }
-
-      setItems((prevItems) => [...prevItems, ...newItems.data!]);
-      setOffset((prevOffset) => prevOffset + pageSize);
-    }
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.IntersectionObserver) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreItems();
+        if (!newItems.data?.length || newItems.data.length < pageSize) {
+          setHasMoreData(false);
         }
-      },
-      { threshold: 0.5 }
-    );
 
-    if (scrollTrigger.current) {
-      observer.observe(scrollTrigger.current);
-    }
-
-    return () => {
-      if (scrollTrigger.current) {
-        observer.unobserve(scrollTrigger.current);
+        setItems((prevItems) => [...prevItems, ...newItems.data!]);
+        setOffset((prevOffset) => prevOffset + pageSize);
+      } finally {
+        setIsLoading(false);
       }
-    };
-  }, [hasMoreData, offset]);
+    }
+  }, [hasMoreData, fetchMore, offset, pageSize, isLoading]);
 
   return (
     <View {...props}>
       {items.map(renderItem)}
-      {hasMoreData && (
-        <div ref={scrollTrigger}>
-          <Spinner />
-        </div>
-      )}
+
+      <div className="flex justify-center items-center">
+        <Button
+          onPress={loadMoreItems}
+          isDisabled={!hasMoreData}
+          isLoading={isLoading}
+        >
+          {t("loadMore")}
+        </Button>
+      </div>
     </View>
   );
 };

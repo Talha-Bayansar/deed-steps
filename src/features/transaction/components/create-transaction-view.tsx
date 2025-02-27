@@ -53,7 +53,9 @@ export const CreateTransactionView = ({
     <View className="items-center justify-between flex-grow">
       <View className="items-center justify-center flex-grow">
         <ArrowRightLeft size={60} className="text-primary" />
-        <h2 className="text-2xl text-primary font-medium">{groupName}</h2>
+        <h2 className="text-2xl text-primary text-center font-medium">
+          {groupName}
+        </h2>
         <View className="gap-0 items-center">
           <div className="text-xl font-medium">{t("points")}</div>
           <div className="text-xl text-primary font-medium">{amount}</div>

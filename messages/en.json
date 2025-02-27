@@ -290,5 +290,6 @@
   "endGroupSession": "End group session",
   "endGroupSessionWarning": "By ending the group session, the total points will be resetted for everyone and the group session will be added as historical data.",
   "leaderboard": "Leaderboard",
-  "notificationDelay": "Notification delay"
+  "notificationDelay": "Notification delay",
+  "loadMore": "Load more"
 }
