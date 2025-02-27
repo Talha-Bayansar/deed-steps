@@ -34,11 +34,25 @@ export const RootBottomNavigation = () => {
     },
   ];
 
+  const getSelectedKey = () => {
+    if (pathname.includes(routes.groups.root)) {
+      return routes.groups.root;
+    } else if (pathname.includes(routes.invitations.root)) {
+      return routes.invitations.root;
+    } else if (pathname.includes(routes.settings.root)) {
+      return routes.settings.root;
+    } else if (routes.app === pathname) {
+      return routes.app;
+    }
+
+    return undefined;
+  };
+
   return (
     <Tabs
       className="fixed bottom-8 left-1/2 -translate-x-1/2 backdrop-blur-md bg-background/25 rounded-full"
       aria-label="navigation"
-      selectedKey={pathname}
+      selectedKey={getSelectedKey()}
       items={tabs}
       radius="full"
       color="primary"
