@@ -75,7 +75,7 @@ export const NotificationPreferencesTile = ({ group }: Props) => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        scrollBehavior="outside"
+        shouldBlockScroll={false}
       >
         <ModalContent>
           <ModalHeader>{t("notificationPreferences")}</ModalHeader>
