@@ -52,10 +52,7 @@ const GroupSettingsPage = async ({ params }: Props) => {
         <ManageDeedsTile groupName={name} groupId={Number(id)} />
       )}
       {hasGroupPermission(userToGroup.data!, "notification:edit") && (
-        <NotificationPreferencesTile
-          groupId={Number(id)}
-          notifyDeeds={group.data!.notifyDeeds}
-        />
+        <NotificationPreferencesTile group={group.data!} />
       )}
       {hasGroupPermission(userToGroup.data!, "transaction:read") && (
         <TransactionsTile groupName={name} groupId={Number(id)} />

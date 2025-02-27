@@ -289,5 +289,6 @@
   "groupSessionStarted": "La session de groupe a commencé.",
   "endGroupSession": "Terminer la session de groupe",
   "endGroupSessionWarning": "En terminant la session de groupe, les points totaux seront réinitialisés pour tout le monde et la session de groupe sera ajoutée comme données historiques.",
-  "leaderboard": "Classement"
+  "leaderboard": "Classement",
+  "notificationDelay": "Délai de notification"
 }
