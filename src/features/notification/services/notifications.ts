@@ -13,6 +13,7 @@ export async function registerPushNotifications() {
   const existingSubscription = await getCurrentPushSubscription();
 
   if (existingSubscription) {
+    await existingSubscription.unsubscribe();
     throw Error("Existing push subscription found");
   }
 
