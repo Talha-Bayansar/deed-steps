@@ -1,17 +1,21 @@
 import { db } from "@/db";
 import { transactionTable, userTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { Pagination } from "@/lib/pagination/types";
+import { desc, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
 export const transactionKey = "transactionKey";
 
 export const findTransactionsByGroupId = unstable_cache(
-  async (groupId: number) => {
+  async (groupId: number, pagination?: Pagination) => {
     const rows = await db
       .select()
       .from(transactionTable)
       .innerJoin(userTable, eq(transactionTable.userId, userTable.id))
-      .where(eq(transactionTable.groupId, groupId));
+      .where(eq(transactionTable.groupId, groupId))
+      .orderBy(desc(transactionTable.createdAt))
+      .limit(pagination?.limit ?? 20)
+      .offset(pagination?.offset ?? 0);
 
     return rows;
   },

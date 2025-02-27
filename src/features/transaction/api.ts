@@ -15,13 +15,17 @@ import { requireAuth } from "../auth/api";
 import { revalidateTag } from "next/cache";
 import { findTransactionsByGroupId, transactionKey } from "./queries";
 import { groupPointsKey } from "../group-points/queries";
+import { Pagination } from "@/lib/pagination/types";
 
-export const getTransactionsByGroupId = async (groupId: number) => {
+export const getTransactionsByGroupId = async (
+  groupId: number,
+  pagination?: Pagination
+) => {
   const t = await getTranslations();
   await requireAuth();
 
   try {
-    const transactions = await findTransactionsByGroupId(groupId);
+    const transactions = await findTransactionsByGroupId(groupId, pagination);
 
     return createSuccessResponse(transactions);
   } catch {

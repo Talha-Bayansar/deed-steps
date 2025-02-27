@@ -33,7 +33,9 @@ const TransactionsRootPage = async ({ params }: Props) => {
   if (!hasGroupPermission(userToGroup.data!, "transaction:read"))
     redirect(routes.groups.nameId(name, id).root);
 
-  return <TransactionsView transactions={transactions.data!} />;
+  return (
+    <TransactionsView initialData={transactions.data!} groupId={Number(id)} />
+  );
 };
 
 export default TransactionsRootPage;

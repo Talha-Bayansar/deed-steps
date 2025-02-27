@@ -1,21 +1,32 @@
 "use client";
 
-import { View } from "@/components/layout/view";
 import { Transaction } from "../types";
 import { TransactionItem } from "./transaction-item";
 import { User } from "@/features/auth/types";
-import { isArrayEmpty } from "@/lib/utils";
+import { CustomResponse, isArrayEmpty } from "@/lib/utils";
 import { EmptyState } from "@/components/empty-state";
 import { useTranslations } from "next-intl";
+import { InfiniteView } from "@/lib/pagination/components/infinite-view";
+import { Pagination } from "@/lib/pagination/types";
+import { getTransactionsByGroupId } from "../api";
 
 type Props = {
-  transactions: { transaction: Transaction; user: User }[];
+  initialData: { transaction: Transaction; user: User }[];
+  groupId: number;
 };
 
-export const TransactionsView = ({ transactions }: Props) => {
+export const TransactionsView = ({ initialData, groupId }: Props) => {
   const t = useTranslations();
 
-  if (isArrayEmpty(transactions))
+  const fetchMore = async (pagination: Pagination) => {
+    const response = await getTransactionsByGroupId(groupId, pagination);
+
+    return response as CustomResponse<
+      { transaction: Transaction; user: User }[]
+    >;
+  };
+
+  if (isArrayEmpty(initialData))
     return (
       <EmptyState
         title={t("emptyWarning")}
@@ -24,20 +35,18 @@ export const TransactionsView = ({ transactions }: Props) => {
     );
 
   return (
-    <View className="gap-2">
-      {transactions
-        .sort(
-          (a, b) =>
-            new Date(b.transaction.createdAt).getTime() -
-            new Date(a.transaction.createdAt).getTime()
-        )
-        .map(({ transaction, user }) => (
-          <TransactionItem
-            key={transaction.id}
-            transaction={transaction}
-            user={user}
-          />
-        ))}
-    </View>
+    <InfiniteView
+      className="gap-2"
+      pageSize={30}
+      initialItems={initialData}
+      renderItem={(transaction) => (
+        <TransactionItem
+          key={transaction.transaction.id}
+          transaction={transaction.transaction}
+          user={transaction.user}
+        />
+      )}
+      fetchMore={fetchMore}
+    />
   );
 };
