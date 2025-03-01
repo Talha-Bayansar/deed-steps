@@ -64,7 +64,7 @@ export const MemberTile = ({ member, currentUserToGroup }: Props) => {
         </View>
         {hasPointsPermission && (
           <span className="flex items-center gap-1 text-zinc-400">
-            <Coins className="text-yellow-500 w-5 h-5" />{" "}
+            <Coins className="text-yellow-400 w-5 h-5" />{" "}
             <span className="font-medium text-lg">
               {member.group_points.points}
               <span className="text-xs font-normal">

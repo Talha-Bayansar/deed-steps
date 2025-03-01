@@ -15,6 +15,7 @@ import { getGroupById } from "@/features/group/api";
 import { getActiveGroupSessionByGroupId } from "@/features/group-session/api";
 import { StartGroupSessionTile } from "../_components/start-group-session-tile";
 import { EndGroupSessionTile } from "../_components/end-group-session-tile";
+import { HistoryTile } from "../_components/history-tile";
 
 type Props = {
   params: Promise<{
@@ -68,6 +69,9 @@ const GroupSettingsPage = async ({ params }: Props) => {
         activeGroupSession.data && (
           <EndGroupSessionTile groupSessionId={activeGroupSession.data.id} />
         )}
+      {hasGroupPermission(userToGroup.data!, "historicalGroupPoints:read") && (
+        <HistoryTile groupName={name} groupId={Number(id)} />
+      )}
       {hasGroupPermission(userToGroup.data!, "group:delete") && (
         <DeleteGroupTile groupId={Number(id)} />
       )}

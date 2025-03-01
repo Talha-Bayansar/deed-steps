@@ -291,5 +291,6 @@
   "endGroupSessionWarning": "Grup oturumunu bitirdiğinizde, tüm kişiler için toplam puanlar sıfırlanacak ve grup oturumu tarihi verilerine eklenecektir.",
   "leaderboard": "Sıralama",
   "notificationDelay": "Bildirim gecikmesi",
-  "loadMore": "Daha fazla yükle"
+  "loadMore": "Daha fazla yükle",
+  "history": "Tarih"
 }

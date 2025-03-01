@@ -64,6 +64,16 @@ export const routes = {
           },
         }),
       },
+      history: {
+        root: `/app/groups/${encodeURIComponent(
+          `${groupName}_${groupId}`
+        )}/history`,
+        id: (groupSessionId: string | number) => ({
+          root: `/app/groups/${encodeURIComponent(
+            `${groupName}_${groupId}`
+          )}/history/${groupSessionId}`,
+        }),
+      },
     }),
   },
   invitations: {

@@ -14,8 +14,12 @@ import {
 import { and, eq, isNull } from "drizzle-orm";
 import { createHistoricalGroupPoints } from "../historical-group-points/api";
 import { revalidateTag } from "next/cache";
-import { findActiveGroupSessionByGroupId, groupSessionsKey } from "./queries";
-
+import {
+  findActiveGroupSessionByGroupId,
+  findPassedGroupSessionsByGroupId,
+  groupSessionsKey,
+} from "./queries";
+import { Pagination } from "@/lib/pagination/types";
 export const getActiveGroupSessionByGroupId = async (groupId: number) => {
   const t = await getTranslations();
   await requireAuth();
@@ -24,6 +28,26 @@ export const getActiveGroupSessionByGroupId = async (groupId: number) => {
     const groupSession = await findActiveGroupSessionByGroupId(groupId);
 
     return createSuccessResponse(groupSession);
+  } catch (error) {
+    console.error(error);
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+};
+
+export const getPassedGroupSessionsByGroupId = async (
+  groupId: number,
+  pagination?: Pagination
+) => {
+  const t = await getTranslations();
+  await requireAuth();
+
+  try {
+    const groupSessions = await findPassedGroupSessionsByGroupId(
+      groupId,
+      pagination
+    );
+
+    return createSuccessResponse(groupSessions);
   } catch (error) {
     console.error(error);
     return createErrorResponse(t("somethingWentWrong"));

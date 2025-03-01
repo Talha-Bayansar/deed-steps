@@ -16,14 +16,18 @@ export const groupPermissions: GroupPermissions = {
     "transaction:create",
     "settings:read",
     "memberPoints:read",
+    "groupSession:read",
     "groupSession:start",
     "groupSession:end",
+    "historicalGroupPoints:read",
   ],
   admin: [
     "transaction:read",
     "transaction:create",
     "settings:read",
     "memberPoints:read",
+    "groupSession:read",
+    "historicalGroupPoints:read",
   ],
   member: [],
 };

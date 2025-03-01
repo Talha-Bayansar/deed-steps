@@ -291,5 +291,6 @@
   "endGroupSessionWarning": "En terminant la session de groupe, les points totaux seront réinitialisés pour tout le monde et la session de groupe sera ajoutée comme données historiques.",
   "leaderboard": "Classement",
   "notificationDelay": "Délai de notification",
-  "loadMore": "Charger plus"
+  "loadMore": "Charger plus",
+  "history": "Historique"
 }

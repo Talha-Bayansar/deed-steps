@@ -15,6 +15,28 @@ import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { findGroupSessionById } from "../group-session/queries";
 import { groupPointsKey } from "../group-points/queries";
+import { Pagination } from "@/lib/pagination/types";
+import { findHistoricalGroupPointsByGroupSessionId } from "./queries";
+
+export const getHistoricalGroupPointsByGroupSessionId = async (
+  groupSessionId: number,
+  pagination?: Pagination
+) => {
+  await requireAuth();
+  const t = await getTranslations();
+
+  try {
+    const rows = await findHistoricalGroupPointsByGroupSessionId(
+      groupSessionId,
+      pagination
+    );
+
+    return createSuccessResponse(rows);
+  } catch (error) {
+    console.error(error);
+    return createErrorResponse(t("somethingWentWrong"));
+  }
+};
 
 export const createHistoricalGroupPoints = safeAction
   .schema(z.object({ groupSessionId: z.number() }))

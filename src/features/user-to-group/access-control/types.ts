@@ -14,8 +14,10 @@ export type GroupAction =
   | "transaction:read"
   | "transaction:create"
   | "settings:read"
+  | "groupSession:read"
   | "groupSession:start"
-  | "groupSession:end";
+  | "groupSession:end"
+  | "historicalGroupPoints:read";
 
 export type GroupPermissions = {
   [key: string]: GroupAction[];
