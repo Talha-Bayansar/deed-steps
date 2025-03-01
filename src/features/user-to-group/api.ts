@@ -17,6 +17,7 @@ import {
 import { and, eq } from "drizzle-orm";
 import { userToGroupTable } from "@/db/schema";
 import { Pagination } from "@/lib/pagination/types";
+
 export const getGroupUserDetailsByGroupId = async (
   groupId: number,
   pagination?: Pagination

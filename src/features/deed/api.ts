@@ -23,6 +23,8 @@ import {
 } from "@/lib/utils";
 import { safeAction } from "@/lib/safe-action";
 import { z } from "zod";
+import { revalidateTag } from "next/cache";
+import { userToGroupKey } from "../user-to-group/queries";
 
 export const getMyDeedsByDate = async (date: string) => {
   const user = await requireAuth();
@@ -180,6 +182,8 @@ export const saveDeed = safeAction
           });
         }
       }
+
+      revalidateTag(userToGroupKey);
 
       return createSuccessResponse();
     } catch (error) {
