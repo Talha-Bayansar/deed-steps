@@ -18,8 +18,8 @@ import {
   CardHeader,
   Divider,
   Modal,
-  ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   Switch,
   useDisclosure,
@@ -76,7 +76,7 @@ export const NotificationPreferencesTile = ({ group }: Props) => {
         <ModalContent>
           <ModalHeader>{t("notificationPreferences")}</ModalHeader>
           <Divider />
-          <ModalBody>
+          <ModalFooter>
             <View className="gap-2">
               <ListTile onPress={sendReminder}>
                 <BellRing className="text-primary" />
@@ -111,7 +111,7 @@ export const NotificationPreferencesTile = ({ group }: Props) => {
                 </CardFooter>
               </Card>
             </View>
-          </ModalBody>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
