@@ -27,6 +27,7 @@ export const PointsButton = ({ groupId }: Props) => {
   const router = useRouter();
   const { data } = useGroupPointsByGroupId(groupId);
   const { onOpenChange, isOpen, onOpen } = useDisclosure();
+
   const handleScan = (values: IDetectedBarcode[]) => {
     const value = values[0];
     router.push(value.rawValue);
@@ -42,7 +43,7 @@ export const PointsButton = ({ groupId }: Props) => {
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="qrCode" onPress={onOpen}>
+          <DropdownItem key="qrCode" textValue={t("scanCode")} onPress={onOpen}>
             <div className="flex items-center gap-2">
               <ScanQrCode className="text-primary" /> {t("scanCode")}
             </div>

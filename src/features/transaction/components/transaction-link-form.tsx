@@ -71,7 +71,7 @@ export const TransactionLinkForm = ({ groupName, groupId }: Props) => {
       >
         <View className="items-center">
           {transactionLink ? (
-            <Link href={transactionLink}>
+            <Link className="border" href={transactionLink}>
               <QRCode value={transactionLink} />
             </Link>
           ) : (
