@@ -18,6 +18,7 @@ import {
   getMyDeedsByDateKey,
 } from "../hooks/use-my-deeds-by-date";
 import {
+  ButtonProps,
   Divider,
   Modal,
   ModalContent,
@@ -32,12 +33,13 @@ type Props = {
   deedTemplate: DeedTemplate;
   deedStatuses: DeedStatus[];
   selectedDay: string;
-};
+} & ButtonProps;
 
 export const DeedTile = ({
   deedTemplate,
   deedStatuses,
   selectedDay,
+  ...props
 }: Props) => {
   const queryClient = useQueryClient();
   const t = useTranslations();
@@ -124,6 +126,7 @@ export const DeedTile = ({
   return (
     <>
       <ListTile
+        {...props}
         isDisabled={
           selectedDate > endOfToday() || startOfYesterday() > selectedDate
         }
@@ -161,6 +164,7 @@ export const DeedTile = ({
                       deedStatusId: status.id,
                     })
                   }
+                  isDisabled={getStatus()?.id === status.id}
                   hideReward
                 />
               ))}
