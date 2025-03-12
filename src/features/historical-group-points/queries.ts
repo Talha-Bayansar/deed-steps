@@ -19,5 +19,6 @@ export const findHistoricalGroupPointsByGroupSessionId = unstable_cache(
 
     return rows;
   },
-  [historicalGroupPointsKey]
+  undefined,
+  { tags: [historicalGroupPointsKey], revalidate: 60 * 3 }
 );

@@ -21,6 +21,7 @@ export const findDeedTemplateById = unstable_cache(
   undefined,
   {
     tags: [deedTemplatesKey],
+    revalidate: 60 * 3,
   }
 );
 
@@ -34,7 +35,7 @@ export const findDeedTemplatesByGroupId = unstable_cache(
     return rows;
   },
   undefined,
-  { tags: [deedTemplatesKey] }
+  { tags: [deedTemplatesKey], revalidate: 60 * 3 }
 );
 
 export const findDeedTemplatesByGroupIds = unstable_cache(
@@ -49,6 +50,7 @@ export const findDeedTemplatesByGroupIds = unstable_cache(
   undefined,
   {
     tags: [deedTemplatesKey],
+    revalidate: 60 * 3,
   }
 );
 

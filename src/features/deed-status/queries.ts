@@ -18,6 +18,7 @@ export const findDeedStatusesByTemplateId = unstable_cache(
   undefined,
   {
     tags: [deedStatusesKey],
+    revalidate: 60 * 3,
   }
 );
 
@@ -31,7 +32,7 @@ export const findDeedStatusesByTemplateIds = unstable_cache(
     return rows;
   },
   undefined,
-  { tags: [deedStatusesKey] }
+  { tags: [deedStatusesKey], revalidate: 60 * 3 }
 );
 
 export const findDeedStatusesCountByTemplateId = async (

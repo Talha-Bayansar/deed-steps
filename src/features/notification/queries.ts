@@ -19,5 +19,6 @@ export const findPushSubscriptionBySessionId = unstable_cache(
   undefined,
   {
     tags: [pushSubscriptionsKey],
+    revalidate: 0,
   }
 );

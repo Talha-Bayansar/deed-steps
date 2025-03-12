@@ -66,6 +66,7 @@ export const findPassedGroupSessionsByGroupId = unstable_cache(
   undefined,
   {
     tags: [groupSessionsKey],
+    revalidate: 60 * 5,
   }
 );
 
@@ -81,5 +82,6 @@ export const findGroupSessionsByGroupId = unstable_cache(
   undefined,
   {
     tags: [groupSessionsKey],
+    revalidate: 60 * 5,
   }
 );
