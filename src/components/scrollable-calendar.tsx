@@ -90,7 +90,7 @@ export function ScrollableCalendar({ selectedDay, onSelectDay }: Props) {
                 key={`day_${i}`}
                 onPress={() => onSelectDay?.(day)}
                 className={cn(
-                  "min-w-min flex h-auto flex-col gap-2 items-center rounded-full p-2",
+                  "min-w-10 flex h-auto flex-col gap-2 items-center rounded-full p-2",
                   {
                     "is-selected bg-primary/20": isSameDay(selectedDay, day),
                     first: i === 0,

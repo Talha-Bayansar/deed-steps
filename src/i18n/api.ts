@@ -18,5 +18,8 @@ export const changeLocale = safeAction
   )
   .action(async ({ parsedInput: { locale } }) => {
     const cookieStore = await cookies();
-    cookieStore.set("locale", locale);
+    cookieStore.set("locale", locale, {
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 100), // 100 years from now
+      maxAge: 60 * 60 * 24 * 365 * 10, // 10 years in seconds
+    });
   });
