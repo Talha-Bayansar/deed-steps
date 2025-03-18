@@ -1,8 +1,6 @@
 import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
-import { RevalidateButton } from "@/components/revalidate-button";
-import { transactionKey } from "@/features/transaction/queries";
 import { routes } from "@/lib/routes";
 import { getTranslations } from "next-intl/server";
 
@@ -20,10 +18,7 @@ const TransactionsRootLayout = async ({ children, params }: Props) => {
 
   return (
     <PageContainer>
-      <Navbar
-        hrefBackButton={routes.groups.nameId(name, id).settings.root}
-        trailing={<RevalidateButton tags={[transactionKey]} />}
-      >
+      <Navbar hrefBackButton={routes.groups.nameId(name, id).settings.root}>
         {t("transactions")}
       </Navbar>
       <Main>{children}</Main>

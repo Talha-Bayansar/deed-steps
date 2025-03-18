@@ -25,7 +25,7 @@ export const ChangeLocale = ({ locale }: Props) => {
       case "tr":
         return t("tr");
       default:
-        return t("tr");
+        return t("en");
     }
   };
 

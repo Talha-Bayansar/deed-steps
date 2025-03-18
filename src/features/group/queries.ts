@@ -40,6 +40,7 @@ export const findGroupsByUserId = unstable_cache(
   undefined,
   {
     tags: [groupsKey],
+    revalidate: 60 * 3,
   }
 );
 

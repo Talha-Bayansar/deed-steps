@@ -6,7 +6,7 @@ import { z } from "zod";
 
 export const getLocale = async () => {
   const cookieStore = await cookies();
-  const locale = cookieStore.get("locale")?.value ?? "tr";
+  const locale = cookieStore.get("locale")?.value ?? "en";
   return locale;
 };
 

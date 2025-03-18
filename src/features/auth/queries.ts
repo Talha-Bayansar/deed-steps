@@ -21,5 +21,6 @@ export const findUserBySessionId = unstable_cache(
   undefined,
   {
     tags: [currentUserKey],
+    revalidate: 60 * 3,
   }
 );

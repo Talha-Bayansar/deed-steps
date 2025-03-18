@@ -2,8 +2,6 @@ import { Main } from "@/components/layout/main";
 import { Navbar } from "@/components/layout/navbar";
 import { PageContainer } from "@/components/layout/page-container";
 import { routes } from "@/lib/routes";
-import { RevalidateButton } from "@/components/revalidate-button";
-import { deedStatusesKey } from "@/features/deed-status/queries";
 import Link from "next/link";
 import { EditIconButton } from "@/components/icon-buttons/edit-icon-button";
 import { DuplicateDeedTemplate } from "../_components/duplicate-deed-template";
@@ -29,7 +27,6 @@ const DeedTemplateDetailsLayout = async ({ children, params }: Props) => {
         hrefBackButton={routes.groups.nameId(name, id).deedTemplates.root}
         trailing={
           <div className="flex items-center">
-            <RevalidateButton tags={[deedStatusesKey]} />
             <DuplicateDeedTemplate
               deedTemplateId={Number(templateId)}
               groupId={Number(id)}
