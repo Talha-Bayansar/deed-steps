@@ -70,15 +70,6 @@ export async function PUT(req: Request) {
 
     const { newSubscription, oldEndpoint } = sub;
 
-    const { user, session } = await validateRequest();
-
-    if (!user || !session) {
-      return NextResponse.json(
-        { error: "User not authenticated" },
-        { status: 401 }
-      );
-    }
-
     await db
       .update(pushSubscriptionTable)
       .set({ subscription: JSON.stringify(newSubscription) })

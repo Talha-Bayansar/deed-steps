@@ -51,7 +51,7 @@ sw.addEventListener("notificationclick", (event) => {
 sw.addEventListener("pushsubscriptionchange", function (event) {
   // @ts-ignore
   event.waitUntil(
-    fetch("https://pushpad.xyz/pushsubscriptionchange", {
+    fetch("https://deed-steps.vercel.app/api/subscribe", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
