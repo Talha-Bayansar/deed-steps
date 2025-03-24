@@ -14,6 +14,7 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
+  Divider,
 } from "@heroui/react";
 import { DeleteMemberButton } from "./delete-member-button";
 import { DemoteMemberButton } from "./demote-member-button";
@@ -79,6 +80,7 @@ export const MemberTile = ({ member, currentUserToGroup }: Props) => {
           <ModalHeader>
             {member.user.firstName} {member.user.lastName}
           </ModalHeader>
+          <Divider />
           <ModalFooter>
             {hasEditPermission && (
               <>

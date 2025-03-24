@@ -19,7 +19,7 @@ export const Navbar = ({
 }: Props) => {
   return (
     <Card className="rounded-t-none">
-      <CardHeader className="pb-0">
+      <CardHeader className="pb-0 h-10">
         {(leading || hrefBackButton || trailing) && (
           <div className="flex w-full gap-2 items-center justify-between">
             <div className="flex items-center justify-start">
@@ -34,7 +34,7 @@ export const Navbar = ({
         )}
       </CardHeader>
 
-      <CardFooter className="pt-0">
+      <CardFooter className="pt-1">
         <h1 className="text-2xl font-semibold">{children}</h1>
       </CardFooter>
     </Card>

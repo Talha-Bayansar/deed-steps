@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { UpdateUserNameForm } from "@/features/auth/containers/update-user-name-form";
 import { User } from "@/features/auth/types";
 import {
+  Divider,
   Modal,
   ModalContent,
   ModalFooter,
@@ -30,6 +31,7 @@ export const ChangeName = ({ user }: Props) => {
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("changeName")}</ModalHeader>
+          <Divider />
           <ModalFooter>
             <UpdateUserNameForm onSuccess={onClose} user={user} />
           </ModalFooter>

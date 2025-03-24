@@ -10,6 +10,7 @@ import {
   Modal,
   useDisclosure,
   ModalFooter,
+  Divider,
 } from "@heroui/react";
 
 type Props = {
@@ -34,6 +35,7 @@ export const ChangeLocaleDrawer = ({ locale }: Props) => {
               {t("changeLocaleDescription")}
             </span>
           </ModalHeader>
+          <Divider />
           <ModalFooter>
             <ChangeLocale locale={locale} />
           </ModalFooter>

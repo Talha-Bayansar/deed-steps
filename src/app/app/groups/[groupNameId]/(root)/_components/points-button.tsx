@@ -16,6 +16,7 @@ import {
   ModalFooter,
   useDisclosure,
   ModalHeader,
+  Divider,
 } from "@heroui/react";
 
 type Props = {
@@ -53,6 +54,7 @@ export const PointsButton = ({ groupId }: Props) => {
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader>{t("scanCode")}</ModalHeader>
+          <Divider />
           <ModalFooter>
             <Scanner onScan={handleScan} allowMultiple={false} />
           </ModalFooter>
